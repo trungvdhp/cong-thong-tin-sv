@@ -35,13 +35,32 @@ namespace CongThongTinSV.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            //if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            //{
+            //    return RedirectToLocal(returnUrl);
+            //}
+            Entities db = new Entities();
+            if (ModelState.IsValid)
             {
-                return RedirectToLocal(returnUrl);
-            }
+                var q = from sv in db.STU_HoSoSinhVien
+                        join ds in db.STU_DanhSach on sv.ID_sv equals ds.ID_sv
+                        where sv.Ma_sv == model.UserName
+                        select new
+                        {
+                            Ma_sv = sv.Ma_sv,
+                            Mat_khau = ds.Mat_khau,
+                            Ho_ten = sv.Ho_ten
+                        };
+                var hssv = q.First();
+                if (hssv.Mat_khau == model.Password)
+                {
+                    FormsAuthentication.SetAuthCookie(hssv.Ma_sv, model.RememberMe);
+                    return RedirectToLocal(returnUrl);
+                }
 
+            }
             // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "The user name or password provided is incorrect.");
+            ModelState.AddModelError("", "Tên đăng nhập hoặc mật khẩu không hợp lệ.");
             return View(model);
         }
 

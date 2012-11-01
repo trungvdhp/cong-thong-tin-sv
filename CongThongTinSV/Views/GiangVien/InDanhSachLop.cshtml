@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "InDanhSachLop";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#Nam_hoc").change(function () {
+            var url = "/JSON/HocKy_NamHoc";
+            var ddlsource = "#Nam_hoc";
+            var ddltarget = "#Hoc_ky";
+            $.getJSON(url, { NamHoc: $(ddlsource).val() }, function (data) {
+                $(ddltarget).empty();
+                $.each(data, function (index, optionData) {
+                    $(ddltarget).append("<option value='" + optionData.Value + "'>" + optionData.Text + "</option>");
+                });
+            });
+        });
+    });
+</script>
+@Html.DropDownList("Nam_hoc", (SelectList)ViewBag.NamHoc)
+<select id="Hoc_ky" name="Hoc_ky"></select>
