@@ -1,0 +1,854 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DHHHModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="DHHHModelStoreContainer">
+          <EntitySet Name="MARK_MonHoc" EntityType="DHHHModel.Store.MARK_MonHoc" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PLAN_HocKyDangKy_TC" EntityType="DHHHModel.Store.PLAN_HocKyDangKy_TC" store:Type="Tables" store:Schema="dbo" store:Name="PLAN_HocKyDangKy_TC">
+            <DefiningQuery>SELECT 
+      [PLAN_HocKyDangKy_TC].[Ky_dang_ky] AS [Ky_dang_ky], 
+      [PLAN_HocKyDangKy_TC].[Dot] AS [Dot], 
+      [PLAN_HocKyDangKy_TC].[Hoc_ky] AS [Hoc_ky], 
+      [PLAN_HocKyDangKy_TC].[Nam_hoc] AS [Nam_hoc], 
+      [PLAN_HocKyDangKy_TC].[Tu_ngay] AS [Tu_ngay], 
+      [PLAN_HocKyDangKy_TC].[Den_ngay] AS [Den_ngay], 
+      [PLAN_HocKyDangKy_TC].[Chon_dang_ky] AS [Chon_dang_ky]
+      FROM [dbo].[PLAN_HocKyDangKy_TC] AS [PLAN_HocKyDangKy_TC]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="PLAN_LopTinChi_TC" EntityType="DHHHModel.Store.PLAN_LopTinChi_TC" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PLAN_MonTinChi_TC" EntityType="DHHHModel.Store.PLAN_MonTinChi_TC" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PLAN_SukiensTinChi_TC" EntityType="DHHHModel.Store.PLAN_SukiensTinChi_TC" store:Type="Tables" store:Schema="dbo" store:Name="PLAN_SukiensTinChi_TC">
+            <DefiningQuery>SELECT 
+      [PLAN_SukiensTinChi_TC].[ID] AS [ID], 
+      [PLAN_SukiensTinChi_TC].[ID_lop_tc] AS [ID_lop_tc], 
+      [PLAN_SukiensTinChi_TC].[ID_phong] AS [ID_phong], 
+      [PLAN_SukiensTinChi_TC].[ID_cb] AS [ID_cb], 
+      [PLAN_SukiensTinChi_TC].[Ca_hoc] AS [Ca_hoc], 
+      [PLAN_SukiensTinChi_TC].[Thu] AS [Thu], 
+      [PLAN_SukiensTinChi_TC].[Tiet] AS [Tiet], 
+      [PLAN_SukiensTinChi_TC].[So_tiet] AS [So_tiet], 
+      [PLAN_SukiensTinChi_TC].[Loai_tiet] AS [Loai_tiet], 
+      [PLAN_SukiensTinChi_TC].[Da_xep_lich] AS [Da_xep_lich]
+      FROM [dbo].[PLAN_SukiensTinChi_TC] AS [PLAN_SukiensTinChi_TC]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="STU_DanhSach" EntityType="DHHHModel.Store.STU_DanhSach" store:Type="Tables" store:Schema="dbo" store:Name="STU_DanhSach">
+            <DefiningQuery>SELECT 
+      [STU_DanhSach].[ID_sv] AS [ID_sv], 
+      [STU_DanhSach].[ID_lop] AS [ID_lop], 
+      [STU_DanhSach].[Mat_khau] AS [Mat_khau], 
+      [STU_DanhSach].[Active] AS [Active], 
+      [STU_DanhSach].[Da_tot_nghiep] AS [Da_tot_nghiep], 
+      [STU_DanhSach].[Ngoai_ngan_sach] AS [Ngoai_ngan_sach], 
+      [STU_DanhSach].[Lop_chat_luong_cao] AS [Lop_chat_luong_cao], 
+      [STU_DanhSach].[ID_xep_hang_hoc_luc] AS [ID_xep_hang_hoc_luc], 
+      [STU_DanhSach].[Trang_thai] AS [Trang_thai]
+      FROM [dbo].[STU_DanhSach] AS [STU_DanhSach]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="STU_HoSoSinhVien" EntityType="DHHHModel.Store.STU_HoSoSinhVien" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ViewNamHoc" EntityType="DHHHModel.Store.ViewNamHoc" store:Type="Views" store:Schema="dbo" store:Name="ViewNamHoc">
+            <DefiningQuery>SELECT 
+      [ViewNamHoc].[Nam_hoc] AS [Nam_hoc]
+      FROM [dbo].[ViewNamHoc] AS [ViewNamHoc]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_PLAN_LopTinChi_TC_PLAN_MonTinChi_TC" Association="DHHHModel.Store.FK_PLAN_LopTinChi_TC_PLAN_MonTinChi_TC">
+            <End Role="PLAN_MonTinChi_TC" EntitySet="PLAN_MonTinChi_TC" />
+            <End Role="PLAN_LopTinChi_TC" EntitySet="PLAN_LopTinChi_TC" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PLAN_MonTinChi_TC_MARK_MonHoc" Association="DHHHModel.Store.FK_PLAN_MonTinChi_TC_MARK_MonHoc">
+            <End Role="MARK_MonHoc" EntitySet="MARK_MonHoc" />
+            <End Role="PLAN_MonTinChi_TC" EntitySet="PLAN_MonTinChi_TC" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PLAN_SukiensTinChi_TC_PLAN_LopTinChi_TC" Association="DHHHModel.Store.FK_PLAN_SukiensTinChi_TC_PLAN_LopTinChi_TC">
+            <End Role="PLAN_LopTinChi_TC" EntitySet="PLAN_LopTinChi_TC" />
+            <End Role="PLAN_SukiensTinChi_TC" EntitySet="PLAN_SukiensTinChi_TC" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="MARK_MonHoc">
+          <Key>
+            <PropertyRef Name="ID_mon" />
+          </Key>
+          <Property Name="ID_mon" Type="int" Nullable="false" />
+          <Property Name="Ky_hieu" Type="nvarchar" Nullable="false" MaxLength="225" />
+          <Property Name="Ten_mon" Type="nvarchar" Nullable="false" MaxLength="260" />
+          <Property Name="Ten_tieng_anh" Type="nvarchar" MaxLength="200" />
+          <Property Name="ID_bm" Type="int" Nullable="false" />
+          <Property Name="ID_he_dt" Type="int" />
+          <Property Name="ID_nhom_hp" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'DHHH.dbo.PLAN_HocKyDangKy_TC' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="PLAN_HocKyDangKy_TC">
+          <Key>
+            <PropertyRef Name="Ky_dang_ky" />
+            <PropertyRef Name="Dot" />
+            <PropertyRef Name="Hoc_ky" />
+            <PropertyRef Name="Nam_hoc" />
+            <PropertyRef Name="Tu_ngay" />
+            <PropertyRef Name="Chon_dang_ky" />
+          </Key>
+          <Property Name="Ky_dang_ky" Type="int" Nullable="false" />
+          <Property Name="Dot" Type="int" Nullable="false" />
+          <Property Name="Hoc_ky" Type="int" Nullable="false" />
+          <Property Name="Nam_hoc" Type="nvarchar" Nullable="false" MaxLength="10" />
+          <Property Name="Tu_ngay" Type="datetime" Nullable="false" />
+          <Property Name="Den_ngay" Type="datetime" />
+          <Property Name="Chon_dang_ky" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PLAN_LopTinChi_TC">
+          <Key>
+            <PropertyRef Name="ID_lop_tc" />
+          </Key>
+          <Property Name="ID_lop_tc" Type="int" Nullable="false" />
+          <Property Name="ID_lop_lt" Type="int" Nullable="false" />
+          <Property Name="ID_mon_tc" Type="int" Nullable="false" />
+          <Property Name="STT_lop" Type="int" Nullable="false" />
+          <Property Name="So_sv_min" Type="int" Nullable="false" />
+          <Property Name="So_sv_max" Type="int" Nullable="false" />
+          <Property Name="Tu_ngay" Type="datetime" Nullable="false" />
+          <Property Name="Den_ngay" Type="datetime" Nullable="false" />
+          <Property Name="Ca_hoc" Type="int" Nullable="false" />
+          <Property Name="So_tiet_tuan" Type="int" Nullable="false" />
+          <Property Name="ID_phong" Type="int" Nullable="false" />
+          <Property Name="ID_cb" Type="int" Nullable="false" />
+          <Property Name="Huy_lop" Type="bit" Nullable="false" />
+          <Property Name="Ly_do" Type="nvarchar" MaxLength="200" />
+          <Property Name="Nhom_dang_ky" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ngay_thi" Type="datetime" />
+          <Property Name="Cho_trong" Type="int" />
+        </EntityType>
+        <EntityType Name="PLAN_MonTinChi_TC">
+          <Key>
+            <PropertyRef Name="ID_mon_tc" />
+          </Key>
+          <Property Name="ID_mon_tc" Type="int" Nullable="false" />
+          <Property Name="Ky_dang_ky" Type="int" Nullable="false" />
+          <Property Name="Ky_hieu_lop_tc" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="ID_mon" Type="int" Nullable="false" />
+          <Property Name="So_tin_chi" Type="int" Nullable="false" />
+          <Property Name="He_so" Type="int" Nullable="false" />
+          <Property Name="So_tien" Type="int" />
+          <Property Name="Ly_thuyet" Type="int" Nullable="false" />
+          <Property Name="Thuc_hanh" Type="int" Nullable="false" />
+          <Property Name="Bai_tap" Type="int" Nullable="false" />
+          <Property Name="Bai_tap_lon" Type="int" Nullable="false" />
+          <Property Name="Locked" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'DHHH.dbo.PLAN_SukiensTinChi_TC' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="PLAN_SukiensTinChi_TC">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="ID_lop_tc" />
+            <PropertyRef Name="ID_phong" />
+            <PropertyRef Name="ID_cb" />
+            <PropertyRef Name="Ca_hoc" />
+            <PropertyRef Name="Thu" />
+            <PropertyRef Name="Tiet" />
+            <PropertyRef Name="So_tiet" />
+            <PropertyRef Name="Loai_tiet" />
+            <PropertyRef Name="Da_xep_lich" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID_lop_tc" Type="int" Nullable="false" />
+          <Property Name="ID_phong" Type="int" Nullable="false" />
+          <Property Name="ID_cb" Type="int" Nullable="false" />
+          <Property Name="Ca_hoc" Type="int" Nullable="false" />
+          <Property Name="Thu" Type="int" Nullable="false" />
+          <Property Name="Tiet" Type="int" Nullable="false" />
+          <Property Name="So_tiet" Type="int" Nullable="false" />
+          <Property Name="Loai_tiet" Type="int" Nullable="false" />
+          <Property Name="Da_xep_lich" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'DHHH.dbo.STU_DanhSach' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="STU_DanhSach">
+          <Key>
+            <PropertyRef Name="ID_sv" />
+            <PropertyRef Name="ID_lop" />
+            <PropertyRef Name="Active" />
+            <PropertyRef Name="Da_tot_nghiep" />
+            <PropertyRef Name="Trang_thai" />
+          </Key>
+          <Property Name="ID_sv" Type="int" Nullable="false" />
+          <Property Name="ID_lop" Type="int" Nullable="false" />
+          <Property Name="Mat_khau" Type="nvarchar" MaxLength="20" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Da_tot_nghiep" Type="bit" Nullable="false" />
+          <Property Name="Ngoai_ngan_sach" Type="bit" />
+          <Property Name="Lop_chat_luong_cao" Type="bit" />
+          <Property Name="ID_xep_hang_hoc_luc" Type="int" />
+          <Property Name="Trang_thai" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="STU_HoSoSinhVien">
+          <Key>
+            <PropertyRef Name="ID_sv" />
+          </Key>
+          <Property Name="ID_sv" Type="int" Nullable="false" />
+          <Property Name="Anh" Type="image" />
+          <Property Name="Ma_sv" Type="nvarchar" MaxLength="20" />
+          <Property Name="Ho_ten" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ngay_sinh" Type="datetime" />
+          <Property Name="ID_gioi_tinh" Type="int" />
+          <Property Name="ID_dan_toc" Type="int" />
+          <Property Name="ID_quoc_tich" Type="int" />
+          <Property Name="Ton_giao" Type="nvarchar" MaxLength="30" />
+          <Property Name="ID_thanh_phan_xuat_than" Type="int" />
+          <Property Name="Ngay_vao_doan" Type="datetime" />
+          <Property Name="Ngay_vao_dang" Type="datetime" />
+          <Property Name="Que_quan" Type="nvarchar" MaxLength="500" />
+          <Property Name="ID_tinh_ns" Type="nvarchar" MaxLength="5" />
+          <Property Name="Dia_chi_tt" Type="nvarchar" MaxLength="500" />
+          <Property Name="Xa_phuong_tt" Type="nvarchar" MaxLength="500" />
+          <Property Name="ID_huyen_tt" Type="nvarchar" MaxLength="5" />
+          <Property Name="ID_tinh_tt" Type="nvarchar" MaxLength="5" />
+          <Property Name="ID_doi_tuong_TC" Type="int" />
+          <Property Name="ID_doi_tuong_TS" Type="int" />
+          <Property Name="Dien_thoai_NR" Type="nvarchar" MaxLength="15" />
+          <Property Name="ID_nhom_doi_tuong" Type="int" />
+          <Property Name="Dia_chi_bao_tin" Type="nvarchar" MaxLength="500" />
+          <Property Name="ID_khu_vuc_TS" Type="int" />
+          <Property Name="Doi_tuong_du_thi" Type="nvarchar" MaxLength="20" />
+          <Property Name="Diem1" Type="real" />
+          <Property Name="Diem2" Type="real" />
+          <Property Name="Diem3" Type="real" />
+          <Property Name="Diem4" Type="real" />
+          <Property Name="Tong_diem" Type="real" />
+          <Property Name="SBD" Type="nvarchar" MaxLength="20" />
+          <Property Name="Nganh_tuyen_sinh" Type="nvarchar" MaxLength="50" />
+          <Property Name="Khoi_thi" Type="nvarchar" MaxLength="5" />
+          <Property Name="Xep_loai_hoc_tap" Type="nvarchar" MaxLength="50" />
+          <Property Name="Xep_loai_hanh_kiem" Type="nvarchar" MaxLength="50" />
+          <Property Name="Xep_loai_tot_nghiep" Type="nvarchar" MaxLength="50" />
+          <Property Name="Nam_tot_nghiep" Type="nvarchar" MaxLength="10" />
+          <Property Name="Diem_thuong" Type="real" />
+          <Property Name="Ly_do_thuong_diem" Type="nvarchar" MaxLength="50" />
+          <Property Name="Khen_thuong_ky_luat" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Qua_trinh_HT_LD" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Ho_ten_cha" Type="nvarchar" MaxLength="30" />
+          <Property Name="ID_quoc_tich_cha" Type="int" />
+          <Property Name="ID_dan_toc_cha" Type="int" />
+          <Property Name="Ton_giao_cha" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ho_khau_TT_cha" Type="nvarchar" MaxLength="500" />
+          <Property Name="Hoat_dong_XH_CT_cha" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Ho_ten_me" Type="nvarchar" MaxLength="30" />
+          <Property Name="ID_quoc_tich_me" Type="int" />
+          <Property Name="ID_dan_toc_me" Type="int" />
+          <Property Name="Ton_giao_me" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ho_khau_TT_me" Type="nvarchar" MaxLength="500" />
+          <Property Name="Hoat_dong_XH_CT_me" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Ho_ten_vo_chong" Type="nvarchar" MaxLength="30" />
+          <Property Name="ID_quoc_tich_vo_chong" Type="int" />
+          <Property Name="ID_dan_toc_vo_chong" Type="int" />
+          <Property Name="Ton_giao_vo_chong" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ho_khau_TT_vo_chong" Type="nvarchar" MaxLength="500" />
+          <Property Name="Hoat_dong_XH_CT_vo_chong" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Ho_ten_nghe_nghiep_anh_em" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Dang_ky_hoc" Type="bit" />
+          <Property Name="Hoten_Order" Type="nvarchar" MaxLength="200" />
+          <Property Name="Chuyen_nganh_dang_ky" Type="nvarchar" MaxLength="100" />
+          <Property Name="Lop" Type="nvarchar" MaxLength="100" />
+          <Property Name="Ngoai_ngu" Type="nvarchar" MaxLength="5" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="Ngay_nhap_hoc" Type="datetime" />
+          <Property Name="UserName_tiep_nhan" Type="nvarchar" MaxLength="200" />
+          <Property Name="UserID_tiep_nhan" Type="int" />
+          <Property Name="CMND" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ngay_cap" Type="datetime" />
+          <Property Name="Noi_cap" Type="nvarchar" MaxLength="200" />
+          <Property Name="Dienthoai_canhan" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="NoiO_hiennay" Type="nvarchar" MaxLength="200" />
+          <Property Name="Namsinh_cha" Type="nvarchar" MaxLength="50" />
+          <Property Name="Namsinh_me" Type="nvarchar" MaxLength="50" />
+          <Property Name="IDCard" Type="nvarchar" MaxLength="20" />
+          <Property Name="Nam_nhap_hoc" Type="nvarchar" MaxLength="20" />
+          <Property Name="So_tai_khoan" Type="nvarchar" MaxLength="20" />
+          <Property Name="ID_xep_hang_hoc_luc" Type="int" />
+          <Property Name="Da_nhap_truong" Type="bit" Nullable="false" />
+          <Property Name="SV_ngoai_tinh" Type="bit" Nullable="false" />
+          <Property Name="Ma_ho_so" Type="nvarchar" MaxLength="50" />
+          <Property Name="NGANHTS" Type="nvarchar" MaxLength="50" />
+          <Property Name="CNGANHTT" Type="nvarchar" MaxLength="50" />
+          <Property Name="TTNganh" Type="int" />
+          <Property Name="TruongTHPT" Type="nvarchar" MaxLength="250" />
+          <Property Name="BanTS" Type="nvarchar" MaxLength="50" />
+          <Property Name="DonViDKDT" Type="nvarchar" MaxLength="50" />
+          <Property Name="PhieuDKDL" Type="nvarchar" MaxLength="50" />
+          <Property Name="LOP10" Type="nvarchar" MaxLength="10" />
+          <Property Name="LOP11" Type="nvarchar" MaxLength="10" />
+          <Property Name="LOP12" Type="nvarchar" MaxLength="50" />
+          <Property Name="He_nhap_hoc" Type="nvarchar" MaxLength="50" />
+          <Property Name="Trang_thai_hoc" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'DHHH.dbo.ViewNamHoc' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="ViewNamHoc">
+          <Key>
+            <PropertyRef Name="Nam_hoc" />
+          </Key>
+          <Property Name="Nam_hoc" Type="nvarchar" Nullable="false" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK_PLAN_LopTinChi_TC_PLAN_MonTinChi_TC">
+          <End Role="PLAN_MonTinChi_TC" Type="DHHHModel.Store.PLAN_MonTinChi_TC" Multiplicity="1" />
+          <End Role="PLAN_LopTinChi_TC" Type="DHHHModel.Store.PLAN_LopTinChi_TC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PLAN_MonTinChi_TC">
+              <PropertyRef Name="ID_mon_tc" />
+            </Principal>
+            <Dependent Role="PLAN_LopTinChi_TC">
+              <PropertyRef Name="ID_mon_tc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PLAN_MonTinChi_TC_MARK_MonHoc">
+          <End Role="MARK_MonHoc" Type="DHHHModel.Store.MARK_MonHoc" Multiplicity="1" />
+          <End Role="PLAN_MonTinChi_TC" Type="DHHHModel.Store.PLAN_MonTinChi_TC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MARK_MonHoc">
+              <PropertyRef Name="ID_mon" />
+            </Principal>
+            <Dependent Role="PLAN_MonTinChi_TC">
+              <PropertyRef Name="ID_mon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PLAN_SukiensTinChi_TC_PLAN_LopTinChi_TC">
+          <End Role="PLAN_LopTinChi_TC" Type="DHHHModel.Store.PLAN_LopTinChi_TC" Multiplicity="1" />
+          <End Role="PLAN_SukiensTinChi_TC" Type="DHHHModel.Store.PLAN_SukiensTinChi_TC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PLAN_LopTinChi_TC">
+              <PropertyRef Name="ID_lop_tc" />
+            </Principal>
+            <Dependent Role="PLAN_SukiensTinChi_TC">
+              <PropertyRef Name="ID_lop_tc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DHHHModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="MARK_MonHoc" EntityType="DHHHModel.MARK_MonHoc" />
+          <EntitySet Name="PLAN_LopTinChi_TC" EntityType="DHHHModel.PLAN_LopTinChi_TC" />
+          <EntitySet Name="PLAN_MonTinChi_TC" EntityType="DHHHModel.PLAN_MonTinChi_TC" />
+          <EntitySet Name="PLAN_SukiensTinChi_TC" EntityType="DHHHModel.PLAN_SukiensTinChi_TC" />
+          <AssociationSet Name="FK_PLAN_MonTinChi_TC_MARK_MonHoc" Association="DHHHModel.FK_PLAN_MonTinChi_TC_MARK_MonHoc">
+            <End Role="MARK_MonHoc" EntitySet="MARK_MonHoc" />
+            <End Role="PLAN_MonTinChi_TC" EntitySet="PLAN_MonTinChi_TC" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PLAN_LopTinChi_TC_PLAN_MonTinChi_TC" Association="DHHHModel.FK_PLAN_LopTinChi_TC_PLAN_MonTinChi_TC">
+            <End Role="PLAN_MonTinChi_TC" EntitySet="PLAN_MonTinChi_TC" />
+            <End Role="PLAN_LopTinChi_TC" EntitySet="PLAN_LopTinChi_TC" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PLAN_SukiensTinChi_TC_PLAN_LopTinChi_TC" Association="DHHHModel.FK_PLAN_SukiensTinChi_TC_PLAN_LopTinChi_TC">
+            <End Role="PLAN_LopTinChi_TC" EntitySet="PLAN_LopTinChi_TC" />
+            <End Role="PLAN_SukiensTinChi_TC" EntitySet="PLAN_SukiensTinChi_TC" />
+          </AssociationSet>
+          <EntitySet Name="STU_HoSoSinhVien" EntityType="DHHHModel.STU_HoSoSinhVien" />
+          <EntitySet Name="STU_DanhSach" EntityType="DHHHModel.STU_DanhSach" />
+          <EntitySet Name="PLAN_HocKyDangKy_TC" EntityType="DHHHModel.PLAN_HocKyDangKy_TC" />
+          <EntitySet Name="ViewNamHoc" EntityType="DHHHModel.ViewNamHoc" />
+        </EntityContainer>
+        <EntityType Name="MARK_MonHoc">
+          <Key>
+            <PropertyRef Name="ID_mon" />
+          </Key>
+          <Property Name="ID_mon" Type="Int32" Nullable="false" />
+          <Property Name="Ky_hieu" Type="String" Nullable="false" MaxLength="225" Unicode="true" FixedLength="false" />
+          <Property Name="Ten_mon" Type="String" Nullable="false" MaxLength="260" Unicode="true" FixedLength="false" />
+          <Property Name="Ten_tieng_anh" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+          <Property Name="ID_bm" Type="Int32" Nullable="false" />
+          <Property Name="ID_he_dt" Type="Int32" />
+          <Property Name="ID_nhom_hp" Type="Int32" />
+          <NavigationProperty Name="PLAN_MonTinChi_TC" Relationship="DHHHModel.FK_PLAN_MonTinChi_TC_MARK_MonHoc" FromRole="MARK_MonHoc" ToRole="PLAN_MonTinChi_TC" />
+        </EntityType>
+        <EntityType Name="PLAN_LopTinChi_TC">
+          <Key>
+            <PropertyRef Name="ID_lop_tc" />
+          </Key>
+          <Property Name="ID_lop_tc" Type="Int32" Nullable="false" />
+          <Property Name="ID_lop_lt" Type="Int32" Nullable="false" />
+          <Property Name="ID_mon_tc" Type="Int32" Nullable="false" />
+          <Property Name="STT_lop" Type="Int32" Nullable="false" />
+          <Property Name="So_sv_min" Type="Int32" Nullable="false" />
+          <Property Name="So_sv_max" Type="Int32" Nullable="false" />
+          <Property Name="Tu_ngay" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Den_ngay" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Ca_hoc" Type="Int32" Nullable="false" />
+          <Property Name="So_tiet_tuan" Type="Int32" Nullable="false" />
+          <Property Name="ID_phong" Type="Int32" Nullable="false" />
+          <Property Name="ID_cb" Type="Int32" Nullable="false" />
+          <Property Name="Huy_lop" Type="Boolean" Nullable="false" />
+          <Property Name="Ly_do" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+          <Property Name="Nhom_dang_ky" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Ngay_thi" Type="DateTime" Precision="3" />
+          <Property Name="Cho_trong" Type="Int32" />
+          <NavigationProperty Name="PLAN_MonTinChi_TC" Relationship="DHHHModel.FK_PLAN_LopTinChi_TC_PLAN_MonTinChi_TC" FromRole="PLAN_LopTinChi_TC" ToRole="PLAN_MonTinChi_TC" />
+          <NavigationProperty Name="PLAN_SukiensTinChi_TC" Relationship="DHHHModel.FK_PLAN_SukiensTinChi_TC_PLAN_LopTinChi_TC" FromRole="PLAN_LopTinChi_TC" ToRole="PLAN_SukiensTinChi_TC" />
+        </EntityType>
+        <EntityType Name="PLAN_MonTinChi_TC">
+          <Key>
+            <PropertyRef Name="ID_mon_tc" />
+          </Key>
+          <Property Name="ID_mon_tc" Type="Int32" Nullable="false" />
+          <Property Name="Ky_dang_ky" Type="Int32" Nullable="false" />
+          <Property Name="Ky_hieu_lop_tc" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="ID_mon" Type="Int32" Nullable="false" />
+          <Property Name="So_tin_chi" Type="Int32" Nullable="false" />
+          <Property Name="He_so" Type="Int32" Nullable="false" />
+          <Property Name="So_tien" Type="Int32" />
+          <Property Name="Ly_thuyet" Type="Int32" Nullable="false" />
+          <Property Name="Thuc_hanh" Type="Int32" Nullable="false" />
+          <Property Name="Bai_tap" Type="Int32" Nullable="false" />
+          <Property Name="Bai_tap_lon" Type="Int32" Nullable="false" />
+          <Property Name="Locked" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="MARK_MonHoc" Relationship="DHHHModel.FK_PLAN_MonTinChi_TC_MARK_MonHoc" FromRole="PLAN_MonTinChi_TC" ToRole="MARK_MonHoc" />
+          <NavigationProperty Name="PLAN_LopTinChi_TC" Relationship="DHHHModel.FK_PLAN_LopTinChi_TC_PLAN_MonTinChi_TC" FromRole="PLAN_MonTinChi_TC" ToRole="PLAN_LopTinChi_TC" />
+        </EntityType>
+        <EntityType Name="PLAN_SukiensTinChi_TC">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="ID_lop_tc" />
+            <PropertyRef Name="ID_phong" />
+            <PropertyRef Name="ID_cb" />
+            <PropertyRef Name="Ca_hoc" />
+            <PropertyRef Name="Thu" />
+            <PropertyRef Name="Tiet" />
+            <PropertyRef Name="So_tiet" />
+            <PropertyRef Name="Loai_tiet" />
+            <PropertyRef Name="Da_xep_lich" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID_lop_tc" Type="Int32" Nullable="false" />
+          <Property Name="ID_phong" Type="Int32" Nullable="false" />
+          <Property Name="ID_cb" Type="Int32" Nullable="false" />
+          <Property Name="Ca_hoc" Type="Int32" Nullable="false" />
+          <Property Name="Thu" Type="Int32" Nullable="false" />
+          <Property Name="Tiet" Type="Int32" Nullable="false" />
+          <Property Name="So_tiet" Type="Int32" Nullable="false" />
+          <Property Name="Loai_tiet" Type="Int32" Nullable="false" />
+          <Property Name="Da_xep_lich" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PLAN_LopTinChi_TC" Relationship="DHHHModel.FK_PLAN_SukiensTinChi_TC_PLAN_LopTinChi_TC" FromRole="PLAN_SukiensTinChi_TC" ToRole="PLAN_LopTinChi_TC" />
+        </EntityType>
+        <Association Name="FK_PLAN_MonTinChi_TC_MARK_MonHoc">
+          <End Role="MARK_MonHoc" Type="DHHHModel.MARK_MonHoc" Multiplicity="1" />
+          <End Role="PLAN_MonTinChi_TC" Type="DHHHModel.PLAN_MonTinChi_TC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MARK_MonHoc">
+              <PropertyRef Name="ID_mon" />
+            </Principal>
+            <Dependent Role="PLAN_MonTinChi_TC">
+              <PropertyRef Name="ID_mon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PLAN_LopTinChi_TC_PLAN_MonTinChi_TC">
+          <End Role="PLAN_MonTinChi_TC" Type="DHHHModel.PLAN_MonTinChi_TC" Multiplicity="1" />
+          <End Role="PLAN_LopTinChi_TC" Type="DHHHModel.PLAN_LopTinChi_TC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PLAN_MonTinChi_TC">
+              <PropertyRef Name="ID_mon_tc" />
+            </Principal>
+            <Dependent Role="PLAN_LopTinChi_TC">
+              <PropertyRef Name="ID_mon_tc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PLAN_SukiensTinChi_TC_PLAN_LopTinChi_TC">
+          <End Role="PLAN_LopTinChi_TC" Type="DHHHModel.PLAN_LopTinChi_TC" Multiplicity="1" />
+          <End Role="PLAN_SukiensTinChi_TC" Type="DHHHModel.PLAN_SukiensTinChi_TC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PLAN_LopTinChi_TC">
+              <PropertyRef Name="ID_lop_tc" />
+            </Principal>
+            <Dependent Role="PLAN_SukiensTinChi_TC">
+              <PropertyRef Name="ID_lop_tc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="STU_HoSoSinhVien">
+          <Key>
+            <PropertyRef Name="ID_sv" />
+          </Key>
+          <Property Type="Int32" Name="ID_sv" Nullable="false" />
+          <Property Type="Binary" Name="Anh" MaxLength="Max" FixedLength="false" />
+          <Property Type="String" Name="Ma_sv" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Ho_ten" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="Ngay_sinh" Precision="3" />
+          <Property Type="Int32" Name="ID_gioi_tinh" />
+          <Property Type="Int32" Name="ID_dan_toc" />
+          <Property Type="Int32" Name="ID_quoc_tich" />
+          <Property Type="String" Name="Ton_giao" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ID_thanh_phan_xuat_than" />
+          <Property Type="DateTime" Name="Ngay_vao_doan" Precision="3" />
+          <Property Type="DateTime" Name="Ngay_vao_dang" Precision="3" />
+          <Property Type="String" Name="Que_quan" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ID_tinh_ns" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Dia_chi_tt" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Xa_phuong_tt" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ID_huyen_tt" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ID_tinh_tt" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ID_doi_tuong_TC" />
+          <Property Type="Int32" Name="ID_doi_tuong_TS" />
+          <Property Type="String" Name="Dien_thoai_NR" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ID_nhom_doi_tuong" />
+          <Property Type="String" Name="Dia_chi_bao_tin" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ID_khu_vuc_TS" />
+          <Property Type="String" Name="Doi_tuong_du_thi" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="Single" Name="Diem1" />
+          <Property Type="Single" Name="Diem2" />
+          <Property Type="Single" Name="Diem3" />
+          <Property Type="Single" Name="Diem4" />
+          <Property Type="Single" Name="Tong_diem" />
+          <Property Type="String" Name="SBD" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Nganh_tuyen_sinh" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Khoi_thi" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Xep_loai_hoc_tap" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Xep_loai_hanh_kiem" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Xep_loai_tot_nghiep" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Nam_tot_nghiep" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Type="Single" Name="Diem_thuong" />
+          <Property Type="String" Name="Ly_do_thuong_diem" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Khen_thuong_ky_luat" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Qua_trinh_HT_LD" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Ho_ten_cha" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ID_quoc_tich_cha" />
+          <Property Type="Int32" Name="ID_dan_toc_cha" />
+          <Property Type="String" Name="Ton_giao_cha" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Ho_khau_TT_cha" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Hoat_dong_XH_CT_cha" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Ho_ten_me" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ID_quoc_tich_me" />
+          <Property Type="Int32" Name="ID_dan_toc_me" />
+          <Property Type="String" Name="Ton_giao_me" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Ho_khau_TT_me" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Hoat_dong_XH_CT_me" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Ho_ten_vo_chong" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ID_quoc_tich_vo_chong" />
+          <Property Type="Int32" Name="ID_dan_toc_vo_chong" />
+          <Property Type="String" Name="Ton_giao_vo_chong" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Ho_khau_TT_vo_chong" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Hoat_dong_XH_CT_vo_chong" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Ho_ten_nghe_nghiep_anh_em" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="Dang_ky_hoc" />
+          <Property Type="String" Name="Hoten_Order" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Chuyen_nganh_dang_ky" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Lop" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Ngoai_ngu" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="UserID" />
+          <Property Type="DateTime" Name="Ngay_nhap_hoc" Precision="3" />
+          <Property Type="String" Name="UserName_tiep_nhan" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="UserID_tiep_nhan" />
+          <Property Type="String" Name="CMND" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="Ngay_cap" Precision="3" />
+          <Property Type="String" Name="Noi_cap" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Dienthoai_canhan" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Email" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="NoiO_hiennay" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Namsinh_cha" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Namsinh_me" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="IDCard" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Nam_nhap_hoc" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="So_tai_khoan" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ID_xep_hang_hoc_luc" />
+          <Property Type="Boolean" Name="Da_nhap_truong" Nullable="false" />
+          <Property Type="Boolean" Name="SV_ngoai_tinh" Nullable="false" />
+          <Property Type="String" Name="Ma_ho_so" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="NGANHTS" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CNGANHTT" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="TTNganh" />
+          <Property Type="String" Name="TruongTHPT" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="BanTS" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="DonViDKDT" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PhieuDKDL" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="LOP10" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="LOP11" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="LOP12" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="He_nhap_hoc" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Trang_thai_hoc" />
+        </EntityType>
+        <EntityType Name="STU_DanhSach">
+          <Key>
+            <PropertyRef Name="ID_sv" />
+            <PropertyRef Name="ID_lop" />
+            <PropertyRef Name="Active" />
+            <PropertyRef Name="Da_tot_nghiep" />
+            <PropertyRef Name="Trang_thai" />
+          </Key>
+          <Property Type="Int32" Name="ID_sv" Nullable="false" />
+          <Property Type="Int32" Name="ID_lop" Nullable="false" />
+          <Property Type="String" Name="Mat_khau" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="Active" Nullable="false" />
+          <Property Type="Boolean" Name="Da_tot_nghiep" Nullable="false" />
+          <Property Type="Boolean" Name="Ngoai_ngan_sach" />
+          <Property Type="Boolean" Name="Lop_chat_luong_cao" />
+          <Property Type="Int32" Name="ID_xep_hang_hoc_luc" />
+          <Property Type="Int32" Name="Trang_thai" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PLAN_HocKyDangKy_TC">
+          <Key>
+            <PropertyRef Name="Ky_dang_ky" />
+            <PropertyRef Name="Dot" />
+            <PropertyRef Name="Hoc_ky" />
+            <PropertyRef Name="Nam_hoc" />
+            <PropertyRef Name="Tu_ngay" />
+            <PropertyRef Name="Chon_dang_ky" />
+          </Key>
+          <Property Type="Int32" Name="Ky_dang_ky" Nullable="false" />
+          <Property Type="Int32" Name="Dot" Nullable="false" />
+          <Property Type="Int32" Name="Hoc_ky" Nullable="false" />
+          <Property Type="String" Name="Nam_hoc" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="Tu_ngay" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="Den_ngay" Precision="3" />
+          <Property Type="Boolean" Name="Chon_dang_ky" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ViewNamHoc">
+          <Key>
+            <PropertyRef Name="Nam_hoc" />
+          </Key>
+          <Property Type="String" Name="Nam_hoc" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DHHHModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="MARK_MonHoc">
+            <EntityTypeMapping TypeName="DHHHModel.MARK_MonHoc">
+              <MappingFragment StoreEntitySet="MARK_MonHoc">
+                <ScalarProperty Name="ID_mon" ColumnName="ID_mon" />
+                <ScalarProperty Name="Ky_hieu" ColumnName="Ky_hieu" />
+                <ScalarProperty Name="Ten_mon" ColumnName="Ten_mon" />
+                <ScalarProperty Name="Ten_tieng_anh" ColumnName="Ten_tieng_anh" />
+                <ScalarProperty Name="ID_bm" ColumnName="ID_bm" />
+                <ScalarProperty Name="ID_he_dt" ColumnName="ID_he_dt" />
+                <ScalarProperty Name="ID_nhom_hp" ColumnName="ID_nhom_hp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PLAN_LopTinChi_TC">
+            <EntityTypeMapping TypeName="DHHHModel.PLAN_LopTinChi_TC">
+              <MappingFragment StoreEntitySet="PLAN_LopTinChi_TC">
+                <ScalarProperty Name="ID_lop_tc" ColumnName="ID_lop_tc" />
+                <ScalarProperty Name="ID_lop_lt" ColumnName="ID_lop_lt" />
+                <ScalarProperty Name="ID_mon_tc" ColumnName="ID_mon_tc" />
+                <ScalarProperty Name="STT_lop" ColumnName="STT_lop" />
+                <ScalarProperty Name="So_sv_min" ColumnName="So_sv_min" />
+                <ScalarProperty Name="So_sv_max" ColumnName="So_sv_max" />
+                <ScalarProperty Name="Tu_ngay" ColumnName="Tu_ngay" />
+                <ScalarProperty Name="Den_ngay" ColumnName="Den_ngay" />
+                <ScalarProperty Name="Ca_hoc" ColumnName="Ca_hoc" />
+                <ScalarProperty Name="So_tiet_tuan" ColumnName="So_tiet_tuan" />
+                <ScalarProperty Name="ID_phong" ColumnName="ID_phong" />
+                <ScalarProperty Name="ID_cb" ColumnName="ID_cb" />
+                <ScalarProperty Name="Huy_lop" ColumnName="Huy_lop" />
+                <ScalarProperty Name="Ly_do" ColumnName="Ly_do" />
+                <ScalarProperty Name="Nhom_dang_ky" ColumnName="Nhom_dang_ky" />
+                <ScalarProperty Name="Ngay_thi" ColumnName="Ngay_thi" />
+                <ScalarProperty Name="Cho_trong" ColumnName="Cho_trong" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PLAN_MonTinChi_TC">
+            <EntityTypeMapping TypeName="DHHHModel.PLAN_MonTinChi_TC">
+              <MappingFragment StoreEntitySet="PLAN_MonTinChi_TC">
+                <ScalarProperty Name="ID_mon_tc" ColumnName="ID_mon_tc" />
+                <ScalarProperty Name="Ky_dang_ky" ColumnName="Ky_dang_ky" />
+                <ScalarProperty Name="Ky_hieu_lop_tc" ColumnName="Ky_hieu_lop_tc" />
+                <ScalarProperty Name="ID_mon" ColumnName="ID_mon" />
+                <ScalarProperty Name="So_tin_chi" ColumnName="So_tin_chi" />
+                <ScalarProperty Name="He_so" ColumnName="He_so" />
+                <ScalarProperty Name="So_tien" ColumnName="So_tien" />
+                <ScalarProperty Name="Ly_thuyet" ColumnName="Ly_thuyet" />
+                <ScalarProperty Name="Thuc_hanh" ColumnName="Thuc_hanh" />
+                <ScalarProperty Name="Bai_tap" ColumnName="Bai_tap" />
+                <ScalarProperty Name="Bai_tap_lon" ColumnName="Bai_tap_lon" />
+                <ScalarProperty Name="Locked" ColumnName="Locked" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PLAN_SukiensTinChi_TC">
+            <EntityTypeMapping TypeName="DHHHModel.PLAN_SukiensTinChi_TC">
+              <MappingFragment StoreEntitySet="PLAN_SukiensTinChi_TC">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ID_lop_tc" ColumnName="ID_lop_tc" />
+                <ScalarProperty Name="ID_phong" ColumnName="ID_phong" />
+                <ScalarProperty Name="ID_cb" ColumnName="ID_cb" />
+                <ScalarProperty Name="Ca_hoc" ColumnName="Ca_hoc" />
+                <ScalarProperty Name="Thu" ColumnName="Thu" />
+                <ScalarProperty Name="Tiet" ColumnName="Tiet" />
+                <ScalarProperty Name="So_tiet" ColumnName="So_tiet" />
+                <ScalarProperty Name="Loai_tiet" ColumnName="Loai_tiet" />
+                <ScalarProperty Name="Da_xep_lich" ColumnName="Da_xep_lich" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STU_HoSoSinhVien">
+            <EntityTypeMapping TypeName="DHHHModel.STU_HoSoSinhVien">
+              <MappingFragment StoreEntitySet="STU_HoSoSinhVien">
+                <ScalarProperty Name="Trang_thai_hoc" ColumnName="Trang_thai_hoc" />
+                <ScalarProperty Name="He_nhap_hoc" ColumnName="He_nhap_hoc" />
+                <ScalarProperty Name="LOP12" ColumnName="LOP12" />
+                <ScalarProperty Name="LOP11" ColumnName="LOP11" />
+                <ScalarProperty Name="LOP10" ColumnName="LOP10" />
+                <ScalarProperty Name="PhieuDKDL" ColumnName="PhieuDKDL" />
+                <ScalarProperty Name="DonViDKDT" ColumnName="DonViDKDT" />
+                <ScalarProperty Name="BanTS" ColumnName="BanTS" />
+                <ScalarProperty Name="TruongTHPT" ColumnName="TruongTHPT" />
+                <ScalarProperty Name="TTNganh" ColumnName="TTNganh" />
+                <ScalarProperty Name="CNGANHTT" ColumnName="CNGANHTT" />
+                <ScalarProperty Name="NGANHTS" ColumnName="NGANHTS" />
+                <ScalarProperty Name="Ma_ho_so" ColumnName="Ma_ho_so" />
+                <ScalarProperty Name="SV_ngoai_tinh" ColumnName="SV_ngoai_tinh" />
+                <ScalarProperty Name="Da_nhap_truong" ColumnName="Da_nhap_truong" />
+                <ScalarProperty Name="ID_xep_hang_hoc_luc" ColumnName="ID_xep_hang_hoc_luc" />
+                <ScalarProperty Name="So_tai_khoan" ColumnName="So_tai_khoan" />
+                <ScalarProperty Name="Nam_nhap_hoc" ColumnName="Nam_nhap_hoc" />
+                <ScalarProperty Name="IDCard" ColumnName="IDCard" />
+                <ScalarProperty Name="Namsinh_me" ColumnName="Namsinh_me" />
+                <ScalarProperty Name="Namsinh_cha" ColumnName="Namsinh_cha" />
+                <ScalarProperty Name="NoiO_hiennay" ColumnName="NoiO_hiennay" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Dienthoai_canhan" ColumnName="Dienthoai_canhan" />
+                <ScalarProperty Name="Noi_cap" ColumnName="Noi_cap" />
+                <ScalarProperty Name="Ngay_cap" ColumnName="Ngay_cap" />
+                <ScalarProperty Name="CMND" ColumnName="CMND" />
+                <ScalarProperty Name="UserID_tiep_nhan" ColumnName="UserID_tiep_nhan" />
+                <ScalarProperty Name="UserName_tiep_nhan" ColumnName="UserName_tiep_nhan" />
+                <ScalarProperty Name="Ngay_nhap_hoc" ColumnName="Ngay_nhap_hoc" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Ngoai_ngu" ColumnName="Ngoai_ngu" />
+                <ScalarProperty Name="Lop" ColumnName="Lop" />
+                <ScalarProperty Name="Chuyen_nganh_dang_ky" ColumnName="Chuyen_nganh_dang_ky" />
+                <ScalarProperty Name="Hoten_Order" ColumnName="Hoten_Order" />
+                <ScalarProperty Name="Dang_ky_hoc" ColumnName="Dang_ky_hoc" />
+                <ScalarProperty Name="Ho_ten_nghe_nghiep_anh_em" ColumnName="Ho_ten_nghe_nghiep_anh_em" />
+                <ScalarProperty Name="Hoat_dong_XH_CT_vo_chong" ColumnName="Hoat_dong_XH_CT_vo_chong" />
+                <ScalarProperty Name="Ho_khau_TT_vo_chong" ColumnName="Ho_khau_TT_vo_chong" />
+                <ScalarProperty Name="Ton_giao_vo_chong" ColumnName="Ton_giao_vo_chong" />
+                <ScalarProperty Name="ID_dan_toc_vo_chong" ColumnName="ID_dan_toc_vo_chong" />
+                <ScalarProperty Name="ID_quoc_tich_vo_chong" ColumnName="ID_quoc_tich_vo_chong" />
+                <ScalarProperty Name="Ho_ten_vo_chong" ColumnName="Ho_ten_vo_chong" />
+                <ScalarProperty Name="Hoat_dong_XH_CT_me" ColumnName="Hoat_dong_XH_CT_me" />
+                <ScalarProperty Name="Ho_khau_TT_me" ColumnName="Ho_khau_TT_me" />
+                <ScalarProperty Name="Ton_giao_me" ColumnName="Ton_giao_me" />
+                <ScalarProperty Name="ID_dan_toc_me" ColumnName="ID_dan_toc_me" />
+                <ScalarProperty Name="ID_quoc_tich_me" ColumnName="ID_quoc_tich_me" />
+                <ScalarProperty Name="Ho_ten_me" ColumnName="Ho_ten_me" />
+                <ScalarProperty Name="Hoat_dong_XH_CT_cha" ColumnName="Hoat_dong_XH_CT_cha" />
+                <ScalarProperty Name="Ho_khau_TT_cha" ColumnName="Ho_khau_TT_cha" />
+                <ScalarProperty Name="Ton_giao_cha" ColumnName="Ton_giao_cha" />
+                <ScalarProperty Name="ID_dan_toc_cha" ColumnName="ID_dan_toc_cha" />
+                <ScalarProperty Name="ID_quoc_tich_cha" ColumnName="ID_quoc_tich_cha" />
+                <ScalarProperty Name="Ho_ten_cha" ColumnName="Ho_ten_cha" />
+                <ScalarProperty Name="Qua_trinh_HT_LD" ColumnName="Qua_trinh_HT_LD" />
+                <ScalarProperty Name="Khen_thuong_ky_luat" ColumnName="Khen_thuong_ky_luat" />
+                <ScalarProperty Name="Ly_do_thuong_diem" ColumnName="Ly_do_thuong_diem" />
+                <ScalarProperty Name="Diem_thuong" ColumnName="Diem_thuong" />
+                <ScalarProperty Name="Nam_tot_nghiep" ColumnName="Nam_tot_nghiep" />
+                <ScalarProperty Name="Xep_loai_tot_nghiep" ColumnName="Xep_loai_tot_nghiep" />
+                <ScalarProperty Name="Xep_loai_hanh_kiem" ColumnName="Xep_loai_hanh_kiem" />
+                <ScalarProperty Name="Xep_loai_hoc_tap" ColumnName="Xep_loai_hoc_tap" />
+                <ScalarProperty Name="Khoi_thi" ColumnName="Khoi_thi" />
+                <ScalarProperty Name="Nganh_tuyen_sinh" ColumnName="Nganh_tuyen_sinh" />
+                <ScalarProperty Name="SBD" ColumnName="SBD" />
+                <ScalarProperty Name="Tong_diem" ColumnName="Tong_diem" />
+                <ScalarProperty Name="Diem4" ColumnName="Diem4" />
+                <ScalarProperty Name="Diem3" ColumnName="Diem3" />
+                <ScalarProperty Name="Diem2" ColumnName="Diem2" />
+                <ScalarProperty Name="Diem1" ColumnName="Diem1" />
+                <ScalarProperty Name="Doi_tuong_du_thi" ColumnName="Doi_tuong_du_thi" />
+                <ScalarProperty Name="ID_khu_vuc_TS" ColumnName="ID_khu_vuc_TS" />
+                <ScalarProperty Name="Dia_chi_bao_tin" ColumnName="Dia_chi_bao_tin" />
+                <ScalarProperty Name="ID_nhom_doi_tuong" ColumnName="ID_nhom_doi_tuong" />
+                <ScalarProperty Name="Dien_thoai_NR" ColumnName="Dien_thoai_NR" />
+                <ScalarProperty Name="ID_doi_tuong_TS" ColumnName="ID_doi_tuong_TS" />
+                <ScalarProperty Name="ID_doi_tuong_TC" ColumnName="ID_doi_tuong_TC" />
+                <ScalarProperty Name="ID_tinh_tt" ColumnName="ID_tinh_tt" />
+                <ScalarProperty Name="ID_huyen_tt" ColumnName="ID_huyen_tt" />
+                <ScalarProperty Name="Xa_phuong_tt" ColumnName="Xa_phuong_tt" />
+                <ScalarProperty Name="Dia_chi_tt" ColumnName="Dia_chi_tt" />
+                <ScalarProperty Name="ID_tinh_ns" ColumnName="ID_tinh_ns" />
+                <ScalarProperty Name="Que_quan" ColumnName="Que_quan" />
+                <ScalarProperty Name="Ngay_vao_dang" ColumnName="Ngay_vao_dang" />
+                <ScalarProperty Name="Ngay_vao_doan" ColumnName="Ngay_vao_doan" />
+                <ScalarProperty Name="ID_thanh_phan_xuat_than" ColumnName="ID_thanh_phan_xuat_than" />
+                <ScalarProperty Name="Ton_giao" ColumnName="Ton_giao" />
+                <ScalarProperty Name="ID_quoc_tich" ColumnName="ID_quoc_tich" />
+                <ScalarProperty Name="ID_dan_toc" ColumnName="ID_dan_toc" />
+                <ScalarProperty Name="ID_gioi_tinh" ColumnName="ID_gioi_tinh" />
+                <ScalarProperty Name="Ngay_sinh" ColumnName="Ngay_sinh" />
+                <ScalarProperty Name="Ho_ten" ColumnName="Ho_ten" />
+                <ScalarProperty Name="Ma_sv" ColumnName="Ma_sv" />
+                <ScalarProperty Name="Anh" ColumnName="Anh" />
+                <ScalarProperty Name="ID_sv" ColumnName="ID_sv" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STU_DanhSach">
+            <EntityTypeMapping TypeName="DHHHModel.STU_DanhSach">
+              <MappingFragment StoreEntitySet="STU_DanhSach">
+                <ScalarProperty Name="Trang_thai" ColumnName="Trang_thai" />
+                <ScalarProperty Name="ID_xep_hang_hoc_luc" ColumnName="ID_xep_hang_hoc_luc" />
+                <ScalarProperty Name="Lop_chat_luong_cao" ColumnName="Lop_chat_luong_cao" />
+                <ScalarProperty Name="Ngoai_ngan_sach" ColumnName="Ngoai_ngan_sach" />
+                <ScalarProperty Name="Da_tot_nghiep" ColumnName="Da_tot_nghiep" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Mat_khau" ColumnName="Mat_khau" />
+                <ScalarProperty Name="ID_lop" ColumnName="ID_lop" />
+                <ScalarProperty Name="ID_sv" ColumnName="ID_sv" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PLAN_HocKyDangKy_TC">
+            <EntityTypeMapping TypeName="DHHHModel.PLAN_HocKyDangKy_TC">
+              <MappingFragment StoreEntitySet="PLAN_HocKyDangKy_TC">
+                <ScalarProperty Name="Chon_dang_ky" ColumnName="Chon_dang_ky" />
+                <ScalarProperty Name="Den_ngay" ColumnName="Den_ngay" />
+                <ScalarProperty Name="Tu_ngay" ColumnName="Tu_ngay" />
+                <ScalarProperty Name="Nam_hoc" ColumnName="Nam_hoc" />
+                <ScalarProperty Name="Hoc_ky" ColumnName="Hoc_ky" />
+                <ScalarProperty Name="Dot" ColumnName="Dot" />
+                <ScalarProperty Name="Ky_dang_ky" ColumnName="Ky_dang_ky" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewNamHoc">
+            <EntityTypeMapping TypeName="DHHHModel.ViewNamHoc">
+              <MappingFragment StoreEntitySet="ViewNamHoc">
+                <ScalarProperty Name="Nam_hoc" ColumnName="Nam_hoc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
