@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Kendo.Mvc.UI;
 
 namespace CongThongTinSV.Controllers
 {
@@ -17,9 +18,6 @@ namespace CongThongTinSV.Controllers
         }
         public ActionResult InDanhSachLop()
         {
-            Entities db=new Entities();
-            var namhoc = new SelectList(db.ViewNamHoc,"Nam_hoc","Nam_hoc");
-            ViewBag.NamHoc = namhoc;
             return View();
         }
 

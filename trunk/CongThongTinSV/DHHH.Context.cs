@@ -31,7 +31,14 @@ namespace CongThongTinSV
         public DbSet<PLAN_SukiensTinChi_TC> PLAN_SukiensTinChi_TC { get; set; }
         public DbSet<STU_HoSoSinhVien> STU_HoSoSinhVien { get; set; }
         public DbSet<STU_DanhSach> STU_DanhSach { get; set; }
-        public DbSet<PLAN_HocKyDangKy_TC> PLAN_HocKyDangKy_TC { get; set; }
         public DbSet<ViewNamHoc> ViewNamHoc { get; set; }
+        public DbSet<PLAN_HocKyDangKy_TC> PLAN_HocKyDangKy_TC { get; set; }
+        public DbSet<PLAN_ChuongTrinhDaoTao> PLAN_ChuongTrinhDaoTao { get; set; }
+        public DbSet<PLAN_ChuongTrinhDaoTaoChiTiet> PLAN_ChuongTrinhDaoTaoChiTiet { get; set; }
+        public DbSet<STU_ChuyenNganh> STU_ChuyenNganh { get; set; }
+        public DbSet<STU_He> STU_He { get; set; }
+        public DbSet<STU_Khoa> STU_Khoa { get; set; }
+        public DbSet<STU_Nganh> STU_Nganh { get; set; }
+        public DbSet<ViewLopTC> ViewLopTC { get; set; }
     }
 }

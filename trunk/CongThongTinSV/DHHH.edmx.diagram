@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="d9b5cf5e44d640389ee7a28f3a1a412b" Name="Diagram1" ZoomLevel="23">
+      <Diagram DiagramId="d9b5cf5e44d640389ee7a28f3a1a412b" Name="Diagram1" ZoomLevel="64">
         <EntityTypeShape EntityType="DHHHModel.MARK_MonHoc" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DHHHModel.PLAN_LopTinChi_TC" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="DHHHModel.PLAN_MonTinChi_TC" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
@@ -12,10 +12,22 @@
         <AssociationConnector Association="DHHHModel.FK_PLAN_MonTinChi_TC_MARK_MonHoc" ManuallyRouted="false" />
         <AssociationConnector Association="DHHHModel.FK_PLAN_LopTinChi_TC_PLAN_MonTinChi_TC" ManuallyRouted="false" />
         <AssociationConnector Association="DHHHModel.FK_PLAN_SukiensTinChi_TC_PLAN_LopTinChi_TC" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="DHHHModel.STU_HoSoSinhVien" Width="1.5" PointX="2.1251664171578204" PointY="13.135145729936262" />
-        <EntityTypeShape EntityType="DHHHModel.STU_DanhSach" Width="1.5" PointX="9.3550787071488237" PointY="18.17071572792284" />
-        <EntityTypeShape EntityType="DHHHModel.PLAN_HocKyDangKy_TC" Width="1.5" PointX="1.5213723506412342" PointY="21.225393454183543" />
-        <EntityTypeShape EntityType="DHHHModel.ViewNamHoc" Width="1.5" PointX="1.9839647756814793" PointY="12.823754659306143" />
+        <EntityTypeShape EntityType="DHHHModel.STU_HoSoSinhVien" Width="1.5" PointX="3.875" PointY="6.75" />
+        <EntityTypeShape EntityType="DHHHModel.STU_DanhSach" Width="1.5" PointX="5.5" PointY="6.75" />
+        <EntityTypeShape EntityType="DHHHModel.ViewNamHoc" Width="1.5" PointX="10.375" PointY="4.625" />
+        <EntityTypeShape EntityType="DHHHModel.PLAN_HocKyDangKy_TC" Width="1.5" PointX="2.125" PointY="6.75" />
+        <EntityTypeShape EntityType="DHHHModel.PLAN_ChuongTrinhDaoTao" Width="1.5" PointX="11.59118918496705" PointY="31.301258176239795" />
+        <EntityTypeShape EntityType="DHHHModel.PLAN_ChuongTrinhDaoTaoChiTiet" Width="1.5" PointX="9" PointY="9.375" />
+        <EntityTypeShape EntityType="DHHHModel.STU_ChuyenNganh" Width="1.5" PointX="3.3858841375382083" PointY="24.721971195527338" />
+        <EntityTypeShape EntityType="DHHHModel.STU_He" Width="1.5" PointX="11.170682340474185" PointY="25.026431184740005" />
+        <EntityTypeShape EntityType="DHHHModel.STU_Khoa" Width="1.5" PointX="11.483683660385982" PointY="29.001006110106132" />
+        <EntityTypeShape EntityType="DHHHModel.STU_Nganh" Width="1.5" PointX="0.5" PointY="5" />
+        <AssociationConnector Association="DHHHModel.FK_PLAN_ChuongTrinhDaoTaoChiTiet_MARK_MonHoc" />
+        <AssociationConnector Association="DHHHModel.FK_PLAN_ChuongTrinhDaoTao_STU_He" />
+        <AssociationConnector Association="DHHHModel.FK_PLAN_ChuongTrinhDaoTao_STU_Khoa" />
+        <AssociationConnector Association="DHHHModel.FK_PLAN_ChuongTrinhDaoTaoChiTiet_PLAN_ChuongTrinhDaoTao" />
+        <AssociationConnector Association="DHHHModel.FK_STU_ChuyenNganh_STU_Nganh" />
+        <EntityTypeShape EntityType="DHHHModel.ViewLopTC" Width="1.5" PointX="9.8801259276830251" PointY="22.926587860531448" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
