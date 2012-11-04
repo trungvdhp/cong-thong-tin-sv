@@ -19,8 +19,35 @@
     </AssociationSet>
     <EntitySet Name="STU_HoSoSinhVien" EntityType="DHHHModel.STU_HoSoSinhVien" />
     <EntitySet Name="STU_DanhSach" EntityType="DHHHModel.STU_DanhSach" />
-    <EntitySet Name="PLAN_HocKyDangKy_TC" EntityType="DHHHModel.PLAN_HocKyDangKy_TC" />
     <EntitySet Name="ViewNamHoc" EntityType="DHHHModel.ViewNamHoc" />
+    <EntitySet Name="PLAN_HocKyDangKy_TC" EntityType="DHHHModel.PLAN_HocKyDangKy_TC" />
+    <EntitySet Name="PLAN_ChuongTrinhDaoTao" EntityType="DHHHModel.PLAN_ChuongTrinhDaoTao" />
+    <EntitySet Name="PLAN_ChuongTrinhDaoTaoChiTiet" EntityType="DHHHModel.PLAN_ChuongTrinhDaoTaoChiTiet" />
+    <EntitySet Name="STU_ChuyenNganh" EntityType="DHHHModel.STU_ChuyenNganh" />
+    <EntitySet Name="STU_He" EntityType="DHHHModel.STU_He" />
+    <EntitySet Name="STU_Khoa" EntityType="DHHHModel.STU_Khoa" />
+    <EntitySet Name="STU_Nganh" EntityType="DHHHModel.STU_Nganh" />
+    <AssociationSet Name="FK_PLAN_ChuongTrinhDaoTaoChiTiet_MARK_MonHoc" Association="DHHHModel.FK_PLAN_ChuongTrinhDaoTaoChiTiet_MARK_MonHoc">
+      <End Role="MARK_MonHoc" EntitySet="MARK_MonHoc" />
+      <End Role="PLAN_ChuongTrinhDaoTaoChiTiet" EntitySet="PLAN_ChuongTrinhDaoTaoChiTiet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PLAN_ChuongTrinhDaoTao_STU_He" Association="DHHHModel.FK_PLAN_ChuongTrinhDaoTao_STU_He">
+      <End Role="STU_He" EntitySet="STU_He" />
+      <End Role="PLAN_ChuongTrinhDaoTao" EntitySet="PLAN_ChuongTrinhDaoTao" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PLAN_ChuongTrinhDaoTao_STU_Khoa" Association="DHHHModel.FK_PLAN_ChuongTrinhDaoTao_STU_Khoa">
+      <End Role="STU_Khoa" EntitySet="STU_Khoa" />
+      <End Role="PLAN_ChuongTrinhDaoTao" EntitySet="PLAN_ChuongTrinhDaoTao" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PLAN_ChuongTrinhDaoTaoChiTiet_PLAN_ChuongTrinhDaoTao" Association="DHHHModel.FK_PLAN_ChuongTrinhDaoTaoChiTiet_PLAN_ChuongTrinhDaoTao">
+      <End Role="PLAN_ChuongTrinhDaoTao" EntitySet="PLAN_ChuongTrinhDaoTao" />
+      <End Role="PLAN_ChuongTrinhDaoTaoChiTiet" EntitySet="PLAN_ChuongTrinhDaoTaoChiTiet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_STU_ChuyenNganh_STU_Nganh" Association="DHHHModel.FK_STU_ChuyenNganh_STU_Nganh">
+      <End Role="STU_Nganh" EntitySet="STU_Nganh" />
+      <End Role="STU_ChuyenNganh" EntitySet="STU_ChuyenNganh" />
+    </AssociationSet>
+    <EntitySet Name="ViewLopTC" EntityType="DHHHModel.ViewLopTC" />
   </EntityContainer>
   <EntityType Name="MARK_MonHoc">
     <Key>
@@ -34,6 +61,7 @@
     <Property Name="ID_he_dt" Type="Int32" />
     <Property Name="ID_nhom_hp" Type="Int32" />
     <NavigationProperty Name="PLAN_MonTinChi_TC" Relationship="DHHHModel.FK_PLAN_MonTinChi_TC_MARK_MonHoc" FromRole="MARK_MonHoc" ToRole="PLAN_MonTinChi_TC" />
+    <NavigationProperty Name="PLAN_ChuongTrinhDaoTaoChiTiet" Relationship="DHHHModel.FK_PLAN_ChuongTrinhDaoTaoChiTiet_MARK_MonHoc" FromRole="MARK_MonHoc" ToRole="PLAN_ChuongTrinhDaoTaoChiTiet" />
   </EntityType>
   <EntityType Name="PLAN_LopTinChi_TC">
     <Key>
@@ -258,6 +286,12 @@
     <Property Type="Int32" Name="ID_xep_hang_hoc_luc" />
     <Property Type="Int32" Name="Trang_thai" Nullable="false" />
   </EntityType>
+  <EntityType Name="ViewNamHoc">
+    <Key>
+      <PropertyRef Name="Nam_hoc" />
+    </Key>
+    <Property Type="String" Name="Nam_hoc" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+  </EntityType>
   <EntityType Name="PLAN_HocKyDangKy_TC">
     <Key>
       <PropertyRef Name="Ky_dang_ky" />
@@ -275,10 +309,180 @@
     <Property Type="DateTime" Name="Den_ngay" Precision="3" />
     <Property Type="Boolean" Name="Chon_dang_ky" Nullable="false" />
   </EntityType>
-  <EntityType Name="ViewNamHoc">
+  <EntityType Name="PLAN_ChuongTrinhDaoTao">
     <Key>
-      <PropertyRef Name="Nam_hoc" />
+      <PropertyRef Name="ID_dt" />
     </Key>
+    <Property Type="Int32" Name="ID_dt" Nullable="false" />
+    <Property Type="Int32" Name="ID_he" Nullable="false" />
+    <Property Type="Int32" Name="ID_khoa" Nullable="false" />
+    <Property Type="Int32" Name="Khoa_hoc" Nullable="false" />
+    <Property Type="Int32" Name="ID_chuyen_nganh" Nullable="false" />
+    <Property Type="Single" Name="So_hoc_trinh" Nullable="false" />
+    <Property Type="Int32" Name="So_ky_hoc" Nullable="false" />
+    <Property Type="Int32" Name="So" />
+    <NavigationProperty Name="STU_He" Relationship="DHHHModel.FK_PLAN_ChuongTrinhDaoTao_STU_He" FromRole="PLAN_ChuongTrinhDaoTao" ToRole="STU_He" />
+    <NavigationProperty Name="STU_Khoa" Relationship="DHHHModel.FK_PLAN_ChuongTrinhDaoTao_STU_Khoa" FromRole="PLAN_ChuongTrinhDaoTao" ToRole="STU_Khoa" />
+    <NavigationProperty Name="PLAN_ChuongTrinhDaoTaoChiTiet" Relationship="DHHHModel.FK_PLAN_ChuongTrinhDaoTaoChiTiet_PLAN_ChuongTrinhDaoTao" FromRole="PLAN_ChuongTrinhDaoTao" ToRole="PLAN_ChuongTrinhDaoTaoChiTiet" />
+  </EntityType>
+  <EntityType Name="PLAN_ChuongTrinhDaoTaoChiTiet">
+    <Key>
+      <PropertyRef Name="ID_dt_mon" />
+    </Key>
+    <Property Type="Int32" Name="ID_dt_mon" Nullable="false" />
+    <Property Type="Int32" Name="ID_dt" Nullable="false" />
+    <Property Type="Int32" Name="ID_mon" Nullable="false" />
+    <Property Type="Int32" Name="Ky_thu" />
+    <Property Type="Single" Name="So_hoc_trinh" />
+    <Property Type="Int32" Name="Ly_thuyet" />
+    <Property Type="Int32" Name="Thuc_hanh" />
+    <Property Type="Int32" Name="Bai_tap" />
+    <Property Type="Int32" Name="Bai_tap_lon" />
+    <Property Type="Int32" Name="Thuc_tap" />
+    <Property Type="Boolean" Name="Tu_chon" />
+    <Property Type="Int32" Name="STT_mon" />
+    <Property Type="Single" Name="He_so" />
+    <Property Type="Int32" Name="Kien_thuc" />
+    <Property Type="Boolean" Name="Khong_tinh_TBCHT" />
+    <Property Type="Int32" Name="Nhom_tu_chon" />
+    <Property Type="Boolean" Name="Mon_tot_nghiep" />
+    <Property Type="Int32" Name="So_hoc_trinh_tien_quyet" />
+    <Property Type="Int32" Name="Tu_hoc" />
+    <Property Type="String" Name="Ma_khoa_phu_trach" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="Mon_Main" Nullable="false" />
+    <Property Type="Int32" Name="Nhom_mon_sub" Nullable="false" />
+    <NavigationProperty Name="MARK_MonHoc" Relationship="DHHHModel.FK_PLAN_ChuongTrinhDaoTaoChiTiet_MARK_MonHoc" FromRole="PLAN_ChuongTrinhDaoTaoChiTiet" ToRole="MARK_MonHoc" />
+    <NavigationProperty Name="PLAN_ChuongTrinhDaoTao" Relationship="DHHHModel.FK_PLAN_ChuongTrinhDaoTaoChiTiet_PLAN_ChuongTrinhDaoTao" FromRole="PLAN_ChuongTrinhDaoTaoChiTiet" ToRole="PLAN_ChuongTrinhDaoTao" />
+  </EntityType>
+  <EntityType Name="STU_ChuyenNganh">
+    <Key>
+      <PropertyRef Name="ID_chuyen_nganh" />
+    </Key>
+    <Property Type="Int32" Name="ID_chuyen_nganh" Nullable="false" />
+    <Property Type="String" Name="Ma_chuyen_nganh" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Chuyen_nganh" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="ID_nganh" Nullable="false" />
+    <Property Type="String" Name="Chuyen_nganh_En" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Boolean" Name="Ky_thuat" Nullable="false" />
+    <NavigationProperty Name="STU_Nganh" Relationship="DHHHModel.FK_STU_ChuyenNganh_STU_Nganh" FromRole="STU_ChuyenNganh" ToRole="STU_Nganh" />
+  </EntityType>
+  <EntityType Name="STU_He">
+    <Key>
+      <PropertyRef Name="ID_he" />
+    </Key>
+    <Property Type="Int32" Name="ID_he" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Ma_he" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Ten_he" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="Quy_che" Nullable="false" />
+    <Property Type="String" Name="Ten_he_en" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Ten_bac_hoc" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Loai_dao_tao" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Loai_dao_tao_en" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="PLAN_ChuongTrinhDaoTao" Relationship="DHHHModel.FK_PLAN_ChuongTrinhDaoTao_STU_He" FromRole="STU_He" ToRole="PLAN_ChuongTrinhDaoTao" />
+  </EntityType>
+  <EntityType Name="STU_Khoa">
+    <Key>
+      <PropertyRef Name="ID_khoa" />
+    </Key>
+    <Property Type="Int32" Name="ID_khoa" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Ma_khoa" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Ten_khoa" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Ten_khoa_en" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="PLAN_ChuongTrinhDaoTao" Relationship="DHHHModel.FK_PLAN_ChuongTrinhDaoTao_STU_Khoa" FromRole="STU_Khoa" ToRole="PLAN_ChuongTrinhDaoTao" />
+  </EntityType>
+  <EntityType Name="STU_Nganh">
+    <Key>
+      <PropertyRef Name="ID_nganh" />
+    </Key>
+    <Property Type="Int32" Name="ID_nganh" Nullable="false" />
+    <Property Type="String" Name="Ma_nganh" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Ten_nganh" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Ten_nganh_En" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="STU_ChuyenNganh" Relationship="DHHHModel.FK_STU_ChuyenNganh_STU_Nganh" FromRole="STU_Nganh" ToRole="STU_ChuyenNganh" />
+  </EntityType>
+  <Association Name="FK_PLAN_ChuongTrinhDaoTaoChiTiet_MARK_MonHoc">
+    <End Type="DHHHModel.MARK_MonHoc" Role="MARK_MonHoc" Multiplicity="1" />
+    <End Type="DHHHModel.PLAN_ChuongTrinhDaoTaoChiTiet" Role="PLAN_ChuongTrinhDaoTaoChiTiet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MARK_MonHoc">
+        <PropertyRef Name="ID_mon" />
+      </Principal>
+      <Dependent Role="PLAN_ChuongTrinhDaoTaoChiTiet">
+        <PropertyRef Name="ID_mon" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PLAN_ChuongTrinhDaoTao_STU_He">
+    <End Type="DHHHModel.STU_He" Role="STU_He" Multiplicity="1" />
+    <End Type="DHHHModel.PLAN_ChuongTrinhDaoTao" Role="PLAN_ChuongTrinhDaoTao" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="STU_He">
+        <PropertyRef Name="ID_he" />
+      </Principal>
+      <Dependent Role="PLAN_ChuongTrinhDaoTao">
+        <PropertyRef Name="ID_he" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PLAN_ChuongTrinhDaoTao_STU_Khoa">
+    <End Type="DHHHModel.STU_Khoa" Role="STU_Khoa" Multiplicity="1" />
+    <End Type="DHHHModel.PLAN_ChuongTrinhDaoTao" Role="PLAN_ChuongTrinhDaoTao" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="STU_Khoa">
+        <PropertyRef Name="ID_khoa" />
+      </Principal>
+      <Dependent Role="PLAN_ChuongTrinhDaoTao">
+        <PropertyRef Name="ID_khoa" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PLAN_ChuongTrinhDaoTaoChiTiet_PLAN_ChuongTrinhDaoTao">
+    <End Type="DHHHModel.PLAN_ChuongTrinhDaoTao" Role="PLAN_ChuongTrinhDaoTao" Multiplicity="1" />
+    <End Type="DHHHModel.PLAN_ChuongTrinhDaoTaoChiTiet" Role="PLAN_ChuongTrinhDaoTaoChiTiet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PLAN_ChuongTrinhDaoTao">
+        <PropertyRef Name="ID_dt" />
+      </Principal>
+      <Dependent Role="PLAN_ChuongTrinhDaoTaoChiTiet">
+        <PropertyRef Name="ID_dt" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_STU_ChuyenNganh_STU_Nganh">
+    <End Type="DHHHModel.STU_Nganh" Role="STU_Nganh" Multiplicity="1" />
+    <End Type="DHHHModel.STU_ChuyenNganh" Role="STU_ChuyenNganh" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="STU_Nganh">
+        <PropertyRef Name="ID_nganh" />
+      </Principal>
+      <Dependent Role="STU_ChuyenNganh">
+        <PropertyRef Name="ID_nganh" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ViewLopTC">
+    <Key>
+      <PropertyRef Name="ID_lop_tc" />
+      <PropertyRef Name="ID_mon" />
+      <PropertyRef Name="Ten_mon" />
+      <PropertyRef Name="Ky_hieu_lop_tc" />
+      <PropertyRef Name="Ky_dang_ky" />
+      <PropertyRef Name="Dot" />
+      <PropertyRef Name="Hoc_ky" />
+      <PropertyRef Name="Nam_hoc" />
+      <PropertyRef Name="Tu_ngay" />
+      <PropertyRef Name="Den_ngay" />
+    </Key>
+    <Property Type="Int32" Name="ID_lop_tc" Nullable="false" />
+    <Property Type="Int32" Name="ID_mon" Nullable="false" />
+    <Property Type="String" Name="Ten_mon" Nullable="false" MaxLength="260" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Ky_hieu_lop_tc" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="Ky_dang_ky" Nullable="false" />
+    <Property Type="Int32" Name="Dot" Nullable="false" />
+    <Property Type="Int32" Name="Hoc_ky" Nullable="false" />
     <Property Type="String" Name="Nam_hoc" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Ma_nhom" MaxLength="36" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="Tu_ngay" Nullable="false" Precision="3" />
+    <Property Type="DateTime" Name="Den_ngay" Nullable="false" Precision="3" />
   </EntityType>
 </Schema>

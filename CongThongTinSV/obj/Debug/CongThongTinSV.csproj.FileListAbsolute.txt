@@ -96,3 +96,17 @@ C:\Users\THETHAOPC\Desktop\CongThongTinSV\CongThongTinSV\bin\DotNetOpenAuth.Open
 C:\Users\THETHAOPC\Desktop\CongThongTinSV\CongThongTinSV\obj\Debug\CongThongTinSV.csprojResolveAssemblyReference.cache
 C:\Users\THETHAOPC\Desktop\CongThongTinSV\CongThongTinSV\obj\Debug\CongThongTinSV.dll
 C:\Users\THETHAOPC\Desktop\CongThongTinSV\CongThongTinSV\obj\Debug\CongThongTinSV.pdb
+D:\Tot nghiep\CongThongTinSV\CongThongTinSV\bin\Kendo.Mvc.dll
+D:\Tot nghiep\CongThongTinSV\CongThongTinSV\bin\Kendo.Mvc.xml
+D:\Tot nghiep\CongThongTinSV\CongThongTinSV\bin\bg-BG\Kendo.Mvc.resources.dll
+D:\Tot nghiep\CongThongTinSV\CongThongTinSV\bin\da-DK\Kendo.Mvc.resources.dll
+D:\Tot nghiep\CongThongTinSV\CongThongTinSV\bin\de-DE\Kendo.Mvc.resources.dll
+D:\Tot nghiep\CongThongTinSV\CongThongTinSV\bin\es-ES\Kendo.Mvc.resources.dll
+D:\Tot nghiep\CongThongTinSV\CongThongTinSV\bin\fr-FR\Kendo.Mvc.resources.dll
+D:\Tot nghiep\CongThongTinSV\CongThongTinSV\bin\nl-NL\Kendo.Mvc.resources.dll
+D:\Tot nghiep\CongThongTinSV\CongThongTinSV\bin\pl-PL\Kendo.Mvc.resources.dll
+D:\Tot nghiep\CongThongTinSV\CongThongTinSV\bin\pt-BR\Kendo.Mvc.resources.dll
+D:\Tot nghiep\CongThongTinSV\CongThongTinSV\bin\pt-PT\Kendo.Mvc.resources.dll
+D:\Tot nghiep\CongThongTinSV\CongThongTinSV\bin\ru-RU\Kendo.Mvc.resources.dll
+D:\Tot nghiep\CongThongTinSV\CongThongTinSV\bin\uk-UA\Kendo.Mvc.resources.dll
+D:\Tot nghiep\CongThongTinSV\CongThongTinSV\bin\zh-CN\Kendo.Mvc.resources.dll
