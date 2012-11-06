@@ -194,6 +194,7 @@
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\JSONModel.cs" />
     <Compile Include="PLAN_ChuongTrinhDaoTao.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
@@ -226,6 +227,9 @@
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
     <Compile Include="STU_Khoa.cs">
+      <DependentUpon>DHHH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="STU_Lop.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
     <Compile Include="STU_Nganh.cs">

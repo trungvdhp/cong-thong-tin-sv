@@ -48,6 +48,7 @@
       <End Role="STU_ChuyenNganh" EntitySet="STU_ChuyenNganh" />
     </AssociationSet>
     <EntitySet Name="ViewLopTC" EntityType="DHHHModel.ViewLopTC" />
+    <EntitySet Name="STU_Lop" EntityType="DHHHModel.STU_Lop" />
   </EntityContainer>
   <EntityType Name="MARK_MonHoc">
     <Key>
@@ -484,5 +485,38 @@
     <Property Type="String" Name="Ma_nhom" MaxLength="36" FixedLength="false" Unicode="false" />
     <Property Type="DateTime" Name="Tu_ngay" Nullable="false" Precision="3" />
     <Property Type="DateTime" Name="Den_ngay" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="STU_Lop">
+    <Key>
+      <PropertyRef Name="ID_lop" />
+      <PropertyRef Name="Ten_lop" />
+      <PropertyRef Name="ID_he" />
+      <PropertyRef Name="ID_khoa" />
+      <PropertyRef Name="ID_chuyen_nganh" />
+      <PropertyRef Name="Khoa_hoc" />
+      <PropertyRef Name="Nien_khoa" />
+      <PropertyRef Name="ID_dt" />
+      <PropertyRef Name="Ra_truong" />
+      <PropertyRef Name="Ca_hoc" />
+      <PropertyRef Name="ID_phong" />
+    </Key>
+    <Property Type="Int32" Name="ID_lop" Nullable="false" />
+    <Property Type="String" Name="Ten_lop" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="ID_he" Nullable="false" />
+    <Property Type="Int32" Name="ID_khoa" Nullable="false" />
+    <Property Type="Int32" Name="ID_chuyen_nganh" Nullable="false" />
+    <Property Type="Int32" Name="Khoa_hoc" Nullable="false" />
+    <Property Type="String" Name="Nien_khoa" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="ID_dt" Nullable="false" />
+    <Property Type="Int32" Name="So_sv" />
+    <Property Type="Boolean" Name="Ra_truong" Nullable="false" />
+    <Property Type="Int32" Name="Ca_hoc" Nullable="false" />
+    <Property Type="Int32" Name="ID_phong" Nullable="false" />
+    <Property Type="String" Name="Ho_ten_gv" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Dien_thoai" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Email" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="Tinh_chat" />
+    <Property Type="Int32" Name="Lop_chuyen_nganh" />
+    <Property Type="Int32" Name="Lop_hanh_chinh" />
   </EntityType>
 </Schema>

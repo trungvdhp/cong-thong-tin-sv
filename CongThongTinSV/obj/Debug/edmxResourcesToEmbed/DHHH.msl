@@ -313,5 +313,29 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="STU_Lop">
+      <EntityTypeMapping TypeName="DHHHModel.STU_Lop">
+        <MappingFragment StoreEntitySet="STU_Lop">
+          <ScalarProperty Name="Lop_hanh_chinh" ColumnName="Lop_hanh_chinh" />
+          <ScalarProperty Name="Lop_chuyen_nganh" ColumnName="Lop_chuyen_nganh" />
+          <ScalarProperty Name="Tinh_chat" ColumnName="Tinh_chat" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Dien_thoai" ColumnName="Dien_thoai" />
+          <ScalarProperty Name="Ho_ten_gv" ColumnName="Ho_ten_gv" />
+          <ScalarProperty Name="ID_phong" ColumnName="ID_phong" />
+          <ScalarProperty Name="Ca_hoc" ColumnName="Ca_hoc" />
+          <ScalarProperty Name="Ra_truong" ColumnName="Ra_truong" />
+          <ScalarProperty Name="So_sv" ColumnName="So_sv" />
+          <ScalarProperty Name="ID_dt" ColumnName="ID_dt" />
+          <ScalarProperty Name="Nien_khoa" ColumnName="Nien_khoa" />
+          <ScalarProperty Name="Khoa_hoc" ColumnName="Khoa_hoc" />
+          <ScalarProperty Name="ID_chuyen_nganh" ColumnName="ID_chuyen_nganh" />
+          <ScalarProperty Name="ID_khoa" ColumnName="ID_khoa" />
+          <ScalarProperty Name="ID_he" ColumnName="ID_he" />
+          <ScalarProperty Name="Ten_lop" ColumnName="Ten_lop" />
+          <ScalarProperty Name="ID_lop" ColumnName="ID_lop" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

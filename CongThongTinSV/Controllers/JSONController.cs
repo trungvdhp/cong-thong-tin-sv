@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CongThongTinSV.Models;
 
 namespace CongThongTinSV.Controllers
 {
@@ -98,22 +99,37 @@ namespace CongThongTinSV.Controllers
         public JsonResult GetLopTC(int Ky_dang_ky,int ID_khoa,int ID_he,int Khoa_hoc)
         {
             Entities db = new Entities();
+            var lop = db.STU_Lop.First(l => l.Khoa_hoc == Khoa_hoc);
+            var kdk = db.PLAN_HocKyDangKy_TC.Single(k => k.Ky_dang_ky == Ky_dang_ky);
+            int namhoc=Convert.ToInt32(kdk.Nam_hoc.Split(new string[]{"-"},StringSplitOptions.None)[0]);
+            int namnhaphoc = Convert.ToInt32(lop.Nien_khoa.Split(new string[] { "-" }, StringSplitOptions.None)[0]);
+            int hocky = 2 * (namhoc - namnhaphoc) + kdk.Hoc_ky;
             var q1 = from ctdt in db.PLAN_ChuongTrinhDaoTaoChiTiet
-                     where ctdt.PLAN_ChuongTrinhDaoTao.ID_khoa == ID_khoa && ctdt.PLAN_ChuongTrinhDaoTao.ID_he == ID_he && ctdt.PLAN_ChuongTrinhDaoTao.Khoa_hoc == Khoa_hoc
+                     where ctdt.PLAN_ChuongTrinhDaoTao.ID_khoa == ID_khoa 
+                     && ctdt.PLAN_ChuongTrinhDaoTao.ID_he == ID_he 
+                     && ctdt.PLAN_ChuongTrinhDaoTao.Khoa_hoc == Khoa_hoc
+                     && ctdt.Ky_thu==hocky
                      select ctdt;
-            Dictionary<int, PLAN_ChuongTrinhDaoTaoChiTiet> mon = q1.ToDictionary(ct => ct.ID_mon);
-            var q = from loptc in db.ViewLopTC
-                    where loptc.Ky_dang_ky==Ky_dang_ky
-                    select loptc;
-            List<ViewLopTC> list = new List<ViewLopTC>();
-            foreach (var loptc in q)
+            Dictionary<int, PLAN_ChuongTrinhDaoTaoChiTiet> mon = new Dictionary<int, PLAN_ChuongTrinhDaoTaoChiTiet>();
+            foreach (var m in q1) if (!mon.ContainsKey(m.ID_mon)) mon.Add(m.ID_mon, m);
+
+            var q = from ltc in db.PLAN_LopTinChi_TC
+                    select new LopHocPhan
+                    {
+                        ID_lop_tc = ltc.ID_lop_tc,
+                        ID_mon = ltc.ID_mon_tc,
+                        Ten_lop = ltc.PLAN_MonTinChi_TC.MARK_MonHoc.Ten_mon + ltc.PLAN_MonTinChi_TC.Ky_hieu_lop_tc + "N" + ltc.STT_lop
+                    };
+            List<LopHocPhan> list = new List<LopHocPhan>();
+            
+            foreach (LopHocPhan lophp in q)
             {
-                if (mon.ContainsKey(loptc.ID_mon)) list.Add(loptc);
+                //if (mon.ContainsKey(lophp.ID_mon)) list.Add(lophp);
             }
 
             JsonResult result = new JsonResult();
 
-            result.Data = new SelectList(list, "ID_lop_tc", "Ten_mon");
+            result.Data = new SelectList(list, "ID_lop_tc", "Ten_lop");
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return result;
         }
