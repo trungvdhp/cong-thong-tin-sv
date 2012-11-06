@@ -28,6 +28,7 @@
         <AssociationConnector Association="DHHHModel.FK_PLAN_ChuongTrinhDaoTaoChiTiet_PLAN_ChuongTrinhDaoTao" />
         <AssociationConnector Association="DHHHModel.FK_STU_ChuyenNganh_STU_Nganh" />
         <EntityTypeShape EntityType="DHHHModel.ViewLopTC" Width="1.5" PointX="9.8801259276830251" PointY="22.926587860531448" />
+        <EntityTypeShape EntityType="DHHHModel.STU_Lop" Width="1.5" PointX="0.457653478001083" PointY="7.3591314290459877" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

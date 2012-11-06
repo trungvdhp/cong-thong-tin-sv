@@ -40,5 +40,6 @@ namespace CongThongTinSV
         public DbSet<STU_Khoa> STU_Khoa { get; set; }
         public DbSet<STU_Nganh> STU_Nganh { get; set; }
         public DbSet<ViewLopTC> ViewLopTC { get; set; }
+        public DbSet<STU_Lop> STU_Lop { get; set; }
     }
 }

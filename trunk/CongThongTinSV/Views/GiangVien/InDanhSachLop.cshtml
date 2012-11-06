@@ -4,10 +4,11 @@
 }
 
 
-@Html.Label("NamHoc", "Năm học:")
+@*@Html.Label("NamHoc", "Năm học:")*@
 @(Html.Kendo().DropDownList()
     .Name("NamHoc")
     //.Placeholder("Chọn năm học")
+    .OptionLabel("Chọn năm học")
     .DataTextField("Text")
     .DataValueField("Value")
     //.SelectedIndex(0)
@@ -18,17 +19,15 @@
             read.Action("GetNamHoc", "JSON");
         }).ServerFiltering(true);
     })
-    //.Events(e =>
-    //{
-    //    e.Select("NamHoc_Select");
-    //})
+        //.Events(e =>
+        //{
+        //    e.Select("reloadDotHoc");
+        //})
 )
 <script type="text/javascript">
     function reloadDotHoc() {
-        $("#HocKy").data("kendoComboBox").value("");
-    }
-    function HocKy_Select() {
-        $("#DotHoc").data("kendoComboBox").value("");
+        $("#HocKy").data("kendoDropDownList").dataSource.read();
+        $("#HocKy").data("kendoDropDownList").refresh();
     }
     function filterHocKy() {
         return {
@@ -42,11 +41,10 @@
         }
     }
 </script>
-@Html.Label("HocKy", "Học kỳ:")
+@*@Html.Label("HocKy", "Học kỳ:")*@
 @(Html.Kendo().DropDownList()
     .Name("HocKy")
-    .Filter(FilterType.Contains)
-    //.Placeholder("Chọn học kỳ")
+    .OptionLabel("Chọn học kỳ")
     .DataTextField("Text")
     .DataValueField("Value")
     .DataSource(source =>
@@ -57,15 +55,14 @@
                 .Data("filterHocKy");
         }).ServerFiltering(true);
     })
-    //.SelectedIndex(0)
     .Enable(false)
     .AutoBind(false)
-    .CascadeFrom("NamHoc")
+        .CascadeFrom("NamHoc")
 )
-@Html.Label("DotHoc", "Đợt học:")
+@*@Html.Label("DotHoc", "Đợt học:")*@
 @(Html.Kendo().DropDownList()
     .Name("DotHoc")
-        //.Placeholder("Chọn đợt học")
+    .OptionLabel("Chọn đợt học")
     .DataTextField("Text")
     .DataValueField("Value")
     .DataSource(source =>
@@ -76,16 +73,14 @@
                 .Data("filterDotHoc");
         }).ServerFiltering(true);
     })
-        //.SelectedIndex(0)
     .Enable(false)
     .AutoBind(false)
-    .CascadeFrom("HocKy")
-    .CascadeFrom("NamHoc")
+        .CascadeFrom("HocKy")
 )
-@Html.Label("HeDT", "Hệ đào tạo:")
+@*@Html.Label("HeDT", "Hệ đào tạo:")*@
 @(Html.Kendo().DropDownList()
     .Name("HeDT")
-    //.Placeholder("Chọn năm học")
+    .OptionLabel("Chọn hệ đào tạo")
     .DataTextField("Text")
     .DataValueField("Value")
         .SelectedIndex(0)
@@ -96,11 +91,12 @@
             read.Action("GetHeDT", "JSON");
         }).ServerFiltering(true);
     })
+    .CascadeFrom("DotHoc")
 )
-@Html.Label("Khoa", "Khoa:")
+@*@Html.Label("Khoa", "Khoa:")*@
 @(Html.Kendo().DropDownList()
     .Name("Khoa")
-    //.Placeholder("Chọn năm học")
+    .OptionLabel("Chọn khoa")
     .DataTextField("Text")
     .DataValueField("Value")
         .SelectedIndex(0)
@@ -111,11 +107,12 @@
             read.Action("GetKhoa", "JSON");
         }).ServerFiltering(true);
     })
+    .CascadeFrom("HeDT")
 )
-@Html.Label("KhoaHoc", "Khóa:")
+@*@Html.Label("KhoaHoc", "Khóa:")*@
 @(Html.Kendo().DropDownList()
     .Name("KhoaHoc")
-    //.Placeholder("Chọn năm học")
+    .OptionLabel("Chọn khóa học")
     .DataTextField("Text")
     .DataValueField("Value")
         .SelectedIndex(0)
@@ -126,6 +123,7 @@
             read.Action("GetKhoaHoc", "JSON");
         }).ServerFiltering(true);
     })
+    .CascadeFrom("Khoa")
 )
 <script type="text/javascript">
     function filterLopTC() {
@@ -140,10 +138,10 @@
 
     }
 </script>
-@Html.Label("LopTC", "Danh sách lớp học phần:")
+@*@Html.Label("LopTC", "Danh sách lớp học phần:")*@
 @(Html.Kendo().DropDownList()
     .Name("LopTC")
-        //.Placeholder("Chọn năm học")
+    .OptionLabel("Chọn lớp học phần")
     .DataTextField("Text")
     .DataValueField("Value")
         //.SelectedIndex(0)
@@ -157,5 +155,5 @@
     })
     .Enable(false)
     .AutoBind(false)
-    .CascadeFrom("DotHoc")
+        .CascadeFrom("KhoaHoc")
 )

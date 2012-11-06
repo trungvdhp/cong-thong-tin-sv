@@ -48,6 +48,28 @@
     <EntitySet Name="STU_He" EntityType="DHHHModel.Store.STU_He" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="STU_HoSoSinhVien" EntityType="DHHHModel.Store.STU_HoSoSinhVien" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="STU_Khoa" EntityType="DHHHModel.Store.STU_Khoa" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="STU_Lop" EntityType="DHHHModel.Store.STU_Lop" store:Type="Tables" store:Schema="dbo" store:Name="STU_Lop">
+      <DefiningQuery>SELECT 
+      [STU_Lop].[ID_lop] AS [ID_lop], 
+      [STU_Lop].[Ten_lop] AS [Ten_lop], 
+      [STU_Lop].[ID_he] AS [ID_he], 
+      [STU_Lop].[ID_khoa] AS [ID_khoa], 
+      [STU_Lop].[ID_chuyen_nganh] AS [ID_chuyen_nganh], 
+      [STU_Lop].[Khoa_hoc] AS [Khoa_hoc], 
+      [STU_Lop].[Nien_khoa] AS [Nien_khoa], 
+      [STU_Lop].[ID_dt] AS [ID_dt], 
+      [STU_Lop].[So_sv] AS [So_sv], 
+      [STU_Lop].[Ra_truong] AS [Ra_truong], 
+      [STU_Lop].[Ca_hoc] AS [Ca_hoc], 
+      [STU_Lop].[ID_phong] AS [ID_phong], 
+      [STU_Lop].[Ho_ten_gv] AS [Ho_ten_gv], 
+      [STU_Lop].[Dien_thoai] AS [Dien_thoai], 
+      [STU_Lop].[Email] AS [Email], 
+      [STU_Lop].[Tinh_chat] AS [Tinh_chat], 
+      [STU_Lop].[Lop_chuyen_nganh] AS [Lop_chuyen_nganh], 
+      [STU_Lop].[Lop_hanh_chinh] AS [Lop_hanh_chinh]
+      FROM [dbo].[STU_Lop] AS [STU_Lop]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="STU_Nganh" EntityType="DHHHModel.Store.STU_Nganh" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ViewLopTC" EntityType="DHHHModel.Store.ViewLopTC" store:Type="Views" store:Schema="dbo" store:Name="ViewLopTC">
       <DefiningQuery>SELECT 
@@ -394,6 +416,42 @@
     <Property Name="Ma_khoa" Type="nvarchar" MaxLength="5" />
     <Property Name="Ten_khoa" Type="nvarchar" Nullable="false" MaxLength="50" />
     <Property Name="Ten_khoa_en" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'DHHH.dbo.STU_Lop' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="STU_Lop">
+    <Key>
+      <PropertyRef Name="ID_lop" />
+      <PropertyRef Name="Ten_lop" />
+      <PropertyRef Name="ID_he" />
+      <PropertyRef Name="ID_khoa" />
+      <PropertyRef Name="ID_chuyen_nganh" />
+      <PropertyRef Name="Khoa_hoc" />
+      <PropertyRef Name="Nien_khoa" />
+      <PropertyRef Name="ID_dt" />
+      <PropertyRef Name="Ra_truong" />
+      <PropertyRef Name="Ca_hoc" />
+      <PropertyRef Name="ID_phong" />
+    </Key>
+    <Property Name="ID_lop" Type="int" Nullable="false" />
+    <Property Name="Ten_lop" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="ID_he" Type="int" Nullable="false" />
+    <Property Name="ID_khoa" Type="int" Nullable="false" />
+    <Property Name="ID_chuyen_nganh" Type="int" Nullable="false" />
+    <Property Name="Khoa_hoc" Type="int" Nullable="false" />
+    <Property Name="Nien_khoa" Type="nvarchar" Nullable="false" MaxLength="15" />
+    <Property Name="ID_dt" Type="int" Nullable="false" />
+    <Property Name="So_sv" Type="int" />
+    <Property Name="Ra_truong" Type="bit" Nullable="false" />
+    <Property Name="Ca_hoc" Type="int" Nullable="false" />
+    <Property Name="ID_phong" Type="int" Nullable="false" />
+    <Property Name="Ho_ten_gv" Type="nvarchar" MaxLength="200" />
+    <Property Name="Dien_thoai" Type="nvarchar" MaxLength="200" />
+    <Property Name="Email" Type="nvarchar" MaxLength="200" />
+    <Property Name="Tinh_chat" Type="int" />
+    <Property Name="Lop_chuyen_nganh" Type="int" />
+    <Property Name="Lop_hanh_chinh" Type="int" />
   </EntityType>
   <EntityType Name="STU_Nganh">
     <Key>
