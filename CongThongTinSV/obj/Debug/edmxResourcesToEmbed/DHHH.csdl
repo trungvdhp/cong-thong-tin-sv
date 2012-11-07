@@ -48,6 +48,18 @@
       <End Role="STU_ChuyenNganh" EntitySet="STU_ChuyenNganh" />
     </AssociationSet>
     <EntitySet Name="ViewLopTC" EntityType="DHHHModel.ViewLopTC" />
+    <EntitySet Name="STU_DanhSachLopTinChi" EntityType="DHHHModel.STU_DanhSachLopTinChi" />
+    <AssociationSet Name="FK_STU_DanhSachLopTinChi_PLAN_LopTinChi_TC" Association="DHHHModel.FK_STU_DanhSachLopTinChi_PLAN_LopTinChi_TC">
+      <End Role="PLAN_LopTinChi_TC" EntitySet="PLAN_LopTinChi_TC" />
+      <End Role="STU_DanhSachLopTinChi" EntitySet="STU_DanhSachLopTinChi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_STU_DanhSachLopTinChi_STU_HoSoSinhVien" Association="DHHHModel.FK_STU_DanhSachLopTinChi_STU_HoSoSinhVien">
+      <End Role="STU_HoSoSinhVien" EntitySet="STU_HoSoSinhVien" />
+      <End Role="STU_DanhSachLopTinChi" EntitySet="STU_DanhSachLopTinChi" />
+    </AssociationSet>
+    <FunctionImport Name="SP_SinhVienLopTC" ReturnType="Collection(DHHHModel.SP_SinhVienLopTC_Result)">
+      <Parameter Name="Id_lop_tc" Mode="In" Type="Int32" />
+    </FunctionImport>
     <EntitySet Name="STU_Lop" EntityType="DHHHModel.STU_Lop" />
   </EntityContainer>
   <EntityType Name="MARK_MonHoc">
@@ -87,6 +99,7 @@
     <Property Name="Cho_trong" Type="Int32" />
     <NavigationProperty Name="PLAN_MonTinChi_TC" Relationship="DHHHModel.FK_PLAN_LopTinChi_TC_PLAN_MonTinChi_TC" FromRole="PLAN_LopTinChi_TC" ToRole="PLAN_MonTinChi_TC" />
     <NavigationProperty Name="PLAN_SukiensTinChi_TC" Relationship="DHHHModel.FK_PLAN_SukiensTinChi_TC_PLAN_LopTinChi_TC" FromRole="PLAN_LopTinChi_TC" ToRole="PLAN_SukiensTinChi_TC" />
+    <NavigationProperty Name="STU_DanhSachLopTinChi" Relationship="DHHHModel.FK_STU_DanhSachLopTinChi_PLAN_LopTinChi_TC" FromRole="PLAN_LopTinChi_TC" ToRole="STU_DanhSachLopTinChi" />
   </EntityType>
   <EntityType Name="PLAN_MonTinChi_TC">
     <Key>
@@ -268,6 +281,7 @@
     <Property Type="String" Name="LOP12" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Type="String" Name="He_nhap_hoc" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Type="Int32" Name="Trang_thai_hoc" />
+    <NavigationProperty Name="STU_DanhSachLopTinChi" Relationship="DHHHModel.FK_STU_DanhSachLopTinChi_STU_HoSoSinhVien" FromRole="STU_HoSoSinhVien" ToRole="STU_DanhSachLopTinChi" />
   </EntityType>
   <EntityType Name="STU_DanhSach">
     <Key>
@@ -482,23 +496,60 @@
     <Property Type="Int32" Name="Dot" Nullable="false" />
     <Property Type="Int32" Name="Hoc_ky" Nullable="false" />
     <Property Type="String" Name="Nam_hoc" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-    <Property Type="String" Name="Ma_nhom" MaxLength="36" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Ten_lop_tc" MaxLength="304" FixedLength="false" Unicode="true" />
     <Property Type="DateTime" Name="Tu_ngay" Nullable="false" Precision="3" />
     <Property Type="DateTime" Name="Den_ngay" Nullable="false" Precision="3" />
   </EntityType>
+  <EntityType Name="STU_DanhSachLopTinChi">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="Int32" Name="ID_lop_tc" Nullable="false" />
+    <Property Type="Int32" Name="ID_sv" Nullable="false" />
+    <Property Type="Int32" Name="Hoc_lai" Nullable="false" />
+    <Property Type="Int32" Name="Duyet" Nullable="false" />
+    <Property Type="Boolean" Name="Huy_dang_ky" Nullable="false" />
+    <Property Type="String" Name="Ly_do" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="Boolean" Name="Rut_bot_hoc_phan" />
+    <Property Type="Boolean" Name="Chuyen_nganh2" Nullable="false" />
+    <Property Type="Boolean" Name="CLC" />
+    <NavigationProperty Name="PLAN_LopTinChi_TC" Relationship="DHHHModel.FK_STU_DanhSachLopTinChi_PLAN_LopTinChi_TC" FromRole="STU_DanhSachLopTinChi" ToRole="PLAN_LopTinChi_TC" />
+    <NavigationProperty Name="STU_HoSoSinhVien" Relationship="DHHHModel.FK_STU_DanhSachLopTinChi_STU_HoSoSinhVien" FromRole="STU_DanhSachLopTinChi" ToRole="STU_HoSoSinhVien" />
+  </EntityType>
+  <Association Name="FK_STU_DanhSachLopTinChi_PLAN_LopTinChi_TC">
+    <End Type="DHHHModel.PLAN_LopTinChi_TC" Role="PLAN_LopTinChi_TC" Multiplicity="1" />
+    <End Type="DHHHModel.STU_DanhSachLopTinChi" Role="STU_DanhSachLopTinChi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PLAN_LopTinChi_TC">
+        <PropertyRef Name="ID_lop_tc" />
+      </Principal>
+      <Dependent Role="STU_DanhSachLopTinChi">
+        <PropertyRef Name="ID_lop_tc" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_STU_DanhSachLopTinChi_STU_HoSoSinhVien">
+    <End Type="DHHHModel.STU_HoSoSinhVien" Role="STU_HoSoSinhVien" Multiplicity="1" />
+    <End Type="DHHHModel.STU_DanhSachLopTinChi" Role="STU_DanhSachLopTinChi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="STU_HoSoSinhVien">
+        <PropertyRef Name="ID_sv" />
+      </Principal>
+      <Dependent Role="STU_DanhSachLopTinChi">
+        <PropertyRef Name="ID_sv" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="SP_SinhVienLopTC_Result">
+    <Property Type="Int32" Name="ID_sv" Nullable="false" />
+    <Property Type="String" Name="Ho_ten" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Ten_lop" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Ma_sv" Nullable="true" MaxLength="20" />
+  </ComplexType>
   <EntityType Name="STU_Lop">
     <Key>
       <PropertyRef Name="ID_lop" />
-      <PropertyRef Name="Ten_lop" />
-      <PropertyRef Name="ID_he" />
-      <PropertyRef Name="ID_khoa" />
-      <PropertyRef Name="ID_chuyen_nganh" />
-      <PropertyRef Name="Khoa_hoc" />
-      <PropertyRef Name="Nien_khoa" />
-      <PropertyRef Name="ID_dt" />
-      <PropertyRef Name="Ra_truong" />
-      <PropertyRef Name="Ca_hoc" />
-      <PropertyRef Name="ID_phong" />
     </Key>
     <Property Type="Int32" Name="ID_lop" Nullable="false" />
     <Property Type="String" Name="Ten_lop" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />

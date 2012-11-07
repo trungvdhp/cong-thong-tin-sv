@@ -17,6 +17,7 @@ namespace CongThongTinSV
         public PLAN_LopTinChi_TC()
         {
             this.PLAN_SukiensTinChi_TC = new HashSet<PLAN_SukiensTinChi_TC>();
+            this.STU_DanhSachLopTinChi = new HashSet<STU_DanhSachLopTinChi>();
         }
     
         public int ID_lop_tc { get; set; }
@@ -39,5 +40,6 @@ namespace CongThongTinSV
     
         public virtual PLAN_MonTinChi_TC PLAN_MonTinChi_TC { get; set; }
         public virtual ICollection<PLAN_SukiensTinChi_TC> PLAN_SukiensTinChi_TC { get; set; }
+        public virtual ICollection<STU_DanhSachLopTinChi> STU_DanhSachLopTinChi { get; set; }
     }
 }

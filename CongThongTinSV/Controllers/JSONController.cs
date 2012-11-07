@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CongThongTinSV.Models;
+using Kendo.Mvc.UI;
+using Kendo.Mvc.Extensions;
 
 namespace CongThongTinSV.Controllers
 {
@@ -51,12 +53,6 @@ namespace CongThongTinSV.Controllers
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return result;
         }
-        //public JsonResult GetLopTC(string KyDangKy)
-        //{
-        //    Entities db=new Entities();
-        //    var q=from ctdt in db.PLAN_ChuongTrinhDaoTaoChiTiet
-        //          where ctdt.ky
-        //}
         public JsonResult GetHeDT()
         {
             Entities db = new Entities();
@@ -113,25 +109,36 @@ namespace CongThongTinSV.Controllers
             Dictionary<int, PLAN_ChuongTrinhDaoTaoChiTiet> mon = new Dictionary<int, PLAN_ChuongTrinhDaoTaoChiTiet>();
             foreach (var m in q1) if (!mon.ContainsKey(m.ID_mon)) mon.Add(m.ID_mon, m);
 
-            var q = from ltc in db.PLAN_LopTinChi_TC
-                    select new LopHocPhan
-                    {
-                        ID_lop_tc = ltc.ID_lop_tc,
-                        ID_mon = ltc.ID_mon_tc,
-                        Ten_lop = ltc.PLAN_MonTinChi_TC.MARK_MonHoc.Ten_mon + ltc.PLAN_MonTinChi_TC.Ky_hieu_lop_tc + "N" + ltc.STT_lop
-                    };
-            List<LopHocPhan> list = new List<LopHocPhan>();
+            var q = from ltc in db.ViewLopTC
+                    select ltc;
+            List<ViewLopTC> list = new List<ViewLopTC>();
             
-            foreach (LopHocPhan lophp in q)
+            foreach (var lophp in q)
             {
-                //if (mon.ContainsKey(lophp.ID_mon)) list.Add(lophp);
+                if (mon.ContainsKey(lophp.ID_mon)) list.Add(lophp);
             }
 
             JsonResult result = new JsonResult();
 
-            result.Data = new SelectList(list, "ID_lop_tc", "Ten_lop");
+            result.Data = new SelectList(list, "ID_lop_tc", "Ten_lop_tc");
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return result;
+        }
+        public ActionResult GetSinhVienLopTC([DataSourceRequest] DataSourceRequest request, int ID_lop_tc)
+        {
+
+            return Json(SinhVienLopTC(ID_lop_tc).ToDataSourceResult(request));
+        }
+        public static IEnumerable<SinhVien> SinhVienLopTC(int ID_lop_tc)
+        {
+            Entities db=new Entities();
+            return db.SP_SinhVienLopTC(ID_lop_tc).Select(sv => new SinhVien
+            {
+                ID_sv = sv.ID_sv,
+                Ho_ten = sv.Ho_ten,
+                Lop = sv.Ten_lop,
+                Ma_sv = sv.Ma_sv
+            }).ToList();
         }
     }
 }
