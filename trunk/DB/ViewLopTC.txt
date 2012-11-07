@@ -1,0 +1,18 @@
+SELECT     ltc.ID_lop_tc, mtc.ID_mon, mh.Ten_mon, mtc.Ky_hieu_lop_tc, mtc.Ky_dang_ky, hk.Dot, hk.Hoc_ky, hk.Nam_hoc
+, mh.Ten_mon + RIGHT(mtc.Ky_hieu_lop_tc, 5) + ' (N' + RIGHT('0' + CAST(ltc.STT_lop AS VARCHAR(2)), 2) + ')' AS Ten_lop_tc, ltc.Tu_ngay,
+                      ltc.Den_ngay
+FROM         DHHH.dbo.PLAN_LopTinChi_TC ltc JOIN
+                      DHHH.dbo.PLAN_MonTinChi_TC mtc ON mtc.ID_mon_tc = ltc.ID_mon_Tc JOIN
+                      DHHH.dbo.MARK_MonHoc mh ON mh.ID_mon = mtc.ID_mon JOIN
+                      DHHH.dbo.PLAN_HocKyDangKy_TC hk ON hk.Ky_dang_ky = mtc.Ky_dang_ky
+WHERE     ltc.ID_lop_lt = 0
+UNION
+SELECT     l2.ID_lop_tc, mtc.ID_mon, mh.Ten_mon, mtc.Ky_hieu_lop_tc, mtc.Ky_dang_ky, hk.Dot, hk.Hoc_ky, hk.Nam_hoc
+, mh.Ten_mon + RIGHT(mtc.Ky_hieu_lop_tc, 5) + ' (N' + RIGHT('0' + CAST(l1.STT_lop AS VARCHAR(2)), 2) 
+                      + '.TH' + CAST(l2.STT_Lop AS VARCHAR) + ')' AS Ma_nhom, l2.Tu_ngay, l2.Den_ngay
+FROM         DHHH.dbo.PLAN_LopTinChi_TC l1 JOIN
+                      DHHH.dbo.PLAN_LopTinChi_TC l2 ON l1.ID_lop_tc = l2.ID_lop_lt JOIN
+                      DHHH.dbo.PLAN_MonTinChi_TC mtc ON mtc.ID_mon_tc = l1.ID_mon_Tc JOIN
+                      DHHH.dbo.MARK_MonHoc mh ON mh.ID_mon = mtc.ID_mon JOIN
+                      DHHH.dbo.PLAN_HocKyDangKy_TC hk ON hk.Ky_dang_ky = mtc.Ky_dang_ky
+WHERE     l2.ID_lop_lt <> 0

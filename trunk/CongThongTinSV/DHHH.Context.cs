@@ -12,6 +12,9 @@ namespace CongThongTinSV
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Objects;
+    using System.Data.Objects.DataClasses;
+    using System.Linq;
     
     public partial class Entities : DbContext
     {
@@ -40,6 +43,16 @@ namespace CongThongTinSV
         public DbSet<STU_Khoa> STU_Khoa { get; set; }
         public DbSet<STU_Nganh> STU_Nganh { get; set; }
         public DbSet<ViewLopTC> ViewLopTC { get; set; }
+        public DbSet<STU_DanhSachLopTinChi> STU_DanhSachLopTinChi { get; set; }
         public DbSet<STU_Lop> STU_Lop { get; set; }
+    
+        public virtual ObjectResult<SP_SinhVienLopTC_Result> SP_SinhVienLopTC(Nullable<int> id_lop_tc)
+        {
+            var id_lop_tcParameter = id_lop_tc.HasValue ?
+                new ObjectParameter("Id_lop_tc", id_lop_tc) :
+                new ObjectParameter("Id_lop_tc", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_SinhVienLopTC_Result>("SP_SinhVienLopTC", id_lop_tcParameter);
+        }
     }
 }

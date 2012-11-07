@@ -22,7 +22,7 @@ namespace CongThongTinSV
         public int Dot { get; set; }
         public int Hoc_ky { get; set; }
         public string Nam_hoc { get; set; }
-        public string Ma_nhom { get; set; }
+        public string Ten_lop_tc { get; set; }
         public System.DateTime Tu_ngay { get; set; }
         public System.DateTime Den_ngay { get; set; }
     }

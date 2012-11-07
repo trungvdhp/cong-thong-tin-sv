@@ -1,4 +1,5 @@
 ﻿@using Kendo.Mvc.UI;
+@using CongThongTinSV.Models;
 @{
     ViewBag.Title = "InDanhSachLop";
 }
@@ -19,28 +20,8 @@
             read.Action("GetNamHoc", "JSON");
         }).ServerFiltering(true);
     })
-        //.Events(e =>
-        //{
-        //    e.Select("reloadDotHoc");
-        //})
 )
-<script type="text/javascript">
-    function reloadDotHoc() {
-        $("#HocKy").data("kendoDropDownList").dataSource.read();
-        $("#HocKy").data("kendoDropDownList").refresh();
-    }
-    function filterHocKy() {
-        return {
-            NamHoc: $("#NamHoc").val()
-        }
-    }
-    function filterDotHoc() {
-        return {
-            NamHoc: $("#NamHoc").val(),
-            HocKy: $("#HocKy").val()
-        }
-    }
-</script>
+
 @*@Html.Label("HocKy", "Học kỳ:")*@
 @(Html.Kendo().DropDownList()
     .Name("HocKy")
@@ -125,19 +106,6 @@
     })
     .CascadeFrom("Khoa")
 )
-<script type="text/javascript">
-    function filterLopTC() {
-        return {
-            Ky_dang_ky: $("#DotHoc").val(),
-            ID_khoa: $("#Khoa").val(),
-            ID_he: $("#HeDT").val(),
-            Khoa_hoc: $("#KhoaHoc").val(),
-        }
-    }
-    function reloadLopTC() {
-
-    }
-</script>
 @*@Html.Label("LopTC", "Danh sách lớp học phần:")*@
 @(Html.Kendo().DropDownList()
     .Name("LopTC")
@@ -156,4 +124,57 @@
     .Enable(false)
     .AutoBind(false)
         .CascadeFrom("KhoaHoc")
+    .Events(e=>{
+        e.Change("loadGridSinhVien");
+    })
 )
+@(Html.Kendo().Grid<CongThongTinSV.Models.SinhVien>()
+    .Name("GridSinhVien")
+    .Columns(columns => {
+        columns.Bound(sv => sv.ID_sv).Groupable(false);
+        columns.Bound(sv => sv.Ma_sv);
+        columns.Bound(sv => sv.Ho_ten);
+        columns.Bound(sv => sv.Lop);
+    })
+    .Pageable()
+    .Sortable()
+    .Filterable()
+    .Scrollable()
+    .Groupable()
+    .DataSource(
+        dataSource => dataSource
+            .Ajax()
+            .Read(read => read.Action("GetSinhVienLopTC", "JSON").Data("filterGrid"))
+            
+    )
+)
+
+<script type="text/javascript">
+    function filterHocKy() {
+        return {
+            NamHoc: $("#NamHoc").val()
+        }
+    }
+    function filterDotHoc() {
+        return {
+            NamHoc: $("#NamHoc").val(),
+            HocKy: $("#HocKy").val()
+        }
+    }
+    function filterGrid() {
+        return {
+            ID_lop_tc: $("#LopTC").val()
+        }
+    }
+    function filterLopTC() {
+        return {
+            Ky_dang_ky: $("#DotHoc").val(),
+            ID_khoa: $("#Khoa").val(),
+            ID_he: $("#HeDT").val(),
+            Khoa_hoc: $("#KhoaHoc").val(),
+        }
+    }
+    function loadGridSinhVien() {
+        $("#GridSinhVien").data("kendoGrid").dataSource.read();
+    }
+</script>

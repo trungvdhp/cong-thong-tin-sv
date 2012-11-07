@@ -301,7 +301,7 @@
         <MappingFragment StoreEntitySet="ViewLopTC">
           <ScalarProperty Name="Den_ngay" ColumnName="Den_ngay" />
           <ScalarProperty Name="Tu_ngay" ColumnName="Tu_ngay" />
-          <ScalarProperty Name="Ma_nhom" ColumnName="Ma_nhom" />
+          <ScalarProperty Name="Ten_lop_tc" ColumnName="Ten_lop_tc" />
           <ScalarProperty Name="Nam_hoc" ColumnName="Nam_hoc" />
           <ScalarProperty Name="Hoc_ky" ColumnName="Hoc_ky" />
           <ScalarProperty Name="Dot" ColumnName="Dot" />
@@ -313,6 +313,32 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="STU_DanhSachLopTinChi">
+      <EntityTypeMapping TypeName="DHHHModel.STU_DanhSachLopTinChi">
+        <MappingFragment StoreEntitySet="STU_DanhSachLopTinChi">
+          <ScalarProperty Name="CLC" ColumnName="CLC" />
+          <ScalarProperty Name="Chuyen_nganh2" ColumnName="Chuyen_nganh2" />
+          <ScalarProperty Name="Rut_bot_hoc_phan" ColumnName="Rut_bot_hoc_phan" />
+          <ScalarProperty Name="Ly_do" ColumnName="Ly_do" />
+          <ScalarProperty Name="Huy_dang_ky" ColumnName="Huy_dang_ky" />
+          <ScalarProperty Name="Duyet" ColumnName="Duyet" />
+          <ScalarProperty Name="Hoc_lai" ColumnName="Hoc_lai" />
+          <ScalarProperty Name="ID_sv" ColumnName="ID_sv" />
+          <ScalarProperty Name="ID_lop_tc" ColumnName="ID_lop_tc" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="SP_SinhVienLopTC" FunctionName="DHHHModel.Store.SP_SinhVienLopTC">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DHHHModel.SP_SinhVienLopTC_Result">
+          <ScalarProperty Name="ID_sv" ColumnName="ID_sv" />
+          <ScalarProperty Name="Ho_ten" ColumnName="Ho_ten" />
+          <ScalarProperty Name="Ten_lop" ColumnName="Ten_lop" />
+          <ScalarProperty Name="Ma_sv" ColumnName="Ma_sv" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <EntitySetMapping Name="STU_Lop">
       <EntityTypeMapping TypeName="DHHHModel.STU_Lop">
         <MappingFragment StoreEntitySet="STU_Lop">
