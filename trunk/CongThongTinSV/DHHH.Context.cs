@@ -45,6 +45,19 @@ namespace CongThongTinSV
         public DbSet<ViewLopTC> ViewLopTC { get; set; }
         public DbSet<STU_DanhSachLopTinChi> STU_DanhSachLopTinChi { get; set; }
         public DbSet<STU_Lop> STU_Lop { get; set; }
+        public DbSet<MOD_DanhSachLopTinChi> MOD_DanhSachLopTinChi { get; set; }
+        public DbSet<MOD_DichVu> MOD_DichVu { get; set; }
+        public DbSet<MOD_HocKy> MOD_HocKy { get; set; }
+        public DbSet<MOD_HocKy_ChuyenNganh> MOD_HocKy_ChuyenNganh { get; set; }
+        public DbSet<MOD_LopTinChi_TC> MOD_LopTinChi_TC { get; set; }
+        public DbSet<MOD_NguoiDung> MOD_NguoiDung { get; set; }
+        public DbSet<MOD_NguoiDung_VaiTro_HeThong> MOD_NguoiDung_VaiTro_HeThong { get; set; }
+        public DbSet<MOD_NguoiDung_VaiTro_LopTinChi> MOD_NguoiDung_VaiTro_LopTinChi { get; set; }
+        public DbSet<MOD_NhomHocVien> MOD_NhomHocVien { get; set; }
+        public DbSet<MOD_NhomNguoiDung> MOD_NhomNguoiDung { get; set; }
+        public DbSet<MOD_ToNhom> MOD_ToNhom { get; set; }
+        public DbSet<MOD_VaiTro> MOD_VaiTro { get; set; }
+        public DbSet<STU_GioiTinh> STU_GioiTinh { get; set; }
     
         public virtual ObjectResult<SP_SinhVienLopTC_Result> SP_SinhVienLopTC(Nullable<int> id_lop_tc)
         {
@@ -53,6 +66,35 @@ namespace CongThongTinSV
                 new ObjectParameter("Id_lop_tc", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_SinhVienLopTC_Result>("SP_SinhVienLopTC", id_lop_tcParameter);
+        }
+    
+        public virtual ObjectResult<SP_SinhVien_Result> SP_SinhVien(string id_lop, string ma_sv, string ho_dem, string ten, string ngay_sinh, string gioi_tinh)
+        {
+            var id_lopParameter = id_lop != null ?
+                new ObjectParameter("Id_lop", id_lop) :
+                new ObjectParameter("Id_lop", typeof(string));
+    
+            var ma_svParameter = ma_sv != null ?
+                new ObjectParameter("Ma_sv", ma_sv) :
+                new ObjectParameter("Ma_sv", typeof(string));
+    
+            var ho_demParameter = ho_dem != null ?
+                new ObjectParameter("Ho_dem", ho_dem) :
+                new ObjectParameter("Ho_dem", typeof(string));
+    
+            var tenParameter = ten != null ?
+                new ObjectParameter("Ten", ten) :
+                new ObjectParameter("Ten", typeof(string));
+    
+            var ngay_sinhParameter = ngay_sinh != null ?
+                new ObjectParameter("Ngay_sinh", ngay_sinh) :
+                new ObjectParameter("Ngay_sinh", typeof(string));
+    
+            var gioi_tinhParameter = gioi_tinh != null ?
+                new ObjectParameter("Gioi_tinh", gioi_tinh) :
+                new ObjectParameter("Gioi_tinh", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_SinhVien_Result>("SP_SinhVien", id_lopParameter, ma_svParameter, ho_demParameter, tenParameter, ngay_sinhParameter, gioi_tinhParameter);
         }
     }
 }
