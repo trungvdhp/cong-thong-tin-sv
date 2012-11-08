@@ -58,6 +58,8 @@ namespace CongThongTinSV
         public DbSet<MOD_ToNhom> MOD_ToNhom { get; set; }
         public DbSet<MOD_VaiTro> MOD_VaiTro { get; set; }
         public DbSet<STU_GioiTinh> STU_GioiTinh { get; set; }
+        public DbSet<PLAN_GiaoVien> PLAN_GiaoVien { get; set; }
+        public DbSet<POR_GiaoVien> POR_GiaoVien { get; set; }
     
         public virtual ObjectResult<SP_SinhVienLopTC_Result> SP_SinhVienLopTC(Nullable<int> id_lop_tc)
         {

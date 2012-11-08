@@ -92,6 +92,7 @@ namespace CongThongTinSV.Controllers
 
             return result;
         }
+
         public JsonResult GetLopTC(int Ky_dang_ky,int ID_khoa,int ID_he,int Khoa_hoc)
         {
             Entities db = new Entities();

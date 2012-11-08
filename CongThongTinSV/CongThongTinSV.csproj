@@ -172,8 +172,11 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JSONController.cs" />
     <Compile Include="Controllers\LopController.cs" />
+    <Compile Include="Controllers\LopHocPhanController.cs" />
     <Compile Include="Controllers\MoodleUserController.cs" />
     <Compile Include="Controllers\SinhVienController.cs" />
+    <Compile Include="Controllers\TraCuuController.cs" />
+    <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\UtilityController.cs" />
     <Compile Include="Controllers\WebRequestController.cs" />
     <Compile Include="DHHH.Context.cs">
@@ -242,6 +245,9 @@
     <Compile Include="PLAN_ChuongTrinhDaoTaoChiTiet.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
+    <Compile Include="PLAN_GiaoVien.cs">
+      <DependentUpon>DHHH.tt</DependentUpon>
+    </Compile>
     <Compile Include="PLAN_HocKyDangKy_TC.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
@@ -252,6 +258,9 @@
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
     <Compile Include="PLAN_SukiensTinChi_TC.cs">
+      <DependentUpon>DHHH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POR_GiaoVien.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -926,12 +935,13 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\SinhVien\DangKyHocPhan.cshtml" />
     <Content Include="Views\SinhVien\YeucauMoLop.cshtml" />
-    <Content Include="Views\GiangVien\InDanhSachLop.cshtml" />
+    <Content Include="Views\LopHocPhan\InDanhSachLop.cshtml" />
     <Content Include="Views\MoodleUser\Index.cshtml" />
     <Content Include="Views\MoodleUser\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\GiangVien\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -1,4 +1,5 @@
-﻿@model CongThongTinSV.Models.LoginModel
+﻿@using Kendo.Mvc.UI
+@model CongThongTinSV.Models.LoginModel
 
 @{
     ViewBag.Title = "Log in";
@@ -33,7 +34,12 @@
             </li>
             <li>
                 @Html.Label("Dịch vụ")
-                @Html.DropDownList("Service", (SelectList)ViewBag.Service);
+                @*@Html.DropDownList("Service", (SelectList)ViewBag.Service)*@
+                @(Html.Kendo().DropDownList()
+                .Name("Service")
+                .BindTo(ViewBag.Service)
+                )
+                
             </li>
             <li>
                 @Html.CheckBoxFor(m => m.RememberMe)

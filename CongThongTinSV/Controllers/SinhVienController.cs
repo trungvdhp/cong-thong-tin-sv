@@ -13,17 +13,7 @@ namespace CongThongTinSV.Controllers
 
         public ActionResult Index()
         {
-            return RedirectToAction("DangKyTC","SinhVien");
-        }
-
-        public ActionResult DangKyHocPhan()
-        {
-
-            return View();
-        }
-        public ActionResult YeucauMoLop()
-        {
-            return View();
+            return RedirectToAction("DangKy","LopHocPhan");
         }
     }
 }

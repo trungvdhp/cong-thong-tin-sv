@@ -126,6 +126,12 @@
       <Parameter Name="Ngay_sinh" Mode="In" Type="String" />
       <Parameter Name="Gioi_tinh" Mode="In" Type="String" />
     </FunctionImport>
+    <EntitySet Name="PLAN_GiaoVien" EntityType="DHHHModel.PLAN_GiaoVien" />
+    <EntitySet Name="POR_GiaoVien" EntityType="DHHHModel.POR_GiaoVien" />
+    <AssociationSet Name="FK_POR_GiaoVien_PLAN_GiaoVien" Association="DHHHModel.FK_POR_GiaoVien_PLAN_GiaoVien">
+      <End Role="PLAN_GiaoVien" EntitySet="PLAN_GiaoVien" />
+      <End Role="POR_GiaoVien" EntitySet="POR_GiaoVien" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="MARK_MonHoc">
     <Key>
@@ -906,4 +912,43 @@
     <Property Type="String" Name="Ten_lop" Nullable="false" MaxLength="50" />
     <Property Type="Int64" Name="ID_moodle" Nullable="true" />
   </ComplexType>
+  <EntityType Name="PLAN_GiaoVien">
+    <Key>
+      <PropertyRef Name="ID_cb" />
+    </Key>
+    <Property Type="Int32" Name="ID_cb" Nullable="false" />
+    <Property Type="String" Name="Ma_cb" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Ten" Nullable="false" MaxLength="35" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Ho_ten" Nullable="false" MaxLength="35" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="ID_gioi_tinh" />
+    <Property Type="DateTime" Name="Ngay_sinh" Precision="3" />
+    <Property Type="Int32" Name="ID_khoa" Nullable="false" />
+    <Property Type="Int32" Name="ID_hoc_ham" Nullable="false" />
+    <Property Type="Int32" Name="ID_hoc_vi" Nullable="false" />
+    <Property Type="Int32" Name="ID_chuc_danh" Nullable="false" />
+    <Property Type="Int32" Name="ID_chuc_vu" Nullable="false" />
+    <NavigationProperty Name="POR_GiaoVien" Relationship="DHHHModel.FK_POR_GiaoVien_PLAN_GiaoVien" FromRole="PLAN_GiaoVien" ToRole="POR_GiaoVien" />
+  </EntityType>
+  <EntityType Name="POR_GiaoVien">
+    <Key>
+      <PropertyRef Name="ID_cb" />
+    </Key>
+    <Property Type="Int32" Name="ID_cb" Nullable="false" />
+    <Property Type="String" Name="Mat_khau" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Email" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="Boolean" Name="Trang_thai" />
+    <NavigationProperty Name="PLAN_GiaoVien" Relationship="DHHHModel.FK_POR_GiaoVien_PLAN_GiaoVien" FromRole="POR_GiaoVien" ToRole="PLAN_GiaoVien" />
+  </EntityType>
+  <Association Name="FK_POR_GiaoVien_PLAN_GiaoVien">
+    <End Type="DHHHModel.PLAN_GiaoVien" Role="PLAN_GiaoVien" Multiplicity="1" />
+    <End Type="DHHHModel.POR_GiaoVien" Role="POR_GiaoVien" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="PLAN_GiaoVien">
+        <PropertyRef Name="ID_cb" />
+      </Principal>
+      <Dependent Role="POR_GiaoVien">
+        <PropertyRef Name="ID_cb" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>
