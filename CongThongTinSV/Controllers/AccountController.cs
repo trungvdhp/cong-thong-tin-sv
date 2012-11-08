@@ -23,6 +23,8 @@ namespace CongThongTinSV.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            Entities db = new Entities();
+            ViewBag.Service = new SelectList(db.MOD_DichVu, "Ten_rut_gon", "Ten_dv");
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -33,15 +35,16 @@ namespace CongThongTinSV.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginModel model, string returnUrl)
+        public ActionResult Login(LoginModel model, string returnUrl, string Service)
         {
             //if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             //{
             //    return RedirectToLocal(returnUrl);
             //}
-            Entities db = new Entities();
             if (ModelState.IsValid)
             {
+                Entities db = new Entities();
+                ViewBag.Service = new SelectList(db.MOD_DichVu, "Ten_rut_gon", "Ten_dv");
                 var q = from sv in db.STU_HoSoSinhVien
                         join ds in db.STU_DanhSach on sv.ID_sv equals ds.ID_sv
                         where sv.Ma_sv == model.UserName
@@ -52,15 +55,29 @@ namespace CongThongTinSV.Controllers
                             Ho_ten = sv.Ho_ten
                         };
                 var hssv = q.First();
+                //Get user token
+                WebRequestController web = new WebRequestController(1, "POST", "username=" + model.UserName + "&password=" + model.Password + "&service=" + Service);
+                string s = web.GetResponse();
+                string[] rs = s.Split(new char[] { '"' });
+                //UtilityController.WriteTextToFile("D:\\token.txt", s + " " + Service + " " + rs.Length);
+                if (rs.Length == 5)
+                    Session["token"] = rs[3].Trim();
                 if (hssv.Mat_khau == model.Password)
                 {
-                    FormsAuthentication.SetAuthCookie(hssv.Ma_sv, model.RememberMe);
+                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                     return RedirectToLocal(returnUrl);
+
                 }
+                //if (hssv.Mat_khau == model.Password)
+                //{
+                //    FormsAuthentication.SetAuthCookie(hssv.Ma_sv, model.RememberMe);
+                //    return RedirectToLocal(returnUrl);
+                //}
 
             }
             // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "Tên đăng nhập hoặc mật khẩu không hợp lệ.");
+            //ModelState.AddModelError("", "Tên đăng nhập hoặc mật khẩu không hợp lệ.");
+            ModelState.AddModelError("", "Thông tin đăng nhập không hợp lệ.");
             return View(model);
         }
 
@@ -72,6 +89,7 @@ namespace CongThongTinSV.Controllers
         public ActionResult LogOff()
         {
             WebSecurity.Logout();
+            Session["token"] = "";
 
             return RedirectToAction("Index", "Home");
         }

@@ -61,6 +61,71 @@
       <Parameter Name="Id_lop_tc" Mode="In" Type="Int32" />
     </FunctionImport>
     <EntitySet Name="STU_Lop" EntityType="DHHHModel.STU_Lop" />
+    <EntitySet Name="MOD_DanhSachLopTinChi" EntityType="DHHHModel.MOD_DanhSachLopTinChi" />
+    <EntitySet Name="MOD_DichVu" EntityType="DHHHModel.MOD_DichVu" />
+    <EntitySet Name="MOD_HocKy" EntityType="DHHHModel.MOD_HocKy" />
+    <EntitySet Name="MOD_HocKy_ChuyenNganh" EntityType="DHHHModel.MOD_HocKy_ChuyenNganh" />
+    <EntitySet Name="MOD_LopTinChi_TC" EntityType="DHHHModel.MOD_LopTinChi_TC" />
+    <EntitySet Name="MOD_NguoiDung" EntityType="DHHHModel.MOD_NguoiDung" />
+    <EntitySet Name="MOD_NguoiDung_VaiTro_HeThong" EntityType="DHHHModel.MOD_NguoiDung_VaiTro_HeThong" />
+    <EntitySet Name="MOD_NguoiDung_VaiTro_LopTinChi" EntityType="DHHHModel.MOD_NguoiDung_VaiTro_LopTinChi" />
+    <EntitySet Name="MOD_NhomHocVien" EntityType="DHHHModel.MOD_NhomHocVien" />
+    <EntitySet Name="MOD_NhomNguoiDung" EntityType="DHHHModel.MOD_NhomNguoiDung" />
+    <EntitySet Name="MOD_ToNhom" EntityType="DHHHModel.MOD_ToNhom" />
+    <EntitySet Name="MOD_VaiTro" EntityType="DHHHModel.MOD_VaiTro" />
+    <EntitySet Name="STU_GioiTinh" EntityType="DHHHModel.STU_GioiTinh" />
+    <AssociationSet Name="FK_DangKy_Nhom" Association="DHHHModel.FK_DangKy_Nhom">
+      <End Role="MOD_NhomHocVien" EntitySet="MOD_NhomHocVien" />
+      <End Role="MOD_DanhSachLopTinChi" EntitySet="MOD_DanhSachLopTinChi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MOD_HocKy_ChuyenNganh_MOD_HocKy" Association="DHHHModel.FK_MOD_HocKy_ChuyenNganh_MOD_HocKy">
+      <End Role="MOD_HocKy" EntitySet="MOD_HocKy" />
+      <End Role="MOD_HocKy_ChuyenNganh" EntitySet="MOD_HocKy_ChuyenNganh" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_LopTinChi_TC" Association="DHHHModel.FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_LopTinChi_TC">
+      <End Role="MOD_LopTinChi_TC" EntitySet="MOD_LopTinChi_TC" />
+      <End Role="MOD_NguoiDung_VaiTro_LopTinChi" EntitySet="MOD_NguoiDung_VaiTro_LopTinChi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Nhom_ThoiKhoaBieu" Association="DHHHModel.FK_Nhom_ThoiKhoaBieu">
+      <End Role="MOD_LopTinChi_TC" EntitySet="MOD_LopTinChi_TC" />
+      <End Role="MOD_NhomHocVien" EntitySet="MOD_NhomHocVien" />
+    </AssociationSet>
+    <AssociationSet Name="FK_To_ThoiKhoaBieu" Association="DHHHModel.FK_To_ThoiKhoaBieu">
+      <End Role="MOD_LopTinChi_TC" EntitySet="MOD_LopTinChi_TC" />
+      <End Role="MOD_ToNhom" EntitySet="MOD_ToNhom" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MOD_NguoiDung_MOD_NhomNguoiDung" Association="DHHHModel.FK_MOD_NguoiDung_MOD_NhomNguoiDung">
+      <End Role="MOD_NhomNguoiDung" EntitySet="MOD_NhomNguoiDung" />
+      <End Role="MOD_NguoiDung" EntitySet="MOD_NguoiDung" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MOD_NguoiDung_VaiTro_HeThong_MOD_NguoiDung" Association="DHHHModel.FK_MOD_NguoiDung_VaiTro_HeThong_MOD_NguoiDung">
+      <End Role="MOD_NguoiDung" EntitySet="MOD_NguoiDung" />
+      <End Role="MOD_NguoiDung_VaiTro_HeThong" EntitySet="MOD_NguoiDung_VaiTro_HeThong" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_NguoiDung" Association="DHHHModel.FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_NguoiDung">
+      <End Role="MOD_NguoiDung" EntitySet="MOD_NguoiDung" />
+      <End Role="MOD_NguoiDung_VaiTro_LopTinChi" EntitySet="MOD_NguoiDung_VaiTro_LopTinChi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MOD_NguoiDung_VaiTro_HeThong_MOD_VaiTro" Association="DHHHModel.FK_MOD_NguoiDung_VaiTro_HeThong_MOD_VaiTro">
+      <End Role="MOD_VaiTro" EntitySet="MOD_VaiTro" />
+      <End Role="MOD_NguoiDung_VaiTro_HeThong" EntitySet="MOD_NguoiDung_VaiTro_HeThong" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_VaiTro" Association="DHHHModel.FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_VaiTro">
+      <End Role="MOD_VaiTro" EntitySet="MOD_VaiTro" />
+      <End Role="MOD_NguoiDung_VaiTro_LopTinChi" EntitySet="MOD_NguoiDung_VaiTro_LopTinChi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Nhom_To" Association="DHHHModel.FK_Nhom_To">
+      <End Role="MOD_ToNhom" EntitySet="MOD_ToNhom" />
+      <End Role="MOD_NhomHocVien" EntitySet="MOD_NhomHocVien" />
+    </AssociationSet>
+    <FunctionImport Name="SP_SinhVien" ReturnType="Collection(DHHHModel.SP_SinhVien_Result)">
+      <Parameter Name="Id_lop" Mode="In" Type="String" />
+      <Parameter Name="Ma_sv" Mode="In" Type="String" />
+      <Parameter Name="Ho_dem" Mode="In" Type="String" />
+      <Parameter Name="Ten" Mode="In" Type="String" />
+      <Parameter Name="Ngay_sinh" Mode="In" Type="String" />
+      <Parameter Name="Gioi_tinh" Mode="In" Type="String" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="MARK_MonHoc">
     <Key>
@@ -570,4 +635,275 @@
     <Property Type="Int32" Name="Lop_chuyen_nganh" />
     <Property Type="Int32" Name="Lop_hanh_chinh" />
   </EntityType>
+  <EntityType Name="MOD_DanhSachLopTinChi">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="Int32" Name="ID_nhom" />
+    <NavigationProperty Name="MOD_NhomHocVien" Relationship="DHHHModel.FK_DangKy_Nhom" FromRole="MOD_DanhSachLopTinChi" ToRole="MOD_NhomHocVien" />
+  </EntityType>
+  <EntityType Name="MOD_DichVu">
+    <Key>
+      <PropertyRef Name="ID_dv" />
+    </Key>
+    <Property Type="Int32" Name="ID_dv" Nullable="false" />
+    <Property Type="String" Name="Ten_dv" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Ten_rut_gon" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="MOD_HocKy">
+    <Key>
+      <PropertyRef Name="Ky_dang_ky" />
+    </Key>
+    <Property Type="Int32" Name="Ky_dang_ky" Nullable="false" />
+    <Property Type="Int64" Name="ID_moodle" Nullable="false" />
+    <NavigationProperty Name="MOD_HocKy_ChuyenNganh" Relationship="DHHHModel.FK_MOD_HocKy_ChuyenNganh_MOD_HocKy" FromRole="MOD_HocKy" ToRole="MOD_HocKy_ChuyenNganh" />
+  </EntityType>
+  <EntityType Name="MOD_HocKy_ChuyenNganh">
+    <Key>
+      <PropertyRef Name="ID_moodle" />
+    </Key>
+    <Property Type="Int64" Name="ID_moodle" Nullable="false" />
+    <Property Type="Int32" Name="Ky_dang_ky" Nullable="false" />
+    <Property Type="Int32" Name="ID_chuyen_nganh" Nullable="false" />
+    <NavigationProperty Name="MOD_HocKy" Relationship="DHHHModel.FK_MOD_HocKy_ChuyenNganh_MOD_HocKy" FromRole="MOD_HocKy_ChuyenNganh" ToRole="MOD_HocKy" />
+  </EntityType>
+  <EntityType Name="MOD_LopTinChi_TC">
+    <Key>
+      <PropertyRef Name="ID_lop_tc" />
+    </Key>
+    <Property Type="Int32" Name="ID_lop_tc" Nullable="false" />
+    <Property Type="Int64" Name="ID_moodle" Nullable="false" />
+    <NavigationProperty Name="MOD_NguoiDung_VaiTro_LopTinChi" Relationship="DHHHModel.FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_LopTinChi_TC" FromRole="MOD_LopTinChi_TC" ToRole="MOD_NguoiDung_VaiTro_LopTinChi" />
+    <NavigationProperty Name="MOD_NhomHocVien" Relationship="DHHHModel.FK_Nhom_ThoiKhoaBieu" FromRole="MOD_LopTinChi_TC" ToRole="MOD_NhomHocVien" />
+    <NavigationProperty Name="MOD_ToNhom" Relationship="DHHHModel.FK_To_ThoiKhoaBieu" FromRole="MOD_LopTinChi_TC" ToRole="MOD_ToNhom" />
+  </EntityType>
+  <EntityType Name="MOD_NguoiDung">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Type="Int32" Name="UserID" Nullable="false" />
+    <Property Type="Int32" Name="ID_nd" Nullable="false" />
+    <Property Type="Int32" Name="ID_nhom_nd" Nullable="false" />
+    <Property Type="Int64" Name="ID_moodle" Nullable="false" />
+    <NavigationProperty Name="MOD_NhomNguoiDung" Relationship="DHHHModel.FK_MOD_NguoiDung_MOD_NhomNguoiDung" FromRole="MOD_NguoiDung" ToRole="MOD_NhomNguoiDung" />
+    <NavigationProperty Name="MOD_NguoiDung_VaiTro_HeThong" Relationship="DHHHModel.FK_MOD_NguoiDung_VaiTro_HeThong_MOD_NguoiDung" FromRole="MOD_NguoiDung" ToRole="MOD_NguoiDung_VaiTro_HeThong" />
+    <NavigationProperty Name="MOD_NguoiDung_VaiTro_LopTinChi" Relationship="DHHHModel.FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_NguoiDung" FromRole="MOD_NguoiDung" ToRole="MOD_NguoiDung_VaiTro_LopTinChi" />
+  </EntityType>
+  <EntityType Name="MOD_NguoiDung_VaiTro_HeThong">
+    <Key>
+      <PropertyRef Name="STT" />
+    </Key>
+    <Property Type="Int64" Name="STT" Nullable="false" />
+    <Property Type="Int32" Name="UserID" Nullable="false" />
+    <Property Type="Int32" Name="ID_vai_tro" Nullable="false" />
+    <NavigationProperty Name="MOD_NguoiDung" Relationship="DHHHModel.FK_MOD_NguoiDung_VaiTro_HeThong_MOD_NguoiDung" FromRole="MOD_NguoiDung_VaiTro_HeThong" ToRole="MOD_NguoiDung" />
+    <NavigationProperty Name="MOD_VaiTro" Relationship="DHHHModel.FK_MOD_NguoiDung_VaiTro_HeThong_MOD_VaiTro" FromRole="MOD_NguoiDung_VaiTro_HeThong" ToRole="MOD_VaiTro" />
+  </EntityType>
+  <EntityType Name="MOD_NguoiDung_VaiTro_LopTinChi">
+    <Key>
+      <PropertyRef Name="STT" />
+    </Key>
+    <Property Type="Int64" Name="STT" Nullable="false" />
+    <Property Type="Int32" Name="UserID" Nullable="false" />
+    <Property Type="Int32" Name="ID_lop_tc" Nullable="false" />
+    <Property Type="Int32" Name="ID_vai_tro" Nullable="false" />
+    <NavigationProperty Name="MOD_LopTinChi_TC" Relationship="DHHHModel.FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_LopTinChi_TC" FromRole="MOD_NguoiDung_VaiTro_LopTinChi" ToRole="MOD_LopTinChi_TC" />
+    <NavigationProperty Name="MOD_NguoiDung" Relationship="DHHHModel.FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_NguoiDung" FromRole="MOD_NguoiDung_VaiTro_LopTinChi" ToRole="MOD_NguoiDung" />
+    <NavigationProperty Name="MOD_VaiTro" Relationship="DHHHModel.FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_VaiTro" FromRole="MOD_NguoiDung_VaiTro_LopTinChi" ToRole="MOD_VaiTro" />
+  </EntityType>
+  <EntityType Name="MOD_NhomHocVien">
+    <Key>
+      <PropertyRef Name="ID_nhom" />
+    </Key>
+    <Property Type="Int32" Name="ID_nhom" Nullable="false" />
+    <Property Type="String" Name="Ten_nhom" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Mo_ta" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="ID_to" />
+    <Property Type="Int32" Name="ID_lop_tc" Nullable="false" />
+    <NavigationProperty Name="MOD_DanhSachLopTinChi" Relationship="DHHHModel.FK_DangKy_Nhom" FromRole="MOD_NhomHocVien" ToRole="MOD_DanhSachLopTinChi" />
+    <NavigationProperty Name="MOD_LopTinChi_TC" Relationship="DHHHModel.FK_Nhom_ThoiKhoaBieu" FromRole="MOD_NhomHocVien" ToRole="MOD_LopTinChi_TC" />
+    <NavigationProperty Name="MOD_ToNhom" Relationship="DHHHModel.FK_Nhom_To" FromRole="MOD_NhomHocVien" ToRole="MOD_ToNhom" />
+  </EntityType>
+  <EntityType Name="MOD_NhomNguoiDung">
+    <Key>
+      <PropertyRef Name="ID_nhom_nd" />
+    </Key>
+    <Property Type="Int32" Name="ID_nhom_nd" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Ten_nhom" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Mo_ta" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="MOD_NguoiDung" Relationship="DHHHModel.FK_MOD_NguoiDung_MOD_NhomNguoiDung" FromRole="MOD_NhomNguoiDung" ToRole="MOD_NguoiDung" />
+  </EntityType>
+  <EntityType Name="MOD_ToNhom">
+    <Key>
+      <PropertyRef Name="ID_to" />
+    </Key>
+    <Property Type="Int32" Name="ID_to" Nullable="false" />
+    <Property Type="String" Name="Ten_to" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Mo_ta" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="ID_lop_tc" Nullable="false" />
+    <NavigationProperty Name="MOD_LopTinChi_TC" Relationship="DHHHModel.FK_To_ThoiKhoaBieu" FromRole="MOD_ToNhom" ToRole="MOD_LopTinChi_TC" />
+    <NavigationProperty Name="MOD_NhomHocVien" Relationship="DHHHModel.FK_Nhom_To" FromRole="MOD_ToNhom" ToRole="MOD_NhomHocVien" />
+  </EntityType>
+  <EntityType Name="MOD_VaiTro">
+    <Key>
+      <PropertyRef Name="ID_vai_tro" />
+    </Key>
+    <Property Type="Int32" Name="ID_vai_tro" Nullable="false" />
+    <Property Type="String" Name="Ten_vai_tro" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Mo_ta" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="Boolean" Name="He_thong" Nullable="false" />
+    <NavigationProperty Name="MOD_NguoiDung_VaiTro_HeThong" Relationship="DHHHModel.FK_MOD_NguoiDung_VaiTro_HeThong_MOD_VaiTro" FromRole="MOD_VaiTro" ToRole="MOD_NguoiDung_VaiTro_HeThong" />
+    <NavigationProperty Name="MOD_NguoiDung_VaiTro_LopTinChi" Relationship="DHHHModel.FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_VaiTro" FromRole="MOD_VaiTro" ToRole="MOD_NguoiDung_VaiTro_LopTinChi" />
+  </EntityType>
+  <EntityType Name="STU_GioiTinh">
+    <Key>
+      <PropertyRef Name="ID_gioi_tinh" />
+      <PropertyRef Name="Gioi_tinh" />
+    </Key>
+    <Property Type="Int32" Name="ID_gioi_tinh" Nullable="false" />
+    <Property Type="String" Name="Gioi_tinh" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_DangKy_Nhom">
+    <End Type="DHHHModel.MOD_NhomHocVien" Role="MOD_NhomHocVien" Multiplicity="0..1" />
+    <End Type="DHHHModel.MOD_DanhSachLopTinChi" Role="MOD_DanhSachLopTinChi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MOD_NhomHocVien">
+        <PropertyRef Name="ID_nhom" />
+      </Principal>
+      <Dependent Role="MOD_DanhSachLopTinChi">
+        <PropertyRef Name="ID_nhom" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MOD_HocKy_ChuyenNganh_MOD_HocKy">
+    <End Type="DHHHModel.MOD_HocKy" Role="MOD_HocKy" Multiplicity="1" />
+    <End Type="DHHHModel.MOD_HocKy_ChuyenNganh" Role="MOD_HocKy_ChuyenNganh" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MOD_HocKy">
+        <PropertyRef Name="Ky_dang_ky" />
+      </Principal>
+      <Dependent Role="MOD_HocKy_ChuyenNganh">
+        <PropertyRef Name="Ky_dang_ky" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_LopTinChi_TC">
+    <End Type="DHHHModel.MOD_LopTinChi_TC" Role="MOD_LopTinChi_TC" Multiplicity="1" />
+    <End Type="DHHHModel.MOD_NguoiDung_VaiTro_LopTinChi" Role="MOD_NguoiDung_VaiTro_LopTinChi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MOD_LopTinChi_TC">
+        <PropertyRef Name="ID_lop_tc" />
+      </Principal>
+      <Dependent Role="MOD_NguoiDung_VaiTro_LopTinChi">
+        <PropertyRef Name="ID_lop_tc" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Nhom_ThoiKhoaBieu">
+    <End Type="DHHHModel.MOD_LopTinChi_TC" Role="MOD_LopTinChi_TC" Multiplicity="1" />
+    <End Type="DHHHModel.MOD_NhomHocVien" Role="MOD_NhomHocVien" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MOD_LopTinChi_TC">
+        <PropertyRef Name="ID_lop_tc" />
+      </Principal>
+      <Dependent Role="MOD_NhomHocVien">
+        <PropertyRef Name="ID_lop_tc" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_To_ThoiKhoaBieu">
+    <End Type="DHHHModel.MOD_LopTinChi_TC" Role="MOD_LopTinChi_TC" Multiplicity="1" />
+    <End Type="DHHHModel.MOD_ToNhom" Role="MOD_ToNhom" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MOD_LopTinChi_TC">
+        <PropertyRef Name="ID_lop_tc" />
+      </Principal>
+      <Dependent Role="MOD_ToNhom">
+        <PropertyRef Name="ID_lop_tc" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MOD_NguoiDung_MOD_NhomNguoiDung">
+    <End Type="DHHHModel.MOD_NhomNguoiDung" Role="MOD_NhomNguoiDung" Multiplicity="1" />
+    <End Type="DHHHModel.MOD_NguoiDung" Role="MOD_NguoiDung" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MOD_NhomNguoiDung">
+        <PropertyRef Name="ID_nhom_nd" />
+      </Principal>
+      <Dependent Role="MOD_NguoiDung">
+        <PropertyRef Name="ID_nhom_nd" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MOD_NguoiDung_VaiTro_HeThong_MOD_NguoiDung">
+    <End Type="DHHHModel.MOD_NguoiDung" Role="MOD_NguoiDung" Multiplicity="1" />
+    <End Type="DHHHModel.MOD_NguoiDung_VaiTro_HeThong" Role="MOD_NguoiDung_VaiTro_HeThong" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MOD_NguoiDung">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="MOD_NguoiDung_VaiTro_HeThong">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_NguoiDung">
+    <End Type="DHHHModel.MOD_NguoiDung" Role="MOD_NguoiDung" Multiplicity="1" />
+    <End Type="DHHHModel.MOD_NguoiDung_VaiTro_LopTinChi" Role="MOD_NguoiDung_VaiTro_LopTinChi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MOD_NguoiDung">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="MOD_NguoiDung_VaiTro_LopTinChi">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MOD_NguoiDung_VaiTro_HeThong_MOD_VaiTro">
+    <End Type="DHHHModel.MOD_VaiTro" Role="MOD_VaiTro" Multiplicity="1" />
+    <End Type="DHHHModel.MOD_NguoiDung_VaiTro_HeThong" Role="MOD_NguoiDung_VaiTro_HeThong" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MOD_VaiTro">
+        <PropertyRef Name="ID_vai_tro" />
+      </Principal>
+      <Dependent Role="MOD_NguoiDung_VaiTro_HeThong">
+        <PropertyRef Name="ID_vai_tro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_VaiTro">
+    <End Type="DHHHModel.MOD_VaiTro" Role="MOD_VaiTro" Multiplicity="1" />
+    <End Type="DHHHModel.MOD_NguoiDung_VaiTro_LopTinChi" Role="MOD_NguoiDung_VaiTro_LopTinChi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MOD_VaiTro">
+        <PropertyRef Name="ID_vai_tro" />
+      </Principal>
+      <Dependent Role="MOD_NguoiDung_VaiTro_LopTinChi">
+        <PropertyRef Name="ID_vai_tro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Nhom_To">
+    <End Type="DHHHModel.MOD_ToNhom" Role="MOD_ToNhom" Multiplicity="0..1" />
+    <End Type="DHHHModel.MOD_NhomHocVien" Role="MOD_NhomHocVien" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MOD_ToNhom">
+        <PropertyRef Name="ID_to" />
+      </Principal>
+      <Dependent Role="MOD_NhomHocVien">
+        <PropertyRef Name="ID_to" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="SP_SinhVien_Result">
+    <Property Type="Int32" Name="ID_sv" Nullable="false" />
+    <Property Type="String" Name="Ma_sv" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="Ho_dem" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Ten" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="Ngay_sinh" Nullable="true" Precision="23" />
+    <Property Type="String" Name="Gioi_tinh" Nullable="false" MaxLength="3" />
+    <Property Type="String" Name="Ten_lop" Nullable="false" MaxLength="50" />
+    <Property Type="Int64" Name="ID_moodle" Nullable="true" />
+  </ComplexType>
 </Schema>
