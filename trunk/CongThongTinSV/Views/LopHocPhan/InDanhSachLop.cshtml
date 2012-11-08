@@ -131,7 +131,13 @@
 @(Html.Kendo().Grid<CongThongTinSV.Models.SinhVien>()
     .Name("GridSinhVien")
     .Columns(columns => {
-        columns.Bound(sv => sv.ID_sv).Groupable(false);
+        columns.Bound(sv => sv.ID_sv).Groupable(false)
+            .ClientTemplate("<input type='checkbox'  class='chkbx' value='#= ID_sv #'/>")
+            .HeaderTemplate("<input type='checkbox' id='masterCheckBox' onclick='checkAll(this)'/>").Width(200)
+            .Title("")
+            .Width(36)
+            .HtmlAttributes(new { style = "text-align:center" })
+            .Filterable(false).Groupable(false).Sortable(false);
         columns.Bound(sv => sv.Ma_sv);
         columns.Bound(sv => sv.Ho_ten);
         columns.Bound(sv => sv.Lop);
@@ -141,6 +147,9 @@
     .Filterable()
     .Scrollable()
     .Groupable()
+    .Events(e => {
+                e.DataBound("onDataBound");
+            })
     .DataSource(
         dataSource => dataSource
             .Ajax()
@@ -150,6 +159,30 @@
 )
 
 <script type="text/javascript">
+    // this object will store all checked records
+    var selected = {};
+    $(function () {
+        $('#GridSinhVien').on('click', '.chkbx', function () {
+            var checked = $(this).is(':checked');
+            var grid = $('#GridSinhVien').data().kendoGrid;
+            var dataItem = grid.dataItem($(this).closest('tr'));
+            if (!checked) $("#masterCheckBox").attr('checked', 'false');
+            selected[dataItem.ID_sv] = checked;
+        })
+    })
+    function checkAll(ele) {
+        var state = $(ele).is(':checked');
+        var grid = $('#GridSinhVien').data().kendoGrid;
+        $('#GridSinhVien :checkbox').each(function () {
+            selected[$(this).val()] = state;
+            $(this).attr('checked', state);
+        });
+    }
+    function onDataBound(e) {
+        $('#GridSinhVien :checkbox').each(function () {
+            if(selected[$(this).val()]) $(this).attr('checked', 'true');
+        });
+    }
     function filterHocKy() {
         return {
             NamHoc: $("#NamHoc").val()
@@ -165,6 +198,9 @@
         return {
             ID_lop_tc: $("#LopTC").val()
         }
+    }
+    function GridSinhVien_DataBound(e) {
+        alert(e.row);
     }
     function filterLopTC() {
         return {
