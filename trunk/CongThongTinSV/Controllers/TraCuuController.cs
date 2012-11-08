@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Kendo.Mvc.UI;
 
 namespace CongThongTinSV.Controllers
 {
-    public class GiangVienController : Controller
+    public class TraCuuController : Controller
     {
         //
-        // GET: /GiangVien/
+        // GET: /TraCuu/
 
         public ActionResult Index()
         {
             return View();
         }
+
     }
 }

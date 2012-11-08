@@ -43,31 +43,70 @@ namespace CongThongTinSV.Controllers
             //}
             if (ModelState.IsValid)
             {
-                Entities db = new Entities();
-                ViewBag.Service = new SelectList(db.MOD_DichVu, "Ten_rut_gon", "Ten_dv");
-                var q = from sv in db.STU_HoSoSinhVien
-                        join ds in db.STU_DanhSach on sv.ID_sv equals ds.ID_sv
-                        where sv.Ma_sv == model.UserName
-                        select new
-                        {
-                            Ma_sv = sv.Ma_sv,
-                            Mat_khau = ds.Mat_khau,
-                            Ho_ten = sv.Ho_ten
-                        };
-                var hssv = q.First();
-                //Get user token
-                WebRequestController web = new WebRequestController(1, "POST", "username=" + model.UserName + "&password=" + model.Password + "&service=" + Service);
-                string s = web.GetResponse();
-                string[] rs = s.Split(new char[] { '"' });
-                //UtilityController.WriteTextToFile("D:\\token.txt", s + " " + Service + " " + rs.Length);
-                if (rs.Length == 5)
-                    Session["token"] = rs[3].Trim();
-                if (hssv.Mat_khau == model.Password)
+                if (Service == "user")
                 {
-                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                    return RedirectToLocal(returnUrl);
+                    Entities db = new Entities();
+                    ViewBag.Service = new SelectList(db.MOD_DichVu, "Ten_rut_gon", "Ten_dv");
+                    var q = from sv in db.STU_HoSoSinhVien
+                            join ds in db.STU_DanhSach on sv.ID_sv equals ds.ID_sv
+                            where sv.Ma_sv == model.UserName
+                            select new
+                            {
+                                Ma_sv = sv.Ma_sv,
+                                Mat_khau = ds.Mat_khau,
+                                Ho_ten = sv.Ho_ten
+                            };
+                    if (q.Count() > 0)
+                    {
+                        var hssv = q.First();
 
+                        if (hssv.Mat_khau == model.Password)
+                        {
+                            FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                            return RedirectToLocal(returnUrl);
+                        }
+                    }
+                    var q1 = from gv in db.PLAN_GiaoVien
+                             where gv.Ma_cb == model.UserName
+                             select gv;
+                    if (q1.Count() > 0)
+                    {
+                        
+                        var giaovien = q1.First();
+                        if (giaovien.POR_GiaoVien == null)
+                        {
+                            string matkhau = ((DateTime)giaovien.Ngay_sinh).ToString("ddMMyyyy");
+                            if (model.Password == matkhau)
+                            {
+                                db.POR_GiaoVien.Add(new POR_GiaoVien()
+                                {
+                                    ID_cb = giaovien.ID_cb,
+                                    Mat_khau = matkhau
+                                });
+                                db.SaveChanges();
+                                FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                                return RedirectToLocal(returnUrl);
+                            }
+                        }
+                        else {
+                            if (giaovien.POR_GiaoVien.Mat_khau == model.Password)
+                            {
+                                FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                                return RedirectToLocal(returnUrl);
+                            }
+                        }
+                    }
                 }
+
+                ////Get user token
+                //WebRequestController web = new WebRequestController(1, "POST", "username=" + model.UserName + "&password=" + model.Password + "&service=" + Service);
+                //string s = web.GetResponse();
+                //string[] rs = s.Split(new char[] { '"' });
+                ////UtilityController.WriteTextToFile("D:\\token.txt", s + " " + Service + " " + rs.Length);
+                //if (rs.Length == 5)
+                //    Session["token"] = rs[3].Trim();
+
+
                 //if (hssv.Mat_khau == model.Password)
                 //{
                 //    FormsAuthentication.SetAuthCookie(hssv.Ma_sv, model.RememberMe);

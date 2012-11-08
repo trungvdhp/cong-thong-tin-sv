@@ -482,19 +482,32 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="SP_SinhVien" FunctionName="DHHHModel.Store.SP_SinhVien">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="DHHHModel.SP_SinhVien_Result">
-          <ScalarProperty Name="ID_sv" ColumnName="ID_sv" />
-          <ScalarProperty Name="Ma_sv" ColumnName="Ma_sv" />
-          <ScalarProperty Name="Ho_dem" ColumnName="Ho_dem" />
-          <ScalarProperty Name="Ten" ColumnName="Ten" />
+    <EntitySetMapping Name="PLAN_GiaoVien">
+      <EntityTypeMapping TypeName="DHHHModel.PLAN_GiaoVien">
+        <MappingFragment StoreEntitySet="PLAN_GiaoVien">
+          <ScalarProperty Name="ID_chuc_vu" ColumnName="ID_chuc_vu" />
+          <ScalarProperty Name="ID_chuc_danh" ColumnName="ID_chuc_danh" />
+          <ScalarProperty Name="ID_hoc_vi" ColumnName="ID_hoc_vi" />
+          <ScalarProperty Name="ID_hoc_ham" ColumnName="ID_hoc_ham" />
+          <ScalarProperty Name="ID_khoa" ColumnName="ID_khoa" />
           <ScalarProperty Name="Ngay_sinh" ColumnName="Ngay_sinh" />
-          <ScalarProperty Name="Gioi_tinh" ColumnName="Gioi_tinh" />
-          <ScalarProperty Name="Ten_lop" ColumnName="Ten_lop" />
-          <ScalarProperty Name="ID_moodle" ColumnName="ID_moodle" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
+          <ScalarProperty Name="ID_gioi_tinh" ColumnName="ID_gioi_tinh" />
+          <ScalarProperty Name="Ho_ten" ColumnName="Ho_ten" />
+          <ScalarProperty Name="Ten" ColumnName="Ten" />
+          <ScalarProperty Name="Ma_cb" ColumnName="Ma_cb" />
+          <ScalarProperty Name="ID_cb" ColumnName="ID_cb" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="POR_GiaoVien">
+      <EntityTypeMapping TypeName="DHHHModel.POR_GiaoVien">
+        <MappingFragment StoreEntitySet="POR_GiaoVien">
+          <ScalarProperty Name="Trang_thai" ColumnName="Trang_thai" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Mat_khau" ColumnName="Mat_khau" />
+          <ScalarProperty Name="ID_cb" ColumnName="ID_cb" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
