@@ -1296,6 +1296,9 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="SP_Moodle_SinhVien" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Id_chuyen_nganh" Type="int" Mode="In" />
+  </Function>
   <Function Name="SP_SinhVien" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Id_lop" Type="varchar" Mode="In" />
     <Parameter Name="Ma_sv" Type="varchar" Mode="In" />

@@ -1,173 +1,343 @@
-﻿@{
+﻿@using Kendo.Mvc.UI;
+@using CongThongTinSV.Models;
+@{
     ViewBag.Title = "Index";
 }
 
+@(Html.Kendo().DropDownList()
+    .Name("ChuyenNganh")
+    .OptionLabel("Chọn chuyên ngành")
+    .DataTextField("Text")
+    .DataValueField("Value")
+        //.SelectedIndex(0)
+    .DataSource(source =>
+    {
+        source.Read(read =>
+        {
+            read.Action("GetChuyenNganh", "ChuyenNganh");
+        }).ServerFiltering(true);
+    })
+    .Events(e =>
+    {
+        e.Change("loadGridSinhVien");
+    })
+    //.HtmlAttributes(new { style = "display: block;"})
+)
+
+@(Html.Kendo().Grid<CongThongTinSV.Models.MoodleSinhVien>()
+    .Name("GridSinhVien")
+    .Columns(columns => {
+        columns.Bound(sv => sv.ID_sv).Groupable(false)
+            .ClientTemplate("<input type='checkbox'  class='chkbx' value='#= ID_sv #'/>")
+            .HeaderTemplate("<input type='checkbox' id='masterCheckBox' onclick='checkAll(this)'/>").Width(120)
+            .Title("")
+            .Width(36)
+            .HtmlAttributes(new { style = "text-align:center" })
+            .Filterable(false).Groupable(false).Sortable(false);
+        columns.Bound(sv => sv.Ma_sv);
+        columns.Bound(sv => sv.ID_moodle);
+        columns.Bound(sv => sv.Ho_dem);
+        columns.Bound(sv => sv.Ten);
+        columns.Bound(sv => sv.Ngay_sinh).Format("{0:dd-MM-yyyy}");
+        columns.Bound(sv => sv.Gioi_tinh);
+        columns.Bound(sv => sv.Lop);
+    })
+    .Pageable(pager => pager.PageSizes(new int[]{5, 10, 25, 50, 100, 1000}))
+    .Sortable()
+    .Filterable()
+    .Scrollable()
+    .Groupable()
+    .Events(e => {
+                e.DataBound("onDataBound");
+            })
+    .DataSource(
+        dataSource => dataSource
+            .Ajax()
+            .Read(read => read.Action("GetSinhVien", "MoodleUser").Data("filterGrid"))
+            .PageSize(5)
+            
+    )
+)
+<div>
+    <button id="register">Đăng ký tài khoản</button>
+    <button id="unregister">Hủy đăng ký</button>
+</div>
+
 <script type="text/javascript">
-    $(document).ready(function () {
-        var timeoutHnd;
-        var flAuto = false;
-        var idlop = '-1';
-        var $grid = $('#grid'), idsOfSelectedRows = [],
-           ddlsource = "#ddlChuyenNganh",
-           ddltarget = "#ddlLop",
-        updateSelectedId = function (id, isSelected) {
-            var index = $.inArray(id, idsOfSelectedRows);
-            if (!isSelected && index >= 0) {
-                idsOfSelectedRows.splice(index, 1); // remove id from the list
-            } else if (index < 0) {
-                idsOfSelectedRows.push(id);
+    var selectedVals = [];
+
+    function loadGridSinhVien() {
+        selectedVals.splice(0, selectedVals.length);
+        $("#GridSinhVien").data("kendoGrid").dataSource.read();
+    }
+    // on data bound, check checkboxes
+    function onDataBound(e) {
+        var ok = true;
+        $('#GridSinhVien :checkbox').each(function () {
+            var id = $(this).val()
+            var index = inArray(id, selectedVals);
+
+            if (index >= 0) {
+                $(this).attr('checked', true);
             }
-        };
+            else {
+                ok = false;
+            }
+        });
+        
+        $('#masterCheckBox').attr('checked', ok);
+    }
 
-        function doSearch() {
-            if (!flAuto)
-                return;
-            //	var elem = ev.target||ev.srcElement;
-            if (timeoutHnd)
-                clearTimeout(timeoutHnd)
-            timeoutHnd = setTimeout(gridReload, 500)
+    function filterGrid() {
+        return {
+            ID_chuyen_nganh: $("#ChuyenNganh").val()
+        }
+    }
+    // on click checkbox cell in a row
+    $(function () {
+        $('#GridSinhVien').on('click', '.chkbx', function () {
+            var checked = $(this).is(':checked');
+            var grid = $('#GridSinhVien').data().kendoGrid;
+            var dataItem = grid.dataItem($(this).closest('tr'));
+
+            //if (!checked) {
+            //    $('#masterCheckBox').attr('checked', false);
+            //}
+            check(dataItem.ID_sv, checked, selectedVals);
+            //alert(isCheckedAll());
+            $('#masterCheckBox').attr('checked', isCheckedAll());
+        })
+    })
+
+    // return index of value in array
+    function inArray(value, arr) {
+        var len = arr.length;
+
+        for (i = 0; i < len; i++) {
+            if (value == arr[i])
+                return i;
         }
 
-        function gridReload() {
-            $grid.jqGrid('setGridParam', { url: "/MoodleUser/GetSinhVienLop/?id_lop=" + idlop + "&ma_sv=" + jQuery("#masv").val() + "&ho_dem=" + jQuery("#hodem").val() + "&ten=" + jQuery("#ten").val() + "&ngay_sinh=" + jQuery("#ngaysinh").val() + "&gioi_tinh=" + jQuery("#gioitinh").val(), page: 1 }).trigger("reloadGrid");
-            $grid.jqGrid('resetSelection');
-            idsOfSelectedRows.splice(0, idsOfSelectedRows.length);
+        if(i == len){
+            return -1;
         }
+    }
+    // update value to array
+    function check(value, checked, arr) {
+        var index = inArray(value, arr);
+        
+        if (!checked && index >= 0) {
+            // remove id from the list
+            arr.splice(index, 1); 
+        } else if (index < 0) {
+            // add id to list
+            arr.push(value);
+        }
+    }
 
-        $("#autosearch").change(function () {
-            flAuto = document.getElementById("autosearch").checked;
-            jQuery("#submit").attr("disabled", flAuto);
-        })
+    function checkAll(ele) {
+        var state = $(ele).is(':checked');
+        var grid = $('#GridSinhVien').data().kendoGrid;
 
-        $("#submit").click(function () {
-            idlop = jQuery("#ddlLop").val();
-            gridReload();
-        })
-
-        $("#masv").keydown(function () {
-            doSearch();
-        })
-
-        $("#hodem").keydown(function () {
-            doSearch();
-        })
-
-        $("#ten").keydown(function () {
-            doSearch();
-        })
-
-        $("#ngaysinh").keydown(function () {
-            doSearch();
-        })
-
-        $("#gioitinh").keydown(function () {
-            doSearch();
-        })
-
-        $("#ddlChuyenNganh").change(function () {
-            var url = "/Lop/GetLopChuyenNganh"
-            $.getJSON(url, { ID_chuyen_nganh: $(ddlsource).val() }, function (data) {
-                $(ddltarget).empty();
-                $.each(data, function (index, optionData) {
-                    $(ddltarget).append("<option value='" + optionData.Value + "'>" + optionData.Text + "</option>");
-                });
-                if (data.length == 0) {
-                    idlop = '-1';
-                }
-                else {
-                    idlop = data[0].Value;
-                }
-                gridReload();
-            });
-        })
-
-        $("#ddlLop").change(function () {
-            idlop = jQuery("#ddlLop").val();
-            gridReload();
-        })
-
-        $grid.jqGrid({
-            url: "/MoodleUser/GetSinhVienLop/?id_lop=" + jQuery("#ddlLop").val()  + "&ma_sv=" + jQuery("#masv").val() + "&ho_dem=" + jQuery("#hodem").val() + "&ten=" + jQuery("#ten").val() + "&ngay_sinh=" + jQuery("#ngaysinh").val() + "&gioi_tinh=" + jQuery("#gioitinh").val(),
-            datatype: "json",
-            mtype: "POST",
-            gridview: true,
-            colNames: ['ID sinh viên', 'Mã sinh viên', 'ID moodle', 'Họ và đệm', 'Tên', 'Ngày sinh', 'Giới tính'],
-            colModel: [
-                            { name: 'ID_sv', index: 'ID_sv', width: 100, align: "center", hidden: true },
-                            { name: 'Ma_sv', index: 'Ma_sv', width: 100, align: "center" },
-                            { name: 'ID_moodle', index: 'ID_moodle', width: 90, align: "center" },
-                            { name: 'Ho_dem', index: 'Ho_dem', width: 100 },
-                            { name: 'Ten', index: 'Ten', width: 50 },
-                            { name: 'Ngay_sinh', index: 'Ngay_sinh', width: 85, align: "center", formatter: 'date', formatoptions: { newformat: 'd/m/Y'} },
-                            { name: 'Gioi_tinh', index: 'Gioi_tinh', width: 80, align: "center" }
-            ],
-            multiselect: true,
-            rowNum: 50,
-            rownumWidth: 40,
-            rowList: [5, 10, 20, 50, 100],
-            pager: jQuery('#pager1'),
-            toppager: true,
-            sortname: 'ID_sv',
-            //sortable: false,
-            sortorder: "asc",
-            viewrecords: true,
-            caption: "Danh sách sinh viên",
-            rownumbers: true,
-            forceFit: false,
-            shrinkToFit: false,
-            width: 630,
-            height: 250,
-            onSelectRow: updateSelectedId,
-            onSelectAll: function (aRowids, isSelected) {
-                var i, count, id;
-                for (i = 0, count = aRowids.length; i < count; i++) {
-                    id = aRowids[i];
-                    updateSelectedId(id, isSelected);
-                }
-            },
-            loadComplete: function () {
-                var i, count;
-                for (i = 0, count = idsOfSelectedRows.length; i < count; i++) {
-                    $grid.jqGrid('setSelection', idsOfSelectedRows[i], false);
-                }
+        $('#GridSinhVien :checkbox').each(function () {
+            check($(this).val(), state, selectedVals);
+            $(this).attr('checked', state);
+        });
+    }
+    //function ischeckAll() {
+    //    var check = true;
+    //    $('#GridSinhVien :checkbox').each(function () {
+    //        if (!selected[$(this).val()]) check = false;
+    //    });
+    //    return check;
+    //}
+    function isCheckedAll() {
+        var ok = true;
+        $('#GridSinhVien :checkbox').each(function () {
+            //alert($(this).val() + ':' + $(this).is(':checked'));
+            if ($(this).val() != 'on' && !$(this).is(':checked')) {
+                ok = false;
             }
         });
 
-        $grid.jqGrid('navGrid', '#pager1', { refresh: true, del: false, add: false, edit: false, search: false });
+        return ok;
+    }
+    $("#register").click(function () {
+        window.location.href = '/MoodleUser/Register/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&ids=' + selectedVals;
+    })
 
-        $("#register").click(function () {
-            window.location.href='/MoodleUser/Register/?id_lop='+ jQuery("#ddlLop").val() + '&ids=' + idsOfSelectedRows;
-            //$.blockUI({
-            //    message: 'Đang xử lý...',
-            //    css: {
-            //        border: 'none',
-            //        padding: '15px',
-            //        backgroundColor: '#000',
-            //        '-webkit-border-radius': '10px',
-            //        '-moz-border-radius': '10px',
-            //        opacity: .5,
-            //        color: '#fff'
-            //    }
-            //});
+    $(document).ready(function () {
+        // this object will store all checked records
 
-            //$.ajax({
-            //    url: '/MoodleUser/Register/?id_lop='+ jQuery("#ddlLop").val() + '&ids=' + idsOfSelectedRows,
-            //    success: function () { 
-            //        gridReload(); },
-            //    complete: function() { 
-            //        // unblock when remote call returns 
-            //        $.unblockUI(); 
-            //    },
-            //    cache: false
-            //});
-        })
+       
 
-        $("#unregister").click(function () {
-            gridReload();
-        })
+
+        //$(document).ready(function () {
+        //var timeoutHnd;
+        //var flAuto = false;
+        //var idlop = '-1';
+        //var $grid = $('#grid'), idsOfSelectedRows = [],
+        //   ddlsource = "#ddlChuyenNganh",
+        //   ddltarget = "#ddlLop",
+        //updateSelectedId = function (id, isSelected) {
+        //    var index = $.inArray(id, idsOfSelectedRows);
+        //    if (!isSelected && index >= 0) {
+        //        idsOfSelectedRows.splice(index, 1); // remove id from the list
+        //    } else if (index < 0) {
+        //        idsOfSelectedRows.push(id);
+        //    }
+        //};
+
+        //function doSearch() {
+        //    if (!flAuto)
+        //        return;
+        //    //	var elem = ev.target||ev.srcElement;
+        //    if (timeoutHnd)
+        //        clearTimeout(timeoutHnd)
+        //    timeoutHnd = setTimeout(gridReload, 500)
+        //}
+
+        //function gridReload() {
+        //    $grid.jqGrid('setGridParam', { url: "/MoodleUser/GetSinhVienLop/?id_lop=" + idlop + "&ma_sv=" + jQuery("#masv").val() + "&ho_dem=" + jQuery("#hodem").val() + "&ten=" + jQuery("#ten").val() + "&ngay_sinh=" + jQuery("#ngaysinh").val() + "&gioi_tinh=" + jQuery("#gioitinh").val(), page: 1 }).trigger("reloadGrid");
+        //    $grid.jqGrid('resetSelection');
+        //    idsOfSelectedRows.splice(0, idsOfSelectedRows.length);
+        //}
+
+        //$("#autosearch").change(function () {
+        //    flAuto = document.getElementById("autosearch").checked;
+        //    jQuery("#submit").attr("disabled", flAuto);
+        //})
+
+        //$("#submit").click(function () {
+        //    idlop = jQuery("#ddlLop").val();
+        //    gridReload();
+        //})
+
+        //$("#masv").keydown(function () {
+        //    doSearch();
+        //})
+
+        //$("#hodem").keydown(function () {
+        //    doSearch();
+        //})
+
+        //$("#ten").keydown(function () {
+        //    doSearch();
+        //})
+
+        //$("#ngaysinh").keydown(function () {
+        //    doSearch();
+        //})
+
+        //$("#gioitinh").keydown(function () {
+        //    doSearch();
+        //})
+
+        //$("#ddlChuyenNganh").change(function () {
+        //    var url = "/Lop/GetLopChuyenNganh"
+        //    $.getJSON(url, { ID_chuyen_nganh: $(ddlsource).val() }, function (data) {
+        //        $(ddltarget).empty();
+        //        $.each(data, function (index, optionData) {
+        //            $(ddltarget).append("<option value='" + optionData.Value + "'>" + optionData.Text + "</option>");
+        //        });
+        //        if (data.length == 0) {
+        //            idlop = '-1';
+        //        }
+        //        else {
+        //            idlop = data[0].Value;
+        //        }
+        //        gridReload();
+        //    });
+        //})
+
+        //$("#ddlLop").change(function () {
+        //    idlop = jQuery("#ddlLop").val();
+        //    gridReload();
+        //})
+
+        //$grid.jqGrid({
+        //    url: "/MoodleUser/GetSinhVienLop/?id_lop=" + jQuery("#ddlLop").val()  + "&ma_sv=" + jQuery("#masv").val() + "&ho_dem=" + jQuery("#hodem").val() + "&ten=" + jQuery("#ten").val() + "&ngay_sinh=" + jQuery("#ngaysinh").val() + "&gioi_tinh=" + jQuery("#gioitinh").val(),
+        //    datatype: "json",
+        //    mtype: "POST",
+        //    gridview: true,
+        //    colNames: ['ID sinh viên', 'Mã sinh viên', 'ID moodle', 'Họ và đệm', 'Tên', 'Ngày sinh', 'Giới tính'],
+        //    colModel: [
+        //                    { name: 'ID_sv', index: 'ID_sv', width: 100, align: "center", hidden: true },
+        //                    { name: 'Ma_sv', index: 'Ma_sv', width: 100, align: "center" },
+        //                    { name: 'ID_moodle', index: 'ID_moodle', width: 90, align: "center" },
+        //                    { name: 'Ho_dem', index: 'Ho_dem', width: 100 },
+        //                    { name: 'Ten', index: 'Ten', width: 50 },
+        //                    { name: 'Ngay_sinh', index: 'Ngay_sinh', width: 85, align: "center", formatter: 'date', formatoptions: { newformat: 'd/m/Y'} },
+        //                    { name: 'Gioi_tinh', index: 'Gioi_tinh', width: 80, align: "center" }
+        //    ],
+        //    multiselect: true,
+        //    rowNum: 50,
+        //    rownumWidth: 40,
+        //    rowList: [5, 10, 20, 50, 100],
+        //    pager: jQuery('#pager1'),
+        //    toppager: true,
+        //    sortname: 'ID_sv',
+        //    //sortable: false,
+        //    sortorder: "asc",
+        //    viewrecords: true,
+        //    caption: "Danh sách sinh viên",
+        //    rownumbers: true,
+        //    forceFit: false,
+        //    shrinkToFit: false,
+        //    width: 630,
+        //    height: 250,
+        //    onSelectRow: updateSelectedId,
+        //    onSelectAll: function (aRowids, isSelected) {
+        //        var i, count, id;
+        //        for (i = 0, count = aRowids.length; i < count; i++) {
+        //            id = aRowids[i];
+        //            updateSelectedId(id, isSelected);
+        //        }
+        //    },
+        //    loadComplete: function () {
+        //        var i, count;
+        //        for (i = 0, count = idsOfSelectedRows.length; i < count; i++) {
+        //            $grid.jqGrid('setSelection', idsOfSelectedRows[i], false);
+        //        }
+        //    }
+        //});
+
+        //$grid.jqGrid('navGrid', '#pager1', { refresh: true, del: false, add: false, edit: false, search: false });
+
+        //$("#register").click(function () {
+        //    window.location.href='/MoodleUser/Register/?id_lop='+ jQuery("#ddlLop").val() + '&ids=' + selectedVals;
+        //$.blockUI({
+        //    message: 'Đang xử lý...',
+        //    css: {
+        //        border: 'none',
+        //        padding: '15px',
+        //        backgroundColor: '#000',
+        //        '-webkit-border-radius': '10px',
+        //        '-moz-border-radius': '10px',
+        //        opacity: .5,
+        //        color: '#fff'
+        //    }
+        //});
+
+        //$.ajax({
+        //    url: '/MoodleUser/Register/?id_lop='+ jQuery("#ddlLop").val() + '&ids=' + idsOfSelectedRows,
+        //    success: function () { 
+        //        gridReload(); },
+        //    complete: function() { 
+        //        // unblock when remote call returns 
+        //        $.unblockUI(); 
+        //    },
+        //    cache: false
+        //});
+        //    })
+
+        //    $("#unregister").click(function () {
+        //        gridReload();
+        //    })
+        //});
     });
 </script>
-<h2>Quản lý tài khoản sinh viên trên Moodle</h2>
+@*<h2>Quản lý tài khoản sinh viên trên Moodle</h2>
 <br />
 
 <div>
@@ -192,4 +362,4 @@
         <button id="unregister">Hủy đăng ký</button>
     </div>
     <br /><br />
-</div>
+</div>*@

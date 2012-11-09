@@ -591,5 +591,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="SP_Moodle_SinhVien" FunctionName="DHHHModel.Store.SP_Moodle_SinhVien">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DHHHModel.SP_Moodle_SinhVien_Result">
+          <ScalarProperty Name="ID_sv" ColumnName="ID_sv" />
+          <ScalarProperty Name="Ma_sv" ColumnName="Ma_sv" />
+          <ScalarProperty Name="Ho_dem" ColumnName="Ho_dem" />
+          <ScalarProperty Name="Ten" ColumnName="Ten" />
+          <ScalarProperty Name="Ngay_sinh" ColumnName="Ngay_sinh" />
+          <ScalarProperty Name="Gioi_tinh" ColumnName="Gioi_tinh" />
+          <ScalarProperty Name="Ten_lop" ColumnName="Ten_lop" />
+          <ScalarProperty Name="ID_moodle" ColumnName="ID_moodle" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

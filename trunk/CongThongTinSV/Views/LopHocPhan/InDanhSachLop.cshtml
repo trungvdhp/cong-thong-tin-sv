@@ -160,14 +160,18 @@
 
 <script type="text/javascript">
     // this object will store all checked records
-    var selected = {};
+    var selected = Array();
     $(function () {
         $('#GridSinhVien').on('click', '.chkbx', function () {
             var checked = $(this).is(':checked');
             var grid = $('#GridSinhVien').data().kendoGrid;
             var dataItem = grid.dataItem($(this).closest('tr'));
-            if (!checked) $("#masterCheckBox").attr('checked', 'false');
             selected[dataItem.ID_sv] = checked;
+            var check = true;
+            $('#GridSinhVien :checkbox').each(function () {
+                if (!selected[$(this).val()]) check = false;
+            });
+            $("#masterCheckBox").attr('checked', check);
         })
     })
     function checkAll(ele) {
@@ -179,9 +183,12 @@
         });
     }
     function onDataBound(e) {
+        var check = true;
         $('#GridSinhVien :checkbox').each(function () {
-            if(selected[$(this).val()]) $(this).attr('checked', 'true');
+            if (!selected[$(this).val()]) check = false;
+            if (selected[$(this).val()]) $(this).attr('checked', true);
         });
+        $("#masterCheckBox").attr('checked', check);
     }
     function filterHocKy() {
         return {

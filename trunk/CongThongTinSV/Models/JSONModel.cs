@@ -23,12 +23,6 @@ namespace CongThongTinSV.Models
         public string debuginfo { get; set; }
     }
 
-    public class MoodleCreateUserResponse
-    {
-        public string id { get; set; }
-        public string username { get; set; }
-    }
-
     public class SinhVien
     {
         [DisplayName("ID")]

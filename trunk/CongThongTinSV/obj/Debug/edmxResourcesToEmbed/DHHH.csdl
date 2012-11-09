@@ -96,6 +96,9 @@
       <End Role="MOD_NhomHocVien" EntitySet="MOD_NhomHocVien" />
     </AssociationSet>
     <EntitySet Name="STU_DanhSachLopTinChi" EntityType="DHHHModel.STU_DanhSachLopTinChi" />
+    <FunctionImport Name="SP_Moodle_SinhVien" ReturnType="Collection(DHHHModel.SP_Moodle_SinhVien_Result)">
+      <Parameter Name="Id_chuyen_nganh" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="SP_SinhVienLopTC_Result">
     <Property Type="Int32" Name="ID_sv" Nullable="false" />
@@ -898,4 +901,14 @@
     <Property Type="Boolean" Name="Chuyen_nganh2" Nullable="false" />
     <Property Type="Boolean" Name="CLC" />
   </EntityType>
+  <ComplexType Name="SP_Moodle_SinhVien_Result">
+    <Property Type="Int32" Name="ID_sv" Nullable="false" />
+    <Property Type="String" Name="Ma_sv" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="Ho_dem" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Ten" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="Ngay_sinh" Nullable="true" Precision="23" />
+    <Property Type="String" Name="Gioi_tinh" Nullable="false" MaxLength="3" />
+    <Property Type="String" Name="Ten_lop" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="ID_moodle" Nullable="true" />
+  </ComplexType>
 </Schema>
