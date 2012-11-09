@@ -24,8 +24,5 @@ namespace CongThongTinSV
         public Nullable<bool> Rut_bot_hoc_phan { get; set; }
         public bool Chuyen_nganh2 { get; set; }
         public Nullable<bool> CLC { get; set; }
-    
-        public virtual PLAN_LopTinChi_TC PLAN_LopTinChi_TC { get; set; }
-        public virtual STU_HoSoSinhVien STU_HoSoSinhVien { get; set; }
     }
 }

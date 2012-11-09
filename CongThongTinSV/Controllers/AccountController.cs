@@ -41,9 +41,11 @@ namespace CongThongTinSV.Controllers
             //{
             //    return RedirectToLocal(returnUrl);
             //}
+            bool ok = false;
+
             if (ModelState.IsValid)
             {
-                if (Service == "user")
+                if (Service == "user" || Service == "admin")
                 {
                     Entities db = new Entities();
                     ViewBag.Service = new SelectList(db.MOD_DichVu, "Ten_rut_gon", "Ten_dv");
@@ -62,51 +64,64 @@ namespace CongThongTinSV.Controllers
 
                         if (hssv.Mat_khau == model.Password)
                         {
-                            FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                            return RedirectToLocal(returnUrl);
+                            ok = true;
                         }
                     }
+
                     var q1 = from gv in db.PLAN_GiaoVien
                              where gv.Ma_cb == model.UserName
                              select gv;
+
                     if (q1.Count() > 0)
                     {
-                        
-                        var giaovien = q1.First();
-                        if (giaovien.POR_GiaoVien == null)
+                        string matkhau = ((DateTime)q1.First().Ngay_sinh).ToString("ddMMyyyy");
+                        var giaovien = (from gv1 in q1
+                                       join gv2 in db.POR_GiaoVien 
+                                       on gv1.ID_cb equals gv2.ID_cb 
+                                       select new
+                                       {
+                                            ID_cb = gv2.ID_cb,
+                                            Mat_khau = gv2.Mat_khau,
+                                            Ngay_sinh = gv1.Ngay_sinh
+                                       });
+                                        
+                        if (giaovien.Count() == 0)
                         {
-                            string matkhau = ((DateTime)giaovien.Ngay_sinh).ToString("ddMMyyyy");
                             if (model.Password == matkhau)
                             {
                                 db.POR_GiaoVien.Add(new POR_GiaoVien()
                                 {
-                                    ID_cb = giaovien.ID_cb,
+                                    ID_cb = q1.First().ID_cb,
                                     Mat_khau = matkhau
                                 });
                                 db.SaveChanges();
-                                FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                                return RedirectToLocal(returnUrl);
+                                ok = true;
                             }
                         }
                         else {
-                            if (giaovien.POR_GiaoVien.Mat_khau == model.Password)
+                            if (giaovien.First().Mat_khau == model.Password)
                             {
-                                FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                                return RedirectToLocal(returnUrl);
+                                ok = true;
                             }
                         }
                     }
                 }
 
-                ////Get user token
-                //WebRequestController web = new WebRequestController(1, "POST", "username=" + model.UserName + "&password=" + model.Password + "&service=" + Service);
-                //string s = web.GetResponse();
-                //string[] rs = s.Split(new char[] { '"' });
-                ////UtilityController.WriteTextToFile("D:\\token.txt", s + " " + Service + " " + rs.Length);
-                //if (rs.Length == 5)
-                //    Session["token"] = rs[3].Trim();
+                if (ok)
+                {
+                    //Get user token
+                    WebRequestController web = new WebRequestController(1, "POST", "username=" + model.UserName + "&password=" + model.Password + "&service=" + Service);
+                    string s = web.GetResponse();
+                    string[] rs = s.Split(new char[] { '"' });
+                    //UtilityController.WriteTextToFile("D:\\token.txt", s + " " + Service + " " + rs.Length);
+                    if (rs.Length == 5)
+                    {
+                        Session["token"] = rs[3].Trim();
+                    }
 
-
+                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                    return RedirectToLocal(returnUrl);
+                }
                 //if (hssv.Mat_khau == model.Password)
                 //{
                 //    FormsAuthentication.SetAuthCookie(hssv.Ma_sv, model.RememberMe);

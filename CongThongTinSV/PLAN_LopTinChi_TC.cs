@@ -14,12 +14,6 @@ namespace CongThongTinSV
     
     public partial class PLAN_LopTinChi_TC
     {
-        public PLAN_LopTinChi_TC()
-        {
-            this.PLAN_SukiensTinChi_TC = new HashSet<PLAN_SukiensTinChi_TC>();
-            this.STU_DanhSachLopTinChi = new HashSet<STU_DanhSachLopTinChi>();
-        }
-    
         public int ID_lop_tc { get; set; }
         public int ID_lop_lt { get; set; }
         public int ID_mon_tc { get; set; }
@@ -37,9 +31,5 @@ namespace CongThongTinSV
         public string Nhom_dang_ky { get; set; }
         public Nullable<System.DateTime> Ngay_thi { get; set; }
         public Nullable<int> Cho_trong { get; set; }
-    
-        public virtual PLAN_MonTinChi_TC PLAN_MonTinChi_TC { get; set; }
-        public virtual ICollection<PLAN_SukiensTinChi_TC> PLAN_SukiensTinChi_TC { get; set; }
-        public virtual ICollection<STU_DanhSachLopTinChi> STU_DanhSachLopTinChi { get; set; }
     }
 }

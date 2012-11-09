@@ -24,11 +24,13 @@ namespace CongThongTinSV.Controllers
             JsonResult result = new JsonResult();
             result.Data = new SelectList(db.ViewNamHoc, "Nam_hoc", "Nam_hoc");
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+
             return result;
         }
         public JsonResult GetHocKy(string NamHoc)
         {
             Entities db=new Entities();
+
             var q = (from nh in db.PLAN_HocKyDangKy_TC
                      where nh.Nam_hoc == NamHoc
                      select new
@@ -51,6 +53,7 @@ namespace CongThongTinSV.Controllers
             JsonResult result = new JsonResult();
             result.Data = new SelectList(q, "Ky_dang_ky", "Dot");
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+
             return result;
         }
         public JsonResult GetHeDT()
@@ -59,24 +62,30 @@ namespace CongThongTinSV.Controllers
             JsonResult result = new JsonResult();
             result.Data = new SelectList(db.STU_He, "Id_he", "Ten_he");
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+
             return result;
         }
+
         public JsonResult GetKhoa()
         {
             Entities db = new Entities();
             JsonResult result = new JsonResult();
             result.Data = new SelectList(db.STU_Khoa, "Id_khoa", "Ten_khoa");
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+
             return result;
         }
+
         public JsonResult GetChuyenNganh()
         {
             Entities db = new Entities();
             JsonResult result = new JsonResult();
             result.Data = new SelectList(db.STU_ChuyenNganh, "Id_chuyen_nganh", "Ten_chuyen_nganh");
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+
             return result;
         }
+
         public JsonResult GetKhoaHoc()
         {
             Entities db = new Entities();
@@ -98,15 +107,19 @@ namespace CongThongTinSV.Controllers
             Entities db = new Entities();
             var lop = db.STU_Lop.First(l => l.Khoa_hoc == Khoa_hoc);
             var kdk = db.PLAN_HocKyDangKy_TC.Single(k => k.Ky_dang_ky == Ky_dang_ky);
+
             int namhoc=Convert.ToInt32(kdk.Nam_hoc.Split(new string[]{"-"},StringSplitOptions.None)[0]);
             int namnhaphoc = Convert.ToInt32(lop.Nien_khoa.Split(new string[] { "-" }, StringSplitOptions.None)[0]);
             int hocky = 2 * (namhoc - namnhaphoc) + kdk.Hoc_ky;
-            var q1 = from ctdt in db.PLAN_ChuongTrinhDaoTaoChiTiet
-                     where ctdt.PLAN_ChuongTrinhDaoTao.ID_khoa == ID_khoa 
-                     && ctdt.PLAN_ChuongTrinhDaoTao.ID_he == ID_he 
-                     && ctdt.PLAN_ChuongTrinhDaoTao.Khoa_hoc == Khoa_hoc
-                     && ctdt.Ky_thu==hocky
-                     select ctdt;
+
+            var q1 = from ct in db.PLAN_ChuongTrinhDaoTaoChiTiet
+                     join dt in db.PLAN_ChuongTrinhDaoTao on ct.ID_dt equals dt.ID_dt
+                     where dt.ID_khoa == ID_khoa 
+                     && dt.ID_he == ID_he 
+                     && dt.Khoa_hoc == Khoa_hoc
+                     && ct.Ky_thu == hocky
+                     select ct;
+
             Dictionary<int, PLAN_ChuongTrinhDaoTaoChiTiet> mon = new Dictionary<int, PLAN_ChuongTrinhDaoTaoChiTiet>();
             foreach (var m in q1) if (!mon.ContainsKey(m.ID_mon)) mon.Add(m.ID_mon, m);
 
@@ -125,14 +138,17 @@ namespace CongThongTinSV.Controllers
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return result;
         }
+
         public ActionResult GetSinhVienLopTC([DataSourceRequest] DataSourceRequest request, int ID_lop_tc)
         {
 
             return Json(SinhVienLopTC(ID_lop_tc).ToDataSourceResult(request));
         }
+
         public static IEnumerable<SinhVien> SinhVienLopTC(int ID_lop_tc)
         {
             Entities db=new Entities();
+
             return db.SP_SinhVienLopTC(ID_lop_tc).Select(sv => new SinhVien
             {
                 ID_sv = sv.ID_sv,

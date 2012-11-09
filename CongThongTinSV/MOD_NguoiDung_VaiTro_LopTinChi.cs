@@ -14,7 +14,6 @@ namespace CongThongTinSV
     
     public partial class MOD_NguoiDung_VaiTro_LopTinChi
     {
-        public long STT { get; set; }
         public int UserID { get; set; }
         public int ID_lop_tc { get; set; }
         public int ID_vai_tro { get; set; }

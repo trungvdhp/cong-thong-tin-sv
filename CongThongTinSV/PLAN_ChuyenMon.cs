@@ -12,11 +12,10 @@ namespace CongThongTinSV
     using System;
     using System.Collections.Generic;
     
-    public partial class STU_Khoa
+    public partial class PLAN_ChuyenMon
     {
-        public int ID_khoa { get; set; }
-        public string Ma_khoa { get; set; }
-        public string Ten_khoa { get; set; }
-        public string Ten_khoa_en { get; set; }
+        public int ID_chuyen_mon { get; set; }
+        public string Ma_chuyen_mon { get; set; }
+        public string Chuyen_mon { get; set; }
     }
 }

@@ -19,8 +19,8 @@ namespace CongThongTinSV
             this.MOD_HocKy_ChuyenNganh = new HashSet<MOD_HocKy_ChuyenNganh>();
         }
     
+        public int ID_moodle { get; set; }
         public int Ky_dang_ky { get; set; }
-        public long ID_moodle { get; set; }
     
         public virtual ICollection<MOD_HocKy_ChuyenNganh> MOD_HocKy_ChuyenNganh { get; set; }
     }

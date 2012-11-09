@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel;
+using System.Runtime.Serialization;
 
 namespace CongThongTinSV.Models
 {
@@ -13,6 +14,21 @@ namespace CongThongTinSV.Models
         public String Ten_lop { get; set; }
 
     }
+
+    public class MoodleException
+    {
+        public string exception { get; set; }
+        public string errorcode { get; set; }
+        public string message { get; set; }
+        public string debuginfo { get; set; }
+    }
+
+    public class MoodleCreateUserResponse
+    {
+        public string id { get; set; }
+        public string username { get; set; }
+    }
+
     public class SinhVien
     {
         [DisplayName("ID")]

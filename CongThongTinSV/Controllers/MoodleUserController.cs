@@ -6,6 +6,10 @@ using System.Web.Mvc;
 using System.Web.Security;
 using System.Linq.Expressions;
 using System.Collections;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using CongThongTinSV.Models;
+using System.Web.Script.Serialization;
 
 namespace CongThongTinSV.Controllers
 {
@@ -67,7 +71,7 @@ namespace CongThongTinSV.Controllers
         {
             Entities db = new Entities();
             IEnumerable<string> s = ids.Split(new char[] { ',' });
-            var sp = db.SP_SinhVien(id_lop, "", "", "", "", "").Where(t1 => !t1.ID_moodle.HasValue && s.Contains(t1.ID_sv.ToString()));
+            var sp = db.SP_SinhVien(id_lop, "", "", "", "", "").Where(t1 => !t1.ID_moodle.HasValue && s.Contains(t1.ID_sv.ToString())).ToList();
             int i = 0;
             string postData = "wsfunction=core_user_create_users";
 
@@ -89,9 +93,39 @@ namespace CongThongTinSV.Controllers
 
             WebRequestController web = new WebRequestController(4, "POST", postData);
             string rs = web.GetResponse();
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            MoodleException moodleError = new MoodleException();
+            List<MoodleCreateUserResponse> newUsers = new List<MoodleCreateUserResponse>();
+
+            if (rs.Contains("exception"))
+            {
+                // Error
+                moodleError = serializer.Deserialize<MoodleException>(rs);
+            }
+            else
+            {
+                // Good
+                newUsers = serializer.Deserialize<List<MoodleCreateUserResponse>>(rs);
+                i = 0;
+                
+                foreach (SP_SinhVien_Result sv in sp)
+                {
+                    MOD_NguoiDung user = new MOD_NguoiDung();
+
+                    user.ID_moodle = Convert.ToInt32(newUsers[i].id);
+                    user.ID_nd = sv.ID_sv;
+                    user.ID_nhom_nd = 3;
+
+                    db.MOD_NguoiDung.Add(user);
+                    i++;
+                }
+
+                db.SaveChanges();
+            }
+
             UtilityController.WriteTextToFile("D:\\user.txt", rs);
             ViewBag.SelectedIds = new SelectList(sp, "ID_sv", "Ma_sv");
-            ViewBag.Result = rs;
+            ViewBag.Result = "Result: " + newUsers[0].username + ": " + newUsers[0].id;
             return View();
         }
     }

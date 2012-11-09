@@ -14,11 +14,6 @@ namespace CongThongTinSV
     
     public partial class PLAN_ChuongTrinhDaoTao
     {
-        public PLAN_ChuongTrinhDaoTao()
-        {
-            this.PLAN_ChuongTrinhDaoTaoChiTiet = new HashSet<PLAN_ChuongTrinhDaoTaoChiTiet>();
-        }
-    
         public int ID_dt { get; set; }
         public int ID_he { get; set; }
         public int ID_khoa { get; set; }
@@ -27,9 +22,5 @@ namespace CongThongTinSV
         public float So_hoc_trinh { get; set; }
         public int So_ky_hoc { get; set; }
         public Nullable<int> So { get; set; }
-    
-        public virtual STU_He STU_He { get; set; }
-        public virtual STU_Khoa STU_Khoa { get; set; }
-        public virtual ICollection<PLAN_ChuongTrinhDaoTaoChiTiet> PLAN_ChuongTrinhDaoTaoChiTiet { get; set; }
     }
 }

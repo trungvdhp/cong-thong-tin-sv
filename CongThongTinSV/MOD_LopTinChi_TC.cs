@@ -21,8 +21,8 @@ namespace CongThongTinSV
             this.MOD_ToNhom = new HashSet<MOD_ToNhom>();
         }
     
+        public int ID_moodle { get; set; }
         public int ID_lop_tc { get; set; }
-        public long ID_moodle { get; set; }
     
         public virtual ICollection<MOD_NguoiDung_VaiTro_LopTinChi> MOD_NguoiDung_VaiTro_LopTinChi { get; set; }
         public virtual ICollection<MOD_NhomHocVien> MOD_NhomHocVien { get; set; }

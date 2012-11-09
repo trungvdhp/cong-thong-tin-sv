@@ -137,11 +137,27 @@
 
         $("#register").click(function () {
             window.location.href='/MoodleUser/Register/?id_lop='+ jQuery("#ddlLop").val() + '&ids=' + idsOfSelectedRows;
-            //var params = { ids: idsOfSelectedRows};
+            //$.blockUI({
+            //    message: 'Đang xử lý...',
+            //    css: {
+            //        border: 'none',
+            //        padding: '15px',
+            //        backgroundColor: '#000',
+            //        '-webkit-border-radius': '10px',
+            //        '-moz-border-radius': '10px',
+            //        opacity: .5,
+            //        color: '#fff'
+            //    }
+            //});
+
             //$.ajax({
-            //    url: '/MoodleUser/Register/',
-            //    data: params,
-            //    success: gridReload(),
+            //    url: '/MoodleUser/Register/?id_lop='+ jQuery("#ddlLop").val() + '&ids=' + idsOfSelectedRows,
+            //    success: function () { 
+            //        gridReload(); },
+            //    complete: function() { 
+            //        // unblock when remote call returns 
+            //        $.unblockUI(); 
+            //    },
             //    cache: false
             //});
         })
