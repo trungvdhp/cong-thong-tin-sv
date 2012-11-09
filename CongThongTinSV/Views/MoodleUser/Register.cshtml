@@ -4,6 +4,6 @@
 
 <h2>Register</h2>
 <div>
-    @*@Html.DropDownList("ddl", (SelectList)ViewBag.SelectedIds)*@
-    <p>@ViewBag.Result</p>
+    @Html.DropDownList("ddlIds", (SelectList)ViewBag.SelectedIds)
+    @Html.DropDownList("ddlUser", (SelectList)ViewBag.Result)
 </div>

@@ -106,5 +106,14 @@ namespace CongThongTinSV
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_SinhVien_Result>("SP_SinhVien", id_lopParameter, ma_svParameter, ho_demParameter, tenParameter, ngay_sinhParameter, gioi_tinhParameter);
         }
+    
+        public virtual ObjectResult<SP_Moodle_SinhVien_Result> SP_Moodle_SinhVien(Nullable<int> id_chuyen_nganh)
+        {
+            var id_chuyen_nganhParameter = id_chuyen_nganh.HasValue ?
+                new ObjectParameter("Id_chuyen_nganh", id_chuyen_nganh) :
+                new ObjectParameter("Id_chuyen_nganh", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_Moodle_SinhVien_Result>("SP_Moodle_SinhVien", id_chuyen_nganhParameter);
+        }
     }
 }

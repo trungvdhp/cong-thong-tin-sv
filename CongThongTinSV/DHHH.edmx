@@ -1301,6 +1301,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="SP_Moodle_SinhVien" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id_chuyen_nganh" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_SinhVien" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id_lop" Type="varchar" Mode="In" />
           <Parameter Name="Ma_sv" Type="varchar" Mode="In" />
@@ -1412,6 +1415,9 @@
             <End Role="MOD_NhomHocVien" EntitySet="MOD_NhomHocVien" />
           </AssociationSet>
           <EntitySet Name="STU_DanhSachLopTinChi" EntityType="DHHHModel.STU_DanhSachLopTinChi" />
+          <FunctionImport Name="SP_Moodle_SinhVien" ReturnType="Collection(DHHHModel.SP_Moodle_SinhVien_Result)">
+            <Parameter Name="Id_chuyen_nganh" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="SP_SinhVienLopTC_Result">
           <Property Type="Int32" Name="ID_sv" Nullable="false" />
@@ -2214,6 +2220,16 @@
           <Property Type="Boolean" Name="Chuyen_nganh2" Nullable="false" />
           <Property Type="Boolean" Name="CLC" />
         </EntityType>
+        <ComplexType Name="SP_Moodle_SinhVien_Result">
+          <Property Type="Int32" Name="ID_sv" Nullable="false" />
+          <Property Type="String" Name="Ma_sv" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Ho_dem" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Ten" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="Ngay_sinh" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Gioi_tinh" Nullable="false" MaxLength="3" />
+          <Property Type="String" Name="Ten_lop" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="ID_moodle" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2810,6 +2826,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_Moodle_SinhVien" FunctionName="DHHHModel.Store.SP_Moodle_SinhVien">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DHHHModel.SP_Moodle_SinhVien_Result">
+                <ScalarProperty Name="ID_sv" ColumnName="ID_sv" />
+                <ScalarProperty Name="Ma_sv" ColumnName="Ma_sv" />
+                <ScalarProperty Name="Ho_dem" ColumnName="Ho_dem" />
+                <ScalarProperty Name="Ten" ColumnName="Ten" />
+                <ScalarProperty Name="Ngay_sinh" ColumnName="Ngay_sinh" />
+                <ScalarProperty Name="Gioi_tinh" ColumnName="Gioi_tinh" />
+                <ScalarProperty Name="Ten_lop" ColumnName="Ten_lop" />
+                <ScalarProperty Name="ID_moodle" ColumnName="ID_moodle" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -10,6 +10,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using CongThongTinSV.Models;
 using System.Web.Script.Serialization;
+using Kendo.Mvc.UI;
+using Kendo.Mvc.Extensions;
 
 namespace CongThongTinSV.Controllers
 {
@@ -20,15 +22,38 @@ namespace CongThongTinSV.Controllers
 
         public ActionResult Index()
         {
-            Entities db = new Entities();
-            SelectList cn = new SelectList(db.STU_ChuyenNganh.OrderBy(f => f.Chuyen_nganh), "ID_chuyen_nganh", "Chuyen_nganh");
-            SelectListItem first = cn.First();
-            first.Selected = true;
-            int ID_chuyen_nganh = Convert.ToInt32(first.Value);
-            ViewBag.Message = "Danh sách sinh viên!";
-            ViewBag.ChuyenNganh = cn;
-            ViewBag.Lop = new SelectList(db.STU_Lop.Where(t=>t.ID_chuyen_nganh == ID_chuyen_nganh).OrderBy(o=>o.Ten_lop), "ID_lop", "Ten_lop");
+            //Entities db = new Entities();
+            //SelectList cn = new SelectList(db.STU_ChuyenNganh.OrderBy(f => f.Chuyen_nganh), "ID_chuyen_nganh", "Chuyen_nganh");
+            //SelectListItem first = cn.First();
+            //first.Selected = true;
+            //int ID_chuyen_nganh = Convert.ToInt32(first.Value);
+            //ViewBag.Message = "Danh sách sinh viên!";
+            //ViewBag.ChuyenNganh = cn;
+            //ViewBag.Lop = new SelectList(db.STU_Lop.Where(t=>t.ID_chuyen_nganh == ID_chuyen_nganh).OrderBy(o=>o.Ten_lop), "ID_lop", "Ten_lop");
             return View();
+        }
+
+        public ActionResult GetSinhVien([DataSourceRequest] DataSourceRequest request, int ID_chuyen_nganh)
+        {
+
+            return Json(MoodleSinhViens(ID_chuyen_nganh).ToDataSourceResult(request));
+        }
+
+        public IEnumerable<MoodleSinhVien> MoodleSinhViens(int ID_chuyen_nganh)
+        {
+            Entities db = new Entities();
+
+            return db.SP_Moodle_SinhVien(ID_chuyen_nganh).Select(sv => new MoodleSinhVien
+            {
+                ID_sv = sv.ID_sv,
+                ID_moodle = sv.ID_moodle,
+                Ma_sv = sv.Ma_sv,
+                Ho_dem = sv.Ho_dem,
+                Ten = sv.Ten,
+                Ngay_sinh = sv.Ngay_sinh,
+                Gioi_tinh = sv.Gioi_tinh,
+                Lop = sv.Ten_lop
+            }).ToList();
         }
 
         public ActionResult GetSinhVienLop(string sidx, string sord, int page, int rows, string id_lop="", string ma_sv="", string ho_dem="", string ten="", string ngay_sinh="", string gioi_tinh="")
@@ -67,21 +92,19 @@ namespace CongThongTinSV.Controllers
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Register(string ids, string id_lop)
+        public ActionResult Register(string selectedIDs, string id_chuyen_nganh)
         {
             Entities db = new Entities();
-            IEnumerable<string> s = ids.Split(new char[] { ',' });
-            var sp = db.SP_SinhVien(id_lop, "", "", "", "", "").Where(t1 => !t1.ID_moodle.HasValue && s.Contains(t1.ID_sv.ToString())).ToList();
+            IEnumerable<string> s = selectedIDs.Split(new char[] { ',' });
+
+            var sp = db.SP_Moodle_SinhVien(Convert.ToInt32(id_chuyen_nganh)).Where(t1 => !t1.ID_moodle.HasValue && s.Contains(t1.ID_sv.ToString())).ToList();
             int i = 0;
             string postData = "wsfunction=core_user_create_users";
 
-            foreach(SP_SinhVien_Result sv in sp)
+            foreach (SP_Moodle_SinhVien_Result sv in sp)
             {
                 postData += "&users[" + i + "][username]=" + sv.Ma_sv;
-                postData += "&users[" + i + "][password]=" 
-                    + sv.Ngay_sinh.Value.Day.ToString()
-                    + sv.Ngay_sinh.Value.Month.ToString() 
-                    + sv.Ngay_sinh.Value.Year.ToString();
+                postData += "&users[" + i + "][password]=" + ((DateTime)sv.Ngay_sinh).ToString("ddMMyyyy");
                 postData += "&users[" + i + "][firstname]=" + HttpUtility.UrlEncode(sv.Ten);
                 postData += "&users[" + i + "][lastname]=" + HttpUtility.UrlEncode(sv.Ho_dem);
                 postData += "&users[" + i + "][email]=" + "st" + sv.Ma_sv + "@st.vimaru.edu.vn";
@@ -107,8 +130,8 @@ namespace CongThongTinSV.Controllers
                 // Good
                 newUsers = serializer.Deserialize<List<MoodleCreateUserResponse>>(rs);
                 i = 0;
-                
-                foreach (SP_SinhVien_Result sv in sp)
+
+                foreach (SP_Moodle_SinhVien_Result sv in sp)
                 {
                     MOD_NguoiDung user = new MOD_NguoiDung();
 
@@ -123,9 +146,10 @@ namespace CongThongTinSV.Controllers
                 db.SaveChanges();
             }
 
-            UtilityController.WriteTextToFile("D:\\user.txt", rs);
-            ViewBag.SelectedIds = new SelectList(sp, "ID_sv", "Ma_sv");
-            ViewBag.Result = "Result: " + newUsers[0].username + ": " + newUsers[0].id;
+            //UtilityController.WriteTextToFile("D:\\user.txt", rs);
+            
+            ViewBag.SelectedIds = new SelectList(sp, "Ma_sv", "ID_moodle");
+            ViewBag.Result = new SelectList(sp, "ID_moodle", "Ma_sv");
             return View();
         }
     }
