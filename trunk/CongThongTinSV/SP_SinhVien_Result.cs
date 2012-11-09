@@ -20,6 +20,6 @@ namespace CongThongTinSV
         public Nullable<System.DateTime> Ngay_sinh { get; set; }
         public string Gioi_tinh { get; set; }
         public string Ten_lop { get; set; }
-        public Nullable<long> ID_moodle { get; set; }
+        public Nullable<int> ID_moodle { get; set; }
     }
 }

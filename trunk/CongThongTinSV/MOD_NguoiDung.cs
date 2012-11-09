@@ -20,10 +20,9 @@ namespace CongThongTinSV
             this.MOD_NguoiDung_VaiTro_LopTinChi = new HashSet<MOD_NguoiDung_VaiTro_LopTinChi>();
         }
     
-        public int UserID { get; set; }
+        public int ID_moodle { get; set; }
         public int ID_nd { get; set; }
         public int ID_nhom_nd { get; set; }
-        public long ID_moodle { get; set; }
     
         public virtual MOD_NhomNguoiDung MOD_NhomNguoiDung { get; set; }
         public virtual ICollection<MOD_NguoiDung_VaiTro_HeThong> MOD_NguoiDung_VaiTro_HeThong { get; set; }

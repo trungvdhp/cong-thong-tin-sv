@@ -1,73 +1,407 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="DHHHModelStoreContainer" CdmEntityContainer="Entities">
+    <FunctionImportMapping FunctionImportName="SP_SinhVienLopTC" FunctionName="DHHHModel.Store.SP_SinhVienLopTC">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DHHHModel.SP_SinhVienLopTC_Result">
+          <ScalarProperty Name="ID_sv" ColumnName="ID_sv" />
+          <ScalarProperty Name="Ho_ten" ColumnName="Ho_ten" />
+          <ScalarProperty Name="Ten_lop" ColumnName="Ten_lop" />
+          <ScalarProperty Name="Ma_sv" ColumnName="Ma_sv" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_SinhVien" FunctionName="DHHHModel.Store.SP_SinhVien">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DHHHModel.SP_SinhVien_Result">
+          <ScalarProperty Name="ID_sv" ColumnName="ID_sv" />
+          <ScalarProperty Name="Ma_sv" ColumnName="Ma_sv" />
+          <ScalarProperty Name="Ho_dem" ColumnName="Ho_dem" />
+          <ScalarProperty Name="Ten" ColumnName="Ten" />
+          <ScalarProperty Name="Ngay_sinh" ColumnName="Ngay_sinh" />
+          <ScalarProperty Name="Gioi_tinh" ColumnName="Gioi_tinh" />
+          <ScalarProperty Name="Ten_lop" ColumnName="Ten_lop" />
+          <ScalarProperty Name="ID_moodle" ColumnName="ID_moodle" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <EntitySetMapping Name="MARK_MonHoc">
       <EntityTypeMapping TypeName="DHHHModel.MARK_MonHoc">
         <MappingFragment StoreEntitySet="MARK_MonHoc">
-          <ScalarProperty Name="ID_mon" ColumnName="ID_mon" />
-          <ScalarProperty Name="Ky_hieu" ColumnName="Ky_hieu" />
-          <ScalarProperty Name="Ten_mon" ColumnName="Ten_mon" />
-          <ScalarProperty Name="Ten_tieng_anh" ColumnName="Ten_tieng_anh" />
-          <ScalarProperty Name="ID_bm" ColumnName="ID_bm" />
-          <ScalarProperty Name="ID_he_dt" ColumnName="ID_he_dt" />
           <ScalarProperty Name="ID_nhom_hp" ColumnName="ID_nhom_hp" />
+          <ScalarProperty Name="ID_he_dt" ColumnName="ID_he_dt" />
+          <ScalarProperty Name="ID_bm" ColumnName="ID_bm" />
+          <ScalarProperty Name="Ten_tieng_anh" ColumnName="Ten_tieng_anh" />
+          <ScalarProperty Name="Ten_mon" ColumnName="Ten_mon" />
+          <ScalarProperty Name="Ky_hieu" ColumnName="Ky_hieu" />
+          <ScalarProperty Name="ID_mon" ColumnName="ID_mon" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MOD_DanhSachLopTinChi">
+      <EntityTypeMapping TypeName="DHHHModel.MOD_DanhSachLopTinChi">
+        <MappingFragment StoreEntitySet="MOD_DanhSachLopTinChi">
+          <ScalarProperty Name="ID_nhom" ColumnName="ID_nhom" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MOD_DichVu">
+      <EntityTypeMapping TypeName="DHHHModel.MOD_DichVu">
+        <MappingFragment StoreEntitySet="MOD_DichVu">
+          <ScalarProperty Name="Ten_rut_gon" ColumnName="Ten_rut_gon" />
+          <ScalarProperty Name="Ten_dv" ColumnName="Ten_dv" />
+          <ScalarProperty Name="ID_dv" ColumnName="ID_dv" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MOD_HocKy">
+      <EntityTypeMapping TypeName="DHHHModel.MOD_HocKy">
+        <MappingFragment StoreEntitySet="MOD_HocKy">
+          <ScalarProperty Name="Ky_dang_ky" ColumnName="Ky_dang_ky" />
+          <ScalarProperty Name="ID_moodle" ColumnName="ID_moodle" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MOD_HocKy_ChuyenNganh">
+      <EntityTypeMapping TypeName="DHHHModel.MOD_HocKy_ChuyenNganh">
+        <MappingFragment StoreEntitySet="MOD_HocKy_ChuyenNganh">
+          <ScalarProperty Name="ID_chuyen_nganh" ColumnName="ID_chuyen_nganh" />
+          <ScalarProperty Name="Ky_dang_ky" ColumnName="Ky_dang_ky" />
+          <ScalarProperty Name="ID_moodle" ColumnName="ID_moodle" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MOD_LopTinChi_TC">
+      <EntityTypeMapping TypeName="DHHHModel.MOD_LopTinChi_TC">
+        <MappingFragment StoreEntitySet="MOD_LopTinChi_TC">
+          <ScalarProperty Name="ID_lop_tc" ColumnName="ID_lop_tc" />
+          <ScalarProperty Name="ID_moodle" ColumnName="ID_moodle" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MOD_NguoiDung">
+      <EntityTypeMapping TypeName="DHHHModel.MOD_NguoiDung">
+        <MappingFragment StoreEntitySet="MOD_NguoiDung">
+          <ScalarProperty Name="ID_nhom_nd" ColumnName="ID_nhom_nd" />
+          <ScalarProperty Name="ID_nd" ColumnName="ID_nd" />
+          <ScalarProperty Name="ID_moodle" ColumnName="ID_moodle" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MOD_NguoiDung_VaiTro_HeThong">
+      <EntityTypeMapping TypeName="DHHHModel.MOD_NguoiDung_VaiTro_HeThong">
+        <MappingFragment StoreEntitySet="MOD_NguoiDung_VaiTro_HeThong">
+          <ScalarProperty Name="ID_vai_tro" ColumnName="ID_vai_tro" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="STT" ColumnName="STT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MOD_NguoiDung_VaiTro_LopTinChi">
+      <EntityTypeMapping TypeName="DHHHModel.MOD_NguoiDung_VaiTro_LopTinChi">
+        <MappingFragment StoreEntitySet="MOD_NguoiDung_VaiTro_LopTinChi">
+          <ScalarProperty Name="ID_vai_tro" ColumnName="ID_vai_tro" />
+          <ScalarProperty Name="ID_lop_tc" ColumnName="ID_lop_tc" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MOD_NhomHocVien">
+      <EntityTypeMapping TypeName="DHHHModel.MOD_NhomHocVien">
+        <MappingFragment StoreEntitySet="MOD_NhomHocVien">
+          <ScalarProperty Name="ID_lop_tc" ColumnName="ID_lop_tc" />
+          <ScalarProperty Name="ID_to" ColumnName="ID_to" />
+          <ScalarProperty Name="Mo_ta" ColumnName="Mo_ta" />
+          <ScalarProperty Name="Ten_nhom" ColumnName="Ten_nhom" />
+          <ScalarProperty Name="ID_nhom" ColumnName="ID_nhom" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MOD_NhomNguoiDung">
+      <EntityTypeMapping TypeName="DHHHModel.MOD_NhomNguoiDung">
+        <MappingFragment StoreEntitySet="MOD_NhomNguoiDung">
+          <ScalarProperty Name="Mo_ta" ColumnName="Mo_ta" />
+          <ScalarProperty Name="Ten_nhom" ColumnName="Ten_nhom" />
+          <ScalarProperty Name="ID_nhom_nd" ColumnName="ID_nhom_nd" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MOD_ToNhom">
+      <EntityTypeMapping TypeName="DHHHModel.MOD_ToNhom">
+        <MappingFragment StoreEntitySet="MOD_ToNhom">
+          <ScalarProperty Name="ID_lop_tc" ColumnName="ID_lop_tc" />
+          <ScalarProperty Name="Mo_ta" ColumnName="Mo_ta" />
+          <ScalarProperty Name="Ten_to" ColumnName="Ten_to" />
+          <ScalarProperty Name="ID_to" ColumnName="ID_to" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MOD_VaiTro">
+      <EntityTypeMapping TypeName="DHHHModel.MOD_VaiTro">
+        <MappingFragment StoreEntitySet="MOD_VaiTro">
+          <ScalarProperty Name="He_thong" ColumnName="He_thong" />
+          <ScalarProperty Name="Mo_ta" ColumnName="Mo_ta" />
+          <ScalarProperty Name="Ten_vai_tro" ColumnName="Ten_vai_tro" />
+          <ScalarProperty Name="ID_vai_tro" ColumnName="ID_vai_tro" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PLAN_ChucDanh">
+      <EntityTypeMapping TypeName="DHHHModel.PLAN_ChucDanh">
+        <MappingFragment StoreEntitySet="PLAN_ChucDanh">
+          <ScalarProperty Name="Chuc_danh" ColumnName="Chuc_danh" />
+          <ScalarProperty Name="Ma_chuc_danh" ColumnName="Ma_chuc_danh" />
+          <ScalarProperty Name="ID_chuc_danh" ColumnName="ID_chuc_danh" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PLAN_ChucVu">
+      <EntityTypeMapping TypeName="DHHHModel.PLAN_ChucVu">
+        <MappingFragment StoreEntitySet="PLAN_ChucVu">
+          <ScalarProperty Name="Chuc_vu" ColumnName="Chuc_vu" />
+          <ScalarProperty Name="Ma_chuc_vu" ColumnName="Ma_chuc_vu" />
+          <ScalarProperty Name="ID_chuc_vu" ColumnName="ID_chuc_vu" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PLAN_ChuongTrinhDaoTao">
+      <EntityTypeMapping TypeName="DHHHModel.PLAN_ChuongTrinhDaoTao">
+        <MappingFragment StoreEntitySet="PLAN_ChuongTrinhDaoTao">
+          <ScalarProperty Name="So" ColumnName="So" />
+          <ScalarProperty Name="So_ky_hoc" ColumnName="So_ky_hoc" />
+          <ScalarProperty Name="So_hoc_trinh" ColumnName="So_hoc_trinh" />
+          <ScalarProperty Name="ID_chuyen_nganh" ColumnName="ID_chuyen_nganh" />
+          <ScalarProperty Name="Khoa_hoc" ColumnName="Khoa_hoc" />
+          <ScalarProperty Name="ID_khoa" ColumnName="ID_khoa" />
+          <ScalarProperty Name="ID_he" ColumnName="ID_he" />
+          <ScalarProperty Name="ID_dt" ColumnName="ID_dt" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PLAN_ChuongTrinhDaoTaoChiTiet">
+      <EntityTypeMapping TypeName="DHHHModel.PLAN_ChuongTrinhDaoTaoChiTiet">
+        <MappingFragment StoreEntitySet="PLAN_ChuongTrinhDaoTaoChiTiet">
+          <ScalarProperty Name="Nhom_mon_sub" ColumnName="Nhom_mon_sub" />
+          <ScalarProperty Name="Mon_Main" ColumnName="Mon_Main" />
+          <ScalarProperty Name="Ma_khoa_phu_trach" ColumnName="Ma_khoa_phu_trach" />
+          <ScalarProperty Name="Tu_hoc" ColumnName="Tu_hoc" />
+          <ScalarProperty Name="So_hoc_trinh_tien_quyet" ColumnName="So_hoc_trinh_tien_quyet" />
+          <ScalarProperty Name="Mon_tot_nghiep" ColumnName="Mon_tot_nghiep" />
+          <ScalarProperty Name="Nhom_tu_chon" ColumnName="Nhom_tu_chon" />
+          <ScalarProperty Name="Khong_tinh_TBCHT" ColumnName="Khong_tinh_TBCHT" />
+          <ScalarProperty Name="Kien_thuc" ColumnName="Kien_thuc" />
+          <ScalarProperty Name="He_so" ColumnName="He_so" />
+          <ScalarProperty Name="STT_mon" ColumnName="STT_mon" />
+          <ScalarProperty Name="Tu_chon" ColumnName="Tu_chon" />
+          <ScalarProperty Name="Thuc_tap" ColumnName="Thuc_tap" />
+          <ScalarProperty Name="Bai_tap_lon" ColumnName="Bai_tap_lon" />
+          <ScalarProperty Name="Bai_tap" ColumnName="Bai_tap" />
+          <ScalarProperty Name="Thuc_hanh" ColumnName="Thuc_hanh" />
+          <ScalarProperty Name="Ly_thuyet" ColumnName="Ly_thuyet" />
+          <ScalarProperty Name="So_hoc_trinh" ColumnName="So_hoc_trinh" />
+          <ScalarProperty Name="Ky_thu" ColumnName="Ky_thu" />
+          <ScalarProperty Name="ID_mon" ColumnName="ID_mon" />
+          <ScalarProperty Name="ID_dt" ColumnName="ID_dt" />
+          <ScalarProperty Name="ID_dt_mon" ColumnName="ID_dt_mon" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PLAN_ChuongTrinhDaoTaoKienThuc">
+      <EntityTypeMapping TypeName="DHHHModel.PLAN_ChuongTrinhDaoTaoKienThuc">
+        <MappingFragment StoreEntitySet="PLAN_ChuongTrinhDaoTaoKienThuc">
+          <ScalarProperty Name="Ten_kien_thuc" ColumnName="Ten_kien_thuc" />
+          <ScalarProperty Name="ID_kien_thuc" ColumnName="ID_kien_thuc" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PLAN_ChuyenMon">
+      <EntityTypeMapping TypeName="DHHHModel.PLAN_ChuyenMon">
+        <MappingFragment StoreEntitySet="PLAN_ChuyenMon">
+          <ScalarProperty Name="Chuyen_mon" ColumnName="Chuyen_mon" />
+          <ScalarProperty Name="Ma_chuyen_mon" ColumnName="Ma_chuyen_mon" />
+          <ScalarProperty Name="ID_chuyen_mon" ColumnName="ID_chuyen_mon" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PLAN_GiaoVien">
+      <EntityTypeMapping TypeName="DHHHModel.PLAN_GiaoVien">
+        <MappingFragment StoreEntitySet="PLAN_GiaoVien">
+          <ScalarProperty Name="ID_chuc_vu" ColumnName="ID_chuc_vu" />
+          <ScalarProperty Name="ID_chuc_danh" ColumnName="ID_chuc_danh" />
+          <ScalarProperty Name="ID_hoc_vi" ColumnName="ID_hoc_vi" />
+          <ScalarProperty Name="ID_hoc_ham" ColumnName="ID_hoc_ham" />
+          <ScalarProperty Name="ID_khoa" ColumnName="ID_khoa" />
+          <ScalarProperty Name="Ngay_sinh" ColumnName="Ngay_sinh" />
+          <ScalarProperty Name="ID_gioi_tinh" ColumnName="ID_gioi_tinh" />
+          <ScalarProperty Name="Ho_ten" ColumnName="Ho_ten" />
+          <ScalarProperty Name="Ten" ColumnName="Ten" />
+          <ScalarProperty Name="Ma_cb" ColumnName="Ma_cb" />
+          <ScalarProperty Name="ID_cb" ColumnName="ID_cb" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PLAN_GiaoVienMonDay">
+      <EntityTypeMapping TypeName="DHHHModel.PLAN_GiaoVienMonDay">
+        <MappingFragment StoreEntitySet="PLAN_GiaoVienMonDay">
+          <ScalarProperty Name="ID_bm" ColumnName="ID_bm" />
+          <ScalarProperty Name="ID_mon" ColumnName="ID_mon" />
+          <ScalarProperty Name="ID_cb" ColumnName="ID_cb" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PLAN_HocHam">
+      <EntityTypeMapping TypeName="DHHHModel.PLAN_HocHam">
+        <MappingFragment StoreEntitySet="PLAN_HocHam">
+          <ScalarProperty Name="Hoc_ham" ColumnName="Hoc_ham" />
+          <ScalarProperty Name="Ma_hoc_ham" ColumnName="Ma_hoc_ham" />
+          <ScalarProperty Name="ID_hoc_ham" ColumnName="ID_hoc_ham" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PLAN_HocKyDangKy_TC">
+      <EntityTypeMapping TypeName="DHHHModel.PLAN_HocKyDangKy_TC">
+        <MappingFragment StoreEntitySet="PLAN_HocKyDangKy_TC">
+          <ScalarProperty Name="Chon_dang_ky" ColumnName="Chon_dang_ky" />
+          <ScalarProperty Name="Den_ngay" ColumnName="Den_ngay" />
+          <ScalarProperty Name="Tu_ngay" ColumnName="Tu_ngay" />
+          <ScalarProperty Name="Nam_hoc" ColumnName="Nam_hoc" />
+          <ScalarProperty Name="Hoc_ky" ColumnName="Hoc_ky" />
+          <ScalarProperty Name="Dot" ColumnName="Dot" />
+          <ScalarProperty Name="Ky_dang_ky" ColumnName="Ky_dang_ky" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PLAN_HocVi">
+      <EntityTypeMapping TypeName="DHHHModel.PLAN_HocVi">
+        <MappingFragment StoreEntitySet="PLAN_HocVi">
+          <ScalarProperty Name="Hoc_vi" ColumnName="Hoc_vi" />
+          <ScalarProperty Name="Ma_hoc_vi" ColumnName="Ma_hoc_vi" />
+          <ScalarProperty Name="ID_hoc_vi" ColumnName="ID_hoc_vi" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="PLAN_LopTinChi_TC">
       <EntityTypeMapping TypeName="DHHHModel.PLAN_LopTinChi_TC">
         <MappingFragment StoreEntitySet="PLAN_LopTinChi_TC">
-          <ScalarProperty Name="ID_lop_tc" ColumnName="ID_lop_tc" />
-          <ScalarProperty Name="ID_lop_lt" ColumnName="ID_lop_lt" />
-          <ScalarProperty Name="ID_mon_tc" ColumnName="ID_mon_tc" />
-          <ScalarProperty Name="STT_lop" ColumnName="STT_lop" />
-          <ScalarProperty Name="So_sv_min" ColumnName="So_sv_min" />
-          <ScalarProperty Name="So_sv_max" ColumnName="So_sv_max" />
-          <ScalarProperty Name="Tu_ngay" ColumnName="Tu_ngay" />
-          <ScalarProperty Name="Den_ngay" ColumnName="Den_ngay" />
-          <ScalarProperty Name="Ca_hoc" ColumnName="Ca_hoc" />
-          <ScalarProperty Name="So_tiet_tuan" ColumnName="So_tiet_tuan" />
-          <ScalarProperty Name="ID_phong" ColumnName="ID_phong" />
-          <ScalarProperty Name="ID_cb" ColumnName="ID_cb" />
-          <ScalarProperty Name="Huy_lop" ColumnName="Huy_lop" />
-          <ScalarProperty Name="Ly_do" ColumnName="Ly_do" />
-          <ScalarProperty Name="Nhom_dang_ky" ColumnName="Nhom_dang_ky" />
-          <ScalarProperty Name="Ngay_thi" ColumnName="Ngay_thi" />
           <ScalarProperty Name="Cho_trong" ColumnName="Cho_trong" />
+          <ScalarProperty Name="Ngay_thi" ColumnName="Ngay_thi" />
+          <ScalarProperty Name="Nhom_dang_ky" ColumnName="Nhom_dang_ky" />
+          <ScalarProperty Name="Ly_do" ColumnName="Ly_do" />
+          <ScalarProperty Name="Huy_lop" ColumnName="Huy_lop" />
+          <ScalarProperty Name="ID_cb" ColumnName="ID_cb" />
+          <ScalarProperty Name="ID_phong" ColumnName="ID_phong" />
+          <ScalarProperty Name="So_tiet_tuan" ColumnName="So_tiet_tuan" />
+          <ScalarProperty Name="Ca_hoc" ColumnName="Ca_hoc" />
+          <ScalarProperty Name="Den_ngay" ColumnName="Den_ngay" />
+          <ScalarProperty Name="Tu_ngay" ColumnName="Tu_ngay" />
+          <ScalarProperty Name="So_sv_max" ColumnName="So_sv_max" />
+          <ScalarProperty Name="So_sv_min" ColumnName="So_sv_min" />
+          <ScalarProperty Name="STT_lop" ColumnName="STT_lop" />
+          <ScalarProperty Name="ID_mon_tc" ColumnName="ID_mon_tc" />
+          <ScalarProperty Name="ID_lop_lt" ColumnName="ID_lop_lt" />
+          <ScalarProperty Name="ID_lop_tc" ColumnName="ID_lop_tc" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="PLAN_MonTinChi_TC">
       <EntityTypeMapping TypeName="DHHHModel.PLAN_MonTinChi_TC">
         <MappingFragment StoreEntitySet="PLAN_MonTinChi_TC">
-          <ScalarProperty Name="ID_mon_tc" ColumnName="ID_mon_tc" />
-          <ScalarProperty Name="Ky_dang_ky" ColumnName="Ky_dang_ky" />
-          <ScalarProperty Name="Ky_hieu_lop_tc" ColumnName="Ky_hieu_lop_tc" />
-          <ScalarProperty Name="ID_mon" ColumnName="ID_mon" />
-          <ScalarProperty Name="So_tin_chi" ColumnName="So_tin_chi" />
-          <ScalarProperty Name="He_so" ColumnName="He_so" />
-          <ScalarProperty Name="So_tien" ColumnName="So_tien" />
-          <ScalarProperty Name="Ly_thuyet" ColumnName="Ly_thuyet" />
-          <ScalarProperty Name="Thuc_hanh" ColumnName="Thuc_hanh" />
-          <ScalarProperty Name="Bai_tap" ColumnName="Bai_tap" />
-          <ScalarProperty Name="Bai_tap_lon" ColumnName="Bai_tap_lon" />
           <ScalarProperty Name="Locked" ColumnName="Locked" />
+          <ScalarProperty Name="Bai_tap_lon" ColumnName="Bai_tap_lon" />
+          <ScalarProperty Name="Bai_tap" ColumnName="Bai_tap" />
+          <ScalarProperty Name="Thuc_hanh" ColumnName="Thuc_hanh" />
+          <ScalarProperty Name="Ly_thuyet" ColumnName="Ly_thuyet" />
+          <ScalarProperty Name="So_tien" ColumnName="So_tien" />
+          <ScalarProperty Name="He_so" ColumnName="He_so" />
+          <ScalarProperty Name="So_tin_chi" ColumnName="So_tin_chi" />
+          <ScalarProperty Name="ID_mon" ColumnName="ID_mon" />
+          <ScalarProperty Name="Ky_hieu_lop_tc" ColumnName="Ky_hieu_lop_tc" />
+          <ScalarProperty Name="Ky_dang_ky" ColumnName="Ky_dang_ky" />
+          <ScalarProperty Name="ID_mon_tc" ColumnName="ID_mon_tc" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="PLAN_SukiensTinChi_TC">
       <EntityTypeMapping TypeName="DHHHModel.PLAN_SukiensTinChi_TC">
         <MappingFragment StoreEntitySet="PLAN_SukiensTinChi_TC">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="ID_lop_tc" ColumnName="ID_lop_tc" />
-          <ScalarProperty Name="ID_phong" ColumnName="ID_phong" />
-          <ScalarProperty Name="ID_cb" ColumnName="ID_cb" />
-          <ScalarProperty Name="Ca_hoc" ColumnName="Ca_hoc" />
-          <ScalarProperty Name="Thu" ColumnName="Thu" />
-          <ScalarProperty Name="Tiet" ColumnName="Tiet" />
-          <ScalarProperty Name="So_tiet" ColumnName="So_tiet" />
-          <ScalarProperty Name="Loai_tiet" ColumnName="Loai_tiet" />
           <ScalarProperty Name="Da_xep_lich" ColumnName="Da_xep_lich" />
+          <ScalarProperty Name="Loai_tiet" ColumnName="Loai_tiet" />
+          <ScalarProperty Name="So_tiet" ColumnName="So_tiet" />
+          <ScalarProperty Name="Tiet" ColumnName="Tiet" />
+          <ScalarProperty Name="Thu" ColumnName="Thu" />
+          <ScalarProperty Name="Ca_hoc" ColumnName="Ca_hoc" />
+          <ScalarProperty Name="ID_cb" ColumnName="ID_cb" />
+          <ScalarProperty Name="ID_phong" ColumnName="ID_phong" />
+          <ScalarProperty Name="ID_lop_tc" ColumnName="ID_lop_tc" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="POR_GiaoVien">
+      <EntityTypeMapping TypeName="DHHHModel.POR_GiaoVien">
+        <MappingFragment StoreEntitySet="POR_GiaoVien">
+          <ScalarProperty Name="Trang_thai" ColumnName="Trang_thai" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Mat_khau" ColumnName="Mat_khau" />
+          <ScalarProperty Name="ID_cb" ColumnName="ID_cb" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="STU_ChuyenNganh">
+      <EntityTypeMapping TypeName="DHHHModel.STU_ChuyenNganh">
+        <MappingFragment StoreEntitySet="STU_ChuyenNganh">
+          <ScalarProperty Name="Ky_thuat" ColumnName="Ky_thuat" />
+          <ScalarProperty Name="Chuyen_nganh_En" ColumnName="Chuyen_nganh_En" />
+          <ScalarProperty Name="ID_nganh" ColumnName="ID_nganh" />
+          <ScalarProperty Name="Chuyen_nganh" ColumnName="Chuyen_nganh" />
+          <ScalarProperty Name="Ma_chuyen_nganh" ColumnName="Ma_chuyen_nganh" />
+          <ScalarProperty Name="ID_chuyen_nganh" ColumnName="ID_chuyen_nganh" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="STU_DanhSach">
+      <EntityTypeMapping TypeName="DHHHModel.STU_DanhSach">
+        <MappingFragment StoreEntitySet="STU_DanhSach">
+          <ScalarProperty Name="Trang_thai" ColumnName="Trang_thai" />
+          <ScalarProperty Name="ID_xep_hang_hoc_luc" ColumnName="ID_xep_hang_hoc_luc" />
+          <ScalarProperty Name="Lop_chat_luong_cao" ColumnName="Lop_chat_luong_cao" />
+          <ScalarProperty Name="Ngoai_ngan_sach" ColumnName="Ngoai_ngan_sach" />
+          <ScalarProperty Name="Da_tot_nghiep" ColumnName="Da_tot_nghiep" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Mat_khau" ColumnName="Mat_khau" />
+          <ScalarProperty Name="ID_lop" ColumnName="ID_lop" />
+          <ScalarProperty Name="ID_sv" ColumnName="ID_sv" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="STU_GioiTinh">
+      <EntityTypeMapping TypeName="DHHHModel.STU_GioiTinh">
+        <MappingFragment StoreEntitySet="STU_GioiTinh">
+          <ScalarProperty Name="Gioi_tinh" ColumnName="Gioi_tinh" />
+          <ScalarProperty Name="ID_gioi_tinh" ColumnName="ID_gioi_tinh" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="STU_He">
+      <EntityTypeMapping TypeName="DHHHModel.STU_He">
+        <MappingFragment StoreEntitySet="STU_He">
+          <ScalarProperty Name="Loai_dao_tao_en" ColumnName="Loai_dao_tao_en" />
+          <ScalarProperty Name="Loai_dao_tao" ColumnName="Loai_dao_tao" />
+          <ScalarProperty Name="Ten_bac_hoc" ColumnName="Ten_bac_hoc" />
+          <ScalarProperty Name="Ten_he_en" ColumnName="Ten_he_en" />
+          <ScalarProperty Name="Quy_che" ColumnName="Quy_che" />
+          <ScalarProperty Name="Ten_he" ColumnName="Ten_he" />
+          <ScalarProperty Name="Ma_he" ColumnName="Ma_he" />
+          <ScalarProperty Name="ID_he" ColumnName="ID_he" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="STU_HeChuyenNganh">
+      <EntityTypeMapping TypeName="DHHHModel.STU_HeChuyenNganh">
+        <MappingFragment StoreEntitySet="STU_HeChuyenNganh">
+          <ScalarProperty Name="ID_chuyen_nganh" ColumnName="ID_chuyen_nganh" />
+          <ScalarProperty Name="ID_he" ColumnName="ID_he" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -173,109 +507,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="STU_DanhSach">
-      <EntityTypeMapping TypeName="DHHHModel.STU_DanhSach">
-        <MappingFragment StoreEntitySet="STU_DanhSach">
-          <ScalarProperty Name="Trang_thai" ColumnName="Trang_thai" />
-          <ScalarProperty Name="ID_xep_hang_hoc_luc" ColumnName="ID_xep_hang_hoc_luc" />
-          <ScalarProperty Name="Lop_chat_luong_cao" ColumnName="Lop_chat_luong_cao" />
-          <ScalarProperty Name="Ngoai_ngan_sach" ColumnName="Ngoai_ngan_sach" />
-          <ScalarProperty Name="Da_tot_nghiep" ColumnName="Da_tot_nghiep" />
-          <ScalarProperty Name="Active" ColumnName="Active" />
-          <ScalarProperty Name="Mat_khau" ColumnName="Mat_khau" />
-          <ScalarProperty Name="ID_lop" ColumnName="ID_lop" />
-          <ScalarProperty Name="ID_sv" ColumnName="ID_sv" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ViewNamHoc">
-      <EntityTypeMapping TypeName="DHHHModel.ViewNamHoc">
-        <MappingFragment StoreEntitySet="ViewNamHoc">
-          <ScalarProperty Name="Nam_hoc" ColumnName="Nam_hoc" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="PLAN_HocKyDangKy_TC">
-      <EntityTypeMapping TypeName="DHHHModel.PLAN_HocKyDangKy_TC">
-        <MappingFragment StoreEntitySet="PLAN_HocKyDangKy_TC">
-          <ScalarProperty Name="Chon_dang_ky" ColumnName="Chon_dang_ky" />
-          <ScalarProperty Name="Den_ngay" ColumnName="Den_ngay" />
-          <ScalarProperty Name="Tu_ngay" ColumnName="Tu_ngay" />
-          <ScalarProperty Name="Nam_hoc" ColumnName="Nam_hoc" />
-          <ScalarProperty Name="Hoc_ky" ColumnName="Hoc_ky" />
-          <ScalarProperty Name="Dot" ColumnName="Dot" />
-          <ScalarProperty Name="Ky_dang_ky" ColumnName="Ky_dang_ky" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="PLAN_ChuongTrinhDaoTao">
-      <EntityTypeMapping TypeName="DHHHModel.PLAN_ChuongTrinhDaoTao">
-        <MappingFragment StoreEntitySet="PLAN_ChuongTrinhDaoTao">
-          <ScalarProperty Name="So" ColumnName="So" />
-          <ScalarProperty Name="So_ky_hoc" ColumnName="So_ky_hoc" />
-          <ScalarProperty Name="So_hoc_trinh" ColumnName="So_hoc_trinh" />
-          <ScalarProperty Name="ID_chuyen_nganh" ColumnName="ID_chuyen_nganh" />
-          <ScalarProperty Name="Khoa_hoc" ColumnName="Khoa_hoc" />
-          <ScalarProperty Name="ID_khoa" ColumnName="ID_khoa" />
-          <ScalarProperty Name="ID_he" ColumnName="ID_he" />
-          <ScalarProperty Name="ID_dt" ColumnName="ID_dt" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="PLAN_ChuongTrinhDaoTaoChiTiet">
-      <EntityTypeMapping TypeName="DHHHModel.PLAN_ChuongTrinhDaoTaoChiTiet">
-        <MappingFragment StoreEntitySet="PLAN_ChuongTrinhDaoTaoChiTiet">
-          <ScalarProperty Name="Nhom_mon_sub" ColumnName="Nhom_mon_sub" />
-          <ScalarProperty Name="Mon_Main" ColumnName="Mon_Main" />
-          <ScalarProperty Name="Ma_khoa_phu_trach" ColumnName="Ma_khoa_phu_trach" />
-          <ScalarProperty Name="Tu_hoc" ColumnName="Tu_hoc" />
-          <ScalarProperty Name="So_hoc_trinh_tien_quyet" ColumnName="So_hoc_trinh_tien_quyet" />
-          <ScalarProperty Name="Mon_tot_nghiep" ColumnName="Mon_tot_nghiep" />
-          <ScalarProperty Name="Nhom_tu_chon" ColumnName="Nhom_tu_chon" />
-          <ScalarProperty Name="Khong_tinh_TBCHT" ColumnName="Khong_tinh_TBCHT" />
-          <ScalarProperty Name="Kien_thuc" ColumnName="Kien_thuc" />
-          <ScalarProperty Name="He_so" ColumnName="He_so" />
-          <ScalarProperty Name="STT_mon" ColumnName="STT_mon" />
-          <ScalarProperty Name="Tu_chon" ColumnName="Tu_chon" />
-          <ScalarProperty Name="Thuc_tap" ColumnName="Thuc_tap" />
-          <ScalarProperty Name="Bai_tap_lon" ColumnName="Bai_tap_lon" />
-          <ScalarProperty Name="Bai_tap" ColumnName="Bai_tap" />
-          <ScalarProperty Name="Thuc_hanh" ColumnName="Thuc_hanh" />
-          <ScalarProperty Name="Ly_thuyet" ColumnName="Ly_thuyet" />
-          <ScalarProperty Name="So_hoc_trinh" ColumnName="So_hoc_trinh" />
-          <ScalarProperty Name="Ky_thu" ColumnName="Ky_thu" />
-          <ScalarProperty Name="ID_mon" ColumnName="ID_mon" />
-          <ScalarProperty Name="ID_dt" ColumnName="ID_dt" />
-          <ScalarProperty Name="ID_dt_mon" ColumnName="ID_dt_mon" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="STU_ChuyenNganh">
-      <EntityTypeMapping TypeName="DHHHModel.STU_ChuyenNganh">
-        <MappingFragment StoreEntitySet="STU_ChuyenNganh">
-          <ScalarProperty Name="Ky_thuat" ColumnName="Ky_thuat" />
-          <ScalarProperty Name="Chuyen_nganh_En" ColumnName="Chuyen_nganh_En" />
-          <ScalarProperty Name="ID_nganh" ColumnName="ID_nganh" />
-          <ScalarProperty Name="Chuyen_nganh" ColumnName="Chuyen_nganh" />
-          <ScalarProperty Name="Ma_chuyen_nganh" ColumnName="Ma_chuyen_nganh" />
-          <ScalarProperty Name="ID_chuyen_nganh" ColumnName="ID_chuyen_nganh" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="STU_He">
-      <EntityTypeMapping TypeName="DHHHModel.STU_He">
-        <MappingFragment StoreEntitySet="STU_He">
-          <ScalarProperty Name="Loai_dao_tao_en" ColumnName="Loai_dao_tao_en" />
-          <ScalarProperty Name="Loai_dao_tao" ColumnName="Loai_dao_tao" />
-          <ScalarProperty Name="Ten_bac_hoc" ColumnName="Ten_bac_hoc" />
-          <ScalarProperty Name="Ten_he_en" ColumnName="Ten_he_en" />
-          <ScalarProperty Name="Quy_che" ColumnName="Quy_che" />
-          <ScalarProperty Name="Ten_he" ColumnName="Ten_he" />
-          <ScalarProperty Name="Ma_he" ColumnName="Ma_he" />
-          <ScalarProperty Name="ID_he" ColumnName="ID_he" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="STU_Khoa">
       <EntityTypeMapping TypeName="DHHHModel.STU_Khoa">
         <MappingFragment StoreEntitySet="STU_Khoa">
@@ -283,6 +514,30 @@
           <ScalarProperty Name="Ten_khoa" ColumnName="Ten_khoa" />
           <ScalarProperty Name="Ma_khoa" ColumnName="Ma_khoa" />
           <ScalarProperty Name="ID_khoa" ColumnName="ID_khoa" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="STU_Lop">
+      <EntityTypeMapping TypeName="DHHHModel.STU_Lop">
+        <MappingFragment StoreEntitySet="STU_Lop">
+          <ScalarProperty Name="Lop_hanh_chinh" ColumnName="Lop_hanh_chinh" />
+          <ScalarProperty Name="Lop_chuyen_nganh" ColumnName="Lop_chuyen_nganh" />
+          <ScalarProperty Name="Tinh_chat" ColumnName="Tinh_chat" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Dien_thoai" ColumnName="Dien_thoai" />
+          <ScalarProperty Name="Ho_ten_gv" ColumnName="Ho_ten_gv" />
+          <ScalarProperty Name="ID_phong" ColumnName="ID_phong" />
+          <ScalarProperty Name="Ca_hoc" ColumnName="Ca_hoc" />
+          <ScalarProperty Name="Ra_truong" ColumnName="Ra_truong" />
+          <ScalarProperty Name="So_sv" ColumnName="So_sv" />
+          <ScalarProperty Name="ID_dt" ColumnName="ID_dt" />
+          <ScalarProperty Name="Nien_khoa" ColumnName="Nien_khoa" />
+          <ScalarProperty Name="Khoa_hoc" ColumnName="Khoa_hoc" />
+          <ScalarProperty Name="ID_chuyen_nganh" ColumnName="ID_chuyen_nganh" />
+          <ScalarProperty Name="ID_khoa" ColumnName="ID_khoa" />
+          <ScalarProperty Name="ID_he" ColumnName="ID_he" />
+          <ScalarProperty Name="Ten_lop" ColumnName="Ten_lop" />
+          <ScalarProperty Name="ID_lop" ColumnName="ID_lop" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -313,6 +568,13 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ViewNamHoc">
+      <EntityTypeMapping TypeName="DHHHModel.ViewNamHoc">
+        <MappingFragment StoreEntitySet="ViewNamHoc">
+          <ScalarProperty Name="Nam_hoc" ColumnName="Nam_hoc" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="STU_DanhSachLopTinChi">
       <EntityTypeMapping TypeName="DHHHModel.STU_DanhSachLopTinChi">
         <MappingFragment StoreEntitySet="STU_DanhSachLopTinChi">
@@ -326,186 +588,6 @@
           <ScalarProperty Name="ID_sv" ColumnName="ID_sv" />
           <ScalarProperty Name="ID_lop_tc" ColumnName="ID_lop_tc" />
           <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="SP_SinhVienLopTC" FunctionName="DHHHModel.Store.SP_SinhVienLopTC">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="DHHHModel.SP_SinhVienLopTC_Result">
-          <ScalarProperty Name="ID_sv" ColumnName="ID_sv" />
-          <ScalarProperty Name="Ho_ten" ColumnName="Ho_ten" />
-          <ScalarProperty Name="Ten_lop" ColumnName="Ten_lop" />
-          <ScalarProperty Name="Ma_sv" ColumnName="Ma_sv" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <EntitySetMapping Name="STU_Lop">
-      <EntityTypeMapping TypeName="DHHHModel.STU_Lop">
-        <MappingFragment StoreEntitySet="STU_Lop">
-          <ScalarProperty Name="Lop_hanh_chinh" ColumnName="Lop_hanh_chinh" />
-          <ScalarProperty Name="Lop_chuyen_nganh" ColumnName="Lop_chuyen_nganh" />
-          <ScalarProperty Name="Tinh_chat" ColumnName="Tinh_chat" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="Dien_thoai" ColumnName="Dien_thoai" />
-          <ScalarProperty Name="Ho_ten_gv" ColumnName="Ho_ten_gv" />
-          <ScalarProperty Name="ID_phong" ColumnName="ID_phong" />
-          <ScalarProperty Name="Ca_hoc" ColumnName="Ca_hoc" />
-          <ScalarProperty Name="Ra_truong" ColumnName="Ra_truong" />
-          <ScalarProperty Name="So_sv" ColumnName="So_sv" />
-          <ScalarProperty Name="ID_dt" ColumnName="ID_dt" />
-          <ScalarProperty Name="Nien_khoa" ColumnName="Nien_khoa" />
-          <ScalarProperty Name="Khoa_hoc" ColumnName="Khoa_hoc" />
-          <ScalarProperty Name="ID_chuyen_nganh" ColumnName="ID_chuyen_nganh" />
-          <ScalarProperty Name="ID_khoa" ColumnName="ID_khoa" />
-          <ScalarProperty Name="ID_he" ColumnName="ID_he" />
-          <ScalarProperty Name="Ten_lop" ColumnName="Ten_lop" />
-          <ScalarProperty Name="ID_lop" ColumnName="ID_lop" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="MOD_DanhSachLopTinChi">
-      <EntityTypeMapping TypeName="DHHHModel.MOD_DanhSachLopTinChi">
-        <MappingFragment StoreEntitySet="MOD_DanhSachLopTinChi">
-          <ScalarProperty Name="ID_nhom" ColumnName="ID_nhom" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="MOD_DichVu">
-      <EntityTypeMapping TypeName="DHHHModel.MOD_DichVu">
-        <MappingFragment StoreEntitySet="MOD_DichVu">
-          <ScalarProperty Name="Ten_rut_gon" ColumnName="Ten_rut_gon" />
-          <ScalarProperty Name="Ten_dv" ColumnName="Ten_dv" />
-          <ScalarProperty Name="ID_dv" ColumnName="ID_dv" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="MOD_HocKy">
-      <EntityTypeMapping TypeName="DHHHModel.MOD_HocKy">
-        <MappingFragment StoreEntitySet="MOD_HocKy">
-          <ScalarProperty Name="ID_moodle" ColumnName="ID_moodle" />
-          <ScalarProperty Name="Ky_dang_ky" ColumnName="Ky_dang_ky" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="MOD_HocKy_ChuyenNganh">
-      <EntityTypeMapping TypeName="DHHHModel.MOD_HocKy_ChuyenNganh">
-        <MappingFragment StoreEntitySet="MOD_HocKy_ChuyenNganh">
-          <ScalarProperty Name="ID_chuyen_nganh" ColumnName="ID_chuyen_nganh" />
-          <ScalarProperty Name="Ky_dang_ky" ColumnName="Ky_dang_ky" />
-          <ScalarProperty Name="ID_moodle" ColumnName="ID_moodle" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="MOD_LopTinChi_TC">
-      <EntityTypeMapping TypeName="DHHHModel.MOD_LopTinChi_TC">
-        <MappingFragment StoreEntitySet="MOD_LopTinChi_TC">
-          <ScalarProperty Name="ID_moodle" ColumnName="ID_moodle" />
-          <ScalarProperty Name="ID_lop_tc" ColumnName="ID_lop_tc" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="MOD_NguoiDung">
-      <EntityTypeMapping TypeName="DHHHModel.MOD_NguoiDung">
-        <MappingFragment StoreEntitySet="MOD_NguoiDung">
-          <ScalarProperty Name="ID_moodle" ColumnName="ID_moodle" />
-          <ScalarProperty Name="ID_nhom_nd" ColumnName="ID_nhom_nd" />
-          <ScalarProperty Name="ID_nd" ColumnName="ID_nd" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="MOD_NguoiDung_VaiTro_HeThong">
-      <EntityTypeMapping TypeName="DHHHModel.MOD_NguoiDung_VaiTro_HeThong">
-        <MappingFragment StoreEntitySet="MOD_NguoiDung_VaiTro_HeThong">
-          <ScalarProperty Name="ID_vai_tro" ColumnName="ID_vai_tro" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
-          <ScalarProperty Name="STT" ColumnName="STT" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="MOD_NguoiDung_VaiTro_LopTinChi">
-      <EntityTypeMapping TypeName="DHHHModel.MOD_NguoiDung_VaiTro_LopTinChi">
-        <MappingFragment StoreEntitySet="MOD_NguoiDung_VaiTro_LopTinChi">
-          <ScalarProperty Name="ID_vai_tro" ColumnName="ID_vai_tro" />
-          <ScalarProperty Name="ID_lop_tc" ColumnName="ID_lop_tc" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
-          <ScalarProperty Name="STT" ColumnName="STT" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="MOD_NhomHocVien">
-      <EntityTypeMapping TypeName="DHHHModel.MOD_NhomHocVien">
-        <MappingFragment StoreEntitySet="MOD_NhomHocVien">
-          <ScalarProperty Name="ID_lop_tc" ColumnName="ID_lop_tc" />
-          <ScalarProperty Name="ID_to" ColumnName="ID_to" />
-          <ScalarProperty Name="Mo_ta" ColumnName="Mo_ta" />
-          <ScalarProperty Name="Ten_nhom" ColumnName="Ten_nhom" />
-          <ScalarProperty Name="ID_nhom" ColumnName="ID_nhom" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="MOD_NhomNguoiDung">
-      <EntityTypeMapping TypeName="DHHHModel.MOD_NhomNguoiDung">
-        <MappingFragment StoreEntitySet="MOD_NhomNguoiDung">
-          <ScalarProperty Name="Mo_ta" ColumnName="Mo_ta" />
-          <ScalarProperty Name="Ten_nhom" ColumnName="Ten_nhom" />
-          <ScalarProperty Name="ID_nhom_nd" ColumnName="ID_nhom_nd" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="MOD_ToNhom">
-      <EntityTypeMapping TypeName="DHHHModel.MOD_ToNhom">
-        <MappingFragment StoreEntitySet="MOD_ToNhom">
-          <ScalarProperty Name="ID_lop_tc" ColumnName="ID_lop_tc" />
-          <ScalarProperty Name="Mo_ta" ColumnName="Mo_ta" />
-          <ScalarProperty Name="Ten_to" ColumnName="Ten_to" />
-          <ScalarProperty Name="ID_to" ColumnName="ID_to" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="MOD_VaiTro">
-      <EntityTypeMapping TypeName="DHHHModel.MOD_VaiTro">
-        <MappingFragment StoreEntitySet="MOD_VaiTro">
-          <ScalarProperty Name="He_thong" ColumnName="He_thong" />
-          <ScalarProperty Name="Mo_ta" ColumnName="Mo_ta" />
-          <ScalarProperty Name="Ten_vai_tro" ColumnName="Ten_vai_tro" />
-          <ScalarProperty Name="ID_vai_tro" ColumnName="ID_vai_tro" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="STU_GioiTinh">
-      <EntityTypeMapping TypeName="DHHHModel.STU_GioiTinh">
-        <MappingFragment StoreEntitySet="STU_GioiTinh">
-          <ScalarProperty Name="Gioi_tinh" ColumnName="Gioi_tinh" />
-          <ScalarProperty Name="ID_gioi_tinh" ColumnName="ID_gioi_tinh" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="PLAN_GiaoVien">
-      <EntityTypeMapping TypeName="DHHHModel.PLAN_GiaoVien">
-        <MappingFragment StoreEntitySet="PLAN_GiaoVien">
-          <ScalarProperty Name="ID_chuc_vu" ColumnName="ID_chuc_vu" />
-          <ScalarProperty Name="ID_chuc_danh" ColumnName="ID_chuc_danh" />
-          <ScalarProperty Name="ID_hoc_vi" ColumnName="ID_hoc_vi" />
-          <ScalarProperty Name="ID_hoc_ham" ColumnName="ID_hoc_ham" />
-          <ScalarProperty Name="ID_khoa" ColumnName="ID_khoa" />
-          <ScalarProperty Name="Ngay_sinh" ColumnName="Ngay_sinh" />
-          <ScalarProperty Name="ID_gioi_tinh" ColumnName="ID_gioi_tinh" />
-          <ScalarProperty Name="Ho_ten" ColumnName="Ho_ten" />
-          <ScalarProperty Name="Ten" ColumnName="Ten" />
-          <ScalarProperty Name="Ma_cb" ColumnName="Ma_cb" />
-          <ScalarProperty Name="ID_cb" ColumnName="ID_cb" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="POR_GiaoVien">
-      <EntityTypeMapping TypeName="DHHHModel.POR_GiaoVien">
-        <MappingFragment StoreEntitySet="POR_GiaoVien">
-          <ScalarProperty Name="Trang_thai" ColumnName="Trang_thai" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="Mat_khau" ColumnName="Mat_khau" />
-          <ScalarProperty Name="ID_cb" ColumnName="ID_cb" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

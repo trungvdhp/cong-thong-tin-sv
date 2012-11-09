@@ -239,16 +239,37 @@
     <Compile Include="MOD_VaiTro.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
+    <Compile Include="PLAN_ChucDanh.cs">
+      <DependentUpon>DHHH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PLAN_ChucVu.cs">
+      <DependentUpon>DHHH.tt</DependentUpon>
+    </Compile>
     <Compile Include="PLAN_ChuongTrinhDaoTao.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
     <Compile Include="PLAN_ChuongTrinhDaoTaoChiTiet.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
+    <Compile Include="PLAN_ChuongTrinhDaoTaoKienThuc.cs">
+      <DependentUpon>DHHH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PLAN_ChuyenMon.cs">
+      <DependentUpon>DHHH.tt</DependentUpon>
+    </Compile>
     <Compile Include="PLAN_GiaoVien.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
+    <Compile Include="PLAN_GiaoVienMonDay.cs">
+      <DependentUpon>DHHH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PLAN_HocHam.cs">
+      <DependentUpon>DHHH.tt</DependentUpon>
+    </Compile>
     <Compile Include="PLAN_HocKyDangKy_TC.cs">
+      <DependentUpon>DHHH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PLAN_HocVi.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
     <Compile Include="PLAN_LopTinChi_TC.cs">
@@ -283,6 +304,9 @@
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
     <Compile Include="STU_He.cs">
+      <DependentUpon>DHHH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="STU_HeChuyenNganh.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
     <Compile Include="STU_HoSoSinhVien.cs">
@@ -462,6 +486,7 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
+    <Content Include="Scripts\jquery.blockUI.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -894,7 +919,9 @@
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

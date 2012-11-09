@@ -25,7 +25,5 @@ namespace CongThongTinSV
         public int ID_hoc_vi { get; set; }
         public int ID_chuc_danh { get; set; }
         public int ID_chuc_vu { get; set; }
-    
-        public virtual POR_GiaoVien POR_GiaoVien { get; set; }
     }
 }

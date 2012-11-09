@@ -14,12 +14,6 @@ namespace CongThongTinSV
     
     public partial class MARK_MonHoc
     {
-        public MARK_MonHoc()
-        {
-            this.PLAN_MonTinChi_TC = new HashSet<PLAN_MonTinChi_TC>();
-            this.PLAN_ChuongTrinhDaoTaoChiTiet = new HashSet<PLAN_ChuongTrinhDaoTaoChiTiet>();
-        }
-    
         public int ID_mon { get; set; }
         public string Ky_hieu { get; set; }
         public string Ten_mon { get; set; }
@@ -27,8 +21,5 @@ namespace CongThongTinSV
         public int ID_bm { get; set; }
         public Nullable<int> ID_he_dt { get; set; }
         public Nullable<int> ID_nhom_hp { get; set; }
-    
-        public virtual ICollection<PLAN_MonTinChi_TC> PLAN_MonTinChi_TC { get; set; }
-        public virtual ICollection<PLAN_ChuongTrinhDaoTaoChiTiet> PLAN_ChuongTrinhDaoTaoChiTiet { get; set; }
     }
 }

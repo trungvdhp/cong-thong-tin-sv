@@ -14,11 +14,6 @@ namespace CongThongTinSV
     
     public partial class STU_HoSoSinhVien
     {
-        public STU_HoSoSinhVien()
-        {
-            this.STU_DanhSachLopTinChi = new HashSet<STU_DanhSachLopTinChi>();
-        }
-    
         public int ID_sv { get; set; }
         public byte[] Anh { get; set; }
         public string Ma_sv { get; set; }
@@ -115,7 +110,5 @@ namespace CongThongTinSV
         public string LOP12 { get; set; }
         public string He_nhap_hoc { get; set; }
         public Nullable<int> Trang_thai_hoc { get; set; }
-    
-        public virtual ICollection<STU_DanhSachLopTinChi> STU_DanhSachLopTinChi { get; set; }
     }
 }
