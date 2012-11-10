@@ -109,15 +109,15 @@ namespace CongThongTinSV.Controllers
 
                 if (ok)
                 {
-                    //Get user token
-                    WebRequestController web = new WebRequestController(1, "POST", "username=" + model.UserName + "&password=" + model.Password + "&service=" + Service);
-                    string s = web.GetResponse();
-                    string[] rs = s.Split(new char[] { '"' });
-                    //UtilityController.WriteTextToFile("D:\\token.txt", s + " " + Service + " " + rs.Length);
-                    if (rs.Length == 5)
-                    {
-                        Session["token"] = rs[3].Trim();
-                    }
+                    ////Get user token
+                    //WebRequestController web = new WebRequestController(1, "POST", "username=" + model.UserName + "&password=" + model.Password + "&service=" + Service);
+                    //string s = web.GetResponse();
+                    //string[] rs = s.Split(new char[] { '"' });
+                    ////UtilityController.WriteTextToFile("D:\\token.txt", s + " " + Service + " " + rs.Length);
+                    //if (rs.Length == 5)
+                    //{
+                    //    Session["token"] = rs[3].Trim();
+                    //}
 
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                     return RedirectToLocal(returnUrl);
