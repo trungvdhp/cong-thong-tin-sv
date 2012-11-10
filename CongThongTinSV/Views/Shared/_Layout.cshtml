@@ -8,24 +8,69 @@
         @Styles.Render("~/Content/css")
         <link href="@Url.Content("~/Content/jqGrid/redmond/jquery-ui-1.9.0.custom.css")" rel="stylesheet" type="text/css" />
         <link href="@Url.Content("~/Content/jqGrid/ui.jqgrid.css")" rel="stylesheet" type="text/css" />
-        <link href="~/Content/kendo/kendo.common.min.css" rel="stylesheet" />
-        @*<link href="~/Content/kendo/kendo.default.min.css" rel="stylesheet" />*@
-        @*<link href="~/Content/kendo/kendo.blueopal.min.css" rel="stylesheet" />*@
-        <link href="~/Content/kendo/kendo.metro.min.css" rel="stylesheet" />
+        <link href="@Url.Content("~/Content/kendo/kendo.common.min.css")" rel="stylesheet" />
+        <link href="@Url.Content("~/Content/kendo/kendo.default.min.css")" rel="stylesheet" />
+         <link rel="alternate stylesheet" type="text/css" media="screen" title="black" href="@Url.Content("~/Content/kendo/kendo.black.min.css")" />
+        <link rel="alternate stylesheet" type="text/css" media="screen" title="blueopal" href="@Url.Content("~/Content/kendo/kendo.blueopal.min.css")" />
+        <link rel="alternate stylesheet" type="text/css" media="screen" title="metro" href="@Url.Content("~/Content/kendo/kendo.metro.min.css")" />
+         <link rel="alternate stylesheet" type="text/css" media="screen" title="silver" href="@Url.Content("~/Content/kendo/kendo.silver.min.css")" />
         @Scripts.Render("~/bundles/jquery")
         <script src="@Url.Content("~/Scripts/jqGrid/jquery-1.7.2.min.js")" type="text/javascript"></script>
         <script src="@Url.Content("~/Scripts/jqGrid/i18n/grid.locale-en.js")" type="text/javascript"></script>
         <script src="@Url.Content("~/Scripts/jqGrid/jquery.jqGrid.min.js")" type="text/javascript"></script>
-        <script src="~/Scripts/jquery.blockUI.js"></script>
-        <script src="~/Scripts/kendo/kendo.web.min.js"></script>
-        <script src="~/Scripts/kendo/kendo.aspnetmvc.min.js"></script>
+        <script src="@Url.Content("~/Scripts/jquery.blockUI.js")"></script>
+        <script src="@Url.Content("~/Scripts/kendo/kendo.web.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/kendo/kendo.aspnetmvc.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/styleswitch.js")"></script>
         @Scripts.Render("~/bundles/modernizr")
+        <script type="text/javascript">
+            function SelectSkin(e) {
+                var dataItem = this.dataItem(e.item.index());
+                chooseStyle(dataItem.Value, 60);
+            }
+        </script>
     </head>
     <body>
         <header>
             <div class="content-wrapper">
                 <div class="float-left">
                     <p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>
+                   @(Html.Kendo().DropDownList()
+                        .Name("switchcontrol")
+                        .OptionLabel("Chọn giao diện")
+                        .DataTextField("Text")
+                        .DataValueField("Value")
+                        .Events(e => e.Select("SelectSkin"))
+                        .BindTo(new List<SelectListItem>() {
+                            new SelectListItem() {
+                                Text = "Default",
+                                Value = "default"
+                            },
+                            new SelectListItem() {
+                                Text = "Black",
+                                Value = "black"
+                            },
+                            new SelectListItem() {
+                                Text = "BlueOpal",
+                                Value = "blueopal"
+                            },
+                            new SelectListItem() {
+                                Text = "Metro",
+                                Value = "metro"
+                            },
+                            new SelectListItem() {
+                                Text = "Silver",
+                                Value = "silver"
+                            }
+                        })
+                    )
+                   @* <select class="k-dropdown" name="switchcontrol" size="1" onChange="chooseStyle(this.options[this.selectedIndex].value, 60)">
+                      <option value="black">Black</option>
+                      <option value="blueopal">BlueOpal</option>
+                      <option value="default">Defaul</option>
+                      <option value="metro" selected="selected">Metro</option>
+                      <option value="silver">Silver</option>
+                    </select>*@
                 </div>
                 <div class="float-right">
                     <section id="login">
