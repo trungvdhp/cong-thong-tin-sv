@@ -8,11 +8,10 @@
 @*@Html.Label("NamHoc", "Năm học:")*@
 @(Html.Kendo().DropDownList()
     .Name("NamHoc")
-    //.Placeholder("Chọn năm học")
     .OptionLabel("Chọn năm học")
+    .HtmlAttributes(new {style="width:120px"})
     .DataTextField("Text")
     .DataValueField("Value")
-    //.SelectedIndex(0)
     .DataSource(source =>
     {
         source.Read(read =>
@@ -25,6 +24,7 @@
 @*@Html.Label("HocKy", "Học kỳ:")*@
 @(Html.Kendo().DropDownList()
     .Name("HocKy")
+    .HtmlAttributes(new {style="width:120px"})
     .OptionLabel("Chọn học kỳ")
     .DataTextField("Text")
     .DataValueField("Value")
@@ -44,6 +44,7 @@
 @(Html.Kendo().DropDownList()
     .Name("DotHoc")
     .OptionLabel("Chọn đợt học")
+    .HtmlAttributes(new {style="width:120px"})
     .DataTextField("Text")
     .DataValueField("Value")
     .DataSource(source =>
@@ -77,6 +78,7 @@
 @*@Html.Label("Khoa", "Khoa:")*@
 @(Html.Kendo().DropDownList()
     .Name("Khoa")
+    .HtmlAttributes(new {style="width:200px"})
     .OptionLabel("Chọn khoa")
     .DataTextField("Text")
     .DataValueField("Value")
@@ -93,6 +95,7 @@
 @*@Html.Label("KhoaHoc", "Khóa:")*@
 @(Html.Kendo().DropDownList()
     .Name("KhoaHoc")
+    .HtmlAttributes(new {style="width:120px"})
     .OptionLabel("Chọn khóa học")
     .DataTextField("Text")
     .DataValueField("Value")
@@ -109,6 +112,7 @@
 @*@Html.Label("LopTC", "Danh sách lớp học phần:")*@
 @(Html.Kendo().DropDownList()
     .Name("LopTC")
+    .HtmlAttributes(new {style="width:300px"})
     .OptionLabel("Chọn lớp học phần")
     .DataTextField("Text")
     .DataValueField("Value")
@@ -167,13 +171,16 @@
             var grid = $('#GridSinhVien').data().kendoGrid;
             var dataItem = grid.dataItem($(this).closest('tr'));
             selected[dataItem.ID_sv] = checked;
-            var check = true;
-            $('#GridSinhVien :checkbox').each(function () {
-                if (!selected[$(this).val()]) check = false;
-            });
-            $("#masterCheckBox").attr('checked', check);
+            $("#masterCheckBox").attr('checked', isCheckedAll());
         })
     })
+    function isCheckedAll() {
+        var check = true;
+        $('#GridSinhVien :checkbox').each(function () {
+            if ($(this).val()!='on' && !$(this).is(":checked")) check = false;
+        });
+        return check;
+    }
     function checkAll(ele) {
         var state = $(ele).is(':checked');
         var grid = $('#GridSinhVien').data().kendoGrid;
@@ -183,12 +190,10 @@
         });
     }
     function onDataBound(e) {
-        var check = true;
         $('#GridSinhVien :checkbox').each(function () {
-            if (!selected[$(this).val()]) check = false;
             if (selected[$(this).val()]) $(this).attr('checked', true);
         });
-        $("#masterCheckBox").attr('checked', check);
+        $("#masterCheckBox").attr('checked', isCheckedAll());
     }
     function filterHocKy() {
         return {
