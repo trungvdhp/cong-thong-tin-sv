@@ -92,10 +92,10 @@ namespace CongThongTinSV.Controllers
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Register(string selectedIDs, string id_chuyen_nganh)
+        public ActionResult CreateUsers(string selectedVals, string id_chuyen_nganh)
         {
             Entities db = new Entities();
-            IEnumerable<string> s = selectedIDs.Split(new char[] { ',' });
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
 
             var sp = db.SP_Moodle_SinhVien(Convert.ToInt32(id_chuyen_nganh)).Where(t1 => !t1.ID_moodle.HasValue && s.Contains(t1.ID_sv.ToString())).ToList();
             int i = 0;
@@ -146,8 +146,50 @@ namespace CongThongTinSV.Controllers
                 db.SaveChanges();
             }
 
-            //UtilityController.WriteTextToFile("D:\\user.txt", rs);
+            UtilityController.WriteTextToFile("D:\\UserCreate.txt", rs);
             
+            ViewBag.SelectedIds = new SelectList(sp, "Ma_sv", "ID_moodle");
+            ViewBag.Result = new SelectList(sp, "ID_moodle", "Ma_sv");
+            return View();
+        }
+
+        public ActionResult DeleteUsers(string selectedVals, string id_chuyen_nganh)
+        {
+            Entities db = new Entities();
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+
+            var sp = db.SP_Moodle_SinhVien(Convert.ToInt32(id_chuyen_nganh)).Where(t1 => t1.ID_moodle.HasValue && s.Contains(t1.ID_sv.ToString())).ToList();
+            int i = 0;
+            string postData = "wsfunction=core_user_delete_users";
+
+            foreach (SP_Moodle_SinhVien_Result sv in sp)
+            {
+                postData += "&userids[" + i + "]=" + sv.ID_moodle;
+                i++;
+            }
+
+            WebRequestController web = new WebRequestController(4, "POST", postData);
+            string rs = web.GetResponse();
+
+            if (rs.Contains("exception"))
+            {
+            }
+            else
+            {
+                i = 0;
+
+                foreach (SP_Moodle_SinhVien_Result sv in sp)
+                {
+                    MOD_NguoiDung user = db.MOD_NguoiDung.Single(t => t.ID_moodle == (int)sv.ID_moodle);
+                    db.MOD_NguoiDung.Remove(user);
+                    i++;
+                }
+
+                db.SaveChanges();
+            }
+
+            UtilityController.WriteTextToFile("D:\\UserDelete.txt", rs);
+
             ViewBag.SelectedIds = new SelectList(sp, "Ma_sv", "ID_moodle");
             ViewBag.Result = new SelectList(sp, "ID_moodle", "Ma_sv");
             return View();
