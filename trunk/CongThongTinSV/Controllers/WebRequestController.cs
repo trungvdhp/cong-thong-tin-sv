@@ -100,7 +100,7 @@ namespace CongThongTinSV.Controllers
                 queryData += "&wstoken=" + System.Web.HttpContext.Current.Session["token"];
             else if (scriptType > 3)
                 queryData += "&moodlewsrestformat=json" + "&wstoken=" + System.Web.HttpContext.Current.Session["token"];
-
+            //UtilityController.WriteTextToFile("D:\\Query.txt", queryData);
             SetMethod(method);
             ProcessData(queryData);
         }

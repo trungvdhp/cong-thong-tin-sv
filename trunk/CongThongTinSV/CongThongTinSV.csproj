@@ -924,6 +924,7 @@
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\styleswitch.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -969,7 +970,7 @@
     <Content Include="Views\SinhVien\YeucauMoLop.cshtml" />
     <Content Include="Views\LopHocPhan\InDanhSachLop.cshtml" />
     <Content Include="Views\MoodleUser\Index.cshtml" />
-    <Content Include="Views\MoodleUser\Register.cshtml" />
+    <Content Include="Views\MoodleUser\CreateUsers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

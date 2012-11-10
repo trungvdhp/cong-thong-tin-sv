@@ -21,7 +21,7 @@ namespace CongThongTinSV.Controllers
             Entities db = new Entities();
             JsonResult result = new JsonResult();
 
-            result.Data = new SelectList(db.STU_ChuyenNganh, "ID_chuyen_nganh", "Chuyen_nganh");
+            result.Data = new SelectList(db.STU_ChuyenNganh, "ID_chuyen_nganh", "Chuyen_nganh").OrderBy(t => t.Text);
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
 
             return result;

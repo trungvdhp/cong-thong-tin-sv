@@ -7,6 +7,7 @@
 @(Html.Kendo().DropDownList()
     .Name("ChuyenNganh")
     .OptionLabel("Chọn chuyên ngành")
+    .HtmlAttributes(new {style="width:auto"})
     .DataTextField("Text")
     .DataValueField("Value")
         //.SelectedIndex(0)
@@ -19,13 +20,13 @@
     })
     .Events(e =>
     {
-        e.Change("loadGridSinhVien");
+        e.Change("loadGrid");
     })
     //.HtmlAttributes(new { style = "display: block;"})
 )
 
 @(Html.Kendo().Grid<CongThongTinSV.Models.MoodleSinhVien>()
-    .Name("GridSinhVien")
+    .Name("Grid")
     .Columns(columns => {
         columns.Bound(sv => sv.ID_sv).Groupable(false)
             .ClientTemplate("<input type='checkbox'  class='chkbx' value='#= ID_sv #'/>")
@@ -59,21 +60,21 @@
     )
 )
 <div>
-    <button id="register">Đăng ký tài khoản</button>
-    <button id="unregister">Hủy đăng ký</button>
+    <button id="createUsers">Đăng ký tài khoản</button>
+    <button id="deleteUsers">Hủy đăng ký</button>
 </div>
 
 <script type="text/javascript">
     var selectedVals = [];
 
-    function loadGridSinhVien() {
+    function loadGrid() {
         selectedVals.splice(0, selectedVals.length);
-        $("#GridSinhVien").data("kendoGrid").dataSource.read();
+        $("#Grid").data("kendoGrid").dataSource.read();
     }
     // on data bound, check checkboxes
     function onDataBound(e) {
         var ok = true;
-        $('#GridSinhVien :checkbox').each(function () {
+        $('#Grid :checkbox').each(function () {
             var value = $(this).val()
 
             if (value != 'on') {
@@ -97,9 +98,9 @@
     }
     // on click checkbox cell in a row
     $(function () {
-        $('#GridSinhVien').on('click', '.chkbx', function () {
+        $('#Grid').on('click', '.chkbx', function () {
             var state = $(this).is(':checked');
-            var grid = $('#GridSinhVien').data().kendoGrid;
+            var grid = $('#Grid').data().kendoGrid;
             var dataItem = grid.dataItem($(this).closest('tr'));
 
             check(dataItem.ID_sv, state, selectedVals);
@@ -139,7 +140,7 @@
     function checkAll(ele) {
         var state = $(ele).is(':checked');
 
-        $('#GridSinhVien :checkbox').each(function () {
+        $('#Grid :checkbox').each(function () {
             check($(this).val(), state, selectedVals);
             $(this).attr('checked', state);
         });
@@ -148,211 +149,45 @@
     function isCheckedAll() {
         var ok = true;
 
-        $('#GridSinhVien :checkbox').each(function () {
+        $('#Grid :checkbox').each(function () {
             if ($(this).val() != 'on' && !$(this).is(':checked')) {
                 ok = false;
             }
         });
         return ok;
     }
-    $("#register").click(function () {
-        window.location.href = '/MoodleUser/Register/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&ids=' + selectedVals;
+    function processing(action, mess) {
+        $.blockUI({
+            message: mess,
+            css: {
+                border: 'none',
+                padding: '15px',
+                backgroundColor: '#000',
+                '-webkit-border-radius': '10px',
+                '-moz-border-radius': '10px',
+                opacity: .5,
+                color: '#fff'
+            }
+        });
+
+        $.ajax({
+            url: action,
+            success: loadGrid(),
+            complete: $.unblockUI(),
+            cache: false
+        });
+    }
+
+    $("#createUsers").click(function () {
+        //window.location.href = '/MoodleUser/CreateUsers/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals;
+        processing('/MoodleUser/CreateUsers/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals, "Đang tạo tài khoản moodel cho sinh viên...:");
     })
 
-    $(document).ready(function () {
-        // this object will store all checked records
+    $("#deleteUsers").click(function () {
+        if (confirm('Bạn muốn xóa toàn bộ các tài khoản moodle của các sinh viên đã chọn?')) {
+            //window.location.href = '/MoodleUser/DeleteUsers/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals;
+            processing('/MoodleUser/DeleteUsers/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals, "Đang xóa tài khoản moodle của sinh viên...:");
+        }
+    })
 
-       
-
-
-        //$(document).ready(function () {
-        //var timeoutHnd;
-        //var flAuto = false;
-        //var idlop = '-1';
-        //var $grid = $('#grid'), idsOfSelectedRows = [],
-        //   ddlsource = "#ddlChuyenNganh",
-        //   ddltarget = "#ddlLop",
-        //updateSelectedId = function (id, isSelected) {
-        //    var index = $.inArray(id, idsOfSelectedRows);
-        //    if (!isSelected && index >= 0) {
-        //        idsOfSelectedRows.splice(index, 1); // remove id from the list
-        //    } else if (index < 0) {
-        //        idsOfSelectedRows.push(id);
-        //    }
-        //};
-
-        //function doSearch() {
-        //    if (!flAuto)
-        //        return;
-        //    //	var elem = ev.target||ev.srcElement;
-        //    if (timeoutHnd)
-        //        clearTimeout(timeoutHnd)
-        //    timeoutHnd = setTimeout(gridReload, 500)
-        //}
-
-        //function gridReload() {
-        //    $grid.jqGrid('setGridParam', { url: "/MoodleUser/GetSinhVienLop/?id_lop=" + idlop + "&ma_sv=" + jQuery("#masv").val() + "&ho_dem=" + jQuery("#hodem").val() + "&ten=" + jQuery("#ten").val() + "&ngay_sinh=" + jQuery("#ngaysinh").val() + "&gioi_tinh=" + jQuery("#gioitinh").val(), page: 1 }).trigger("reloadGrid");
-        //    $grid.jqGrid('resetSelection');
-        //    idsOfSelectedRows.splice(0, idsOfSelectedRows.length);
-        //}
-
-        //$("#autosearch").change(function () {
-        //    flAuto = document.getElementById("autosearch").checked;
-        //    jQuery("#submit").attr("disabled", flAuto);
-        //})
-
-        //$("#submit").click(function () {
-        //    idlop = jQuery("#ddlLop").val();
-        //    gridReload();
-        //})
-
-        //$("#masv").keydown(function () {
-        //    doSearch();
-        //})
-
-        //$("#hodem").keydown(function () {
-        //    doSearch();
-        //})
-
-        //$("#ten").keydown(function () {
-        //    doSearch();
-        //})
-
-        //$("#ngaysinh").keydown(function () {
-        //    doSearch();
-        //})
-
-        //$("#gioitinh").keydown(function () {
-        //    doSearch();
-        //})
-
-        //$("#ddlChuyenNganh").change(function () {
-        //    var url = "/Lop/GetLopChuyenNganh"
-        //    $.getJSON(url, { ID_chuyen_nganh: $(ddlsource).val() }, function (data) {
-        //        $(ddltarget).empty();
-        //        $.each(data, function (index, optionData) {
-        //            $(ddltarget).append("<option value='" + optionData.Value + "'>" + optionData.Text + "</option>");
-        //        });
-        //        if (data.length == 0) {
-        //            idlop = '-1';
-        //        }
-        //        else {
-        //            idlop = data[0].Value;
-        //        }
-        //        gridReload();
-        //    });
-        //})
-
-        //$("#ddlLop").change(function () {
-        //    idlop = jQuery("#ddlLop").val();
-        //    gridReload();
-        //})
-
-        //$grid.jqGrid({
-        //    url: "/MoodleUser/GetSinhVienLop/?id_lop=" + jQuery("#ddlLop").val()  + "&ma_sv=" + jQuery("#masv").val() + "&ho_dem=" + jQuery("#hodem").val() + "&ten=" + jQuery("#ten").val() + "&ngay_sinh=" + jQuery("#ngaysinh").val() + "&gioi_tinh=" + jQuery("#gioitinh").val(),
-        //    datatype: "json",
-        //    mtype: "POST",
-        //    gridview: true,
-        //    colNames: ['ID sinh viên', 'Mã sinh viên', 'ID moodle', 'Họ và đệm', 'Tên', 'Ngày sinh', 'Giới tính'],
-        //    colModel: [
-        //                    { name: 'ID_sv', index: 'ID_sv', width: 100, align: "center", hidden: true },
-        //                    { name: 'Ma_sv', index: 'Ma_sv', width: 100, align: "center" },
-        //                    { name: 'ID_moodle', index: 'ID_moodle', width: 90, align: "center" },
-        //                    { name: 'Ho_dem', index: 'Ho_dem', width: 100 },
-        //                    { name: 'Ten', index: 'Ten', width: 50 },
-        //                    { name: 'Ngay_sinh', index: 'Ngay_sinh', width: 85, align: "center", formatter: 'date', formatoptions: { newformat: 'd/m/Y'} },
-        //                    { name: 'Gioi_tinh', index: 'Gioi_tinh', width: 80, align: "center" }
-        //    ],
-        //    multiselect: true,
-        //    rowNum: 50,
-        //    rownumWidth: 40,
-        //    rowList: [5, 10, 20, 50, 100],
-        //    pager: jQuery('#pager1'),
-        //    toppager: true,
-        //    sortname: 'ID_sv',
-        //    //sortable: false,
-        //    sortorder: "asc",
-        //    viewrecords: true,
-        //    caption: "Danh sách sinh viên",
-        //    rownumbers: true,
-        //    forceFit: false,
-        //    shrinkToFit: false,
-        //    width: 630,
-        //    height: 250,
-        //    onSelectRow: updateSelectedId,
-        //    onSelectAll: function (aRowids, isSelected) {
-        //        var i, count, id;
-        //        for (i = 0, count = aRowids.length; i < count; i++) {
-        //            id = aRowids[i];
-        //            updateSelectedId(id, isSelected);
-        //        }
-        //    },
-        //    loadComplete: function () {
-        //        var i, count;
-        //        for (i = 0, count = idsOfSelectedRows.length; i < count; i++) {
-        //            $grid.jqGrid('setSelection', idsOfSelectedRows[i], false);
-        //        }
-        //    }
-        //});
-
-        //$grid.jqGrid('navGrid', '#pager1', { refresh: true, del: false, add: false, edit: false, search: false });
-
-        //$("#register").click(function () {
-        //    window.location.href='/MoodleUser/Register/?id_lop='+ jQuery("#ddlLop").val() + '&ids=' + selectedVals;
-        //$.blockUI({
-        //    message: 'Đang xử lý...',
-        //    css: {
-        //        border: 'none',
-        //        padding: '15px',
-        //        backgroundColor: '#000',
-        //        '-webkit-border-radius': '10px',
-        //        '-moz-border-radius': '10px',
-        //        opacity: .5,
-        //        color: '#fff'
-        //    }
-        //});
-
-        //$.ajax({
-        //    url: '/MoodleUser/Register/?id_lop='+ jQuery("#ddlLop").val() + '&ids=' + idsOfSelectedRows,
-        //    success: function () { 
-        //        gridReload(); },
-        //    complete: function() { 
-        //        // unblock when remote call returns 
-        //        $.unblockUI(); 
-        //    },
-        //    cache: false
-        //});
-        //    })
-
-        //    $("#unregister").click(function () {
-        //        gridReload();
-        //    })
-        //});
-    });
 </script>
-@*<h2>Quản lý tài khoản sinh viên trên Moodle</h2>
-<br />
-
-<div>
-    <div>
-    @Html.Label(User.Identity.Name + ": " + Session["token"])
-    </div>
-    Chuyên ngành: @Html.DropDownList("ddlChuyenNganh", (SelectList)ViewBag.ChuyenNganh)
-    Lớp: @Html.DropDownList("ddlLop", (SelectList)ViewBag.Lop)
-    <div>
-	@Html.CheckBox("autosearch") Tự động tìm
-	@Html.TextBox("masv", "", new {style = "width: 85px;", placeholder="Mã sinh viên"})
-	@Html.TextBox("hodem", "", new {style = "width: 100px;", placeholder="Họ và đệm"})
-	@Html.TextBox("ten", "", new {style = "width: 60px;", placeholder="Tên"})
-	@Html.TextBox("ngaysinh", "", new {style = "width: 80px;", placeholder="Ngày sinh"})
-	@Html.TextBox("gioitinh", "", new {style = "width: 60px;", placeholder="Giới tính"})
-    <button id="submit" >Tìm kiếm</button>
-    </div>
-    <table id="grid" ></table>
-    <div id="pager1" ></div>
-    <div>
-        <button id="register">Đăng ký tài khoản</button>
-        <button id="unregister">Hủy đăng ký</button>
-    </div>
-    <br /><br />
-</div>*@
