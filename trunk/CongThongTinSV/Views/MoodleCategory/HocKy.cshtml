@@ -160,7 +160,7 @@
 
     $("#delete").click(function () {
         if (confirm('Bạn muốn xóa toàn bộ các danh mục Học kỳ trên Moodle đã chọn?')) {
-            //window.location.href = '/MoodleCategory/CreateHocKy/?selectedVals=' + selectedVals;
+            //window.location.href = '/MoodleCategory/DeleteHocKy/?selectedVals=' + selectedVals;
             processing('/MoodleCategory/DeleteHocKy/?selectedVals='+ selectedVals, "Đang xóa các danh mục Học kỳ trên Moodle...")
         }
     })
