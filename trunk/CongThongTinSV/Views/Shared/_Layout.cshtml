@@ -38,6 +38,7 @@
                    @(Html.Kendo().DropDownList()
                         .Name("switchcontrol")
                         .OptionLabel("Chọn giao diện")
+                        .HtmlAttributes(new { style = "width:125px" })
                         .DataTextField("Text")
                         .DataValueField("Value")
                         .Events(e => e.Select("SelectSkin"))
@@ -71,7 +72,7 @@
                       <option value="metro" selected="selected">Metro</option>
                       <option value="silver">Silver</option>
                     </select>*@
-                </div>
+</div>
                 <div class="float-right">
                     <section id="login">
                         @Html.Partial("_LoginPartial")
