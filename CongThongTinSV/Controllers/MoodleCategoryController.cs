@@ -53,11 +53,17 @@ namespace CongThongTinSV.Controllers
             Entities db = new Entities();
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
 
-            var sp = MoodleHocKy().Where(t => t.ID_moodle == 0 && s.Contains(t.ID.ToString())).ToList();
+            var hocky = MoodleHocKy().Where(t => t.ID_moodle == 0 && s.Contains(t.ID.ToString())).ToList();
+
+            //ViewBag.SelectedIds = new SelectList(sp, "Ma_sv", "ID_moodle");
+            //ViewBag.Result = new SelectList(sp, "ID_moodle", "Ma_sv");
+
+            if (hocky.Count() == 0) return View();
+
             int i = 0;
             string postData = "&wsfunction=core_course_create_categories";
 
-            foreach (MoodleHocKy hk in sp)
+            foreach (MoodleHocKy hk in hocky)
             {
                 postData += "&categories[" + i + "][name]=" + HttpUtility.UrlEncode(hk.Nam_hoc + " Kỳ " + hk.Hoc_ky + "- Đợt" + hk.Dot);
                 postData += "&categories[" + i + "][parent]=0";
@@ -70,13 +76,13 @@ namespace CongThongTinSV.Controllers
             WebRequestController web = new WebRequestController(4, "POST", postData);
             string rs = web.GetResponse();
             JavaScriptSerializer serializer = new JavaScriptSerializer();
-            MoodleException moodleError = new MoodleException();
+            //MoodleException moodleError = new MoodleException();
             List<MoodleCreateCategoryResponse> res = new List<MoodleCreateCategoryResponse>();
 
             if (rs.Contains("exception"))
             {
                 // Error
-                moodleError = serializer.Deserialize<MoodleException>(rs);
+                // moodleError = serializer.Deserialize<MoodleException>(rs);
             }
             else
             {
@@ -84,13 +90,13 @@ namespace CongThongTinSV.Controllers
                 res = serializer.Deserialize<List<MoodleCreateCategoryResponse>>(rs);
                 i = 0;
 
-                foreach (MoodleHocKy hk in sp)
+                foreach (MoodleHocKy hk in hocky)
                 {
-                    MOD_HocKy hocky = new MOD_HocKy();
+                    MOD_HocKy m = new MOD_HocKy();
 
-                    hocky.ID_moodle = Convert.ToInt32(res[i].id);
-                    hocky.Ky_dang_ky = hk.ID;
-                    db.MOD_HocKy.Add(hocky);
+                    m.ID_moodle = Convert.ToInt32(res[i].id);
+                    m.Ky_dang_ky = hk.ID;
+                    db.MOD_HocKy.Add(m);
                     i++;
                 }
 
@@ -108,6 +114,53 @@ namespace CongThongTinSV.Controllers
         {
             Entities db = new Entities();
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+
+            var hocky = MoodleHocKy().Where(t => t.ID_moodle > 0 && s.Contains(t.ID.ToString())).ToList();
+
+            //ViewBag.SelectedIds = new SelectList(sp, "Ma_sv", "ID_moodle");
+            //ViewBag.Result = new SelectList(sp, "ID_moodle", "Ma_sv");
+
+            if (hocky.Count() == 0) return View();
+
+            int i = 0;
+            string postData = "&wsfunction=core_course_delete_categories";
+
+            foreach (MoodleHocKy hk in hocky)
+            {
+                postData += "&categories[" + i + "][id]=" + hk.ID_moodle;
+                //postData += "&categories[" + i + "][newparent]=0";
+                postData += "&categories[" + i + "][recursive]=1";
+                i++;
+            }
+
+            WebRequestController web = new WebRequestController(4, "POST", postData);
+            string rs = web.GetResponse();
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //MoodleException moodleError = new MoodleException();
+            //List<MoodleCreateCategoryResponse> res = new List<MoodleCreateCategoryResponse>();
+
+            if (rs.Contains("exception"))
+            {
+                // Error
+                // moodleError = serializer.Deserialize<MoodleException>(rs);
+            }
+            else
+            {
+                // Good
+                i = 0;
+
+                foreach (MoodleHocKy hk in hocky)
+                {
+                    MOD_HocKy m = db.MOD_HocKy.Single(t => t.ID_moodle == hk.ID_moodle);
+                    db.MOD_HocKy.Remove(m);
+                    i++;
+                }
+
+                db.SaveChanges();
+            }
+
+            UtilityController.WriteTextToFile("D:\\HocKyDelete.txt", rs);
+
             return View();
         }
     }
