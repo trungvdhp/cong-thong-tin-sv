@@ -15,6 +15,9 @@ namespace CongThongTinSV.Models
 
     public class MoodleSinhVien
     {
+        [DisplayName("STT")]
+        public int STT { get; set; }
+
         [DisplayName("ID")]
         public int ID_sv { get; set; }
 

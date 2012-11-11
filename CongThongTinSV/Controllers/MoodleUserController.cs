@@ -92,7 +92,7 @@ namespace CongThongTinSV.Controllers
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult CreateUsers(string selectedVals, string id_chuyen_nganh)
+        public ActionResult CreateUser(string selectedVals, string id_chuyen_nganh)
         {
             Entities db = new Entities();
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
@@ -153,7 +153,7 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        public ActionResult DeleteUsers(string selectedVals, string id_chuyen_nganh)
+        public ActionResult DeleteUser(string selectedVals, string id_chuyen_nganh)
         {
             Entities db = new Entities();
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
