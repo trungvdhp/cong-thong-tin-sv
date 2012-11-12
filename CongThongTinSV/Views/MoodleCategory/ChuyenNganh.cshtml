@@ -175,7 +175,8 @@
             url: action,
             //success: ,
             complete: function (e) {
-                loadGrid(); $.unblockUI();
+                $("#Grid").data("kendoGrid").dataSource.read();
+                $.unblockUI();
             },
             cache: false
         });

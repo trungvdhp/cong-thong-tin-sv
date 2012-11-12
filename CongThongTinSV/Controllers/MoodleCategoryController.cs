@@ -210,6 +210,26 @@ namespace CongThongTinSV.Controllers
 
         }
 
+        public JsonResult GetMoodleChuyenNganh(int ky_dang_ky)
+        {
+            Entities db = new Entities();
+            JsonResult result = new JsonResult();
+            IEnumerable<SelectListItem> list = 
+                from cn1 in db.STU_ChuyenNganh.AsEnumerable() 
+                join cn2 in db.MOD_HocKy_ChuyenNganh.Where(t => t.Ky_dang_ky == ky_dang_ky)
+                on cn1.ID_chuyen_nganh equals cn2.ID_chuyen_nganh
+                select new SelectListItem
+                {
+                    Value = cn2.ID_moodle.ToString(),
+                    Text = cn1.Chuyen_nganh
+                };
+            int c = Convert.ToInt32(list.Count());
+            result.Data = new SelectList(list, "Value", "Text").OrderBy(t => t.Text);
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+
+            return result;
+        }
+
         public ActionResult CreateChuyenNganh(string selectedVals, string ky_dang_ky)
         {
             Entities db = new Entities();
