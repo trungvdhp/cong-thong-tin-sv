@@ -1,13 +1,13 @@
 ﻿@using Kendo.Mvc.UI;
 @using CongThongTinSV.Models;
 @{
-    ViewBag.Title = "Quản lý tài khoản sinh viên trên Moodle";
+    ViewBag.Title = "Quản lý danh mục chuyên ngành trên Moodle";
 }
 
 @(Html.Kendo().DropDownList()
-    .Name("ChuyenNganh")
-    .OptionLabel("Chọn chuyên ngành")
-    .HtmlAttributes(new {style="width:auto"})
+    .Name("HocKy")
+    .OptionLabel("Chọn học kỳ")
+    .HtmlAttributes(new {style="width:150px"})
     .DataTextField("Text")
     .DataValueField("Value")
         //.SelectedIndex(0)
@@ -15,7 +15,7 @@
     {
         source.Read(read =>
         {
-            read.Action("GetChuyenNganh", "ChuyenNganh");
+            read.Action("GetMoodleHocKy", "MoodleCategory");
         }).ServerFiltering(true);
     })
     .Events(e =>
@@ -25,24 +25,20 @@
     //.HtmlAttributes(new { style = "display: block;"})
 )
 
-@(Html.Kendo().Grid<CongThongTinSV.Models.MoodleSinhVien>()
+@(Html.Kendo().Grid<CongThongTinSV.Models.MoodleChuyenNganh>()
     .Name("Grid")
     .Columns(columns => {
-        columns.Bound(sv => sv.ID_sv)
-            .ClientTemplate("<input type='checkbox' class='chkbx' value='#= ID_sv #'/>")
+        columns.Bound(c => c.ID)
+            .ClientTemplate("<input type='checkbox' class='chkbx' value='#= ID #'/>")
             .HeaderTemplate("<input type='checkbox' id='masterCheckBox' onclick='checkAll(this)'/>")
             .Width(40)
             .Title("")
             .HeaderHtmlAttributes(new { style = "text-align:center" })
             .HtmlAttributes(new { style = "text-align:center" })
             .Filterable(false).Groupable(false).Sortable(false);
-        columns.Bound(sv => sv.Ma_sv).Width(80);
-        columns.Bound(sv => sv.ID_moodle).Width(105);
-        columns.Bound(sv => sv.Ho_dem).Width(150);
-        columns.Bound(sv => sv.Ten).Width(80);
-        columns.Bound(sv => sv.Ngay_sinh).Width(120).Format("{0:dd-MM-yyyy}");
-        columns.Bound(sv => sv.Gioi_tinh).Width(100);
-        columns.Bound(sv => sv.Lop);
+        columns.Bound(c => c.ID_moodle).Width(105);
+        columns.Bound(c => c.Ma_chuyen_nganh).Width(80);
+        columns.Bound(c => c.Chuyen_nganh).Width(150);
     })
     .Pageable(pager => pager.PageSizes(new int[]{5, 10, 25, 50, 100, 1000}).Refresh(true).Input(true).Numeric(false))
     .Sortable(s => s.SortMode(GridSortMode.MultipleColumn))
@@ -60,13 +56,13 @@
     .DataSource(
         dataSource => dataSource
             .Ajax()
-            .Read(read => read.Action("GetSinhVien", "MoodleUser").Data("filterGrid"))
+            .Read(read => read.Action("GetChuyenNganh", "MoodleCategory").Data("filterGrid"))
             .PageSize(5)
     )
 )
 <div>
-    <button id="create">Đăng ký tài khoản</button>
-    <button id="delete">Hủy đăng ký</button>
+    <button id="create">Tạo danh mục</button>
+    <button id="delete">Xóa danh mục</button>
 </div>
 
 <script type="text/javascript">
@@ -98,7 +94,7 @@
 
     function filterGrid() {
         return {
-            id_chuyen_nganh: $("#ChuyenNganh").val()
+            ky_dang_ky: $("#HocKy").val()
         }
     }
     // on click checkbox cell in a row
@@ -108,7 +104,7 @@
             var grid = $('#Grid').data().kendoGrid;
             var dataItem = grid.dataItem($(this).closest('tr'));
 
-            check(dataItem.ID_sv, state, selectedVals);
+            check(dataItem.ID, state, selectedVals);
             $('#masterCheckBox').attr('checked', isCheckedAll());
         })
     })
@@ -186,14 +182,14 @@
     }
 
     $("#create").click(function () {
-        //window.location.href = '/MoodleUser/CreateSinhVien/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals;
-        processing('/MoodleUser/CreateSinhVien/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals, "Đang tạo tài khoản moodle cho sinh viên...");
+        //window.location.href = '/MoodleCategory/CreateChuyenNganh/?Ky_dang_ky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals;
+        processing('/MoodleCategory/CreateChuyenNganh/?Ky_dang_ky=' + jQuery("#HocKy").val() + selectedVals, "Đang tạo danh mục các chuyên ngành trên Moodle...");
     })
 
     $("#delete").click(function () {
-        if (confirm('Bạn muốn xóa toàn bộ các tài khoản moodle của các sinh viên đã chọn?')) {
-            //window.location.href = '/MoodleUser/DeleteSinhVien/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals;
-            processing('/MoodleUser/DeleteSinhVien/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals, "Đang xóa tài khoản moodle của sinh viên...");
+        if (confirm('Bạn muốn xóa toàn bộ các danh mục chuyên ngành đã chọn thuộc học kỳ ' + jQuery("#HocKy").text() + ' trên Moodle?')) {
+            //window.location.href = '/MoodleCategory/DeleteChuyenNganh/?ky_dang_ky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals;
+            processing('/MoodleCategory/DeleteChuyenNganh/?ky_dang_ky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals, "Đang xóa danh mục các chuyên ngành trên Moodle...");
         }
     })
 
