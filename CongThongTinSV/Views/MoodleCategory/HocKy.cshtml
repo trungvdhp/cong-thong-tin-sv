@@ -29,7 +29,7 @@
     .Reorderable(ro => ro.Columns(true))
     .Navigatable()
     //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
-    .Selectable(s => s.Mode(GridSelectionMode.Multiple))
+    .Selectable(s => s.Mode(GridSelectionMode.Single))
     .Events(e => {
                 e.DataBound("onDataBound");
             })
@@ -147,21 +147,23 @@
 
         $.ajax({
             url: action,
-            success: loadGrid(),
-            complete: $.unblockUI(),
+            //success: ,
+            complete: function (e) {
+                loadGrid(); $.unblockUI(); 
+            },
             cache: false
         });
     }
 
     $("#create").click(function () {
         //window.location.href = '/MoodleCategory/CreateHocKy/?selectedVals=' + selectedVals;
-        processing('/MoodleCategory/CreateHocKy/?selectedVals='+ selectedVals, "Đang tạo các danh mục Học kỳ trên Moodle...");
+        processing('/MoodleCategory/CreateHocKy/?selectedVals='+ selectedVals, "Đang tạo các danh mục học kỳ trên Moodle...");
     })
 
     $("#delete").click(function () {
-        if (confirm('Bạn muốn xóa toàn bộ các danh mục Học kỳ trên Moodle đã chọn?')) {
+        if (confirm('Bạn muốn xóa toàn bộ các danh mục học kỳ đã chọn trên Moodle?')) {
             //window.location.href = '/MoodleCategory/DeleteHocKy/?selectedVals=' + selectedVals;
-            processing('/MoodleCategory/DeleteHocKy/?selectedVals='+ selectedVals, "Đang xóa các danh mục Học kỳ trên Moodle...")
+            processing('/MoodleCategory/DeleteHocKy/?selectedVals='+ selectedVals, "Đang xóa các danh mục học kỳ trên Moodle...")
         }
     })
 

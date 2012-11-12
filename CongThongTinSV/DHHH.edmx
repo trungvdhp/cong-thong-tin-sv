@@ -1416,7 +1416,7 @@
           </AssociationSet>
           <EntitySet Name="STU_DanhSachLopTinChi" EntityType="DHHHModel.STU_DanhSachLopTinChi" />
           <FunctionImport Name="SP_Moodle_SinhVien" ReturnType="Collection(DHHHModel.SP_Moodle_SinhVien_Result)">
-            <Parameter Name="Id_chuyen_nganh" Mode="In" Type="Int32" />
+          <Parameter Name="Id_chuyen_nganh" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="SP_SinhVienLopTC_Result">
@@ -1478,7 +1478,7 @@
           <Key>
             <PropertyRef Name="ID_moodle" />
           </Key>
-          <Property Type="Int64" Name="ID_moodle" Nullable="false" />
+          <Property Type="Int32" Name="ID_moodle" Nullable="false" />
           <Property Type="Int32" Name="Ky_dang_ky" Nullable="false" />
           <Property Type="Int32" Name="ID_chuyen_nganh" Nullable="false" />
           <NavigationProperty Name="MOD_HocKy" Relationship="DHHHModel.FK_MOD_HocKy_ChuyenNganh_MOD_HocKy" FromRole="MOD_HocKy_ChuyenNganh" ToRole="MOD_HocKy" />

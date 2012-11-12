@@ -14,7 +14,7 @@ namespace CongThongTinSV
     
     public partial class MOD_HocKy_ChuyenNganh
     {
-        public long ID_moodle { get; set; }
+        public int ID_moodle { get; set; }
         public int Ky_dang_ky { get; set; }
         public int ID_chuyen_nganh { get; set; }
     
