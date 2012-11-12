@@ -7,7 +7,7 @@
 @(Html.Kendo().DropDownList()
     .Name("HocKy")
     .OptionLabel("Chọn học kỳ")
-    .HtmlAttributes(new {style="width:150px"})
+    .HtmlAttributes(new {style="width:200px"})
     .DataTextField("Text")
     .DataValueField("Value")
         //.SelectedIndex(0)
@@ -38,7 +38,7 @@
             .Filterable(false).Groupable(false).Sortable(false);
         columns.Bound(c => c.ID_moodle).Width(105);
         columns.Bound(c => c.Ma_chuyen_nganh).Width(80);
-        columns.Bound(c => c.Chuyen_nganh).Width(150);
+        columns.Bound(c => c.Chuyen_nganh);
     })
     .Pageable(pager => pager.PageSizes(new int[]{5, 10, 25, 50, 100, 1000}).Refresh(true).Input(true).Numeric(false))
     .Sortable(s => s.SortMode(GridSortMode.MultipleColumn))
@@ -182,8 +182,8 @@
     }
 
     $("#create").click(function () {
-        //window.location.href = '/MoodleCategory/CreateChuyenNganh/?Ky_dang_ky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals;
-        processing('/MoodleCategory/CreateChuyenNganh/?Ky_dang_ky=' + jQuery("#HocKy").val() + selectedVals, "Đang tạo danh mục các chuyên ngành trên Moodle...");
+        //window.location.href = '/MoodleCategory/CreateChuyenNganh/?ky_dang_ky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals;
+        processing('/MoodleCategory/CreateChuyenNganh/?ky_dang_ky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals, "Đang tạo danh mục các chuyên ngành trên Moodle...");
     })
 
     $("#delete").click(function () {

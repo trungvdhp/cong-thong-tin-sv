@@ -415,6 +415,10 @@
       <End Role="MOD_HocKy" EntitySet="MOD_HocKy" />
       <End Role="MOD_HocKy_ChuyenNganh" EntitySet="MOD_HocKy_ChuyenNganh" />
     </AssociationSet>
+    <AssociationSet Name="FK_MOD_LopTinChi_TC_MOD_HocKy_ChuyenNganh" Association="DHHHModel.Store.FK_MOD_LopTinChi_TC_MOD_HocKy_ChuyenNganh">
+      <End Role="MOD_HocKy_ChuyenNganh" EntitySet="MOD_HocKy_ChuyenNganh" />
+      <End Role="MOD_LopTinChi_TC" EntitySet="MOD_LopTinChi_TC" />
+    </AssociationSet>
     <AssociationSet Name="FK_MOD_NguoiDung_MOD_NhomNguoiDung" Association="DHHHModel.Store.FK_MOD_NguoiDung_MOD_NhomNguoiDung">
       <End Role="MOD_NhomNguoiDung" EntitySet="MOD_NhomNguoiDung" />
       <End Role="MOD_NguoiDung" EntitySet="MOD_NguoiDung" />
@@ -496,7 +500,7 @@
     <Key>
       <PropertyRef Name="ID_moodle" />
     </Key>
-    <Property Name="ID_moodle" Type="bigint" Nullable="false" />
+    <Property Name="ID_moodle" Type="int" Nullable="false" />
     <Property Name="Ky_dang_ky" Type="int" Nullable="false" />
     <Property Name="ID_chuyen_nganh" Type="int" Nullable="false" />
   </EntityType>
@@ -506,6 +510,7 @@
     </Key>
     <Property Name="ID_moodle" Type="int" Nullable="false" />
     <Property Name="ID_lop_tc" Type="int" Nullable="false" />
+    <Property Name="ID_danhmuc" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="MOD_NguoiDung">
     <Key>
@@ -1165,7 +1170,9 @@
     <Property Name="Nam_hoc" Type="nvarchar" Nullable="false" MaxLength="10" />
   </EntityType>
   <Association Name="FK_DangKy_Nhom">
-    <End Role="MOD_NhomHocVien" Type="DHHHModel.Store.MOD_NhomHocVien" Multiplicity="0..1" />
+    <End Role="MOD_NhomHocVien" Type="DHHHModel.Store.MOD_NhomHocVien" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="MOD_DanhSachLopTinChi" Type="DHHHModel.Store.MOD_DanhSachLopTinChi" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="MOD_NhomHocVien">
@@ -1177,7 +1184,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_MOD_HocKy_ChuyenNganh_MOD_HocKy">
-    <End Role="MOD_HocKy" Type="DHHHModel.Store.MOD_HocKy" Multiplicity="1" />
+    <End Role="MOD_HocKy" Type="DHHHModel.Store.MOD_HocKy" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="MOD_HocKy_ChuyenNganh" Type="DHHHModel.Store.MOD_HocKy_ChuyenNganh" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="MOD_HocKy">
@@ -1185,6 +1194,20 @@
       </Principal>
       <Dependent Role="MOD_HocKy_ChuyenNganh">
         <PropertyRef Name="Ky_dang_ky" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MOD_LopTinChi_TC_MOD_HocKy_ChuyenNganh">
+    <End Role="MOD_HocKy_ChuyenNganh" Type="DHHHModel.Store.MOD_HocKy_ChuyenNganh" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MOD_LopTinChi_TC" Type="DHHHModel.Store.MOD_LopTinChi_TC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MOD_HocKy_ChuyenNganh">
+        <PropertyRef Name="ID_moodle" />
+      </Principal>
+      <Dependent Role="MOD_LopTinChi_TC">
+        <PropertyRef Name="ID_danhmuc" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1201,7 +1224,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_MOD_NguoiDung_VaiTro_HeThong_MOD_NguoiDung">
-    <End Role="MOD_NguoiDung" Type="DHHHModel.Store.MOD_NguoiDung" Multiplicity="1" />
+    <End Role="MOD_NguoiDung" Type="DHHHModel.Store.MOD_NguoiDung" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="MOD_NguoiDung_VaiTro_HeThong" Type="DHHHModel.Store.MOD_NguoiDung_VaiTro_HeThong" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="MOD_NguoiDung">
@@ -1213,7 +1238,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_MOD_NguoiDung_VaiTro_HeThong_MOD_VaiTro">
-    <End Role="MOD_VaiTro" Type="DHHHModel.Store.MOD_VaiTro" Multiplicity="1" />
+    <End Role="MOD_VaiTro" Type="DHHHModel.Store.MOD_VaiTro" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="MOD_NguoiDung_VaiTro_HeThong" Type="DHHHModel.Store.MOD_NguoiDung_VaiTro_HeThong" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="MOD_VaiTro">
@@ -1225,7 +1252,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_LopTinChi_TC">
-    <End Role="MOD_LopTinChi_TC" Type="DHHHModel.Store.MOD_LopTinChi_TC" Multiplicity="1" />
+    <End Role="MOD_LopTinChi_TC" Type="DHHHModel.Store.MOD_LopTinChi_TC" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="MOD_NguoiDung_VaiTro_LopTinChi" Type="DHHHModel.Store.MOD_NguoiDung_VaiTro_LopTinChi" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="MOD_LopTinChi_TC">
@@ -1237,7 +1266,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_NguoiDung">
-    <End Role="MOD_NguoiDung" Type="DHHHModel.Store.MOD_NguoiDung" Multiplicity="1" />
+    <End Role="MOD_NguoiDung" Type="DHHHModel.Store.MOD_NguoiDung" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="MOD_NguoiDung_VaiTro_LopTinChi" Type="DHHHModel.Store.MOD_NguoiDung_VaiTro_LopTinChi" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="MOD_NguoiDung">
@@ -1249,7 +1280,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_VaiTro">
-    <End Role="MOD_VaiTro" Type="DHHHModel.Store.MOD_VaiTro" Multiplicity="1" />
+    <End Role="MOD_VaiTro" Type="DHHHModel.Store.MOD_VaiTro" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="MOD_NguoiDung_VaiTro_LopTinChi" Type="DHHHModel.Store.MOD_NguoiDung_VaiTro_LopTinChi" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="MOD_VaiTro">
@@ -1261,7 +1294,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_MOD_NhomHocVien_MOD_LopTinChi_TC">
-    <End Role="MOD_LopTinChi_TC" Type="DHHHModel.Store.MOD_LopTinChi_TC" Multiplicity="1" />
+    <End Role="MOD_LopTinChi_TC" Type="DHHHModel.Store.MOD_LopTinChi_TC" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="MOD_NhomHocVien" Type="DHHHModel.Store.MOD_NhomHocVien" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="MOD_LopTinChi_TC">
@@ -1273,7 +1308,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_MOD_ToNhom_MOD_LopTinChi_TC">
-    <End Role="MOD_LopTinChi_TC" Type="DHHHModel.Store.MOD_LopTinChi_TC" Multiplicity="1" />
+    <End Role="MOD_LopTinChi_TC" Type="DHHHModel.Store.MOD_LopTinChi_TC" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="MOD_ToNhom" Type="DHHHModel.Store.MOD_ToNhom" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="MOD_LopTinChi_TC">

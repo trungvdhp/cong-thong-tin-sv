@@ -116,7 +116,7 @@ namespace CongThongTinSV.Controllers
             catch //(System.Exception ex)
             {
                 // Không kết nối được đến host
-                return "x";
+                return "exception";
             }
 
             // Lấy tình trạng trả về .

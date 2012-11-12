@@ -29,18 +29,7 @@ namespace CongThongTinSV
         }
     
         public DbSet<MARK_MonHoc> MARK_MonHoc { get; set; }
-        public DbSet<MOD_DanhSachLopTinChi> MOD_DanhSachLopTinChi { get; set; }
         public DbSet<MOD_DichVu> MOD_DichVu { get; set; }
-        public DbSet<MOD_HocKy> MOD_HocKy { get; set; }
-        public DbSet<MOD_HocKy_ChuyenNganh> MOD_HocKy_ChuyenNganh { get; set; }
-        public DbSet<MOD_LopTinChi_TC> MOD_LopTinChi_TC { get; set; }
-        public DbSet<MOD_NguoiDung> MOD_NguoiDung { get; set; }
-        public DbSet<MOD_NguoiDung_VaiTro_HeThong> MOD_NguoiDung_VaiTro_HeThong { get; set; }
-        public DbSet<MOD_NguoiDung_VaiTro_LopTinChi> MOD_NguoiDung_VaiTro_LopTinChi { get; set; }
-        public DbSet<MOD_NhomHocVien> MOD_NhomHocVien { get; set; }
-        public DbSet<MOD_NhomNguoiDung> MOD_NhomNguoiDung { get; set; }
-        public DbSet<MOD_ToNhom> MOD_ToNhom { get; set; }
-        public DbSet<MOD_VaiTro> MOD_VaiTro { get; set; }
         public DbSet<PLAN_ChucDanh> PLAN_ChucDanh { get; set; }
         public DbSet<PLAN_ChucVu> PLAN_ChucVu { get; set; }
         public DbSet<PLAN_ChuongTrinhDaoTao> PLAN_ChuongTrinhDaoTao { get; set; }
@@ -68,6 +57,17 @@ namespace CongThongTinSV
         public DbSet<ViewLopTC> ViewLopTC { get; set; }
         public DbSet<ViewNamHoc> ViewNamHoc { get; set; }
         public DbSet<STU_DanhSachLopTinChi> STU_DanhSachLopTinChi { get; set; }
+        public DbSet<MOD_DanhSachLopTinChi> MOD_DanhSachLopTinChi { get; set; }
+        public DbSet<MOD_HocKy> MOD_HocKy { get; set; }
+        public DbSet<MOD_HocKy_ChuyenNganh> MOD_HocKy_ChuyenNganh { get; set; }
+        public DbSet<MOD_LopTinChi_TC> MOD_LopTinChi_TC { get; set; }
+        public DbSet<MOD_NguoiDung> MOD_NguoiDung { get; set; }
+        public DbSet<MOD_NguoiDung_VaiTro_HeThong> MOD_NguoiDung_VaiTro_HeThong { get; set; }
+        public DbSet<MOD_NguoiDung_VaiTro_LopTinChi> MOD_NguoiDung_VaiTro_LopTinChi { get; set; }
+        public DbSet<MOD_NhomHocVien> MOD_NhomHocVien { get; set; }
+        public DbSet<MOD_NhomNguoiDung> MOD_NhomNguoiDung { get; set; }
+        public DbSet<MOD_ToNhom> MOD_ToNhom { get; set; }
+        public DbSet<MOD_VaiTro> MOD_VaiTro { get; set; }
     
         public virtual ObjectResult<SP_SinhVienLopTC_Result> SP_SinhVienLopTC(Nullable<int> id_lop_tc)
         {
