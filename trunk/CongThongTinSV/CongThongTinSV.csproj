@@ -175,6 +175,7 @@
     <Compile Include="Controllers\LopController.cs" />
     <Compile Include="Controllers\LopHocPhanController.cs" />
     <Compile Include="Controllers\MoodleCategoryController.cs" />
+    <Compile Include="Controllers\MoodleCourseController.cs" />
     <Compile Include="Controllers\MoodleUserController.cs" />
     <Compile Include="Controllers\SinhVienController.cs" />
     <Compile Include="Controllers\TraCuuController.cs" />
@@ -974,6 +975,7 @@
     <Content Include="Views\MoodleUser\SinhVien.cshtml" />
     <Content Include="Views\MoodleCategory\HocKy.cshtml" />
     <Content Include="Views\MoodleCategory\ChuyenNganh.cshtml" />
+    <Content Include="Views\MoodleCourse\LopTinChi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
