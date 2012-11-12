@@ -23,7 +23,9 @@ namespace CongThongTinSV
     
         public int ID_moodle { get; set; }
         public int ID_lop_tc { get; set; }
+        public int ID_danhmuc { get; set; }
     
+        public virtual MOD_HocKy_ChuyenNganh MOD_HocKy_ChuyenNganh { get; set; }
         public virtual ICollection<MOD_NguoiDung_VaiTro_LopTinChi> MOD_NguoiDung_VaiTro_LopTinChi { get; set; }
         public virtual ICollection<MOD_NhomHocVien> MOD_NhomHocVien { get; set; }
         public virtual ICollection<MOD_ToNhom> MOD_ToNhom { get; set; }

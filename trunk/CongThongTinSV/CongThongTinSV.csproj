@@ -972,10 +972,7 @@
     <Content Include="Views\SinhVien\YeucauMoLop.cshtml" />
     <Content Include="Views\LopHocPhan\InDanhSachLop.cshtml" />
     <Content Include="Views\MoodleUser\SinhVien.cshtml" />
-    <Content Include="Views\MoodleUser\CreateSinhVien.cshtml" />
     <Content Include="Views\MoodleCategory\HocKy.cshtml" />
-    <Content Include="Views\MoodleUser\DeleteSinhVien.cshtml" />
-    <Content Include="Views\MoodleCategory\CreateChuyenNganh.cshtml" />
     <Content Include="Views\MoodleCategory\ChuyenNganh.cshtml" />
   </ItemGroup>
   <ItemGroup>

@@ -67,7 +67,7 @@ namespace CongThongTinSV.Controllers
                             Text = h1.Nam_hoc + " Kỳ " + h1.Hoc_ky + "- Đợt" + h1.Dot
                         };
             int c = Convert.ToInt32(list.Count());
-            result.Data = new SelectList(list,"Value", "Text").OrderBy(t => t.Text);
+            result.Data = new SelectList(list,"Value", "Text").OrderByDescending(t => t.Text);
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
 
             return result;
@@ -158,7 +158,7 @@ namespace CongThongTinSV.Controllers
 
             WebRequestController web = new WebRequestController(4, "POST", postData);
             string rs = web.GetResponse();
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
             //MoodleException moodleError = new MoodleException();
 
             if (rs.Contains("exception"))
@@ -270,5 +270,60 @@ namespace CongThongTinSV.Controllers
 
             return View();
         }
+
+        public ActionResult DeleteChuyenNganh(string selectedVals, string ky_dang_ky)
+        {
+            Entities db = new Entities();
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+            int ky = Convert.ToInt32(ky_dang_ky);
+            var list = MoodleChuyenNganhs(ky).Where(t => t.ID_moodle > 0 && s.Contains(t.ID.ToString())).ToList();
+
+            //ViewBag.SelectedIds = new SelectList(list, "ID", "ID_moodle");
+            //ViewBag.Result = new SelectList(list, "ID_moodle", "ID");
+
+            if (list.Count() == 0) return View();
+
+            int i = 0;
+            string postData = "&wsfunction=core_course_delete_categories";
+
+            foreach (MoodleChuyenNganh item in list)
+            {
+                postData += "&categories[" + i + "][id]=" + item.ID_moodle;
+                //postData += "&categories[" + i + "][newparent]=0";
+                postData += "&categories[" + i + "][recursive]=1";
+                i++;
+            }
+
+            WebRequestController web = new WebRequestController(4, "POST", postData);
+            string rs = web.GetResponse();
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //MoodleException moodleError = new MoodleException();
+
+            if (rs.Contains("exception"))
+            {
+                // Error
+                // moodleError = serializer.Deserialize<MoodleException>(rs);
+            }
+            else
+            {
+                // Good
+                // res = serializer.Deserialize<List<MoodleCreateCategoryResponse>>(rs);
+                i = 0;
+
+                foreach (MoodleChuyenNganh item in list)
+                {
+                    MOD_HocKy_ChuyenNganh entity = db.MOD_HocKy_ChuyenNganh.Single(t => t.ID_moodle == item.ID_moodle);
+                    db.MOD_HocKy_ChuyenNganh.Remove(entity);
+                    i++;
+                }
+
+                db.SaveChanges();
+            }
+
+            UtilityController.WriteTextToFile("D:\\ChuyenNganhDelete.txt", rs);
+
+            return View();
+        }
+
     }
 }
