@@ -15,14 +15,11 @@ namespace CongThongTinSV.Models
 
     public class MoodleSinhVien
     {
-        [DisplayName("STT")]
-        public int STT { get; set; }
-
         [DisplayName("ID")]
         public int ID_sv { get; set; }
 
         [DisplayName("ID moodle")]
-        public int? ID_moodle { get; set; }
+        public int ID_moodle { get; set; }
 
         [DisplayName("Mã SV")]
         public string Ma_sv { get; set; }
@@ -41,6 +38,5 @@ namespace CongThongTinSV.Models
 
         [DisplayName("Lớp")]
         public string Lop { get; set; }
-
     }
 }

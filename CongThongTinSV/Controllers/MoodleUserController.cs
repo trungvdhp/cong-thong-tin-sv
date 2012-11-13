@@ -42,18 +42,48 @@ namespace CongThongTinSV.Controllers
         public IEnumerable<MoodleSinhVien> MoodleSinhViens(int id_chuyen_nganh)
         {
             Entities db = new Entities();
+            var sv1 = from ds in db.STU_DanhSach
+                      join hs in db.STU_HoSoSinhVien
+                      on ds.ID_sv equals hs.ID_sv
+                      select new { ds, hs };
 
-            return db.SP_Moodle_SinhVien(id_chuyen_nganh).Select(sv => new MoodleSinhVien
-            {
-                ID_sv = sv.ID_sv,
-                ID_moodle = sv.ID_moodle,
-                Ma_sv = sv.Ma_sv,
-                Ho_dem = sv.Ho_dem,
-                Ten = sv.Ten,
-                Ngay_sinh = sv.Ngay_sinh,
-                Gioi_tinh = sv.Gioi_tinh,
-                Lop = sv.Ten_lop
-            }).ToList();
+            var sv2 = from ds1 in sv1
+                      join lop in db.STU_Lop
+                      on ds1.ds.ID_lop equals lop.ID_lop
+                      where lop.ID_chuyen_nganh == id_chuyen_nganh
+                      select new { ds1, lop };
+
+            var sv3 = from ds2 in sv2
+                      join gt in db.STU_GioiTinh
+                      on ds2.ds1.hs.ID_gioi_tinh equals gt.ID_gioi_tinh
+                      select new
+                      {
+                          ds2.ds1.ds.ID_sv,
+                          ds2.ds1.hs.Ma_sv,
+                          ds2.ds1.hs.Ho_ten,
+                          ds2.ds1.hs.Ngay_sinh,
+                          ds2.lop.Ten_lop,
+                          gt.Gioi_tinh
+                      };
+
+            var sv4 = from ds in sv3.AsEnumerable()
+                      join nd in db.MOD_NguoiDung.AsEnumerable()
+                      on ds.ID_sv equals nd.ID_nd
+                      into nguoidung
+                      from nd1 in nguoidung.DefaultIfEmpty()
+                      select new MoodleSinhVien
+                      {
+                          ID_sv = ds.ID_sv,
+                          ID_moodle = (nd1 == null ? 0 : nd1.ID_moodle),
+                          Ma_sv = ds.Ma_sv,
+                          Ho_dem = UtilityController.GetLastName(ds.Ho_ten),
+                          Ten = UtilityController.GetFirstName(ds.Ho_ten),
+                          Ngay_sinh = ds.Ngay_sinh,
+                          Gioi_tinh = ds.Gioi_tinh,
+                          Lop = ds.Ten_lop
+                      };
+
+            return sv4.ToList();
         }
 
         //public ActionResult GetSinhVienLop(string sidx, string sord, int page, int rows, string id_lop="", string ma_sv="", string ho_dem="", string ten="", string ngay_sinh="", string gioi_tinh="")
