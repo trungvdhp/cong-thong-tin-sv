@@ -207,6 +207,7 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\JSONModel.cs" />
     <Compile Include="Models\MoodleCategoryModel.cs" />
+    <Compile Include="Models\MoodleLopTinChiModel.cs" />
     <Compile Include="Models\MoodleUserModel.cs" />
     <Compile Include="MOD_DanhSachLopTinChi.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
@@ -976,6 +977,7 @@
     <Content Include="Views\MoodleCategory\HocKy.cshtml" />
     <Content Include="Views\MoodleCategory\ChuyenNganh.cshtml" />
     <Content Include="Views\MoodleCourse\LopTinChi.cshtml" />
+    <Content Include="Views\SinhVien\TimKiemSinhVien.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

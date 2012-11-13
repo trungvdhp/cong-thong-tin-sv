@@ -249,8 +249,7 @@ namespace CongThongTinSV.Controllers
         /// <returns></returns>
         public static string GetFirstName(string name)
         {
-            string[] names = name.Split(new char[]{' '});
-            return names[names.Length-1];
+            return name.Substring(name.LastIndexOf(' ') + 1);
         }
 
         /// <summary>
@@ -260,16 +259,14 @@ namespace CongThongTinSV.Controllers
         /// <returns></returns>
         public static string GetLastName(string name)
         {
-            string[] names = name.Split(new char[]{' '});
-            string lastname = names[0];
-            int len = names.Length - 1;
+            return name.Substring(0, name.LastIndexOf(' ')).Trim();
+        }
 
-            for(int i = 1; i < len; i++)
-            {
-                lastname += " " + names[i];
-            }
+        public static string RightString(string input, int length)
+        {
+            int startIndex = input.Length - length;
 
-            return lastname;
+            return input.Substring(startIndex);
         }
     }
 }

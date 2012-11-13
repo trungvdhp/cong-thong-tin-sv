@@ -34,11 +34,25 @@
         <header>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>
-                   @(Html.Kendo().DropDownList()
+                    <p class="site-title">@Html.ActionLink("CỔNG THÔNG TIN SINH VIÊN", "Index", "Home")</p>
+                     <nav>
+                        <ul id="menu">
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Sinh viên", "SinhVien", "MoodleUser")</li>
+                            <li>@Html.ActionLink("Học kỳ", "HocKy", "MoodleCategory")</li>
+                            <li>@Html.ActionLink("Chuyên ngành", "ChuyenNganh", "MoodleCategory")</li>
+                            <li>@Html.ActionLink("Lớp tín chỉ", "LopTinChi", "MoodleCourse")</li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="float-right">
+                    <section id="login">
+                        @Html.Partial("_LoginPartial")
+                    </section>
+                    @(Html.Kendo().DropDownList()
                         .Name("switchcontrol")
                         .OptionLabel("Chọn giao diện")
-                        .HtmlAttributes(new { style = "width:125px" })
+                        .HtmlAttributes(new { style = "display:inline;text-align:center" })
                         .DataTextField("Text")
                         .DataValueField("Value")
                         .Events(e => e.Select("SelectSkin"))
@@ -65,27 +79,6 @@
                             }
                         })
                     )
-                   @* <select class="k-dropdown" name="switchcontrol" size="1" onChange="chooseStyle(this.options[this.selectedIndex].value, 60)">
-                      <option value="black">Black</option>
-                      <option value="blueopal">BlueOpal</option>
-                      <option value="default">Defaul</option>
-                      <option value="metro" selected="selected">Metro</option>
-                      <option value="silver">Silver</option>
-                    </select>*@
-</div>
-                <div class="float-right">
-                    <section id="login">
-                        @Html.Partial("_LoginPartial")
-                    </section>
-                    <nav>
-                        <ul id="menu">
-                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                            <li>@Html.ActionLink("Sinh viên", "SinhVien", "MoodleUser")</li>
-                            <li>@Html.ActionLink("Học kỳ", "HocKy", "MoodleCategory")</li>
-                            <li>@Html.ActionLink("Chuyên ngành", "ChuyenNganh", "MoodleCategory")</li>
-                            <li>@Html.ActionLink("Lớp tín chỉ", "LopTinChi", "MoodleCourse")</li>
-                        </ul>
-                    </nav>
                 </div>
             </div>
         </header>
@@ -98,7 +91,7 @@
         <footer>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
+                    <p>&copy; @DateTime.Now.Year - VIMARU</p>
                 </div>
             </div>
         </footer>

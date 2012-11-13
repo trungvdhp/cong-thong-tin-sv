@@ -1,0 +1,68 @@
+﻿@using Kendo.Mvc.UI;
+@using CongThongTinSV.Models;
+@{
+    ViewBag.Title = "Tìm kiếm sinh viên";
+}
+
+@(Html.Kendo().DropDownList()
+    .Name("ChuyenNganh")
+    .OptionLabel("Chọn chuyên ngành")
+    .HtmlAttributes(new {style="width:auto"})
+    .DataTextField("Text")
+    .DataValueField("Value")
+        //.SelectedIndex(0)
+    .DataSource(source =>
+    {
+        source.Read(read =>
+        {
+            read.Action("GetChuyenNganh", "ChuyenNganh");
+        }).ServerFiltering(true);
+    })
+    .Events(e =>
+    {
+        e.Change("loadGrid");
+    })
+)
+
+@(Html.Kendo().Grid<CongThongTinSV.Models.MoodleSinhVien>()
+    .Name("Grid")
+    .Columns(columns => {
+        columns.Bound(sv => sv.Ma_sv).Width(80);
+        columns.Bound(sv => sv.Ho_dem).Width(150);
+        columns.Bound(sv => sv.Ten).Width(80);
+        columns.Bound(sv => sv.Ngay_sinh).Width(120).Format("{0:dd-MM-yyyy}");
+        columns.Bound(sv => sv.Gioi_tinh).Width(100);
+        columns.Bound(sv => sv.Lop);
+    })
+    .Pageable(pager => pager.PageSizes(new int[]{5, 10, 25, 50, 100, 1000}).Refresh(true).Input(true).Numeric(false))
+    .Sortable(s => s.SortMode(GridSortMode.MultipleColumn))
+    .Filterable()
+    .Scrollable()
+    .Groupable()
+    .Resizable(r => r.Columns(true))
+    .Reorderable(ro => ro.Columns(true))
+    .Navigatable()
+    //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
+    .Selectable(s => s.Mode(GridSelectionMode.Single))
+    .DataSource(
+        dataSource => dataSource
+            .Ajax()
+            .Read(read => read.Action("GetSinhVien", "SinhVien").Data("filterGrid"))
+            .PageSize(5)
+    )
+)
+
+<script type="text/javascript">
+    var selectedVals = [];
+
+    function loadGrid() {
+        selectedVals.splice(0, selectedVals.length);
+        $("#Grid").data("kendoGrid").dataSource.read();
+    }
+ 
+    function filterGrid() {
+        return {
+            id_chuyen_nganh: $("#ChuyenNganh").val()
+        }
+    }
+</script>
