@@ -206,7 +206,7 @@ namespace CongThongTinSV.Controllers
                         ID_moodle = (cn3 == null ? 0 : cn3.ID_moodle),
                         Ma_chuyen_nganh = cn1.Ma_chuyen_nganh,
                         Chuyen_nganh = cn1.Chuyen_nganh
-                    }).ToList();
+                    }).OrderBy(t=>t.Chuyen_nganh).ToList();
 
         }
 
