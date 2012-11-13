@@ -242,6 +242,34 @@ namespace CongThongTinSV.Controllers
             return new DateTime(Convert.ToInt32(s[2]), Convert.ToInt32(s[1]), Convert.ToInt32(s[0])).ToLocalTime();
         }
 
-        
+        /// <summary>
+        /// Get firstname from name
+        /// </summary>
+        /// <param name="name">name</param>
+        /// <returns></returns>
+        public static string GetFirstName(string name)
+        {
+            string[] names = name.Split(new char[]{' '});
+            return names[names.Length-1];
+        }
+
+        /// <summary>
+        /// Get lastname from name
+        /// </summary>
+        /// <param name="name">name</param>
+        /// <returns></returns>
+        public static string GetLastName(string name)
+        {
+            string[] names = name.Split(new char[]{' '});
+            string lastname = names[0];
+            int len = names.Length - 1;
+
+            for(int i = 1; i < len; i++)
+            {
+                lastname += " " + names[i];
+            }
+
+            return lastname;
+        }
     }
 }
