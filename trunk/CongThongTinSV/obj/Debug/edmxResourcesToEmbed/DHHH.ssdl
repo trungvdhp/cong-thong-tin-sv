@@ -411,6 +411,10 @@
       <End Role="MOD_NhomHocVien" EntitySet="MOD_NhomHocVien" />
       <End Role="MOD_DanhSachLopTinChi" EntitySet="MOD_DanhSachLopTinChi" />
     </AssociationSet>
+    <AssociationSet Name="FK_MOD_DanhSachLopTinChi_MOD_LopTinChi_TC" Association="DHHHModel.Store.FK_MOD_DanhSachLopTinChi_MOD_LopTinChi_TC">
+      <End Role="MOD_LopTinChi_TC" EntitySet="MOD_LopTinChi_TC" />
+      <End Role="MOD_DanhSachLopTinChi" EntitySet="MOD_DanhSachLopTinChi" />
+    </AssociationSet>
     <AssociationSet Name="FK_MOD_HocKy_ChuyenNganh_MOD_HocKy" Association="DHHHModel.Store.FK_MOD_HocKy_ChuyenNganh_MOD_HocKy">
       <End Role="MOD_HocKy" EntitySet="MOD_HocKy" />
       <End Role="MOD_HocKy_ChuyenNganh" EntitySet="MOD_HocKy_ChuyenNganh" />
@@ -479,6 +483,7 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="ID_lop_tc" Type="int" Nullable="false" />
     <Property Name="ID_nhom" Type="int" />
   </EntityType>
   <EntityType Name="MOD_DichVu">
@@ -1170,9 +1175,7 @@
     <Property Name="Nam_hoc" Type="nvarchar" Nullable="false" MaxLength="10" />
   </EntityType>
   <Association Name="FK_DangKy_Nhom">
-    <End Role="MOD_NhomHocVien" Type="DHHHModel.Store.MOD_NhomHocVien" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
+    <End Role="MOD_NhomHocVien" Type="DHHHModel.Store.MOD_NhomHocVien" Multiplicity="0..1" />
     <End Role="MOD_DanhSachLopTinChi" Type="DHHHModel.Store.MOD_DanhSachLopTinChi" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="MOD_NhomHocVien">
@@ -1180,6 +1183,20 @@
       </Principal>
       <Dependent Role="MOD_DanhSachLopTinChi">
         <PropertyRef Name="ID_nhom" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MOD_DanhSachLopTinChi_MOD_LopTinChi_TC">
+    <End Role="MOD_LopTinChi_TC" Type="DHHHModel.Store.MOD_LopTinChi_TC" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MOD_DanhSachLopTinChi" Type="DHHHModel.Store.MOD_DanhSachLopTinChi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MOD_LopTinChi_TC">
+        <PropertyRef Name="ID_moodle" />
+      </Principal>
+      <Dependent Role="MOD_DanhSachLopTinChi">
+        <PropertyRef Name="ID_lop_tc" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -249,7 +249,7 @@ namespace CongThongTinSV.Controllers
         /// <returns></returns>
         public static string GetFirstName(string name)
         {
-            return name.Substring(name.LastIndexOf(' ') + 1);
+            return name.Trim().Substring(name.LastIndexOf(' ') + 1);
         }
 
         /// <summary>
@@ -259,9 +259,15 @@ namespace CongThongTinSV.Controllers
         /// <returns></returns>
         public static string GetLastName(string name)
         {
-            return name.Substring(0, name.LastIndexOf(' ')).Trim();
+            return name.Trim().Substring(0, name.LastIndexOf(' ')).Trim();
         }
 
+        /// <summary>
+        /// Get right substring of a input string
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
         public static string RightString(string input, int length)
         {
             int startIndex = input.Length - length;

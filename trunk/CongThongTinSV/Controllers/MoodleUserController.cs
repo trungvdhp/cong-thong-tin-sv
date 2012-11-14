@@ -83,7 +83,7 @@ namespace CongThongTinSV.Controllers
                           Lop = ds.Ten_lop
                       };
 
-            return sv4.ToList();
+            return sv4.OrderByDescending(t => t.ID_moodle).ToList();
         }
 
         //public ActionResult GetSinhVienLop(string sidx, string sord, int page, int rows, string id_lop="", string ma_sv="", string ho_dem="", string ten="", string ngay_sinh="", string gioi_tinh="")

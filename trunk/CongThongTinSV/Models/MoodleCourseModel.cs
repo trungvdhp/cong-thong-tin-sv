@@ -15,7 +15,7 @@ namespace CongThongTinSV.Models
     public class MoodleLopTinChi
     {
         [DisplayName("ID")]
-        public int ID_lop_tc { get; set; }
+        public int ID { get; set; }
 
         [DisplayName("ID moodle")]
         public int ID_moodle { get; set; }
@@ -25,6 +25,9 @@ namespace CongThongTinSV.Models
 
         [DisplayName("Ký hiệu")]
         public string Ky_hieu { get; set; }
+
+        [DisplayName("Số tín chỉ")]
+        public int So_tin_chi { get; set; }
 
         [DisplayName("Từ ngày")]
         public DateTime Tu_ngay { get; set; }
