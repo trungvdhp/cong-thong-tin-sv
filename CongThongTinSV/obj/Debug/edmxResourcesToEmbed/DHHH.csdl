@@ -59,6 +59,10 @@
       <End Role="MOD_NhomHocVien" EntitySet="MOD_NhomHocVien" />
       <End Role="MOD_DanhSachLopTinChi" EntitySet="MOD_DanhSachLopTinChi" />
     </AssociationSet>
+    <AssociationSet Name="FK_MOD_DanhSachLopTinChi_MOD_LopTinChi_TC" Association="DHHHModel.FK_MOD_DanhSachLopTinChi_MOD_LopTinChi_TC">
+      <End Role="MOD_LopTinChi_TC" EntitySet="MOD_LopTinChi_TC" />
+      <End Role="MOD_DanhSachLopTinChi" EntitySet="MOD_DanhSachLopTinChi" />
+    </AssociationSet>
     <AssociationSet Name="FK_MOD_HocKy_ChuyenNganh_MOD_HocKy" Association="DHHHModel.FK_MOD_HocKy_ChuyenNganh_MOD_HocKy">
       <End Role="MOD_HocKy" EntitySet="MOD_HocKy" />
       <End Role="MOD_HocKy_ChuyenNganh" EntitySet="MOD_HocKy_ChuyenNganh" />
@@ -676,8 +680,10 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="Int32" Name="ID_lop_tc" Nullable="false" />
     <Property Type="Int32" Name="ID_nhom" />
     <NavigationProperty Name="MOD_NhomHocVien" Relationship="DHHHModel.FK_DangKy_Nhom" FromRole="MOD_DanhSachLopTinChi" ToRole="MOD_NhomHocVien" />
+    <NavigationProperty Name="MOD_LopTinChi_TC" Relationship="DHHHModel.FK_MOD_DanhSachLopTinChi_MOD_LopTinChi_TC" FromRole="MOD_DanhSachLopTinChi" ToRole="MOD_LopTinChi_TC" />
   </EntityType>
   <EntityType Name="MOD_HocKy">
     <Key>
@@ -704,6 +710,7 @@
     <Property Type="Int32" Name="ID_moodle" Nullable="false" />
     <Property Type="Int32" Name="ID_lop_tc" Nullable="false" />
     <Property Type="Int32" Name="ID_danhmuc" Nullable="false" />
+    <NavigationProperty Name="MOD_DanhSachLopTinChi" Relationship="DHHHModel.FK_MOD_DanhSachLopTinChi_MOD_LopTinChi_TC" FromRole="MOD_LopTinChi_TC" ToRole="MOD_DanhSachLopTinChi" />
     <NavigationProperty Name="MOD_HocKy_ChuyenNganh" Relationship="DHHHModel.FK_MOD_LopTinChi_TC_MOD_HocKy_ChuyenNganh" FromRole="MOD_LopTinChi_TC" ToRole="MOD_HocKy_ChuyenNganh" />
     <NavigationProperty Name="MOD_NguoiDung_VaiTro_LopTinChi" Relationship="DHHHModel.FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_LopTinChi_TC" FromRole="MOD_LopTinChi_TC" ToRole="MOD_NguoiDung_VaiTro_LopTinChi" />
     <NavigationProperty Name="MOD_NhomHocVien" Relationship="DHHHModel.FK_MOD_NhomHocVien_MOD_LopTinChi_TC" FromRole="MOD_LopTinChi_TC" ToRole="MOD_NhomHocVien" />
@@ -787,9 +794,7 @@
     <NavigationProperty Name="MOD_NguoiDung_VaiTro_LopTinChi" Relationship="DHHHModel.FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_VaiTro" FromRole="MOD_VaiTro" ToRole="MOD_NguoiDung_VaiTro_LopTinChi" />
   </EntityType>
   <Association Name="FK_DangKy_Nhom">
-    <End Type="DHHHModel.MOD_NhomHocVien" Role="MOD_NhomHocVien" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
+    <End Type="DHHHModel.MOD_NhomHocVien" Role="MOD_NhomHocVien" Multiplicity="0..1" />
     <End Type="DHHHModel.MOD_DanhSachLopTinChi" Role="MOD_DanhSachLopTinChi" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="MOD_NhomHocVien">
@@ -797,6 +802,20 @@
       </Principal>
       <Dependent Role="MOD_DanhSachLopTinChi">
         <PropertyRef Name="ID_nhom" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MOD_DanhSachLopTinChi_MOD_LopTinChi_TC">
+    <End Type="DHHHModel.MOD_LopTinChi_TC" Role="MOD_LopTinChi_TC" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="DHHHModel.MOD_DanhSachLopTinChi" Role="MOD_DanhSachLopTinChi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MOD_LopTinChi_TC">
+        <PropertyRef Name="ID_moodle" />
+      </Principal>
+      <Dependent Role="MOD_DanhSachLopTinChi">
+        <PropertyRef Name="ID_lop_tc" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

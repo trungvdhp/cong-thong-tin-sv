@@ -15,8 +15,10 @@ namespace CongThongTinSV
     public partial class MOD_DanhSachLopTinChi
     {
         public int ID { get; set; }
+        public int ID_lop_tc { get; set; }
         public Nullable<int> ID_nhom { get; set; }
     
         public virtual MOD_NhomHocVien MOD_NhomHocVien { get; set; }
+        public virtual MOD_LopTinChi_TC MOD_LopTinChi_TC { get; set; }
     }
 }

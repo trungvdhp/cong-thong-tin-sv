@@ -509,6 +509,7 @@
       <EntityTypeMapping TypeName="DHHHModel.MOD_DanhSachLopTinChi">
         <MappingFragment StoreEntitySet="MOD_DanhSachLopTinChi">
           <ScalarProperty Name="ID_nhom" ColumnName="ID_nhom" />
+          <ScalarProperty Name="ID_lop_tc" ColumnName="ID_lop_tc" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>

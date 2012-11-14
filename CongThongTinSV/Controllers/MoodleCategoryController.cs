@@ -50,7 +50,7 @@ namespace CongThongTinSV.Controllers
                         Dot = h1.Dot,
                         Hoc_ky = h1.Hoc_ky,
                         Nam_hoc = h1.Nam_hoc
-                    }).ToList();
+                    }).OrderByDescending(t => t.ID_moodle).ToList();
 
         }
 
@@ -206,8 +206,7 @@ namespace CongThongTinSV.Controllers
                         ID_moodle = (cn3 == null ? 0 : cn3.ID_moodle),
                         Ma_chuyen_nganh = cn1.Ma_chuyen_nganh,
                         Chuyen_nganh = cn1.Chuyen_nganh
-                    }).OrderBy(t=>t.Chuyen_nganh).ToList();
-
+                    }).OrderByDescending(t => t.ID_moodle).ToList();
         }
 
         public JsonResult GetMoodleChuyenNganh(int ky_dang_ky)
