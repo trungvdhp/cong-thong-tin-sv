@@ -179,7 +179,7 @@
     <Compile Include="Controllers\MoodleUserController.cs" />
     <Compile Include="Controllers\SinhVienController.cs" />
     <Compile Include="Controllers\TraCuuController.cs" />
-    <Compile Include="Controllers\UploadController.cs" />
+    <Compile Include="Controllers\TaiLieuController.cs" />
     <Compile Include="Controllers\UtilityController.cs" />
     <Compile Include="Controllers\WebRequestController.cs" />
     <Compile Include="DHHH.Context.cs">
@@ -977,7 +977,9 @@
     <Content Include="Views\MoodleCategory\HocKy.cshtml" />
     <Content Include="Views\MoodleCategory\ChuyenNganh.cshtml" />
     <Content Include="Views\MoodleCourse\LopTinChi.cshtml" />
+    <Content Include="Views\TaiLieu\Upload.cshtml" />
     <Content Include="Views\SinhVien\TimKiemSinhVien.cshtml" />
+    <Content Include="Views\TraCuu\DiemHocTap.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

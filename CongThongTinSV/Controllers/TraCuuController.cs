@@ -15,6 +15,9 @@ namespace CongThongTinSV.Controllers
         {
             return View();
         }
-
+        public ActionResult DiemHocTap()
+        {
+            return View();
+        }
     }
 }
