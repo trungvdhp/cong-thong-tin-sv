@@ -44,7 +44,7 @@
         columns.Bound(sv => sv.Gioi_tinh).Width(100);
         columns.Bound(sv => sv.Lop);
     })
-    .Pageable(pager => pager.PageSizes(new int[]{5, 10, 25, 50, 100, 1000}).Refresh(true).Input(true).Numeric(false))
+    .Pageable(pager => pager.PageSizes(new int[]{5, 10, 20, 50, 100, 1000}).Refresh(true).Input(true).Numeric(false))
     .Sortable(s => s.SortMode(GridSortMode.MultipleColumn))
     .Filterable()
     .Scrollable()
@@ -61,7 +61,7 @@
         dataSource => dataSource
             .Ajax()
             .Read(read => read.Action("GetSinhVien", "MoodleUser").Data("filterGrid"))
-            .PageSize(5)
+            .PageSize(50)
     )
 )
 <div>

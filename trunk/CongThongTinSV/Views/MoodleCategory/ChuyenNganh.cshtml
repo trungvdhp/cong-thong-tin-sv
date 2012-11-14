@@ -40,7 +40,7 @@
         columns.Bound(c => c.Ma_chuyen_nganh).Width(80);
         columns.Bound(c => c.Chuyen_nganh);
     })
-    .Pageable(pager => pager.PageSizes(new int[]{5, 10, 25, 50, 100, 1000}).Refresh(true).Input(true).Numeric(false))
+    .Pageable(pager => pager.PageSizes(new int[]{5, 10, 20, 50}).Refresh(true).Input(true).Numeric(false))
     .Sortable(s => s.SortMode(GridSortMode.MultipleColumn))
     .Filterable()
     .Scrollable()
@@ -57,7 +57,7 @@
         dataSource => dataSource
             .Ajax()
             .Read(read => read.Action("GetChuyenNganh", "MoodleCategory").Data("filterGrid"))
-            .PageSize(5)
+            .PageSize(50)
     )
 )
 <div>

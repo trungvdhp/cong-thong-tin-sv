@@ -23,7 +23,7 @@ namespace CongThongTinSV.Models
         [DisplayName("Lớp học phần")]
         public string Lop_hoc_phan { get; set; }
 
-        [DisplayName("Ký hiệu")]
+        [DisplayName("Học phần")]
         public string Ky_hieu { get; set; }
 
         [DisplayName("Số tín chỉ")]

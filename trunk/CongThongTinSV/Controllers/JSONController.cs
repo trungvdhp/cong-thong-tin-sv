@@ -160,7 +160,7 @@ namespace CongThongTinSV.Controllers
         public ActionResult DiemHocTap(string TuKhoa)
         {
             Entities db = new Entities();
-            var q= from d in 
+            //var q= from d in 
             JsonResult result = new JsonResult();
             return result;
         }

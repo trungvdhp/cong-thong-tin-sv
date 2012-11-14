@@ -1,7 +1,7 @@
 ﻿@using Kendo.Mvc.UI;
 @using CongThongTinSV.Models;
 @{
-    ViewBag.Title = "Quản lý lớp tín chỉ trên Moodle";
+    ViewBag.Title = "Quản lý lớp học phần trên Moodle";
 }
 
 @(Html.Kendo().DropDownList()
@@ -60,7 +60,7 @@
         columns.Bound(c => c.Tu_ngay).Width(120).Format("{0:dd-MM-yyyy}");
         columns.Bound(c => c.Den_ngay).Width(120).Format("{0:dd-MM-yyyy}");
     })
-    .Pageable(pager => pager.PageSizes(new int[]{5, 10, 25, 50, 100, 250}).Refresh(true).Input(true).Numeric(false))
+    .Pageable(pager => pager.PageSizes(new int[]{5, 10, 20, 50, 100, 300}).Refresh(true).Input(true).Numeric(false))
     .Sortable(s => s.SortMode(GridSortMode.MultipleColumn))
     .Filterable()
     .Scrollable()
@@ -77,12 +77,12 @@
         dataSource => dataSource
             .Ajax()
             .Read(read => read.Action("GetLopTinChi", "MoodleCourse").Data("filterGrid"))
-            .PageSize(5)
+            .PageSize(50)
     )
 )
 <div>
-    <button id="create">Tạo danh mục</button>
-    <button id="delete">Xóa danh mục</button>
+    <button id="create">Tạo lớp</button>
+    <button id="delete">Xóa lớp</button>
 </div>
 <script type="text/javascript">
     var selectedVals = [];
@@ -206,4 +206,16 @@
             cache: false
         });
     }
+
+    $("#create").click(function () {
+        //window.location.href = '/MoodleCourse/CreateLopTinChi/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals;
+        processing('/MoodleCourse/CreateLopTinChi/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals, "Đang tạo lớp học phần trên moodle...");
+    })
+
+    $("#delete").click(function () {
+        if (confirm('Bạn muốn xóa toàn bộ các lớp học phần thuộc chuyên ngành đã chọn?')) {
+            //window.location.href = '/MoodleCourse/DeleteLopTinChi/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals;
+            processing('/MoodleCourse/DeleteLopTinChi/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals, "Đang xóa lớp học phần trên moodle...");
+        }
+    })
 </script>
