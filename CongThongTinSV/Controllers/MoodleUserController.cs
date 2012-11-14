@@ -127,7 +127,7 @@ namespace CongThongTinSV.Controllers
             Entities db = new Entities();
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
 
-            var list = db.SP_Moodle_SinhVien(Convert.ToInt32(id_chuyen_nganh)).Where(t1 => !t1.ID_moodle.HasValue && s.Contains(t1.ID_sv.ToString())).ToList();
+            var list = MoodleSinhViens(Convert.ToInt32(id_chuyen_nganh)).Where(t1 => t1.ID_moodle == 0 && s.Contains(t1.ID_sv.ToString())).ToList();
 
             //ViewBag.SelectedIds = new SelectList(list, "Ma_sv", "ID_moodle");
             //ViewBag.Result = new SelectList(list, "ID_moodle", "Ma_sv");
@@ -137,7 +137,7 @@ namespace CongThongTinSV.Controllers
             int i = 0;
             string postData = "wsfunction=core_user_create_users";
 
-            foreach (SP_Moodle_SinhVien_Result item in list)
+            foreach (MoodleSinhVien item in list)
             {
                 postData += "&users[" + i + "][username]=" + item.Ma_sv;
                 postData += "&users[" + i + "][password]=" + ((DateTime)item.Ngay_sinh).ToString("ddMMyyyy");
@@ -151,12 +151,12 @@ namespace CongThongTinSV.Controllers
             }
 
             WebRequestController web = new WebRequestController(4, "POST", postData);
-            string rs = web.GetResponse();
+            string response = web.GetResponse();
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             // MoodleException moodleError = new MoodleException();
-            List<MoodleCreateUserResponse> newUsers = new List<MoodleCreateUserResponse>();
+            List<MoodleCreateUserResponse> results = new List<MoodleCreateUserResponse>();
 
-            if (rs.Contains("exception"))
+            if (response.Contains("exception"))
             {
                 // Error
                 // moodleError = serializer.Deserialize<MoodleException>(rs);
@@ -164,14 +164,14 @@ namespace CongThongTinSV.Controllers
             else
             {
                 // Good
-                newUsers = serializer.Deserialize<List<MoodleCreateUserResponse>>(rs);
+                results = serializer.Deserialize<List<MoodleCreateUserResponse>>(response);
                 i = 0;
 
-                foreach (SP_Moodle_SinhVien_Result item in list)
+                foreach (MoodleSinhVien item in list)
                 {
                     MOD_NguoiDung entity = new MOD_NguoiDung();
 
-                    entity.ID_moodle = Convert.ToInt32(newUsers[i].id);
+                    entity.ID_moodle = Convert.ToInt32(results[i].id);
                     entity.ID_nd = item.ID_sv;
                     entity.ID_nhom_nd = 3;
 
@@ -182,7 +182,7 @@ namespace CongThongTinSV.Controllers
                 db.SaveChanges();
             }
 
-            UtilityController.WriteTextToFile("D:\\SinhVienCreate.txt", rs);
+            UtilityController.WriteTextToFile("D:\\SinhVienCreate.txt", response);
             
             return View();
         }
@@ -192,7 +192,7 @@ namespace CongThongTinSV.Controllers
             Entities db = new Entities();
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
 
-            var list = db.SP_Moodle_SinhVien(Convert.ToInt32(id_chuyen_nganh)).Where(t1 => t1.ID_moodle.HasValue && s.Contains(t1.ID_sv.ToString())).ToList();
+            var list = MoodleSinhViens(Convert.ToInt32(id_chuyen_nganh)).Where(t1 => t1.ID_moodle > 0 && s.Contains(t1.ID_sv.ToString())).ToList();
 
             //ViewBag.SelectedIds = new SelectList(list, "Ma_sv", "ID_moodle");
             //ViewBag.Result = new SelectList(list, "ID_moodle", "Ma_sv");
@@ -202,18 +202,18 @@ namespace CongThongTinSV.Controllers
             int i = 0;
             string postData = "wsfunction=core_user_delete_users";
 
-            foreach (SP_Moodle_SinhVien_Result item in list)
+            foreach (MoodleSinhVien item in list)
             {
                 postData += "&userids[" + i + "]=" + item.ID_moodle;
                 i++;
             }
 
             WebRequestController web = new WebRequestController(4, "POST", postData);
-            string rs = web.GetResponse();
-
+            string response = web.GetResponse();
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
             //MoodleException moodleError = new MoodleException();
 
-            if (rs.Contains("exception"))
+            if (response.Contains("exception"))
             {
                 // Error
                 //moodleError = serializer.Deserialize<MoodleException>(rs);
@@ -222,9 +222,9 @@ namespace CongThongTinSV.Controllers
             {
                 i = 0;
 
-                foreach (SP_Moodle_SinhVien_Result item in list)
+                foreach (MoodleSinhVien item in list)
                 {
-                    MOD_NguoiDung entity = db.MOD_NguoiDung.Single(t => t.ID_moodle == (int)item.ID_moodle);
+                    MOD_NguoiDung entity = db.MOD_NguoiDung.Single(t => t.ID_moodle == item.ID_moodle);
                     db.MOD_NguoiDung.Remove(entity);
                     i++;
                 }
@@ -232,7 +232,7 @@ namespace CongThongTinSV.Controllers
                 db.SaveChanges();
             }
 
-            UtilityController.WriteTextToFile("D:\\SinhVienDelete.txt", rs);
+            UtilityController.WriteTextToFile("D:\\SinhVienDelete.txt", response);
 
             return View();
         }

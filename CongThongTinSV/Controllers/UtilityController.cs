@@ -153,26 +153,37 @@ namespace CongThongTinSV.Controllers
         /// </summary>
         /// <param name="fullName">full name</param>
         /// <returns>id number string</returns>
-        public static string GetIdNumber(string fullName)
+        public static string GetIdnumber(string fullName)
         {
             string rs = "";
 
             //split full name by char ' ' into string array
             string[] split = fullName.Split(new char[] { ' ' });
-            //get total elements (- 1 is last word) of string array
+            //get total elements of string array
             int len = split.Length - 1;
 
-            //cut and join first letter of each word, except last word
+            //cut and join first letter of each word
             for (int i = 0; i < len; ++i)
             {
-                rs += split[i].Substring(0, 1);
+                char c = '-';
+                int j = 0;
+                int n = split[i].Length;
+
+                while (j < n)
+                {
+                    c = split[i][j++];
+
+                    if (char.IsLetterOrDigit(c))
+                        break;
+                }
+
+                if (j == n) 
+                    c = split[i][0];
+
+                rs += c.ToString();
             }
 
-            //split last word by char '-' into string array
-            string[] s = split[len].Split(new char[] { '-' });
-
-            //cut and join in result (N01-20-02-2012 => 0112)
-            rs += s[0].Substring(1) + s[s.Length - 1].Substring(2);
+            rs += split[len - 1].Substring(split[len - 1].IndexOf('-')) + split[len];
 
             //return lower result string 
             return rs.ToLower();

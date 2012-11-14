@@ -99,12 +99,12 @@ namespace CongThongTinSV.Controllers
             }
 
             WebRequestController web = new WebRequestController(4, "POST", postData);
-            string rs = web.GetResponse();
+            string response = web.GetResponse();
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             //MoodleException moodleError = new MoodleException();
-            List<MoodleCreateCategoryResponse> res = new List<MoodleCreateCategoryResponse>();
+            List<MoodleCreateCategoryResponse> results = new List<MoodleCreateCategoryResponse>();
 
-            if (rs.Contains("exception"))
+            if (response.Contains("exception"))
             {
                 // Error
                 // moodleError = serializer.Deserialize<MoodleException>(rs);
@@ -112,14 +112,14 @@ namespace CongThongTinSV.Controllers
             else
             {
                 // Good
-                res = serializer.Deserialize<List<MoodleCreateCategoryResponse>>(rs);
+                results = serializer.Deserialize<List<MoodleCreateCategoryResponse>>(response);
                 i = 0;
 
                 foreach (MoodleHocKy item in list)
                 {
                     MOD_HocKy entity = new MOD_HocKy();
 
-                    entity.ID_moodle = Convert.ToInt32(res[i].id);
+                    entity.ID_moodle = Convert.ToInt32(results[i].id);
                     entity.Ky_dang_ky = item.ID;
                     db.MOD_HocKy.Add(entity);
                     i++;
@@ -128,7 +128,7 @@ namespace CongThongTinSV.Controllers
                 db.SaveChanges();
             }
 
-            UtilityController.WriteTextToFile("D:\\HocKyCreate.txt", rs);
+            UtilityController.WriteTextToFile("D:\\HocKyCreate.txt", response);
 
             return View();
         }
@@ -157,11 +157,11 @@ namespace CongThongTinSV.Controllers
             }
 
             WebRequestController web = new WebRequestController(4, "POST", postData);
-            string rs = web.GetResponse();
+            string response = web.GetResponse();
             //JavaScriptSerializer serializer = new JavaScriptSerializer();
             //MoodleException moodleError = new MoodleException();
 
-            if (rs.Contains("exception"))
+            if (response.Contains("exception"))
             {
                 // Error
                 // moodleError = serializer.Deserialize<MoodleException>(rs);
@@ -181,7 +181,7 @@ namespace CongThongTinSV.Controllers
                 db.SaveChanges();
             }
 
-            UtilityController.WriteTextToFile("D:\\HocKyDelete.txt", rs);
+            UtilityController.WriteTextToFile("D:\\HocKyDelete.txt", response);
 
             return View();
         }
@@ -255,12 +255,12 @@ namespace CongThongTinSV.Controllers
             }
 
             WebRequestController web = new WebRequestController(4, "POST", postData);
-            string rs = web.GetResponse();
+            string response = web.GetResponse();
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             //MoodleException moodleError = new MoodleException();
-            List<MoodleCreateCategoryResponse> res = new List<MoodleCreateCategoryResponse>();
+            List<MoodleCreateCategoryResponse> results = new List<MoodleCreateCategoryResponse>();
 
-            if (rs.Contains("exception"))
+            if (response.Contains("exception"))
             {
                 // Error
                 // moodleError = serializer.Deserialize<MoodleException>(rs);
@@ -268,14 +268,14 @@ namespace CongThongTinSV.Controllers
             else
             {
                 // Good
-                res = serializer.Deserialize<List<MoodleCreateCategoryResponse>>(rs);
+                results = serializer.Deserialize<List<MoodleCreateCategoryResponse>>(response);
                 i = 0;
 
                 foreach (MoodleChuyenNganh item in list)
                 {
                     MOD_HocKy_ChuyenNganh entity = new MOD_HocKy_ChuyenNganh();
 
-                    entity.ID_moodle = Convert.ToInt32(res[i].id);
+                    entity.ID_moodle = Convert.ToInt32(results[i].id);
                     entity.Ky_dang_ky = ky;
                     entity.ID_chuyen_nganh = item.ID;
                     db.MOD_HocKy_ChuyenNganh.Add(entity);
@@ -285,7 +285,7 @@ namespace CongThongTinSV.Controllers
                 db.SaveChanges();
             }
 
-            UtilityController.WriteTextToFile("D:\\ChuyenNganhCreate.txt", rs);
+            UtilityController.WriteTextToFile("D:\\ChuyenNganhCreate.txt", response);
 
             return View();
         }
@@ -314,11 +314,11 @@ namespace CongThongTinSV.Controllers
             }
 
             WebRequestController web = new WebRequestController(4, "POST", postData);
-            string rs = web.GetResponse();
+            string response = web.GetResponse();
             //JavaScriptSerializer serializer = new JavaScriptSerializer();
             //MoodleException moodleError = new MoodleException();
 
-            if (rs.Contains("exception"))
+            if (response.Contains("exception"))
             {
                 // Error
                 // moodleError = serializer.Deserialize<MoodleException>(rs);
@@ -339,7 +339,7 @@ namespace CongThongTinSV.Controllers
                 db.SaveChanges();
             }
 
-            UtilityController.WriteTextToFile("D:\\ChuyenNganhDelete.txt", rs);
+            UtilityController.WriteTextToFile("D:\\ChuyenNganhDelete.txt", response);
 
             return View();
         }
