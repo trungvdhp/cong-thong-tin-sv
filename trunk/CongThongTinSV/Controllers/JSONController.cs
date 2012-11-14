@@ -157,5 +157,12 @@ namespace CongThongTinSV.Controllers
                 Ma_sv = sv.Ma_sv
             }).ToList();
         }
+        public ActionResult DiemHocTap(string TuKhoa)
+        {
+            Entities db = new Entities();
+            var q= from d in 
+            JsonResult result = new JsonResult();
+            return result;
+        }
     }
 }

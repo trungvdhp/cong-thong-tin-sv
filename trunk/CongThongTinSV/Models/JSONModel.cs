@@ -37,4 +37,24 @@ namespace CongThongTinSV.Models
         [DisplayName("Lớp")]
         public string Lop { get; set; }
     }
+    public class DiemHocTap
+    {
+        [DisplayName("Mã MH")]
+        public string Ma_mon { get; set; }
+
+        [DisplayName("Tên môn")]
+        public string Ten_mon { get; set; }
+
+        [DisplayName("Điểm X")]
+        public string X { get; set; }
+
+        [DisplayName("Điểm Y")]
+        public string Y { get; set; }
+
+        [DisplayName("Điểm Z")]
+        public string Z { get; set; }
+
+        [DisplayName("Điểm chữ")]
+        public string Diem_chu { get; set; }
+    }
 }

@@ -1,0 +1,48 @@
+﻿@using CongThongTinSV.Models;
+@{
+    ViewBag.Title = "Tra cứu điểm học tập";
+}
+
+<h2>Tra cứu điểm học tập</h2>
+<div class="clear: both" />
+
+@(Html.Kendo().AutoComplete()
+        .Name("TuKhoa")
+        .Filter("startswith")
+        .Placeholder("Nhập từ khóa...")
+)
+<input type="submit" value="Tra cứu" id="TraCuuButton"/>
+
+<script>
+    function getTuKhoa() {
+        return {
+            TuKhoa: $("#TuKhoa").val()
+        };
+    }
+
+    $("#TraCuuButton").click(function () {
+        //$("#GridBangDiem").fadeIn(1000, function () { });
+        $("#GridBangDiem").data("kendoGrid").dataSource.read();
+    });
+</script>
+@(Html.Kendo().Grid<CongThongTinSV.Models.DiemHocTap>()
+    .Name("GridBangDiem")
+    .Pageable()
+    .Sortable()
+    .Filterable()
+    .Scrollable()
+    .Groupable()
+    .Columns(columns => {
+        columns.Bound(diem => diem.Ma_mon);
+        columns.Bound(diem => diem.Ten_mon);
+        columns.Bound(diem => diem.X);
+        columns.Bound(diem => diem.Y);
+        columns.Bound(diem => diem.Z);
+        columns.Bound(diem => diem.Diem_chu);
+    })
+    .DataSource( 
+        dataSource => dataSource.Ajax().Read(
+            read => read.Action("DiemHocTap","JSON").Data("getTuKhoa")
+        )
+    )
+)
