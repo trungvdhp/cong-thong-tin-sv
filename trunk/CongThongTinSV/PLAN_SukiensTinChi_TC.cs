@@ -24,5 +24,7 @@ namespace CongThongTinSV
         public int So_tiet { get; set; }
         public int Loai_tiet { get; set; }
         public bool Da_xep_lich { get; set; }
+    
+        public virtual PLAN_LopTinChi_TC PLAN_LopTinChi_TC { get; set; }
     }
 }

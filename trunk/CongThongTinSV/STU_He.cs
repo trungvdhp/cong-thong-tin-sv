@@ -14,6 +14,11 @@ namespace CongThongTinSV
     
     public partial class STU_He
     {
+        public STU_He()
+        {
+            this.PLAN_ChuongTrinhDaoTao = new HashSet<PLAN_ChuongTrinhDaoTao>();
+        }
+    
         public int ID_he { get; set; }
         public string Ma_he { get; set; }
         public string Ten_he { get; set; }
@@ -22,5 +27,7 @@ namespace CongThongTinSV
         public string Ten_bac_hoc { get; set; }
         public string Loai_dao_tao { get; set; }
         public string Loai_dao_tao_en { get; set; }
+    
+        public virtual ICollection<PLAN_ChuongTrinhDaoTao> PLAN_ChuongTrinhDaoTao { get; set; }
     }
 }

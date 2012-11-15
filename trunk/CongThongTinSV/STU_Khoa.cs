@@ -14,9 +14,16 @@ namespace CongThongTinSV
     
     public partial class STU_Khoa
     {
+        public STU_Khoa()
+        {
+            this.PLAN_ChuongTrinhDaoTao = new HashSet<PLAN_ChuongTrinhDaoTao>();
+        }
+    
         public int ID_khoa { get; set; }
         public string Ma_khoa { get; set; }
         public string Ten_khoa { get; set; }
         public string Ten_khoa_en { get; set; }
+    
+        public virtual ICollection<PLAN_ChuongTrinhDaoTao> PLAN_ChuongTrinhDaoTao { get; set; }
     }
 }
