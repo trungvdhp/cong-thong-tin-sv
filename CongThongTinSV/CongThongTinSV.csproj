@@ -218,9 +218,6 @@
     <Compile Include="MOD_HocKy.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
-    <Compile Include="MOD_HocKy_ChuyenNganh.cs">
-      <DependentUpon>DHHH.tt</DependentUpon>
-    </Compile>
     <Compile Include="MOD_LopTinChi_TC.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>

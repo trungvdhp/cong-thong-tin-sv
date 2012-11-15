@@ -17,9 +17,13 @@
             read.Action("GetMoodleHocKy", "MoodleCategory");
         }).ServerFiltering(true);
     })
+    .Events(e =>
+    {
+        e.Change("loadGrid");
+    })
 )
 
-@(Html.Kendo().DropDownList()
+@*@(Html.Kendo().DropDownList()
     .Name("ChuyenNganh")
     .OptionLabel("Chọn chuyên ngành")
     .HtmlAttributes(new {style="width:260px"})
@@ -39,7 +43,7 @@
     .Enable(false)
     .AutoBind(false)
         .CascadeFrom("HocKy")
-)
+)*@
 
 @(Html.Kendo().Grid<CongThongTinSV.Models.MoodleLopTinChi>()
     .Name("Grid")
@@ -60,7 +64,7 @@
         columns.Bound(c => c.Tu_ngay).Width(120).Format("{0:dd-MM-yyyy}");
         columns.Bound(c => c.Den_ngay).Width(120).Format("{0:dd-MM-yyyy}");
     })
-    .Pageable(pager => pager.PageSizes(new int[]{5, 10, 20, 50, 100, 300}).Refresh(true).Input(true).Numeric(false))
+    .Pageable(pager => pager.PageSizes(new int[]{5, 10, 20, 50, 100, 1000}).Refresh(true).Input(true).Numeric(false))
     .Sortable(s => s.SortMode(GridSortMode.MultipleColumn))
     .Filterable()
     .Scrollable()
@@ -70,6 +74,7 @@
     .Navigatable()
     //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
     .Selectable(s => s.Mode(GridSelectionMode.Single))
+    //.HtmlAttributes(new {style = "height:400px"})
     .Events(e => {
                 e.DataBound("onDataBound");
             })
@@ -113,15 +118,10 @@
 
     function filterGrid() {
         return {
-            id_chuyen_nganh: $("#ChuyenNganh").val()
+            id_hocky: $("#HocKy").val()
         }
     }
 
-    function filterHocKy() {
-        return {
-            ky_dang_ky: $("#HocKy").val()
-        }
-    }
     // on click checkbox cell in a row
     $(function () {
         $('#Grid').on('click', '.chkbx', function () {
@@ -208,14 +208,14 @@
     }
 
     $("#create").click(function () {
-        //window.location.href = '/MoodleCourse/CreateLopTinChi/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals;
-        processing('/MoodleCourse/CreateLopTinChi/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals, "Đang tạo lớp học phần trên moodle...");
+        //window.location.href = '/MoodleCourse/CreateLopTinChi/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals;
+        processing('/MoodleCourse/CreateLopTinChi/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals, "Đang tạo các lớp học phần trên moodle...");
     })
 
     $("#delete").click(function () {
         if (confirm('Bạn muốn xóa toàn bộ các lớp học phần thuộc chuyên ngành đã chọn?')) {
-            //window.location.href = '/MoodleCourse/DeleteLopTinChi/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals;
-            processing('/MoodleCourse/DeleteLopTinChi/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals, "Đang xóa lớp học phần trên moodle...");
+            //window.location.href = '/MoodleCourse/DeleteLopTinChi/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals;
+            processing('/MoodleCourse/DeleteLopTinChi/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals, "Đang xóa các lớp học phần trên moodle...");
         }
     })
 </script>

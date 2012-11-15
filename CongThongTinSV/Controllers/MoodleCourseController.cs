@@ -25,41 +25,23 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        public ActionResult GetLopTinChi([DataSourceRequest] DataSourceRequest request, int id_chuyen_nganh)
+        public ActionResult GetLopTinChi([DataSourceRequest] DataSourceRequest request, int id_hocky)
         {
 
-            return Json(MoodleLopTinChis(id_chuyen_nganh).ToDataSourceResult(request));
+            return Json(MoodleLopTinChis(id_hocky).ToDataSourceResult(request));
         }
 
-        public IEnumerable<MoodleLopTinChi> MoodleLopTinChis(int id_chuyen_nganh)
+        public IEnumerable<MoodleLopTinChi> MoodleLopTinChis(int id_hocky)
         {
             Entities db = new Entities();
             
-            var q = (from cn in db.MOD_HocKy_ChuyenNganh
-                    join hk in db.MOD_HocKy
-                    on cn.Ky_dang_ky equals hk.ID_moodle
-                    where cn.ID_moodle == id_chuyen_nganh
-                    select new
-                    {
-                        cn.ID_chuyen_nganh,
-                        hk.Ky_dang_ky
-                    }).FirstOrDefault();
-
-            var q1 = from dt in db.PLAN_ChuongTrinhDaoTao
-                      join ct in db.PLAN_ChuongTrinhDaoTaoChiTiet
-                      on dt.ID_dt equals ct.ID_dt
-                      where dt.ID_chuyen_nganh == q.ID_chuyen_nganh
-                      group ct by new { ct.ID_mon }
-                          into mon
-                          select mon.FirstOrDefault();
+            var q = db.MOD_HocKy.Single(t => t.ID_moodle == id_hocky);
 
             var q2 = (from ltc in db.PLAN_LopTinChi_TC
                      join mtc in db.PLAN_MonTinChi_TC
                      on ltc.ID_mon_tc equals mtc.ID_mon_tc
                      join mon in db.MARK_MonHoc
                      on mtc.ID_mon equals mon.ID_mon
-                     join mh in q1
-                     on mon.ID_mon equals mh.ID_mon
                      where mtc.Ky_dang_ky == q.Ky_dang_ky && ltc.ID_lop_lt == 0
                      select new 
                      {
@@ -96,11 +78,11 @@ namespace CongThongTinSV.Controllers
             return q3.OrderByDescending(t => t.ID_moodle).ToList();
         }
 
-        public ActionResult CreateLopTinChi(string selectedVals, string id_chuyen_nganh)
+        public ActionResult CreateLopTinChi(string selectedVals, string id_hocky)
         {
             Entities db = new Entities();
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-            int cID = Convert.ToInt32(id_chuyen_nganh);
+            int cID = Convert.ToInt32(id_hocky);
             var list = MoodleLopTinChis(Convert.ToInt32(cID)).Where(t => t.ID_moodle == 0 && s.Contains(t.ID.ToString())).ToList();
 
             //ViewBag.SelectedIds = new SelectList(list, "", "ID_moodle");
@@ -115,7 +97,7 @@ namespace CongThongTinSV.Controllers
             {
                 postData += "&courses[" + i + "][fullname]=" + HttpUtility.UrlEncode(item.Lop_hoc_phan);
                 postData += "&courses[" + i + "][shortname]=" + HttpUtility.UrlEncode(item.Lop_hoc_phan);
-                postData += "&courses[" + i + "][categoryid]=" + id_chuyen_nganh;
+                postData += "&courses[" + i + "][categoryid]=" + id_hocky;
                 postData += "&courses[" + i + "][idnumber]=" + HttpUtility.UrlEncode(UtilityController.GetIdnumber(item.Lop_hoc_phan));
                 postData += "&courses[" + i + "][summary]=" + HttpUtility.UrlEncode(item.Lop_hoc_phan + "-" + item.Ky_hieu + "-" + item.So_tin_chi + " tín chỉ");
                 //postData += "&courses[" + i + "][summaryformat]=1";
@@ -176,11 +158,11 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        public ActionResult DeleteLopTinChi(string selectedVals, string id_chuyen_nganh)
+        public ActionResult DeleteLopTinChi(string selectedVals, string id_hocky)
         {
             Entities db = new Entities();
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-            int cID = Convert.ToInt32(id_chuyen_nganh);
+            int cID = Convert.ToInt32(id_hocky);
             var list = MoodleLopTinChis(Convert.ToInt32(cID)).Where(t => t.ID_moodle > 0 && s.Contains(t.ID.ToString())).ToList();
 
             //ViewBag.SelectedIds = new SelectList(list, "", "ID_moodle");

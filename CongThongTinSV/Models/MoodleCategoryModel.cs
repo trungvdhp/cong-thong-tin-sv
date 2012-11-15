@@ -30,18 +30,18 @@ namespace CongThongTinSV.Models
         public string Nam_hoc { get; set; }
     }
 
-    public class MoodleChuyenNganh
-    {
-        [DisplayName("ID")]
-        public int ID { get; set; }
+    //public class MoodleChuyenNganh
+    //{
+    //    [DisplayName("ID")]
+    //    public int ID { get; set; }
 
-        [DisplayName("ID moodle")]
-        public int ID_moodle { get; set; }
+    //    [DisplayName("ID moodle")]
+    //    public int ID_moodle { get; set; }
 
-        [DisplayName("Mã")]
-        public string Ma_chuyen_nganh { get; set; }
+    //    [DisplayName("Mã")]
+    //    public string Ma_chuyen_nganh { get; set; }
 
-        [DisplayName("Chuyên ngành")]
-        public string Chuyen_nganh { get; set; }
-    }
+    //    [DisplayName("Chuyên ngành")]
+    //    public string Chuyen_nganh { get; set; }
+    //}
 }

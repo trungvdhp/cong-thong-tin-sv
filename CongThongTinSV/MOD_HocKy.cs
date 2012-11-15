@@ -16,12 +16,12 @@ namespace CongThongTinSV
     {
         public MOD_HocKy()
         {
-            this.MOD_HocKy_ChuyenNganh = new HashSet<MOD_HocKy_ChuyenNganh>();
+            this.MOD_LopTinChi_TC = new HashSet<MOD_LopTinChi_TC>();
         }
     
         public int ID_moodle { get; set; }
         public int Ky_dang_ky { get; set; }
     
-        public virtual ICollection<MOD_HocKy_ChuyenNganh> MOD_HocKy_ChuyenNganh { get; set; }
+        public virtual ICollection<MOD_LopTinChi_TC> MOD_LopTinChi_TC { get; set; }
     }
 }
