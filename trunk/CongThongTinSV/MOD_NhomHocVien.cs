@@ -26,7 +26,7 @@ namespace CongThongTinSV
         public int ID_lop_tc { get; set; }
     
         public virtual ICollection<MOD_DanhSachLopTinChi> MOD_DanhSachLopTinChi { get; set; }
-        public virtual MOD_LopTinChi_TC MOD_LopTinChi_TC { get; set; }
         public virtual MOD_ToNhom MOD_ToNhom { get; set; }
+        public virtual MOD_LopTinChi_TC MOD_LopTinChi_TC { get; set; }
     }
 }

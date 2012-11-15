@@ -25,10 +25,10 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        public ActionResult ChuyenNganh()
-        {
-            return View();
-        }
+        //public ActionResult ChuyenNganh()
+        //{
+        //    return View();
+        //}
 
         public ActionResult GetHocKy([DataSourceRequest] DataSourceRequest request)
         {
@@ -150,6 +150,8 @@ namespace CongThongTinSV.Controllers
 
             foreach (MoodleHocKy item in list)
             {
+                var loptc = db.MOD_LopTinChi_TC.Select(t => t.ID_danhmuc == item.ID_moodle).AsEnumerable();
+                if (loptc.Count() > 0) continue;
                 postData += "&categories[" + i + "][id]=" + item.ID_moodle;
                 //postData += "&categories[" + i + "][newparent]=0";
                 postData += "&categories[" + i + "][recursive]=1";
@@ -186,163 +188,163 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        public ActionResult GetChuyenNganh([DataSourceRequest] DataSourceRequest request, int ky_dang_ky)
-        {
-            return Json(MoodleChuyenNganhs(ky_dang_ky).ToDataSourceResult(request));
-        }
+        //public ActionResult GetChuyenNganh([DataSourceRequest] DataSourceRequest request, int ky_dang_ky)
+        //{
+        //    return Json(MoodleChuyenNganhs(ky_dang_ky).ToDataSourceResult(request));
+        //}
 
-        public IEnumerable<MoodleChuyenNganh> MoodleChuyenNganhs(int ky_dang_ky)
-        {
-            Entities db = new Entities();
+        //public IEnumerable<MoodleChuyenNganh> MoodleChuyenNganhs(int ky_dang_ky)
+        //{
+        //    Entities db = new Entities();
 
-            return (from cn1 in db.STU_ChuyenNganh
-                    join cn2 in db.MOD_HocKy_ChuyenNganh.Where(t => t.Ky_dang_ky == ky_dang_ky)
-                    on cn1.ID_chuyen_nganh equals cn2.ID_chuyen_nganh
-                    into chuyennganh
-                    from cn3 in chuyennganh.DefaultIfEmpty()
-                    select new MoodleChuyenNganh
-                    {
-                        ID = cn1.ID_chuyen_nganh,
-                        ID_moodle = (cn3 == null ? 0 : cn3.ID_moodle),
-                        Ma_chuyen_nganh = cn1.Ma_chuyen_nganh,
-                        Chuyen_nganh = cn1.Chuyen_nganh
-                    }).OrderByDescending(t => t.ID_moodle).ToList();
-        }
+        //    return (from cn1 in db.STU_ChuyenNganh
+        //            join cn2 in db.MOD_HocKy_ChuyenNganh.Where(t => t.Ky_dang_ky == ky_dang_ky)
+        //            on cn1.ID_chuyen_nganh equals cn2.ID_chuyen_nganh
+        //            into chuyennganh
+        //            from cn3 in chuyennganh.DefaultIfEmpty()
+        //            select new MoodleChuyenNganh
+        //            {
+        //                ID = cn1.ID_chuyen_nganh,
+        //                ID_moodle = (cn3 == null ? 0 : cn3.ID_moodle),
+        //                Ma_chuyen_nganh = cn1.Ma_chuyen_nganh,
+        //                Chuyen_nganh = cn1.Chuyen_nganh
+        //            }).OrderByDescending(t => t.ID_moodle).ToList();
+        //}
 
-        public JsonResult GetMoodleChuyenNganh(int ky_dang_ky)
-        {
-            Entities db = new Entities();
-            JsonResult result = new JsonResult();
-            IEnumerable<SelectListItem> list = 
-                from cn1 in db.STU_ChuyenNganh.AsEnumerable() 
-                join cn2 in db.MOD_HocKy_ChuyenNganh.Where(t => t.Ky_dang_ky == ky_dang_ky)
-                on cn1.ID_chuyen_nganh equals cn2.ID_chuyen_nganh
-                select new SelectListItem
-                {
-                    Value = cn2.ID_moodle.ToString(),
-                    Text = cn1.Chuyen_nganh
-                };
-            int c = Convert.ToInt32(list.Count());
-            result.Data = new SelectList(list, "Value", "Text").OrderBy(t => t.Text);
-            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+        //public JsonResult GetMoodleChuyenNganh(int ky_dang_ky)
+        //{
+        //    Entities db = new Entities();
+        //    JsonResult result = new JsonResult();
+        //    IEnumerable<SelectListItem> list = 
+        //        from cn1 in db.STU_ChuyenNganh.AsEnumerable() 
+        //        join cn2 in db.MOD_HocKy_ChuyenNganh.Where(t => t.Ky_dang_ky == ky_dang_ky)
+        //        on cn1.ID_chuyen_nganh equals cn2.ID_chuyen_nganh
+        //        select new SelectListItem
+        //        {
+        //            Value = cn2.ID_moodle.ToString(),
+        //            Text = cn1.Chuyen_nganh
+        //        };
+        //    int c = Convert.ToInt32(list.Count());
+        //    result.Data = new SelectList(list, "Value", "Text").OrderBy(t => t.Text);
+        //    result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
 
-            return result;
-        }
+        //    return result;
+        //}
 
-        public ActionResult CreateChuyenNganh(string selectedVals, string ky_dang_ky)
-        {
-            Entities db = new Entities();
-            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-            int ky = Convert.ToInt32(ky_dang_ky);
-            var list = MoodleChuyenNganhs(ky).Where(t => t.ID_moodle == 0 && s.Contains(t.ID.ToString())).ToList();
+        //public ActionResult CreateChuyenNganh(string selectedVals, string ky_dang_ky)
+        //{
+        //    Entities db = new Entities();
+        //    IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+        //    int ky = Convert.ToInt32(ky_dang_ky);
+        //    var list = MoodleChuyenNganhs(ky).Where(t => t.ID_moodle == 0 && s.Contains(t.ID.ToString())).ToList();
 
-            //ViewBag.SelectedIds = new SelectList(list, "ID", "ID_moodle");
-            //ViewBag.Result = new SelectList(list, "ID_moodle", "ID");
+        //    //ViewBag.SelectedIds = new SelectList(list, "ID", "ID_moodle");
+        //    //ViewBag.Result = new SelectList(list, "ID_moodle", "ID");
 
-            if (list.Count() == 0) return View();
+        //    if (list.Count() == 0) return View();
 
-            int i = 0;
-            string postData = "&wsfunction=core_course_create_categories";
+        //    int i = 0;
+        //    string postData = "&wsfunction=core_course_create_categories";
 
-            foreach (MoodleChuyenNganh item in list)
-            {
-                postData += "&categories[" + i + "][name]=" + HttpUtility.UrlEncode(item.Chuyen_nganh);
-                postData += "&categories[" + i + "][parent]=" + ky_dang_ky;
-                postData += "&categories[" + i + "][idnumber]=" + HttpUtility.UrlEncode(item.Ma_chuyen_nganh);
-                postData += "&categories[" + i + "][description]=" + HttpUtility.UrlEncode(item.Chuyen_nganh + "-" + item.Ma_chuyen_nganh);
-                postData += "&categories[" + i + "][descriptionformat]=1";
-                i++;
-            }
+        //    foreach (MoodleChuyenNganh item in list)
+        //    {
+        //        postData += "&categories[" + i + "][name]=" + HttpUtility.UrlEncode(item.Chuyen_nganh);
+        //        postData += "&categories[" + i + "][parent]=" + ky_dang_ky;
+        //        postData += "&categories[" + i + "][idnumber]=" + HttpUtility.UrlEncode(item.Ma_chuyen_nganh);
+        //        postData += "&categories[" + i + "][description]=" + HttpUtility.UrlEncode(item.Chuyen_nganh + "-" + item.Ma_chuyen_nganh);
+        //        postData += "&categories[" + i + "][descriptionformat]=1";
+        //        i++;
+        //    }
 
-            WebRequestController web = new WebRequestController(4, "POST", postData);
-            string response = web.GetResponse();
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            //MoodleException moodleError = new MoodleException();
-            List<MoodleCreateCategoryResponse> results = new List<MoodleCreateCategoryResponse>();
+        //    WebRequestController web = new WebRequestController(4, "POST", postData);
+        //    string response = web.GetResponse();
+        //    JavaScriptSerializer serializer = new JavaScriptSerializer();
+        //    //MoodleException moodleError = new MoodleException();
+        //    List<MoodleCreateCategoryResponse> results = new List<MoodleCreateCategoryResponse>();
 
-            if (response.Contains("exception"))
-            {
-                // Error
-                // moodleError = serializer.Deserialize<MoodleException>(rs);
-            }
-            else
-            {
-                // Good
-                results = serializer.Deserialize<List<MoodleCreateCategoryResponse>>(response);
-                i = 0;
+        //    if (response.Contains("exception"))
+        //    {
+        //        // Error
+        //        // moodleError = serializer.Deserialize<MoodleException>(rs);
+        //    }
+        //    else
+        //    {
+        //        // Good
+        //        results = serializer.Deserialize<List<MoodleCreateCategoryResponse>>(response);
+        //        i = 0;
 
-                foreach (MoodleChuyenNganh item in list)
-                {
-                    MOD_HocKy_ChuyenNganh entity = new MOD_HocKy_ChuyenNganh();
+        //        foreach (MoodleChuyenNganh item in list)
+        //        {
+        //            MOD_HocKy_ChuyenNganh entity = new MOD_HocKy_ChuyenNganh();
 
-                    entity.ID_moodle = Convert.ToInt32(results[i].id);
-                    entity.Ky_dang_ky = ky;
-                    entity.ID_chuyen_nganh = item.ID;
-                    db.MOD_HocKy_ChuyenNganh.Add(entity);
-                    i++;
-                }
+        //            entity.ID_moodle = Convert.ToInt32(results[i].id);
+        //            entity.Ky_dang_ky = ky;
+        //            entity.ID_chuyen_nganh = item.ID;
+        //            db.MOD_HocKy_ChuyenNganh.Add(entity);
+        //            i++;
+        //        }
 
-                db.SaveChanges();
-            }
+        //        db.SaveChanges();
+        //    }
 
-            UtilityController.WriteTextToFile("D:\\ChuyenNganhCreate.txt", response);
+        //    UtilityController.WriteTextToFile("D:\\ChuyenNganhCreate.txt", response);
 
-            return View();
-        }
+        //    return View();
+        //}
 
-        public ActionResult DeleteChuyenNganh(string selectedVals, string ky_dang_ky)
-        {
-            Entities db = new Entities();
-            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-            int ky = Convert.ToInt32(ky_dang_ky);
-            var list = MoodleChuyenNganhs(ky).Where(t => t.ID_moodle > 0 && s.Contains(t.ID.ToString())).ToList();
+        //public ActionResult DeleteChuyenNganh(string selectedVals, string ky_dang_ky)
+        //{
+        //    Entities db = new Entities();
+        //    IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+        //    int ky = Convert.ToInt32(ky_dang_ky);
+        //    var list = MoodleChuyenNganhs(ky).Where(t => t.ID_moodle > 0 && s.Contains(t.ID.ToString())).ToList();
 
-            //ViewBag.SelectedIds = new SelectList(list, "ID", "ID_moodle");
-            //ViewBag.Result = new SelectList(list, "ID_moodle", "ID");
+        //    //ViewBag.SelectedIds = new SelectList(list, "ID", "ID_moodle");
+        //    //ViewBag.Result = new SelectList(list, "ID_moodle", "ID");
 
-            if (list.Count() == 0) return View();
+        //    if (list.Count() == 0) return View();
 
-            int i = 0;
-            string postData = "&wsfunction=core_course_delete_categories";
+        //    int i = 0;
+        //    string postData = "&wsfunction=core_course_delete_categories";
 
-            foreach (MoodleChuyenNganh item in list)
-            {
-                postData += "&categories[" + i + "][id]=" + item.ID_moodle;
-                //postData += "&categories[" + i + "][newparent]=0";
-                postData += "&categories[" + i + "][recursive]=1";
-                i++;
-            }
+        //    foreach (MoodleChuyenNganh item in list)
+        //    {
+        //        postData += "&categories[" + i + "][id]=" + item.ID_moodle;
+        //        //postData += "&categories[" + i + "][newparent]=0";
+        //        postData += "&categories[" + i + "][recursive]=1";
+        //        i++;
+        //    }
 
-            WebRequestController web = new WebRequestController(4, "POST", postData);
-            string response = web.GetResponse();
-            //JavaScriptSerializer serializer = new JavaScriptSerializer();
-            //MoodleException moodleError = new MoodleException();
+        //    WebRequestController web = new WebRequestController(4, "POST", postData);
+        //    string response = web.GetResponse();
+        //    //JavaScriptSerializer serializer = new JavaScriptSerializer();
+        //    //MoodleException moodleError = new MoodleException();
 
-            if (response.Contains("exception"))
-            {
-                // Error
-                // moodleError = serializer.Deserialize<MoodleException>(rs);
-            }
-            else
-            {
-                // Good
-                // res = serializer.Deserialize<List<MoodleCreateCategoryResponse>>(rs);
-                i = 0;
+        //    if (response.Contains("exception"))
+        //    {
+        //        // Error
+        //        // moodleError = serializer.Deserialize<MoodleException>(rs);
+        //    }
+        //    else
+        //    {
+        //        // Good
+        //        // res = serializer.Deserialize<List<MoodleCreateCategoryResponse>>(rs);
+        //        i = 0;
 
-                foreach (MoodleChuyenNganh item in list)
-                {
-                    MOD_HocKy_ChuyenNganh entity = db.MOD_HocKy_ChuyenNganh.Single(t => t.ID_moodle == item.ID_moodle);
-                    db.MOD_HocKy_ChuyenNganh.Remove(entity);
-                    i++;
-                }
+        //        foreach (MoodleChuyenNganh item in list)
+        //        {
+        //            MOD_HocKy_ChuyenNganh entity = db.MOD_HocKy_ChuyenNganh.Single(t => t.ID_moodle == item.ID_moodle);
+        //            db.MOD_HocKy_ChuyenNganh.Remove(entity);
+        //            i++;
+        //        }
 
-                db.SaveChanges();
-            }
+        //        db.SaveChanges();
+        //    }
 
-            UtilityController.WriteTextToFile("D:\\ChuyenNganhDelete.txt", response);
+        //    UtilityController.WriteTextToFile("D:\\ChuyenNganhDelete.txt", response);
 
-            return View();
-        }
+        //    return View();
+        //}
 
     }
 }

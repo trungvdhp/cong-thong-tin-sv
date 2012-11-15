@@ -18,8 +18,8 @@ namespace CongThongTinSV
         public int ID_lop_tc { get; set; }
         public int ID_vai_tro { get; set; }
     
-        public virtual MOD_LopTinChi_TC MOD_LopTinChi_TC { get; set; }
         public virtual MOD_NguoiDung MOD_NguoiDung { get; set; }
         public virtual MOD_VaiTro MOD_VaiTro { get; set; }
+        public virtual MOD_LopTinChi_TC MOD_LopTinChi_TC { get; set; }
     }
 }
