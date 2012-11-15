@@ -5,58 +5,69 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="d9b5cf5e44d640389ee7a28f3a1a412b" Name="Diagram1" ZoomLevel="81">
-        <EntityTypeShape EntityType="DHHHModel.MARK_MonHoc" Width="1.5" PointX="7.75" PointY="0.75" />
-        <EntityTypeShape EntityType="DHHHModel.MOD_DichVu" Width="1.5" PointX="7.75" PointY="4.75" />
-        <EntityTypeShape EntityType="DHHHModel.PLAN_ChucDanh" Width="1.5" PointX="9.75" PointY="0.75" />
-        <EntityTypeShape EntityType="DHHHModel.PLAN_ChucVu" Width="1.5" PointX="9.75" PointY="3.75" />
-        <EntityTypeShape EntityType="DHHHModel.PLAN_ChuongTrinhDaoTao" Width="1.5" PointX="9.75" PointY="6.75" />
-        <EntityTypeShape EntityType="DHHHModel.PLAN_ChuongTrinhDaoTaoChiTiet" Width="1.5" PointX="9.75" PointY="10.75" />
-        <EntityTypeShape EntityType="DHHHModel.PLAN_ChuongTrinhDaoTaoKienThuc" Width="1.5" PointX="11.75" PointY="0.75" />
-        <EntityTypeShape EntityType="DHHHModel.PLAN_ChuyenMon" Width="1.5" PointX="11.75" PointY="3.75" />
-        <EntityTypeShape EntityType="DHHHModel.PLAN_GiaoVien" Width="1.5" PointX="11.75" PointY="6.75" />
-        <EntityTypeShape EntityType="DHHHModel.PLAN_GiaoVienMonDay" Width="1.5" PointX="11.75" PointY="10.75" />
-        <EntityTypeShape EntityType="DHHHModel.PLAN_HocHam" Width="1.5" PointX="0.75" PointY="12.75" />
-        <EntityTypeShape EntityType="DHHHModel.PLAN_HocKyDangKy_TC" Width="1.5" PointX="13.75" PointY="0.75" />
-        <EntityTypeShape EntityType="DHHHModel.PLAN_HocVi" Width="1.5" PointX="13.75" PointY="4.75" />
-        <EntityTypeShape EntityType="DHHHModel.PLAN_LopTinChi_TC" Width="1.5" PointX="13.75" PointY="7.75" />
-        <EntityTypeShape EntityType="DHHHModel.PLAN_MonTinChi_TC" Width="1.5" PointX="11.75" PointY="13.75" />
-        <EntityTypeShape EntityType="DHHHModel.PLAN_SukiensTinChi_TC" Width="1.5" PointX="13.75" PointY="13.75" />
-        <EntityTypeShape EntityType="DHHHModel.POR_GiaoVien" Width="1.5" PointX="15.75" PointY="0.75" />
-        <EntityTypeShape EntityType="DHHHModel.STU_ChuyenNganh" Width="1.5" PointX="0.75" PointY="15.75" />
-        <EntityTypeShape EntityType="DHHHModel.STU_DanhSach" Width="1.5" PointX="15.75" PointY="3.75" />
-        <EntityTypeShape EntityType="DHHHModel.STU_GioiTinh" Width="1.5" PointX="15.75" PointY="7.75" />
-        <EntityTypeShape EntityType="DHHHModel.STU_He" Width="1.5" PointX="15.75" PointY="10.75" />
-        <EntityTypeShape EntityType="DHHHModel.STU_HeChuyenNganh" Width="1.5" PointX="15.75" PointY="14.75" />
-        <EntityTypeShape EntityType="DHHHModel.STU_HoSoSinhVien" Width="1.5" PointX="7.75" PointY="16.75" />
-        <EntityTypeShape EntityType="DHHHModel.STU_Khoa" Width="1.5" PointX="17.75" PointY="0.75" />
-        <EntityTypeShape EntityType="DHHHModel.STU_Lop" Width="1.5" PointX="2.75" PointY="17.75" />
-        <EntityTypeShape EntityType="DHHHModel.STU_Nganh" Width="1.5" PointX="17.75" PointY="3.75" />
-        <EntityTypeShape EntityType="DHHHModel.ViewLopTC" Width="1.5" PointX="4.75" PointY="17.75" />
-        <EntityTypeShape EntityType="DHHHModel.ViewNamHoc" Width="1.5" PointX="2.75" PointY="12.75" />
-        <EntityTypeShape EntityType="DHHHModel.STU_DanhSachLopTinChi" Width="1.5" PointX="17.75" PointY="6.75" />
-        <EntityTypeShape EntityType="DHHHModel.MOD_DanhSachLopTinChi" Width="1.5" PointX="5.25" PointY="3" />
-        <EntityTypeShape EntityType="DHHHModel.MOD_NguoiDung" Width="1.5" PointX="3" PointY="2.375" />
-        <EntityTypeShape EntityType="DHHHModel.MOD_NguoiDung_VaiTro_HeThong" Width="1.5" PointX="5.25" PointY="9" />
-        <EntityTypeShape EntityType="DHHHModel.MOD_NguoiDung_VaiTro_LopTinChi" Width="1.5" PointX="5.25" PointY="5.875" />
+        <EntityTypeShape EntityType="DHHHModel.MARK_Diem_TC" Width="1.5" PointX="12" PointY="9.125" />
+        <EntityTypeShape EntityType="DHHHModel.MARK_DiemThanhPhan_TC" Width="1.5" PointX="17.25" PointY="9.75" />
+        <EntityTypeShape EntityType="DHHHModel.MARK_DiemThi_TC" Width="1.5" PointX="14.25" PointY="15.75" />
+        <EntityTypeShape EntityType="DHHHModel.MARK_MonHoc" Width="1.5" PointX="9.75" PointY="9.875" />
+        <EntityTypeShape EntityType="DHHHModel.MARK_ThanhPhanMon_TC" Width="1.5" PointX="15" PointY="5.125" />
+        <EntityTypeShape EntityType="DHHHModel.MOD_DanhSachLopTinChi" Width="1.5" PointX="5.25" PointY="6" />
+        <EntityTypeShape EntityType="DHHHModel.MOD_DichVu" Width="1.5" PointX="10.75" PointY="4.75" />
+        <EntityTypeShape EntityType="DHHHModel.MOD_HocKy" Width="1.5" PointX="0.75" PointY="6.125" />
+        <EntityTypeShape EntityType="DHHHModel.MOD_LopTinChi_TC" Width="1.5" PointX="3" PointY="5.625" />
+        <EntityTypeShape EntityType="DHHHModel.MOD_NguoiDung" Width="1.5" PointX="3" PointY="1.375" />
+        <EntityTypeShape EntityType="DHHHModel.MOD_NguoiDung_VaiTro_HeThong" Width="1.5" PointX="8.25" PointY="5.5" />
+        <EntityTypeShape EntityType="DHHHModel.MOD_NguoiDung_VaiTro_LopTinChi" Width="1.5" PointX="5.25" PointY="2.875" />
         <EntityTypeShape EntityType="DHHHModel.MOD_NhomHocVien" Width="1.5" PointX="7.5" PointY="10" />
-        <EntityTypeShape EntityType="DHHHModel.MOD_NhomNguoiDung" Width="1.5" PointX="0.75" PointY="2.625" />
+        <EntityTypeShape EntityType="DHHHModel.MOD_NhomNguoiDung" Width="1.5" PointX="0.75" PointY="1.625" />
         <EntityTypeShape EntityType="DHHHModel.MOD_ToNhom" Width="1.5" PointX="5.25" PointY="14.875" />
         <EntityTypeShape EntityType="DHHHModel.MOD_VaiTro" Width="1.5" PointX="3" PointY="9.375" />
+        <EntityTypeShape EntityType="DHHHModel.PLAN_ChuongTrinhDaoTao" Width="1.5" PointX="9.75" PointY="16.5" />
+        <EntityTypeShape EntityType="DHHHModel.PLAN_ChuongTrinhDaoTaoChiTiet" Width="1.5" PointX="15" PointY="8.625" />
+        <EntityTypeShape EntityType="DHHHModel.PLAN_GiaoVien" Width="1.5" PointX="16.75" PointY="16" />
+        <EntityTypeShape EntityType="DHHHModel.PLAN_HocKyDangKy_TC" Width="1.5" PointX="12.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DHHHModel.PLAN_LopTinChi_TC" Width="1.5" PointX="14.25" PointY="20.625" />
+        <EntityTypeShape EntityType="DHHHModel.PLAN_MonTinChi_TC" Width="1.5" PointX="12" PointY="21.125" />
+        <EntityTypeShape EntityType="DHHHModel.PLAN_SukiensTinChi_TC" Width="1.5" PointX="16.5" PointY="21.375" />
+        <EntityTypeShape EntityType="DHHHModel.POR_GiaoVien" Width="1.5" PointX="19" PointY="16.625" />
+        <EntityTypeShape EntityType="DHHHModel.STU_ChuyenNganh" Width="1.5" PointX="10" PointY="1" />
+        <EntityTypeShape EntityType="DHHHModel.STU_DanhSach" Width="1.5" PointX="0.75" PointY="12.75" />
+        <EntityTypeShape EntityType="DHHHModel.STU_GioiTinh" Width="1.5" PointX="14.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DHHHModel.STU_He" Width="1.5" PointX="7.5" PointY="15.5" />
+        <EntityTypeShape EntityType="DHHHModel.STU_HeChuyenNganh" Width="1.5" PointX="16.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DHHHModel.STU_HoSoSinhVien" Width="1.5" PointX="9.75" PointY="21.75" />
+        <EntityTypeShape EntityType="DHHHModel.STU_Khoa" Width="1.5" PointX="7.5" PointY="19" />
+        <EntityTypeShape EntityType="DHHHModel.STU_Lop" Width="1.5" PointX="0.75" PointY="16.75" />
+        <EntityTypeShape EntityType="DHHHModel.STU_Nganh" Width="1.5" PointX="7.75" PointY="1.125" />
+        <EntityTypeShape EntityType="DHHHModel.ViewLopTC" Width="1.5" PointX="2.75" PointY="17.75" />
+        <EntityTypeShape EntityType="DHHHModel.ViewNamHoc" Width="1.5" PointX="2.75" PointY="12.75" />
+        <AssociationConnector Association="DHHHModel.FK_MARK_Diem_TC_MARK_MonHoc" />
+        <AssociationConnector Association="DHHHModel.FK_MARK_Diem_TC_PLAN_ChuongTrinhDaoTao" />
+        <AssociationConnector Association="DHHHModel.FK_MARK_Diem_TC_STU_HoSoSinhVien" />
+        <AssociationConnector Association="DHHHModel.FK_MARK_DiemThanhPhan_TC_MARK_Diem_TC" />
+        <AssociationConnector Association="DHHHModel.FK_MARK_DiemThi_TC_MARK_Diem_TC" />
+        <AssociationConnector Association="DHHHModel.FK_MARK_DiemThanhPhan_TC_MARK_ThanhPhanMon_TC" />
+        <AssociationConnector Association="DHHHModel.FK_PLAN_ChuongTrinhDaoTaoChiTiet_MARK_MonHoc" />
+        <AssociationConnector Association="DHHHModel.FK_PLAN_MonTinChi_TC_MARK_MonHoc" />
         <AssociationConnector Association="DHHHModel.FK_DangKy_Nhom" />
+        <AssociationConnector Association="DHHHModel.FK_MOD_DanhSachLopTinChi_MOD_LopTinChi_TC" />
+        <AssociationConnector Association="DHHHModel.FK_MOD_LopTinChi_TC_MOD_HocKy" />
+        <AssociationConnector Association="DHHHModel.FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_LopTinChi_TC" />
+        <AssociationConnector Association="DHHHModel.FK_MOD_NhomHocVien_MOD_LopTinChi_TC" />
+        <AssociationConnector Association="DHHHModel.FK_MOD_ToNhom_MOD_LopTinChi_TC" />
         <AssociationConnector Association="DHHHModel.FK_MOD_NguoiDung_MOD_NhomNguoiDung" />
         <AssociationConnector Association="DHHHModel.FK_MOD_NguoiDung_VaiTro_HeThong_MOD_NguoiDung" />
         <AssociationConnector Association="DHHHModel.FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_NguoiDung" />
         <AssociationConnector Association="DHHHModel.FK_MOD_NguoiDung_VaiTro_HeThong_MOD_VaiTro" />
         <AssociationConnector Association="DHHHModel.FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_VaiTro" />
         <AssociationConnector Association="DHHHModel.FK_Nhom_To" />
-        <EntityTypeShape EntityType="DHHHModel.MOD_HocKy" Width="1.5" PointX="0.75" PointY="6.125" />
-        <EntityTypeShape EntityType="DHHHModel.MOD_LopTinChi_TC" Width="1.5" PointX="3" PointY="5.625" />
-        <AssociationConnector Association="DHHHModel.FK_MOD_DanhSachLopTinChi_MOD_LopTinChi_TC" />
-        <AssociationConnector Association="DHHHModel.FK_MOD_LopTinChi_TC_MOD_HocKy" />
-        <AssociationConnector Association="DHHHModel.FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_LopTinChi_TC" />
-        <AssociationConnector Association="DHHHModel.FK_MOD_NhomHocVien_MOD_LopTinChi_TC" />
-        <AssociationConnector Association="DHHHModel.FK_MOD_ToNhom_MOD_LopTinChi_TC" />
-        </Diagram>
+        <AssociationConnector Association="DHHHModel.FK_PLAN_ChuongTrinhDaoTao_STU_He" />
+        <AssociationConnector Association="DHHHModel.FK_PLAN_ChuongTrinhDaoTao_STU_Khoa" />
+        <AssociationConnector Association="DHHHModel.FK_PLAN_ChuongTrinhDaoTaoChiTiet_PLAN_ChuongTrinhDaoTao" />
+        <AssociationConnector Association="DHHHModel.FK_POR_GiaoVien_PLAN_GiaoVien" />
+        <AssociationConnector Association="DHHHModel.FK_PLAN_LopTinChi_TC_PLAN_MonTinChi_TC" />
+        <AssociationConnector Association="DHHHModel.FK_PLAN_SukiensTinChi_TC_PLAN_LopTinChi_TC" />
+        <AssociationConnector Association="DHHHModel.FK_STU_ChuyenNganh_STU_Nganh" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

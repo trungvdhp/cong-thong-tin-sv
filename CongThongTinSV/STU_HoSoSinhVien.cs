@@ -14,6 +14,11 @@ namespace CongThongTinSV
     
     public partial class STU_HoSoSinhVien
     {
+        public STU_HoSoSinhVien()
+        {
+            this.MARK_Diem_TC = new HashSet<MARK_Diem_TC>();
+        }
+    
         public int ID_sv { get; set; }
         public byte[] Anh { get; set; }
         public string Ma_sv { get; set; }
@@ -110,5 +115,7 @@ namespace CongThongTinSV
         public string LOP12 { get; set; }
         public string He_nhap_hoc { get; set; }
         public Nullable<int> Trang_thai_hoc { get; set; }
+    
+        public virtual ICollection<MARK_Diem_TC> MARK_Diem_TC { get; set; }
     }
 }

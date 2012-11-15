@@ -18,5 +18,7 @@ namespace CongThongTinSV
         public string Mat_khau { get; set; }
         public string Email { get; set; }
         public Nullable<bool> Trang_thai { get; set; }
+    
+        public virtual PLAN_GiaoVien PLAN_GiaoVien { get; set; }
     }
 }

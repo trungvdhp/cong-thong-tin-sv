@@ -20,5 +20,7 @@ namespace CongThongTinSV
         public int ID_nganh { get; set; }
         public string Chuyen_nganh_En { get; set; }
         public bool Ky_thuat { get; set; }
+    
+        public virtual STU_Nganh STU_Nganh { get; set; }
     }
 }

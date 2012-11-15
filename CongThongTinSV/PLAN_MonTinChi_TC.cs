@@ -14,6 +14,11 @@ namespace CongThongTinSV
     
     public partial class PLAN_MonTinChi_TC
     {
+        public PLAN_MonTinChi_TC()
+        {
+            this.PLAN_LopTinChi_TC = new HashSet<PLAN_LopTinChi_TC>();
+        }
+    
         public int ID_mon_tc { get; set; }
         public int Ky_dang_ky { get; set; }
         public string Ky_hieu_lop_tc { get; set; }
@@ -26,5 +31,8 @@ namespace CongThongTinSV
         public int Bai_tap { get; set; }
         public int Bai_tap_lon { get; set; }
         public bool Locked { get; set; }
+    
+        public virtual MARK_MonHoc MARK_MonHoc { get; set; }
+        public virtual ICollection<PLAN_LopTinChi_TC> PLAN_LopTinChi_TC { get; set; }
     }
 }
