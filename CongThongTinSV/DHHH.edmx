@@ -67,6 +67,20 @@
       [STU_DanhSach].[Trang_thai] AS [Trang_thai]
       FROM [dbo].[STU_DanhSach] AS [STU_DanhSach]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="STU_DanhSachLopTinChi" EntityType="DHHHModel.Store.STU_DanhSachLopTinChi" store:Type="Tables" store:Schema="dbo" store:Name="STU_DanhSachLopTinChi">
+            <DefiningQuery>SELECT 
+      [STU_DanhSachLopTinChi].[ID] AS [ID], 
+      [STU_DanhSachLopTinChi].[ID_lop_tc] AS [ID_lop_tc], 
+      [STU_DanhSachLopTinChi].[ID_sv] AS [ID_sv], 
+      [STU_DanhSachLopTinChi].[Hoc_lai] AS [Hoc_lai], 
+      [STU_DanhSachLopTinChi].[Duyet] AS [Duyet], 
+      [STU_DanhSachLopTinChi].[Huy_dang_ky] AS [Huy_dang_ky], 
+      [STU_DanhSachLopTinChi].[Ly_do] AS [Ly_do], 
+      [STU_DanhSachLopTinChi].[Rut_bot_hoc_phan] AS [Rut_bot_hoc_phan], 
+      [STU_DanhSachLopTinChi].[Chuyen_nganh2] AS [Chuyen_nganh2], 
+      [STU_DanhSachLopTinChi].[CLC] AS [CLC]
+      FROM [dbo].[STU_DanhSachLopTinChi] AS [STU_DanhSachLopTinChi]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="STU_GioiTinh" EntityType="DHHHModel.Store.STU_GioiTinh" store:Type="Tables" store:Schema="dbo" store:Name="STU_GioiTinh">
             <DefiningQuery>SELECT 
       [STU_GioiTinh].[ID_gioi_tinh] AS [ID_gioi_tinh], 
@@ -581,6 +595,30 @@
           <Property Name="Lop_chat_luong_cao" Type="bit" />
           <Property Name="ID_xep_hang_hoc_luc" Type="int" />
           <Property Name="Trang_thai" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'DHHH.dbo.STU_DanhSachLopTinChi' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="STU_DanhSachLopTinChi">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="ID_lop_tc" />
+            <PropertyRef Name="ID_sv" />
+            <PropertyRef Name="Hoc_lai" />
+            <PropertyRef Name="Duyet" />
+            <PropertyRef Name="Huy_dang_ky" />
+            <PropertyRef Name="Chuyen_nganh2" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID_lop_tc" Type="int" Nullable="false" />
+          <Property Name="ID_sv" Type="int" Nullable="false" />
+          <Property Name="Hoc_lai" Type="int" Nullable="false" />
+          <Property Name="Duyet" Type="int" Nullable="false" />
+          <Property Name="Huy_dang_ky" Type="bit" Nullable="false" />
+          <Property Name="Ly_do" Type="nvarchar" MaxLength="200" />
+          <Property Name="Rut_bot_hoc_phan" Type="bit" />
+          <Property Name="Chuyen_nganh2" Type="bit" Nullable="false" />
+          <Property Name="CLC" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'DHHH.dbo.STU_GioiTinh' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -1322,6 +1360,7 @@
             <End Role="STU_Nganh" EntitySet="STU_Nganh" />
             <End Role="STU_ChuyenNganh" EntitySet="STU_ChuyenNganh" />
           </AssociationSet>
+          <EntitySet Name="STU_DanhSachLopTinChi" EntityType="DHHHModel.STU_DanhSachLopTinChi" />
           </EntityContainer>
         <ComplexType Name="SP_SinhVienLopTC_Result">
           <Property Type="Int32" Name="ID_sv" Nullable="false" />
@@ -2294,6 +2333,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="STU_DanhSachLopTinChi">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="ID_lop_tc" />
+            <PropertyRef Name="ID_sv" />
+            <PropertyRef Name="Hoc_lai" />
+            <PropertyRef Name="Duyet" />
+            <PropertyRef Name="Huy_dang_ky" />
+            <PropertyRef Name="Chuyen_nganh2" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="ID_lop_tc" Nullable="false" />
+          <Property Type="Int32" Name="ID_sv" Nullable="false" />
+          <Property Type="Int32" Name="Hoc_lai" Nullable="false" />
+          <Property Type="Int32" Name="Duyet" Nullable="false" />
+          <Property Type="Boolean" Name="Huy_dang_ky" Nullable="false" />
+          <Property Type="String" Name="Ly_do" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="Rut_bot_hoc_phan" />
+          <Property Type="Boolean" Name="Chuyen_nganh2" Nullable="false" />
+          <Property Type="Boolean" Name="CLC" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2870,6 +2930,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="STU_DanhSachLopTinChi">
+            <EntityTypeMapping TypeName="DHHHModel.STU_DanhSachLopTinChi">
+              <MappingFragment StoreEntitySet="STU_DanhSachLopTinChi">
+                <ScalarProperty Name="CLC" ColumnName="CLC" />
+                <ScalarProperty Name="Chuyen_nganh2" ColumnName="Chuyen_nganh2" />
+                <ScalarProperty Name="Rut_bot_hoc_phan" ColumnName="Rut_bot_hoc_phan" />
+                <ScalarProperty Name="Ly_do" ColumnName="Ly_do" />
+                <ScalarProperty Name="Huy_dang_ky" ColumnName="Huy_dang_ky" />
+                <ScalarProperty Name="Duyet" ColumnName="Duyet" />
+                <ScalarProperty Name="Hoc_lai" ColumnName="Hoc_lai" />
+                <ScalarProperty Name="ID_sv" ColumnName="ID_sv" />
+                <ScalarProperty Name="ID_lop_tc" ColumnName="ID_lop_tc" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2884,7 +2960,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>

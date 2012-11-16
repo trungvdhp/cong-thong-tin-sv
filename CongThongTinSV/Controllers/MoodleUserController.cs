@@ -42,6 +42,7 @@ namespace CongThongTinSV.Controllers
         public IEnumerable<MoodleSinhVien> MoodleSinhViens(int id_chuyen_nganh)
         {
             Entities db = new Entities();
+
             var sv1 = from ds in db.STU_DanhSach
                       join hs in db.STU_HoSoSinhVien
                       on ds.ID_sv equals hs.ID_sv
@@ -122,18 +123,9 @@ namespace CongThongTinSV.Controllers
         //    return Json(jsonData, JsonRequestBehavior.AllowGet);
         //}
 
-        public ActionResult CreateSinhVien(string selectedVals, string id_chuyen_nganh)
+        public static void CreateSinhVien(List<MoodleSinhVien> list)
         {
             Entities db = new Entities();
-            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-
-            var list = MoodleSinhViens(Convert.ToInt32(id_chuyen_nganh)).Where(t1 => t1.ID_moodle == 0 && s.Contains(t1.ID_sv.ToString())).ToList();
-
-            //ViewBag.SelectedIds = new SelectList(list, "Ma_sv", "ID_moodle");
-            //ViewBag.Result = new SelectList(list, "ID_moodle", "Ma_sv");
-
-            if (list.Count() == 0) return View();
-
             int i = 0;
             string postData = "wsfunction=core_user_create_users";
 
@@ -183,22 +175,27 @@ namespace CongThongTinSV.Controllers
             }
 
             UtilityController.WriteTextToFile("D:\\SinhVienCreate.txt", response);
-            
-            return View();
         }
 
-        public ActionResult DeleteSinhVien(string selectedVals, string id_chuyen_nganh)
+        public ActionResult CreateSinhVien(string selectedVals, string id_chuyen_nganh)
         {
-            Entities db = new Entities();
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
 
-            var list = MoodleSinhViens(Convert.ToInt32(id_chuyen_nganh)).Where(t1 => t1.ID_moodle > 0 && s.Contains(t1.ID_sv.ToString())).ToList();
+            var list = MoodleSinhViens(Convert.ToInt32(id_chuyen_nganh)).Where(t1 => t1.ID_moodle == 0 && s.Contains(t1.ID_sv.ToString())).ToList();
 
             //ViewBag.SelectedIds = new SelectList(list, "Ma_sv", "ID_moodle");
             //ViewBag.Result = new SelectList(list, "ID_moodle", "Ma_sv");
 
             if (list.Count() == 0) return View();
 
+            CreateSinhVien(list);
+            
+            return View();
+        }
+
+        public static void DeleteSinhVien(List<MoodleSinhVien> list)
+        {
+            Entities db = new Entities();
             int i = 0;
             string postData = "wsfunction=core_user_delete_users";
 
@@ -233,6 +230,20 @@ namespace CongThongTinSV.Controllers
             }
 
             UtilityController.WriteTextToFile("D:\\SinhVienDelete.txt", response);
+        }
+
+        public ActionResult DeleteSinhVien(string selectedVals, string id_chuyen_nganh)
+        {
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+
+            var list = MoodleSinhViens(Convert.ToInt32(id_chuyen_nganh)).Where(t1 => t1.ID_moodle > 0 && s.Contains(t1.ID_sv.ToString())).ToList();
+
+            //ViewBag.SelectedIds = new SelectList(list, "Ma_sv", "ID_moodle");
+            //ViewBag.Result = new SelectList(list, "ID_moodle", "Ma_sv");
+
+            if (list.Count() == 0) return View();
+
+            DeleteSinhVien(list);
 
             return View();
         }
