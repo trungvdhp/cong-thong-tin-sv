@@ -63,6 +63,7 @@ namespace CongThongTinSV
         public DbSet<STU_Nganh> STU_Nganh { get; set; }
         public DbSet<ViewLopTC> ViewLopTCs { get; set; }
         public DbSet<ViewNamHoc> ViewNamHocs { get; set; }
+        public DbSet<STU_DanhSachLopTinChi> STU_DanhSachLopTinChi { get; set; }
     
         public virtual ObjectResult<SP_SinhVienLopTC_Result> SP_SinhVienLopTC(Nullable<int> id_lop_tc)
         {

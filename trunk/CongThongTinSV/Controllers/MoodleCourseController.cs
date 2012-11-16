@@ -20,18 +20,18 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        public ActionResult LopTinChi()
+        public ActionResult LopHocPhan()
         {
             return View();
         }
 
-        public ActionResult GetLopTinChi([DataSourceRequest] DataSourceRequest request, int id_hocky)
+        public ActionResult GetLopHocPhan([DataSourceRequest] DataSourceRequest request, int id_hocky)
         {
 
-            return Json(MoodleLopTinChis(id_hocky).ToDataSourceResult(request));
+            return Json(MoodleLopHocPhans(id_hocky).ToDataSourceResult(request));
         }
 
-        public IEnumerable<MoodleLopTinChi> MoodleLopTinChis(int id_hocky)
+        public IEnumerable<MoodleLopHocPhan> MoodleLopHocPhans(int id_hocky)
         {
             Entities db = new Entities();
             
@@ -61,7 +61,7 @@ namespace CongThongTinSV.Controllers
                      on a.ID_lop_tc equals b.ID_lop_tc
                      into lophp
                      from c in lophp.DefaultIfEmpty()
-                     select new MoodleLopTinChi
+                     select new MoodleLopHocPhan
                      {
                          ID = a.ID_lop_tc,
                          ID_moodle = (c == null ? 0 : c.ID_moodle),
@@ -78,12 +78,22 @@ namespace CongThongTinSV.Controllers
             return q3.OrderByDescending(t => t.ID_moodle).ToList();
         }
 
-        public ActionResult CreateLopTinChi(string selectedVals, string id_hocky)
+        public JsonResult GetMoodleLopHocPhan(int id_hocky)
+        {
+            Entities db = new Entities();
+            JsonResult result = new JsonResult();
+            result.Data = new SelectList(MoodleLopHocPhans(id_hocky).Where(t => t.ID_moodle > 0), "ID_moodle", "Lop_hoc_phan").OrderBy(t => t.Text);
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+
+            return result;
+        }
+
+        public ActionResult CreateLopHocPhan(string selectedVals, string id_hocky)
         {
             Entities db = new Entities();
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
             int cID = Convert.ToInt32(id_hocky);
-            var list = MoodleLopTinChis(Convert.ToInt32(cID)).Where(t => t.ID_moodle == 0 && s.Contains(t.ID.ToString())).ToList();
+            var list = MoodleLopHocPhans(Convert.ToInt32(cID)).Where(t => t.ID_moodle == 0 && s.Contains(t.ID.ToString())).ToList();
 
             //ViewBag.SelectedIds = new SelectList(list, "", "ID_moodle");
             //ViewBag.Result = new SelectList(list, "ID_moodle", "");
@@ -93,7 +103,7 @@ namespace CongThongTinSV.Controllers
             int i = 0;
             string postData = "wsfunction=core_course_create_courses";
 
-            foreach (MoodleLopTinChi item in list)
+            foreach (MoodleLopHocPhan item in list)
             {
                 postData += "&courses[" + i + "][fullname]=" + HttpUtility.UrlEncode(item.Lop_hoc_phan);
                 postData += "&courses[" + i + "][shortname]=" + HttpUtility.UrlEncode(item.Lop_hoc_phan);
@@ -138,7 +148,7 @@ namespace CongThongTinSV.Controllers
                 results = serializer.Deserialize<List<MoodleCreateCourseResponse>>(response);
                 i = 0;
 
-                foreach (MoodleLopTinChi item in list)
+                foreach (MoodleLopHocPhan item in list)
                 {
                     MOD_LopTinChi_TC entity = new MOD_LopTinChi_TC();
 
@@ -153,17 +163,17 @@ namespace CongThongTinSV.Controllers
                 db.SaveChanges();
             }
 
-            UtilityController.WriteTextToFile("D:\\LopTinChiCreate.txt", response);
+            UtilityController.WriteTextToFile("D:\\LopHocPhanCreate.txt", response);
 
             return View();
         }
 
-        public ActionResult DeleteLopTinChi(string selectedVals, string id_hocky)
+        public ActionResult DeleteLopHocPhan(string selectedVals, string id_hocky)
         {
             Entities db = new Entities();
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
             int cID = Convert.ToInt32(id_hocky);
-            var list = MoodleLopTinChis(Convert.ToInt32(cID)).Where(t => t.ID_moodle > 0 && s.Contains(t.ID.ToString())).ToList();
+            var list = MoodleLopHocPhans(Convert.ToInt32(cID)).Where(t => t.ID_moodle > 0 && s.Contains(t.ID.ToString())).ToList();
 
             //ViewBag.SelectedIds = new SelectList(list, "", "ID_moodle");
             //ViewBag.Result = new SelectList(list, "ID_moodle", "");
@@ -173,7 +183,7 @@ namespace CongThongTinSV.Controllers
             int i = 0;
             string postData = "wsfunction=core_course_delete_courses";
 
-            foreach (MoodleLopTinChi item in list)
+            foreach (MoodleLopHocPhan item in list)
             {
                 postData += "&courseids[" + i + "]=" + item.ID_moodle;
                 i++;
@@ -195,7 +205,7 @@ namespace CongThongTinSV.Controllers
 
                 i = 0;
 
-                foreach (MoodleLopTinChi item in list)
+                foreach (MoodleLopHocPhan item in list)
                 {
                     MOD_LopTinChi_TC entity = db.MOD_LopTinChi_TC.Single(t => t.ID_moodle == item.ID_moodle);
                     db.MOD_LopTinChi_TC.Remove(entity);
@@ -205,7 +215,7 @@ namespace CongThongTinSV.Controllers
                 db.SaveChanges();
             }
 
-            UtilityController.WriteTextToFile("D:\\LopTinChiDelete.txt", response);
+            UtilityController.WriteTextToFile("D:\\LopHocPhanDelete.txt", response);
 
             return View();
         }

@@ -176,6 +176,10 @@
     <Compile Include="Controllers\LopHocPhanController.cs" />
     <Compile Include="Controllers\MoodleCategoryController.cs" />
     <Compile Include="Controllers\MoodleCourseController.cs" />
+    <Compile Include="Controllers\MoodleEnrolController.cs" />
+    <Compile Include="Controllers\MoodleGroupController.cs" />
+    <Compile Include="Controllers\MoodleMessageController.cs" />
+    <Compile Include="Controllers\MoodleRoleController.cs" />
     <Compile Include="Controllers\MoodleUserController.cs" />
     <Compile Include="Controllers\SinhVienController.cs" />
     <Compile Include="Controllers\TraCuuController.cs" />
@@ -201,13 +205,26 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="MARK_DiemThanhPhan_TC.cs">
+      <DependentUpon>DHHH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MARK_DiemThi_TC.cs">
+      <DependentUpon>DHHH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MARK_Diem_TC.cs">
+      <DependentUpon>DHHH.tt</DependentUpon>
+    </Compile>
     <Compile Include="MARK_MonHoc.cs">
+      <DependentUpon>DHHH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MARK_ThanhPhanMon_TC.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\JSONModel.cs" />
     <Compile Include="Models\MoodleCategoryModel.cs" />
     <Compile Include="Models\MoodleCourseModel.cs" />
+    <Compile Include="Models\MoodleEnrolModel.cs" />
     <Compile Include="Models\MoodleUserModel.cs" />
     <Compile Include="MOD_DanhSachLopTinChi.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
@@ -242,37 +259,16 @@
     <Compile Include="MOD_VaiTro.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
-    <Compile Include="PLAN_ChucDanh.cs">
-      <DependentUpon>DHHH.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PLAN_ChucVu.cs">
-      <DependentUpon>DHHH.tt</DependentUpon>
-    </Compile>
     <Compile Include="PLAN_ChuongTrinhDaoTao.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
     <Compile Include="PLAN_ChuongTrinhDaoTaoChiTiet.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
-    <Compile Include="PLAN_ChuongTrinhDaoTaoKienThuc.cs">
-      <DependentUpon>DHHH.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PLAN_ChuyenMon.cs">
-      <DependentUpon>DHHH.tt</DependentUpon>
-    </Compile>
     <Compile Include="PLAN_GiaoVien.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
-    <Compile Include="PLAN_GiaoVienMonDay.cs">
-      <DependentUpon>DHHH.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PLAN_HocHam.cs">
-      <DependentUpon>DHHH.tt</DependentUpon>
-    </Compile>
     <Compile Include="PLAN_HocKyDangKy_TC.cs">
-      <DependentUpon>DHHH.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PLAN_HocVi.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
     <Compile Include="PLAN_LopTinChi_TC.cs">
@@ -973,10 +969,11 @@
     <Content Include="Views\MoodleUser\SinhVien.cshtml" />
     <Content Include="Views\MoodleCategory\HocKy.cshtml" />
     <Content Include="Views\MoodleCategory\ChuyenNganh.cshtml" />
-    <Content Include="Views\MoodleCourse\LopTinChi.cshtml" />
+    <Content Include="Views\MoodleCourse\LopHocPhan.cshtml" />
     <Content Include="Views\TaiLieu\Upload.cshtml" />
     <Content Include="Views\SinhVien\TimKiemSinhVien.cshtml" />
     <Content Include="Views\TraCuu\DiemHocTap.cshtml" />
+    <Content Include="Views\MoodleEnrol\GhiDanh.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

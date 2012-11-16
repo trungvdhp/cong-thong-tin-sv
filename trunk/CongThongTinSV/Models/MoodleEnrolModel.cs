@@ -7,19 +7,10 @@ using System.Runtime.Serialization;
 
 namespace CongThongTinSV.Models
 {
-    public class MoodleCreateUserResponse
+    public class MoodleHocVien
     {
-        public string id { get; set; }
-        public string username { get; set; }
-    }
-
-    public class MoodleSinhVien
-    {
-        [DisplayName("ID đăng ký")]
+        [DisplayName("ID")]
         public int ID { get; set; }
-
-        [DisplayName("ID sinh viên")]
-        public int ID_sv { get; set; }
 
         [DisplayName("ID moodle")]
         public int ID_moodle { get; set; }
@@ -50,5 +41,6 @@ namespace CongThongTinSV.Models
 
         [DisplayName("Nhóm")]
         public string Ten_nhom { get; set; }
+
     }
 }

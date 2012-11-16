@@ -12,7 +12,7 @@ namespace CongThongTinSV.Models
         public string shortname { get; set; }
     }
 
-    public class MoodleLopTinChi
+    public class MoodleLopHocPhan
     {
         [DisplayName("ID")]
         public int ID { get; set; }

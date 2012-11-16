@@ -35,23 +35,38 @@
             <div class="content-wrapper">
                 <div class="float-left">
                     <p class="site-title">@Html.ActionLink("CỔNG THÔNG TIN SINH VIÊN", "Index", "Home")</p>
-                     <nav>
-                        <ul id="menu">
-                            <li>@Html.ActionLink("Đăng nhập", "Login", "Account")</li>
-                            <li>@Html.ActionLink("Sinh viên", "SinhVien", "MoodleUser")</li>
-                            <li>@Html.ActionLink("Học kỳ", "HocKy", "MoodleCategory")</li>
-                            <li>@Html.ActionLink("Lớp tín chỉ", "LopTinChi", "MoodleCourse")</li>
-                        </ul>
-                    </nav>
                 </div>
                 <div class="float-right">
                     <section id="login">
                         @Html.Partial("_LoginPartial")
                     </section>
-                    @(Html.Kendo().DropDownList()
+                    <nav>
+                        <ul id="menu">
+                            <li>@Html.ActionLink("Đăng nhập", "Login", "Account")</li>
+                            <li>@Html.ActionLink("Sinh viên", "SinhVien", "MoodleUser")</li>
+                            <li>@Html.ActionLink("Học kỳ", "HocKy", "MoodleCategory")</li>
+                            <li>@Html.ActionLink("Lớp học phần", "LopHocPhan", "MoodleCourse")</li>
+                            <li>@Html.ActionLink("Ghi danh", "GhiDanh", "MoodleEnrol")</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <div id="body">
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                @RenderBody()
+            </section>
+        </div>
+        <footer>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p>&copy; @DateTime.Now.Year - VIMARU</p>
+                </div>
+                <div class="float-right" style="padding-top:15px">
+                 @(Html.Kendo().DropDownList()
                         .Name("switchcontrol")
                         .OptionLabel("Chọn giao diện")
-                        .HtmlAttributes(new { style = "display:inline;text-align:center" })
                         .DataTextField("Text")
                         .DataValueField("Value")
                         .Events(e => e.Select("SelectSkin"))
@@ -78,19 +93,6 @@
                             }
                         })
                     )
-                </div>
-            </div>
-        </header>
-        <div id="body">
-            @RenderSection("featured", required: false)
-            <section class="content-wrapper main-content clear-fix">
-                @RenderBody()
-            </section>
-        </div>
-        <footer>
-            <div class="content-wrapper">
-                <div class="float-left">
-                    <p>&copy; @DateTime.Now.Year - VIMARU</p>
                 </div>
             </div>
         </footer>

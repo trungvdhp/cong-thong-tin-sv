@@ -22,7 +22,7 @@ namespace CongThongTinSV.Controllers
         {
             Entities db = new Entities();
             JsonResult result = new JsonResult();
-            result.Data = new SelectList(db.ViewNamHoc, "Nam_hoc", "Nam_hoc");
+            result.Data = new SelectList(db.ViewNamHocs, "Nam_hoc", "Nam_hoc");
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
 
             return result;
@@ -123,7 +123,7 @@ namespace CongThongTinSV.Controllers
             Dictionary<int, PLAN_ChuongTrinhDaoTaoChiTiet> mon = new Dictionary<int, PLAN_ChuongTrinhDaoTaoChiTiet>();
             foreach (var m in q1) if (!mon.ContainsKey(m.ID_mon)) mon.Add(m.ID_mon, m);
 
-            var q = from ltc in db.ViewLopTC
+            var q = from ltc in db.ViewLopTCs
                     select ltc;
             List<ViewLopTC> list = new List<ViewLopTC>();
             

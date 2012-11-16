@@ -45,7 +45,7 @@
         .CascadeFrom("HocKy")
 )*@
 
-@(Html.Kendo().Grid<CongThongTinSV.Models.MoodleLopTinChi>()
+@(Html.Kendo().Grid<CongThongTinSV.Models.MoodleLopHocPhan>()
     .Name("Grid")
     .Columns(columns => {
         columns.Bound(c => c.ID)
@@ -81,7 +81,7 @@
     .DataSource(
         dataSource => dataSource
             .Ajax()
-            .Read(read => read.Action("GetLopTinChi", "MoodleCourse").Data("filterGrid"))
+            .Read(read => read.Action("GetLopHocPhan", "MoodleCourse").Data("filterGrid"))
             .PageSize(50)
     )
 )
@@ -208,14 +208,14 @@
     }
 
     $("#create").click(function () {
-        //window.location.href = '/MoodleCourse/CreateLopTinChi/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals;
-        processing('/MoodleCourse/CreateLopTinChi/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals, "Đang tạo các lớp học phần trên moodle...");
+        //window.location.href = '/MoodleCourse/CreateLopHocPhan/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals;
+        processing('/MoodleCourse/CreateLopHocPhan/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals, "Đang tạo các lớp học phần trên moodle...");
     })
 
     $("#delete").click(function () {
         if (confirm('Bạn muốn xóa toàn bộ các lớp học phần thuộc chuyên ngành đã chọn?')) {
-            //window.location.href = '/MoodleCourse/DeleteLopTinChi/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals;
-            processing('/MoodleCourse/DeleteLopTinChi/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals, "Đang xóa các lớp học phần trên moodle...");
+            //window.location.href = '/MoodleCourse/DeleteLopHocPhan/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals;
+            processing('/MoodleCourse/DeleteLopHocPhan/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals, "Đang xóa các lớp học phần trên moodle...");
         }
     })
 </script>
