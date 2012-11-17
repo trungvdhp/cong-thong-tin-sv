@@ -50,26 +50,11 @@
 
     function loadGrid() {
         selectedVals.splice(0, selectedVals.length);
-        $("#Grid").data("kendoGrid").dataSource.read();
+        gridRefresh();
     }
     // on data bound, check checkboxes
     function onDataBound(e) {
-        var ok = true;
-        $('#Grid :checkbox').each(function () {
-            var value = $(this).val()
-
-            if (value != 'on') {
-                var index = inArray(value, selectedVals);
-                if (index >= 0) {
-                    $(this).attr('checked', true);
-                }
-                else {
-                    ok = false;
-                }
-            }
-        });
-        
-        $('#masterCheckBox').attr('checked', ok);
+        checkCells(selectedVals, '#masterCheckBox', '#Grid :checkbox');
     }
     // on click checkbox cell in a row
     $(function () {
@@ -78,93 +63,25 @@
             var grid = $('#Grid').data().kendoGrid;
             var dataItem = grid.dataItem($(this).closest('tr'));
 
-            check(dataItem.ID, state, selectedVals);
-            $('#masterCheckBox').attr('checked', isCheckedAll());
+            checkVal(dataItem.ID, state, selectedVals);
+            $('#masterCheckBox').attr('checked', isCheckedAll('#Grid :checkbox'));
         })
     })
 
-    // return index of value in array
-    // buils in function $.inArray not working in function check(value, state, array)
-    function inArray(value, arr) {
-        var len = arr.length;
+    $('#masterCheckBox').click(function () { checkAll(this, '#Grid :checkbox'); })
 
-        for (i = 0; i < len; i++) {
-            if (value == arr[i])
-                return i;
-        }
-
-        if(i == len){
-            return -1;
-        }
+    function gridRefresh() {
+        $("#Grid").data("kendoGrid").dataSource.read();
     }
-    // update value to array
-    function check(value, state, array) {
-        if (value != 'on') {
-            var index = inArray(value, array);
-
-            if (!state && index != -1) {
-                // remove id from the list
-                array.splice(index, 1);
-            } else if (index == -1) {
-                // add id to list
-                array.push(value);
-            }
-        }
-    }
-
-    function checkAll(ele) {
-        var state = $(ele).is(':checked');
-
-        $('#Grid :checkbox').each(function () {
-            check($(this).val(), state, selectedVals);
-            $(this).attr('checked', state);
-        });
-    }
-
-    function isCheckedAll() {
-        var ok = true;
-
-        $('#Grid :checkbox').each(function () {
-            if ($(this).val() != 'on' && !$(this).is(':checked')) {
-                ok = false;
-            }
-        });
-        return ok;
-    }
-    function processing(action, mess) {
-        $.blockUI({
-            message: mess,
-            css: {
-                border: 'none',
-                padding: '15px',
-                backgroundColor: '#000',
-                '-webkit-border-radius': '10px',
-                '-moz-border-radius': '10px',
-                opacity: .5,
-                color: '#fff'
-            }
-        });
-
-        $.ajax({
-            url: action,
-            //success: ,
-            complete: function (e) {
-                $("#Grid").data("kendoGrid").dataSource.read();
-                $.unblockUI();
-            },
-            cache: false
-        });
-    }
-
     $("#create").click(function () {
         //window.location.href = '/MoodleCategory/CreateHocKy/?selectedVals=' + selectedVals;
-        processing('/MoodleCategory/CreateHocKy/?selectedVals='+ selectedVals, "Đang tạo các danh mục học kỳ trên Moodle...");
+        processing('/MoodleCategory/CreateHocKy/?selectedVals='+ selectedVals, "Đang tạo các danh mục học kỳ trên Moodle...", gridRefresh);
     })
 
     $("#delete").click(function () {
         if (confirm('Bạn muốn xóa toàn bộ các danh mục học kỳ đã chọn trên Moodle?')) {
             //window.location.href = '/MoodleCategory/DeleteHocKy/?selectedVals=' + selectedVals;
-            processing('/MoodleCategory/DeleteHocKy/?selectedVals='+ selectedVals, "Đang xóa các danh mục học kỳ trên Moodle...")
+            processing('/MoodleCategory/DeleteHocKy/?selectedVals='+ selectedVals, "Đang xóa các danh mục học kỳ trên Moodle...", gridRefresh)
         }
     })
 
