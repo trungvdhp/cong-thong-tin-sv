@@ -223,9 +223,21 @@
     })
 
     $("#deleteUser").click(function () {
-        if (confirm('Bạn muốn xóa toàn bộ các tài khoản moodle của các sinh viên đã chọn?')) {
+        if (confirm('Bạn muốn xóa tài khoản moodle của các sinh viên đã chọn?')) {
             //window.location.href = '/MoodleEnrol/DeleteSinhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
             processing('/MoodleEnrol/DeleteSinhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals, "Đang xóa tài khoản moodle của các sinh viên...");
+        }
+    })
+
+    $("#createEnrol").click(function () {
+        //window.location.href = '/MoodleEnrol/CreateGhiDanh/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
+        processing('/MoodleEnrol/CreateGhiDanh/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals, "Đang ghi danh cho các sinh viên...");
+    })
+
+    $("#deleteEnrol").click(function () {
+        if (confirm('Bạn muốn hủy ghi danh của các sinh viên đã chọn?')) {
+            //window.location.href = '/MoodleEnrol/DeleteGhiDanh/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
+            processing('/MoodleEnrol/DeleteGhiDanh/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals, "Đang hủy ghi danh của các sinh viên...");
         }
     })
 </script>

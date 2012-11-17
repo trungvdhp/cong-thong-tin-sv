@@ -18,6 +18,9 @@ namespace CongThongTinSV.Models
         [DisplayName("ID đăng ký")]
         public int ID { get; set; }
 
+        [DisplayName("ID lớp học phần")]
+        public int ID_lop_tc { get; set; }
+
         [DisplayName("ID sinh viên")]
         public int ID_sv { get; set; }
 
