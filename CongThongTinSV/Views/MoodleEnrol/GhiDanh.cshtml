@@ -47,7 +47,7 @@
     {
         columns.Bound(c => c.ID)
             .ClientTemplate("<input type='checkbox' class='chkbx' value='#= ID #'/>")
-            .HeaderTemplate("<input type='checkbox' id='masterCheckBox' onclick='checkAll(this)'/>")
+            .HeaderTemplate("<input type='checkbox' id='masterCheckBox'/>")
             .Width(40)
             .Title("")
             .IncludeInMenu(false)
@@ -92,33 +92,35 @@
     <button id="deleteUser">Hủy đăng ký</button>
     <button id="createEnrol">Ghi danh</button>
     <button id="deleteEnrol">Hủy ghi danh</button>
+    @(Html.Kendo().DropDownList()
+        .Name("Nhom")
+        .OptionLabel("Chọn nhóm")
+        .HtmlAttributes(new { style = "width:180px" })
+        .DataTextField("Text")
+        .DataValueField("Value")
+        .DataSource(source =>
+        {
+            source.Read(read =>
+            {
+                read.Action("GetNhom", "MoodleGroup").Data("filterGrid");
+            }).ServerFiltering(true);
+        })
+        .Enable(false)
+        .AutoBind(false)
+        .CascadeFrom("LopHocPhan")
+    )
+    <button id="addMember">Thêm thành viên</button>
+    <button id="deleteMember">Bớt thành viên</button>
+</div>
+<div>
+    @Html.TextBox("TenNhom", "", new { placeholder = "Nhập tên nhóm", style = "width:120px" })
+    @Html.TextBox("MoTa", "", new { placeholder = "Mô tả nhóm", style = "width:200px" })
+    <button id="createGroup">Tạo nhóm</button>
+    <button id="updateGroup">Sửa nhóm</button>
+    <button id="deleteGroup">Xóa nhóm</button>
 </div>
 <script type="text/javascript">
     var selectedVals = [];
-
-    function loadGrid() {
-        selectedVals.splice(0, selectedVals.length);
-        $("#Grid").data("kendoGrid").dataSource.read();
-    }
-    // on data bound, check checkboxes
-    function onDataBound(e) {
-        var ok = true;
-        $('#Grid :checkbox').each(function () {
-            var value = $(this).val()
-
-            if (value != 'on') {
-                var index = inArray(value, selectedVals);
-                if (index >= 0) {
-                    $(this).attr('checked', true);
-                }
-                else {
-                    ok = false;
-                }
-            }
-        });
-
-        $('#masterCheckBox').attr('checked', ok);
-    }
 
     function filterGrid() {
         return {
@@ -132,6 +134,14 @@
         }
     }
 
+    function loadGrid() {
+        selectedVals.splice(0, selectedVals.length);
+        gridRefresh();
+    }
+    // on data bound, check checkboxes
+    function onDataBound(e) {
+        checkCells(selectedVals, '#masterCheckBox', '#Grid :checkbox');
+    }
     // on click checkbox cell in a row
     $(function () {
         $('#Grid').on('click', '.chkbx', function () {
@@ -139,105 +149,46 @@
             var grid = $('#Grid').data().kendoGrid;
             var dataItem = grid.dataItem($(this).closest('tr'));
 
-            check(dataItem.ID, state, selectedVals);
-            $('#masterCheckBox').attr('checked', isCheckedAll());
+            checkVal(dataItem.ID, state, selectedVals);
+            $('#masterCheckBox').attr('checked', isCheckedAll('#Grid :checkbox'));
         })
     })
 
-    // return index of value in array
-    // buils in function $.inArray not working in function check(value, state, array)
-    function inArray(value, arr) {
-        var len = arr.length;
+    $('#masterCheckBox').click(function () { checkAll(this, '#Grid :checkbox'); })
 
-        for (i = 0; i < len; i++) {
-            if (value == arr[i])
-                return i;
-        }
-
-        if (i == len) {
-            return -1;
-        }
-    }
-    // update value to array
-    function check(value, state, array) {
-        if (value != 'on') {
-            var index = inArray(value, array);
-
-            if (!state && index != -1) {
-                // remove id from the list
-                array.splice(index, 1);
-            } else if (index == -1) {
-                // add id to list
-                array.push(value);
-            }
-        }
+    function gridRefresh() {
+        $("#Grid").data("kendoGrid").dataSource.read();
     }
 
-    function checkAll(ele) {
-        var state = $(ele).is(':checked');
-
-        $('#Grid :checkbox').each(function () {
-            check($(this).val(), state, selectedVals);
-            $(this).attr('checked', state);
-        });
-    }
-
-    function isCheckedAll() {
-        var ok = true;
-
-        $('#Grid :checkbox').each(function () {
-            if ($(this).val() != 'on' && !$(this).is(':checked')) {
-                ok = false;
-            }
-        });
-        return ok;
-    }
-    function processing(action, mess) {
-        $.blockUI({
-            message: mess,
-            css: {
-                border: 'none',
-                padding: '15px',
-                backgroundColor: '#000',
-                '-webkit-border-radius': '10px',
-                '-moz-border-radius': '10px',
-                opacity: .5,
-                color: '#fff'
-            }
-        });
-
-        $.ajax({
-            url: action,
-            //success: ,
-            complete: function (e) {
-                $("#Grid").data("kendoGrid").dataSource.read();
-                $.unblockUI();
-            },
-            cache: false
-        });
+    function groupRefresh() {
+        $("#Nhom").data("kendoDropDownList").dataSource.read();
     }
 
     $("#createUser").click(function () {
         //window.location.href = '/MoodleEnrol/CreateSinhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
-        processing('/MoodleEnrol/CreateSinhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals, "Đang tạo tài khoản moodle cho các sinh viên...");
+        processing('/MoodleEnrol/CreateSinhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals, "Đang tạo tài khoản moodle cho các sinh viên...", gridRefresh);
     })
 
     $("#deleteUser").click(function () {
         if (confirm('Bạn muốn xóa tài khoản moodle của các sinh viên đã chọn?')) {
             //window.location.href = '/MoodleEnrol/DeleteSinhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
-            processing('/MoodleEnrol/DeleteSinhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals, "Đang xóa tài khoản moodle của các sinh viên...");
+            processing('/MoodleEnrol/DeleteSinhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals, "Đang xóa tài khoản moodle của các sinh viên...", gridRefresh);
         }
     })
 
     $("#createEnrol").click(function () {
         //window.location.href = '/MoodleEnrol/CreateGhiDanh/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
-        processing('/MoodleEnrol/CreateGhiDanh/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals, "Đang ghi danh cho các sinh viên...");
+        processing('/MoodleEnrol/CreateGhiDanh/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals, "Đang ghi danh cho các sinh viên...", gridRefresh);
     })
 
     $("#deleteEnrol").click(function () {
         if (confirm('Bạn muốn hủy ghi danh của các sinh viên đã chọn?')) {
             //window.location.href = '/MoodleEnrol/DeleteGhiDanh/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
-            processing('/MoodleEnrol/DeleteGhiDanh/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals, "Đang hủy ghi danh của các sinh viên...");
+            processing('/MoodleEnrol/DeleteGhiDanh/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals, "Đang hủy ghi danh của các sinh viên...", gridRefresh);
         }
+    })
+
+    $("#createGroup").click(function () {
+        processing('/MoodleGroup/CreateNhom/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&ten_nhom=' + jQuery("#TenNhom").val() + '&mo_ta=' + jQuery("#MoTa").val(), "Đang tạo nhóm học viên trong lớp học phần...", groupRefresh);
     })
 </script>

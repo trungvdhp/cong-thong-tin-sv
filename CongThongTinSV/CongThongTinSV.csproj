@@ -225,6 +225,7 @@
     <Compile Include="Models\MoodleCategoryModel.cs" />
     <Compile Include="Models\MoodleCourseModel.cs" />
     <Compile Include="Models\MoodleEnrolModel.cs" />
+    <Compile Include="Models\MoodleGroupModel.cs" />
     <Compile Include="Models\MoodleUserModel.cs" />
     <Compile Include="MOD_DanhSachLopTinChi.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
@@ -921,6 +922,7 @@
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\myscript.js" />
     <Content Include="Scripts\styleswitch.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
