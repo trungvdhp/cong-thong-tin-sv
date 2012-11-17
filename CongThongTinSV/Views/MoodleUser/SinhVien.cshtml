@@ -192,7 +192,7 @@
     })
 
     $("#delete").click(function () {
-        if (confirm('Bạn muốn xóa toàn bộ các tài khoản moodle của các sinh viên đã chọn?')) {
+        if (confirm('Bạn muốn xóa tài khoản moodle của các sinh viên đã chọn?')) {
             //window.location.href = '/MoodleUser/DeleteSinhVien/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals;
             processing('/MoodleUser/DeleteSinhVien/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals, "Đang xóa tài khoản moodle của các sinh viên...");
         }

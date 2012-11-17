@@ -181,7 +181,7 @@ namespace CongThongTinSV.Controllers
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
 
-            var list = MoodleSinhViens(Convert.ToInt32(id_chuyen_nganh)).Where(t1 => t1.ID_moodle == 0 && s.Contains(t1.ID_sv.ToString())).ToList();
+            var list = MoodleSinhViens(Convert.ToInt32(id_chuyen_nganh)).Where(t => t.ID_moodle == 0 && s.Contains(t.ID_sv.ToString())).ToList();
 
             //ViewBag.SelectedIds = new SelectList(list, "Ma_sv", "ID_moodle");
             //ViewBag.Result = new SelectList(list, "ID_moodle", "Ma_sv");
@@ -236,7 +236,7 @@ namespace CongThongTinSV.Controllers
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
 
-            var list = MoodleSinhViens(Convert.ToInt32(id_chuyen_nganh)).Where(t1 => t1.ID_moodle > 0 && s.Contains(t1.ID_sv.ToString())).ToList();
+            var list = MoodleSinhViens(Convert.ToInt32(id_chuyen_nganh)).Where(t => t.ID_moodle > 0 && s.Contains(t.ID_sv.ToString())).ToList();
 
             //ViewBag.SelectedIds = new SelectList(list, "Ma_sv", "ID_moodle");
             //ViewBag.Result = new SelectList(list, "ID_moodle", "Ma_sv");
