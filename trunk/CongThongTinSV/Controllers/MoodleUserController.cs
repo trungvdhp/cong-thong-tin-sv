@@ -221,7 +221,7 @@ namespace CongThongTinSV.Controllers
 
                 foreach (MoodleSinhVien item in list)
                 {
-                    MOD_NguoiDung entity = db.MOD_NguoiDung.Single(t => t.ID_moodle == item.ID_moodle);
+                    MOD_NguoiDung entity = db.MOD_NguoiDung.FirstOrDefault(t => t.ID_moodle == item.ID_moodle);
                     db.MOD_NguoiDung.Remove(entity);
                     i++;
                 }

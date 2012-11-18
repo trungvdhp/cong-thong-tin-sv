@@ -35,7 +35,7 @@ namespace CongThongTinSV.Controllers
         {
             Entities db = new Entities();
             
-            var q = db.MOD_HocKy.Single(t => t.ID_moodle == id_hocky);
+            var q = db.MOD_HocKy.FirstOrDefault(t => t.ID_moodle == id_hocky);
 
             var q2 = (from ltc in db.PLAN_LopTinChi_TC
                      join mtc in db.PLAN_MonTinChi_TC
@@ -207,7 +207,7 @@ namespace CongThongTinSV.Controllers
 
                 foreach (MoodleLopHocPhan item in list)
                 {
-                    MOD_LopTinChi_TC entity = db.MOD_LopTinChi_TC.Single(t => t.ID_moodle == item.ID_moodle);
+                    MOD_LopTinChi_TC entity = db.MOD_LopTinChi_TC.FirstOrDefault(t => t.ID_moodle == item.ID_moodle);
                     db.MOD_LopTinChi_TC.Remove(entity);
                     i++;
                 }

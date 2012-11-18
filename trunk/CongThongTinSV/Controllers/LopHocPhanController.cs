@@ -19,7 +19,7 @@ namespace CongThongTinSV.Controllers
         {
             return View();
         }
-        public ActionResult DangKy()
+        public ActionResult DangKyHocPhan()
         {
             return View();
         }
