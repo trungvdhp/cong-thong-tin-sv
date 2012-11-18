@@ -965,21 +965,22 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\SinhVien\DangKyHocPhan.cshtml" />
-    <Content Include="Views\SinhVien\YeucauMoLop.cshtml" />
+    <Content Include="Views\LopHocPhan\DangKyHocPhan.cshtml" />
+    <Content Include="Views\LopHocPhan\YeucauMoLop.cshtml" />
     <Content Include="Views\LopHocPhan\InDanhSachLop.cshtml" />
     <Content Include="Views\MoodleUser\SinhVien.cshtml" />
     <Content Include="Views\MoodleCategory\HocKy.cshtml" />
     <Content Include="Views\MoodleCategory\ChuyenNganh.cshtml" />
     <Content Include="Views\MoodleCourse\LopHocPhan.cshtml" />
     <Content Include="Views\TaiLieu\Upload.cshtml" />
-    <Content Include="Views\SinhVien\TimKiemSinhVien.cshtml" />
+    <Content Include="Views\TraCuu\SinhVien.cshtml" />
     <Content Include="Views\TraCuu\DiemHocTap.cshtml" />
     <Content Include="Views\MoodleEnrol\GhiDanh.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\GiangVien\" />
+    <Folder Include="Views\SinhVien\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

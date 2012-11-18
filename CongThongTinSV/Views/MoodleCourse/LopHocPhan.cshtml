@@ -50,7 +50,7 @@
     .Columns(columns => {
         columns.Bound(c => c.ID)
             .ClientTemplate("<input type='checkbox' class='chkbx' value='#= ID #'/>")
-            .HeaderTemplate("<input type='checkbox' id='masterCheckBox' onclick='checkAll(this)'/>")
+            .HeaderTemplate("<input type='checkbox' id='masterCheckBox'/>")
             .Width(40)
             .Title("")
             .IncludeInMenu(false)

@@ -79,6 +79,7 @@ namespace CongThongTinSV.Controllers
                           ID = ds.ID,
                           DiemX =  (d1 == null ? 0 : d1.Diem),
                           Ghi_danh = ds.Ghi_danh,
+                          ID_nhom = ds.ID_nhom,
                           Ten_nhom = ds.Ten_nhom
                       };
 
@@ -107,6 +108,7 @@ namespace CongThongTinSV.Controllers
                               Lop = ds.Lop,
                               ID = ds.ID,
                               Ghi_danh = (dk == null ? false : true),
+                              ID_nhom = (dk == null || dk.MOD_NhomHocVien == null ? null : (int?)dk.MOD_NhomHocVien.ID_nhom),
                               Ten_nhom = (dk == null || dk.MOD_NhomHocVien == null ? "" : dk.MOD_NhomHocVien.Ten_nhom)
                           };
 
@@ -312,7 +314,7 @@ namespace CongThongTinSV.Controllers
 
                 foreach (MoodleSinhVien item in list)
                 {
-                    MOD_DanhSachLopTinChi entity = db.MOD_DanhSachLopTinChi.Single(t => t.ID == item.ID);
+                    MOD_DanhSachLopTinChi entity = db.MOD_DanhSachLopTinChi.FirstOrDefault(t => t.ID == item.ID);
                     db.MOD_DanhSachLopTinChi.Remove(entity);
                     i++;
                 }
@@ -332,6 +334,34 @@ namespace CongThongTinSV.Controllers
             if (list.Count() == 0) return View();
 
             DeleteGhiDanh(list);
+
+            return View();
+        }
+
+        public ActionResult AddThanhVien(string selectedVals, string id_lop_tc, string id_nhom)
+        {
+
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+            var list = MoodleHocVienDiems(Convert.ToInt32(id_lop_tc)).Where(t => t.Ghi_danh == true && s.Contains(t.ID.ToString()) && t.Ten_nhom == "").ToList();
+
+            if (list.Count() == 0) return View();
+
+            MoodleGroupController.AddThanhVien(list, id_nhom);
+
+            return View();
+        }
+
+        public ActionResult DeleteThanhVien(string selectedVals, string id_lop_tc, string id_nhom)
+        {
+            Entities db = new Entities();
+            int id = Convert.ToInt32(id_nhom);
+
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+            var list = MoodleHocVienDiems(Convert.ToInt32(id_lop_tc)).Where(t => s.Contains(t.ID.ToString()) && t.ID_nhom == id).ToList();
+
+            if (list.Count() == 0) return View();
+
+            MoodleGroupController.DeleteThanhVien(list, id_nhom);
 
             return View();
         }

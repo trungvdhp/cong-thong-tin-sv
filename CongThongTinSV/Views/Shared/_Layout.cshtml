@@ -29,6 +29,10 @@
                 var dataItem = this.dataItem(e.item.index());
                 chooseStyle(dataItem.Value, 60);
             }
+
+            $(document).ready(function () {
+                $("#menu").kendoMenu();
+            });
         </script>
     </head>
     <body>
@@ -41,13 +45,62 @@
                     <section id="login">
                         @Html.Partial("_LoginPartial")
                     </section>
-                    <nav>
+                   @* <nav>
                         <ul id="menu">
                             <li>@Html.ActionLink("Đăng nhập", "Login", "Account")</li>
                             <li>@Html.ActionLink("Sinh viên", "SinhVien", "MoodleUser")</li>
                             <li>@Html.ActionLink("Học kỳ", "HocKy", "MoodleCategory")</li>
                             <li>@Html.ActionLink("Lớp học phần", "LopHocPhan", "MoodleCourse")</li>
                             <li>@Html.ActionLink("Ghi danh", "GhiDanh", "MoodleEnrol")</li>
+                        </ul>
+                    </nav>*@
+                    <nav>
+                        <ul id="menu">
+                             <li>
+                                Tài khoản
+                                <ul>
+                                    <li>@Html.ActionLink("Đăng nhập", "Login", "Account")</li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                Sinh viên
+                                <ul>
+                                    <li>@Html.ActionLink("Đăng ký học phần", "DangKyHocPhan", "LopHocPhan")</li>
+                                    <li>@Html.ActionLink("Yêu cầu mở lớp", "YeuCauMoLop", "LopHocPhan")</li>
+                                </ul>
+                            </li>
+                            <li>
+                                Tra cứu
+                                <ul>
+                                    <li>@Html.ActionLink("Tra cứu điểm", "DiemHocTap", "TraCuu")</li>
+                                    <li>@Html.ActionLink("Tra cứu sinh viên", "SinhVien", "TraCuu")</li>
+                                </ul>
+                            </li>
+                            <li>
+                                Elearning
+                                <ul>
+                                    <li>
+                                        Tài khoản
+                                        <ul> <!-- moving the UL to the next line will cause an IE7 problem -->
+                                            <li>@Html.ActionLink("Sinh viên", "SinhVien", "MoodleUser")</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        Danh mục
+                                        <ul> <!-- moving the UL to the next line will cause an IE7 problem -->
+                                            <li>@Html.ActionLink("Học kỳ", "HocKy", "MoodleCategory")</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        Khóa học
+                                        <ul> <!-- moving the UL to the next line will cause an IE7 problem -->
+                                            <li>@Html.ActionLink("Lớp học phần", "LopHocPhan", "MoodleCourse")</li>
+                                            <li>@Html.ActionLink("Ghi danh", "GhiDanh", "MoodleEnrol")</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
                         </ul>
                     </nav>
                 </div>

@@ -30,7 +30,7 @@
     .Columns(columns => {
         columns.Bound(sv => sv.ID_sv)
             .ClientTemplate("<input type='checkbox' class='chkbx' value='#= ID_sv #'/>")
-            .HeaderTemplate("<input type='checkbox' id='masterCheckBox' onclick='checkAll(this)'/>")
+            .HeaderTemplate("<input type='checkbox' id='masterCheckBox'/>")
             .Width(40)
             .Title("")
             .HeaderHtmlAttributes(new { style = "text-align:center" })

@@ -175,7 +175,7 @@ namespace CongThongTinSV.Controllers
 
                 foreach (MoodleHocKy item in list)
                 {
-                    MOD_HocKy entity = db.MOD_HocKy.Single(t => t.ID_moodle == item.ID_moodle);
+                    MOD_HocKy entity = db.MOD_HocKy.FirstOrDefault(t => t.ID_moodle == item.ID_moodle);
                     db.MOD_HocKy.Remove(entity);
                     i++;
                 }

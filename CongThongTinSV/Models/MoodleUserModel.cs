@@ -51,6 +51,9 @@ namespace CongThongTinSV.Models
         [DisplayName("Điểm X")]
         public float DiemX { get; set; }
 
+        [DisplayName("ID Nhóm")]
+        public int? ID_nhom { get; set; }
+
         [DisplayName("Nhóm")]
         public string Ten_nhom { get; set; }
     }
