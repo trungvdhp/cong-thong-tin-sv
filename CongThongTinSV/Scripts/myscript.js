@@ -1,11 +1,4 @@
-﻿function getValue(kendoDropDownList) {
-    return $(kendoDropDownList).data("kendoDropDownList").value();
-}
-
-function getText(kendoDropDownList) {
-    return $(kendoDropDownList).data("kendoDropDownList").text();
-}
-// check checkboxes by selected value array
+﻿// check checkboxes by selected value array
 function checkCells(selectedVals, master, childCol) {
     var ok = true;
     $(childCol).each(function () {
