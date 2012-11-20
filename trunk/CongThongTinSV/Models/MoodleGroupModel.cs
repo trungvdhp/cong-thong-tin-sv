@@ -6,24 +6,43 @@ using System.Web;
 
 namespace CongThongTinSV.Models
 {
-    public class MoodleGroup
+    public class MoodleCreateGroupRespond
+    {
+        public int id { get; set; }
+        public int courseId { get; set; }
+        public string name { get; set; }
+        public string description { get; set; }
+        public int descriptionformat { get; set; }
+        public string enrolmentkey { get; set; }
+    }
+
+    public class MoodleCreateGroupingRespond
+    {
+        public int id { get; set; }
+        public int courseId { get; set; }
+        public string name { get; set; }
+        public string description { get; set; }
+        public int descriptionformat { get; set; }
+    }
+
+    public class MoodleNhom
     {
         [DisplayName("ID")]
-        public int id { get; set; }
+        public int ID_nhom { get; set; }
 
         [DisplayName("ID lớp học phần")]
-        public int courseId { get; set; }
+        public int ID_lop_tc { get; set; }
 
         [DisplayName("Tên nhóm")]
-        public string name { get; set; }
+        public string Ten_nhom { get; set; }
 
         [DisplayName("Mô tả")]
-        public string description { get; set; }
+        public string Mo_ta { get; set; }
 
-        [DisplayName("Định dạng mô tả")]
-        public int descriptionformat { get; set; }
+        [DisplayName("ID tổ")]
+        public int ID_to { get; set; }
 
-        [DisplayName("Từ khóa tham gia")]
-        public string enrolmentkey { get; set; }
+        [DisplayName("Tên_to")]
+        public string Ten_to { get; set; }
     }
 }

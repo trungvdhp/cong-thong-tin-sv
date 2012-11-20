@@ -976,6 +976,7 @@
     <Content Include="Views\TraCuu\SinhVien.cshtml" />
     <Content Include="Views\TraCuu\DiemHocTap.cshtml" />
     <Content Include="Views\MoodleEnrol\GhiDanh.cshtml" />
+    <Content Include="Views\MoodleGroup\NhomHocVien.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

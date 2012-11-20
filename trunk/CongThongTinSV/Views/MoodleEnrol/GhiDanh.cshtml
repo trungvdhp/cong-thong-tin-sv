@@ -92,10 +92,10 @@
     )
 )
 <div>
-    <button id="createUser">Đăng ký</button>
-    <button id="deleteUser">Hủy đăng ký</button>
     <button id="createEnrol">Ghi danh</button>
     <button id="deleteEnrol">Hủy ghi danh</button>
+    <button id="createUser">Đăng ký</button>
+    <button id="deleteUser">Hủy đăng ký</button>
     @(Html.Kendo().DropDownList()
         .Name("Nhom")
         .OptionLabel("Chọn nhóm")
@@ -112,10 +112,6 @@
         .Enable(false)
         .AutoBind(false)
         .CascadeFrom("LopHocPhan")
-        .Events(e =>
-        {
-            e.Change("nhomChange");
-        })
     )
     <button id="addMember">Thêm thành viên</button>
     <button id="deleteMember">Bớt thành viên</button>
@@ -131,7 +127,7 @@
 
     function filterGrid() {
         return {
-            id_lop_tc: $("#LopHocPhan").val()
+            id_lop_tc: $("#LopHocPhan").val() == '' ? 0 : $("#LopHocPhan").val()
         }
     }
 
@@ -148,9 +144,6 @@
     function loadGrid() {
         selectedVals.splice(0, selectedVals.length);
         gridRefresh();
-    }
-    function nhomChange() {
-        //alert($("#Nhom").data("kendoDropDownList").text() + ' : ' + $("#Nhom").data("kendoDropDownList").value());
     }
     // on data bound, check checkboxes
     function onDataBound(e) {
@@ -183,7 +176,6 @@
         $("#Nhom").data("kendoDropDownList").dataSource.read();
         $("#Nhom").data("kendoDropDownList").select(0);
     }
-
 
     $("#createUser").click(function () {
         //window.location.href = '/MoodleEnrol/CreateSinhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
@@ -218,7 +210,7 @@
     })
 
     $("#deleteGroup").click(function () {
-        if (getValue('#Nhom') == '') {
+        if ($('#Nhom').val() == '') {
             return;
         }
         if (confirm('Bạn muốn xóa nhóm học viên ' + $("#Nhom").data("kendoDropDownList").text() + '?')) {
@@ -227,14 +219,14 @@
     })
 
     $("#addMember").click(function () {
-        if (getValue('#Nhom') == '') {
+        if ($('#Nhom').val() == '') {
             return;
         }
         processing('/MoodleEnrol/AddThanhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + '&id_nhom=' + jQuery("#Nhom").val(), "Đang thêm các học viên vào nhóm " + $("#Nhom").data("kendoDropDownList").text() + "...", gridRefresh);
     })
 
     $("#deleteMember").click(function () {
-        if (getValue('#Nhom') == '') {
+        if ($('#Nhom').val() == '') {
             return;
         }
         if (confirm('Bạn muốn xóa các học viên đã chọn khỏi nhóm ' + $("#Nhom").data("kendoDropDownList").text() + '?')) {
