@@ -44,10 +44,6 @@ function checkVal(value, state, array) {
             array.push(value);
         }
     }
-    //var s="";
-    //for (var i = 0; i < array.length; i++)
-    //    s += array[i] + ", ";
-    //alert(s);
 }
 //check all child checkboxes by master checkbox state
 function checkAll(master, childCol) {

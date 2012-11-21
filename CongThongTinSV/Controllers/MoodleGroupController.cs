@@ -25,9 +25,9 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        public ActionResult GetNhom([DataSourceRequest] DataSourceRequest request, int id_hocky)
+        public ActionResult GetNhom([DataSourceRequest] DataSourceRequest request, int id_lop_tc)
         {
-            return Json(MoodleNhoms(id_hocky).ToDataSourceResult(request));
+            return Json(MoodleNhoms(id_lop_tc).ToDataSourceResult(request));
         }
 
         public IEnumerable<MoodleNhom> MoodleNhoms(int id_lop_tc)
@@ -113,56 +113,10 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        public ActionResult CreateTo(string ten_to, string mo_ta, int id_lop_tc)
-        {
-            Entities db = new Entities();
-            string postData = "wsfunction=core_group_create_groupings";
-            postData += "&groupings[0][courseid]=" + id_lop_tc;
-            postData += "&groupings[0][name]=" + HttpUtility.UrlEncode(ten_to);
-            postData += "&groupings[0][description]=" + HttpUtility.UrlEncode(mo_ta);
-            //postData += "&groups[" + i + "][descriptionformat]=";
-            //postData += "&groups[" + i + "][enrolmentkey]=" + HttpUtility.UrlEncode();
-
-            WebRequestController web = new WebRequestController(4, "POST", postData);
-            string response = web.GetResponse();
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            MoodleException moodleError = new MoodleException();
-            List<MoodleCreateGroupingRespond> results = new List<MoodleCreateGroupingRespond>();
-
-            if (response.Contains("exception"))
-            {
-                // Error
-                //moodleError = serializer.Deserialize<MoodleException>(rs);
-            }
-            else
-            {
-                // Good
-                results = serializer.Deserialize<List<MoodleCreateGroupingRespond>>(response);
-
-                foreach (MoodleCreateGroupingRespond item in results)
-                {
-                    MOD_ToNhom entity = new MOD_ToNhom();
-
-                    entity.ID_to = item.id;
-                    entity.Ten_to = item.name;
-                    entity.Mo_ta = item.description;
-                    entity.ID_lop_tc = item.courseId;
-
-                    db.MOD_ToNhom.Add(entity);
-                }
-
-                db.SaveChanges();
-            }
-
-            UtilityController.WriteTextToFile("D:\\ToCreate.txt", response);
-
-            return View();
-        }
-
         public ActionResult DeleteNhom(string selectedVals)
         {
             string[] list = selectedVals.Split(new char[] { ',' });
-            
+
             if (list.Count() == 0) return View();
 
             Entities db = new Entities();
@@ -206,6 +160,137 @@ namespace CongThongTinSV.Controllers
             }
 
             UtilityController.WriteTextToFile("D:\\NhomHocVienDelete.txt", response);
+
+            return View();
+        }
+
+        public static void AddThanhVien(List<MoodleSinhVien> list, string id_nhom)
+        {
+            Entities db = new Entities();
+            int i = 0;
+            string postData = "wsfunction=core_group_add_group_members";
+
+            foreach (MoodleSinhVien item in list)
+            {
+                postData += "&members[" + i + "][groupid]=" + id_nhom;
+                postData += "&members[" + i + "][userid]=" + item.ID_moodle;
+                i++;
+            }
+
+            WebRequestController web = new WebRequestController(4, "POST", postData);
+            string response = web.GetResponse();
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //MoodleException moodleError = new MoodleException();
+
+            if (response.Contains("exception"))
+            {
+                // Error
+                //moodleError = serializer.Deserialize<MoodleException>(rs);
+            }
+            else
+            {
+                // Good
+                //results = serializer.Deserialize<List<MoodleCreateUserResponse>>(response);
+                i = 0;
+
+                foreach (MoodleSinhVien item in list)
+                {
+                    MOD_DanhSachLopTinChi entity = db.MOD_DanhSachLopTinChi.Find(item.ID);
+                    entity.ID_nhom = (int?)Convert.ToInt32(id_nhom);
+                    db.Entry(entity).State = System.Data.EntityState.Modified;
+                    i++;
+                }
+
+                db.SaveChanges();
+            }
+
+            UtilityController.WriteTextToFile("D:\\NhomHocVienAddThanhVien.txt", response);
+        }
+
+        public static void DeleteThanhVien(List<MoodleSinhVien> list, string id_nhom)
+        {
+            Entities db = new Entities();
+            int i = 0;
+            string postData = "wsfunction=core_group_delete_group_members";
+
+            foreach (MoodleSinhVien item in list)
+            {
+                postData += "&members[" + i + "][groupid]=" + id_nhom;
+                postData += "&members[" + i + "][userid]=" + item.ID_moodle;
+                i++;
+            }
+
+            WebRequestController web = new WebRequestController(4, "POST", postData);
+            string response = web.GetResponse();
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //MoodleException moodleError = new MoodleException();
+
+            if (response.Contains("exception"))
+            {
+                // Error
+                //moodleError = serializer.Deserialize<MoodleException>(rs);
+            }
+            else
+            {
+                // Good
+                //results = serializer.Deserialize<List<MoodleCreateUserResponse>>(response);
+                i = 0;
+
+                foreach (MoodleSinhVien item in list)
+                {
+                    MOD_DanhSachLopTinChi entity = db.MOD_DanhSachLopTinChi.Find(item.ID);
+                    entity.ID_nhom = null;
+                    db.Entry(entity).State = System.Data.EntityState.Modified;
+                    i++;
+                }
+
+                db.SaveChanges();
+            }
+
+            UtilityController.WriteTextToFile("D:\\NhomHocVienDeleteThanhVien.txt", response);
+        }
+
+        public ActionResult CreateTo(string ten_to, string mo_ta, int id_lop_tc)
+        {
+            Entities db = new Entities();
+            string postData = "wsfunction=core_group_create_groupings";
+            postData += "&groupings[0][courseid]=" + id_lop_tc;
+            postData += "&groupings[0][name]=" + HttpUtility.UrlEncode(ten_to);
+            postData += "&groupings[0][description]=" + HttpUtility.UrlEncode(mo_ta);
+            //postData += "&groups[" + i + "][descriptionformat]=";
+
+            WebRequestController web = new WebRequestController(4, "POST", postData);
+            string response = web.GetResponse();
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            MoodleException moodleError = new MoodleException();
+            List<MoodleCreateGroupingRespond> results = new List<MoodleCreateGroupingRespond>();
+
+            if (response.Contains("exception"))
+            {
+                // Error
+                //moodleError = serializer.Deserialize<MoodleException>(rs);
+            }
+            else
+            {
+                // Good
+                results = serializer.Deserialize<List<MoodleCreateGroupingRespond>>(response);
+
+                foreach (MoodleCreateGroupingRespond item in results)
+                {
+                    MOD_ToNhom entity = new MOD_ToNhom();
+
+                    entity.ID_to = item.id;
+                    entity.Ten_to = item.name;
+                    entity.Mo_ta = item.description;
+                    entity.ID_lop_tc = item.courseId;
+
+                    db.MOD_ToNhom.Add(entity);
+                }
+
+                db.SaveChanges();
+            }
+
+            UtilityController.WriteTextToFile("D:\\ToNhomCreate.txt", response);
 
             return View();
         }
@@ -257,7 +342,7 @@ namespace CongThongTinSV.Controllers
                 db.SaveChanges();
             }
 
-            UtilityController.WriteTextToFile("D:\\ToDelete.txt", response);
+            UtilityController.WriteTextToFile("D:\\ToNhomDelete.txt", response);
 
             return View();
         }
@@ -270,7 +355,6 @@ namespace CongThongTinSV.Controllers
             postData += "&groupings[0][name]=" + HttpUtility.UrlEncode(ten_to);
             postData += "&groupings[0][description]=" + HttpUtility.UrlEncode(mo_ta);
             //postData += "&groups[" + i + "][descriptionformat]=";
-            //postData += "&groups[" + i + "][enrolmentkey]=" + HttpUtility.UrlEncode();
 
             WebRequestController web = new WebRequestController(4, "POST", postData);
             string response = web.GetResponse();
@@ -294,52 +378,21 @@ namespace CongThongTinSV.Controllers
                 db.SaveChanges();
             }
 
-            UtilityController.WriteTextToFile("D:\\ToHocVienUpdate.txt", response);
+            UtilityController.WriteTextToFile("D:\\ToNhomUpdate.txt", response);
 
             return View();
         }
 
-        public static void AddThanhVien(List<MoodleSinhVien> list, string id_nhom)
+        public ActionResult AssignToNhom(string selectedVals, string id_lop_tc, string id_to)
         {
-            Entities db = new Entities();
-            int i = 0;
-            string postData = "wsfunction=core_group_add_group_members";
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+            var list = MoodleNhoms(Convert.ToInt32(id_lop_tc)).Where(t => t.ID_to == 0 && s.Contains(t.ID_nhom.ToString())).ToList();
 
-            foreach (MoodleSinhVien item in list)
-            {
-                postData += "&members[" + i + "][groupid]=" + id_nhom;
-                postData += "&members[" + i + "][userid]=" + item.ID_moodle;
-                i++;
-            }
+            if (list.Count() == 0) return View();
 
-            WebRequestController web = new WebRequestController(4, "POST", postData);
-            string response = web.GetResponse();
-            //JavaScriptSerializer serializer = new JavaScriptSerializer();
-            //MoodleException moodleError = new MoodleException();
+            AssignToNhom(list, id_to);
 
-            if (response.Contains("exception"))
-            {
-                // Error
-                //moodleError = serializer.Deserialize<MoodleException>(rs);
-            }
-            else
-            {
-                // Good
-                //results = serializer.Deserialize<List<MoodleCreateUserResponse>>(response);
-                i = 0;
-
-                foreach (MoodleSinhVien item in list)
-                {
-                    MOD_DanhSachLopTinChi entity = db.MOD_DanhSachLopTinChi.Find(item.ID);
-                    entity.ID_nhom = (int?) Convert.ToInt32(id_nhom);
-                    db.Entry(entity).State = System.Data.EntityState.Modified;
-                    i++;
-                }
-
-                db.SaveChanges();
-            }
-
-            UtilityController.WriteTextToFile("D:\\GroupAddThanhVien.txt", response);
+            return View();
         }
 
         public static void AssignToNhom(List<MoodleNhom> list, string id_to)
@@ -382,53 +435,23 @@ namespace CongThongTinSV.Controllers
                 db.SaveChanges();
             }
 
-            UtilityController.WriteTextToFile("D:\\GroupingAssign.txt", response);
+            UtilityController.WriteTextToFile("D:\\ToNhomAssign.txt", response);
         }
 
-        public static void DeleteThanhVien(List<MoodleSinhVien> list, string id_nhom)
+       
+        public ActionResult UnassignToNhom(string selectedVals, string id_lop_tc, string id_to)
         {
-            Entities db = new Entities();
-            int i = 0;
-            string postData = "wsfunction=core_group_delete_group_members";
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+            var list = MoodleNhoms(Convert.ToInt32(id_lop_tc)).Where(t => t.ID_to.ToString() == id_to && s.Contains(t.ID_nhom.ToString())).ToList();
 
-            foreach (MoodleSinhVien item in list)
-            {
-                postData += "&members[" + i + "][groupid]=" + id_nhom;
-                postData += "&members[" + i + "][userid]=" + item.ID_moodle;
-                i++;
-            }
+            if (list.Count() == 0) return View();
 
-            WebRequestController web = new WebRequestController(4, "POST", postData);
-            string response = web.GetResponse();
-            //JavaScriptSerializer serializer = new JavaScriptSerializer();
-            //MoodleException moodleError = new MoodleException();
+            UnassignToNhom(list, id_to);
 
-            if (response.Contains("exception"))
-            {
-                // Error
-                //moodleError = serializer.Deserialize<MoodleException>(rs);
-            }
-            else
-            {
-                // Good
-                //results = serializer.Deserialize<List<MoodleCreateUserResponse>>(response);
-                i = 0;
-
-                foreach (MoodleSinhVien item in list)
-                {
-                    MOD_DanhSachLopTinChi entity = db.MOD_DanhSachLopTinChi.Find(item.ID);
-                    entity.ID_nhom = null;
-                    db.Entry(entity).State = System.Data.EntityState.Modified;
-                    i++;
-                }
-
-                db.SaveChanges();
-            }
-
-            UtilityController.WriteTextToFile("D:\\GroupDeleteThanhVien.txt", response);
+            return View();
         }
 
-        public static void UnAssignToNhom(List<MoodleNhom> list, string id_to)
+        public static void UnassignToNhom(List<MoodleNhom> list, string id_to)
         {
             Entities db = new Entities();
             int i = 0;
@@ -468,7 +491,7 @@ namespace CongThongTinSV.Controllers
                 db.SaveChanges();
             }
 
-            UtilityController.WriteTextToFile("D:\\GroupingUnAssign.txt", response);
+            UtilityController.WriteTextToFile("D:\\ToNhomUnassign.txt", response);
         }
     }
 }

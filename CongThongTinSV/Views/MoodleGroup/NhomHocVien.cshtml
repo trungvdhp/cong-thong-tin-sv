@@ -44,29 +44,6 @@
     .AutoBind(false)
     .CascadeFrom("HocKy")
 )
-<div>
-    @(Html.Kendo().DropDownList()
-        .Name("Nhom")
-        .OptionLabel("Chọn nhóm")
-        .HtmlAttributes(new { style = "width:150px" })
-        .DataTextField("Text")
-        .DataValueField("Value")
-        .DataSource(source =>
-        {
-            source.Read(read =>
-            {
-                read.Action("GetMoodleNhom", "MoodleGroup").Data("filterGrid");
-            }).ServerFiltering(true);
-        })
-        .Enable(false)
-        .AutoBind(false)
-        .CascadeFrom("LopHocPhan")
-    )
-    @Html.TextBox("TenNhom", "", new { placeholder = "Nhập tên nhóm", style = "width:120px" })
-    @Html.TextBox("MoTaNhom", "", new { placeholder = "Mô tả nhóm", style = "width:200px" })
-    <button id="createGroup">Tạo nhóm</button>
-    <button id="deleteGroup">Xóa nhóm</button>
-</div>
 @(Html.Kendo().Grid<CongThongTinSV.Models.MoodleNhom>()
     .Name("Grid")
     .Columns(columns =>
@@ -80,8 +57,8 @@
             .HeaderHtmlAttributes(new { style = "text-align:center" })
             .HtmlAttributes(new { style = "text-align:center" })
             .Filterable(false).Groupable(false).Sortable(false);
-        columns.Bound(c => c.Ten_nhom).Width(100);
-        columns.Bound(c => c.Mo_ta).Width(105);
+        columns.Bound(c => c.Ten_nhom).Width(120);
+        columns.Bound(c => c.Mo_ta).Width(250);
         columns.Bound(c => c.Ten_to);
     })
     .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50, 80 }).Refresh(true).Input(true).Numeric(false))
@@ -107,6 +84,16 @@
     )
 )
 <div>
+    @Html.TextBox("TenNhom", "", new { placeholder = "Nhập tên nhóm", style = "width:110px" })
+    @Html.TextBox("MoTaNhom", "", new { placeholder = "Mô tả nhóm", style = "width:150px" })
+    <button id="createGroup">Tạo nhóm</button>
+    <button id="deleteGroup">Xóa nhóm</button>
+     @Html.TextBox("TenTo", "", new { placeholder = "Nhập tên tổ", style = "width:100px" })
+    @Html.TextBox("MoTaTo", "", new { placeholder = "Mô tả tổ", style = "width:150px" })
+    <button id="createGrouping">Tạo tổ</button>
+    <button id="updateGrouping">Cập nhật tổ</button>
+</div>
+<div>
     @(Html.Kendo().DropDownList()
         .Name("To")
         .OptionLabel("Chọn tổ")
@@ -124,22 +111,16 @@
         .AutoBind(false)
         .CascadeFrom("LopHocPhan")
     )
-    <button id="assignGrouping">Gán nhóm</button>
-    <button id="unsignGrouping">Hủy gán nhóm</button>
+    <button id="assignGrouping">Thêm nhóm vào tổ</button>
+    <button id="unassignGrouping">Xóa nhóm khỏi tổ</button>
     <button id="deleteGrouping">Xóa tổ</button>
-</div>
-<div>
-    @Html.TextBox("TenTo", "", new { placeholder = "Nhập tên tổ", style = "width:120px" })
-    @Html.TextBox("MoTaTo", "", new { placeholder = "Mô tả tổ", style = "width:200px" })
-    <button id="createGrouping">Tạo nhóm</button>
-    <button id="updateGrouping">Cập nhật nhóm</button>
 </div>
 <script type="text/javascript">
     var selectedVals = [];
 
     function filterGrid() {
         return {
-            id_lop_tc: $("#LopHocPhan").val() == '' ? 0 : $("#LopHocPhan").val()
+            id_lop_tc: $("#LopHocPhan").val()
         }
     }
 
@@ -168,7 +149,8 @@
             var grid = $('#Grid').data().kendoGrid;
             var dataItem = grid.dataItem($(this).closest('tr'));
 
-            checkVal(dataItem.ID, state, selectedVals);
+            checkVal(dataItem.ID_nhom, state, selectedVals);
+           
             $('#masterCheckBox').attr('checked', isCheckedAll('#Grid :checkbox'));
         })
     })
@@ -179,70 +161,92 @@
         $("#Grid").data("kendoGrid").dataSource.read();
     }
 
-    function gridgroupRefresh() {
+    function gridgroupingRefresh() {
         gridRefresh();
-        groupRefresh();
+        groupingRefresh();
     }
 
-    function groupRefresh() {
-        $("#Nhom").data("kendoDropDownList").dataSource.read();
-        $("#Nhom").data("kendoDropDownList").select(0);
+    function groupingRefresh() {
+        $("#To").data("kendoDropDownList").dataSource.read();
+        $("#To").data("kendoDropDownList").select(0);
     }
 
-    //$("#createUser").click(function () {
-    //    //window.location.href = '/MoodleEnrol/CreateSinhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
-    //    processing('/MoodleEnrol/CreateSinhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals, "Đang tạo tài khoản moodle cho các sinh viên...", gridRefresh);
-    //})
+    $("#createGroup").click(function () {
+        if (jQuery("#LopHocPhan").val() == "") {
+            alert('Vui lòng chọn một lớp học phần!');
+            return;
+        }
 
-    //$("#deleteUser").click(function () {
-    //    if (confirm('Bạn muốn xóa tài khoản moodle của các sinh viên đã chọn?')) {
-    //        //window.location.href = '/MoodleEnrol/DeleteSinhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
-    //        processing('/MoodleEnrol/DeleteSinhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals, "Đang xóa tài khoản moodle của các sinh viên...", gridRefresh);
-    //    }
-    //})
+        if (jQuery("#TenNhom").val() == "") {
+            alert('Tên nhóm không được để trống!');
+            return;
+        }
 
-    //$("#createEnrol").click(function () {
-    //    //window.location.href = '/MoodleEnrol/CreateGhiDanh/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
-    //    processing('/MoodleEnrol/CreateGhiDanh/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals, "Đang ghi danh cho các sinh viên...", gridRefresh);
-    //})
+        processing('/MoodleGroup/CreateNhom/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&ten_nhom=' + jQuery("#TenNhom").val() + '&mo_ta=' + jQuery("#MoTaNhom").val(), "Đang tạo nhóm học viên trong lớp học phần...", gridRefresh);
+    })
 
-    //$("#deleteEnrol").click(function () {
-    //    if (confirm('Bạn muốn hủy ghi danh của các sinh viên đã chọn?')) {
-    //        //window.location.href = '/MoodleEnrol/DeleteGhiDanh/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
-    //        processing('/MoodleEnrol/DeleteGhiDanh/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals, "Đang hủy ghi danh của các sinh viên...", gridRefresh);
-    //    }
-    //})
+    $("#deleteGroup").click(function () {
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn 1 nhóm');
+            return;
+        }
 
-    //$("#createGroup").click(function () {
-    //    if (jQuery("#TenNhom").val() == "") {
-    //        alert('Tên nhóm không được để trống!');
-    //        return;
-    //    }
-    //    processing('/MoodleGroup/CreateNhom/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&ten_nhom=' + jQuery("#TenNhom").val() + '&mo_ta=' + jQuery("#MoTa").val(), "Đang tạo nhóm học viên trong lớp học phần...", groupRefresh);
-    //})
+        if (confirm('Bạn muốn xóa các nhóm học viên đã chọn?')) {
+            processing('/MoodleGroup/DeleteNhom/?selectedVals=' + selectedVals, "Đang xóa các nhóm học viên...", gridRefresh);
+        }
+    })
 
-    //$("#deleteGroup").click(function () {
-    //    if ($('#Nhom').val() == '') {
-    //        return;
-    //    }
-    //    if (confirm('Bạn muốn xóa nhóm học viên ' + $("#Nhom").data("kendoDropDownList").text() + '?')) {
-    //        processing('/MoodleGroup/DeleteNhom/?selectedVals=' + jQuery("#Nhom").val(), "Đang xóa nhóm học viên " + $("#Nhom").data("kendoDropDownList").text() + "...", gridgroupRefresh);
-    //    }
-    //})
+    $("#createGrouping").click(function () {
+        if (jQuery("#LopHocPhan").val() == "") {
+            alert('Vui lòng chọn một lớp học phần!');
+            return;
+        }
 
-    //$("#addMember").click(function () {
-    //    if ($('#Nhom').val() == '') {
-    //        return;
-    //    }
-    //    processing('/MoodleEnrol/AddThanhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + '&id_nhom=' + jQuery("#Nhom").val(), "Đang thêm các học viên vào nhóm " + $("#Nhom").data("kendoDropDownList").text() + "...", gridRefresh);
-    //})
+        if (jQuery("#TenTo").val() == "") {
+            alert('Tên tổ không được để trống!');
+            return;
+        }
 
-    //$("#deleteMember").click(function () {
-    //    if ($('#Nhom').val() == '') {
-    //        return;
-    //    }
-    //    if (confirm('Bạn muốn xóa các học viên đã chọn khỏi nhóm ' + $("#Nhom").data("kendoDropDownList").text() + '?')) {
-    //        processing('/MoodleEnrol/DeleteThanhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + '&id_nhom=' + jQuery("#Nhom").val(), "Đang xóa các học viên khỏi nhóm " + $("#Nhom").data("kendoDropDownList").text() + "...", gridRefresh);
-    //    }
-    //})
+        processing('/MoodleGroup/CreateTo/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&ten_to=' + jQuery("#TenTo").val() + '&mo_ta=' + jQuery("#MoTaTo").val(), "Đang tạo tổ trong lớp học phần...", groupingRefresh);
+    })
+
+    $("#deleteGrouping").click(function () {
+        if ($('#To').val() == '') {
+            alert('Vui lòng chọn 1 tổ');
+            return;
+        }
+
+        if (confirm('Bạn muốn xóa tổ ' + $("#To").data("kendoDropDownList").text() + '?')) {
+            processing('/MoodleGroup/DeleteTo/?selectedVals=' + jQuery("#To").val(), "Đang xóa tổ " + $("#To").data("kendoDropDownList").text() + "...", gridgroupingRefresh);
+        }
+    })
+
+    $("#updateGrouping").click(function () {
+        if (jQuery("#TenTo").val() == "") {
+            alert('Tên tổ không được để trống!');
+            return;
+        }
+
+        processing('/MoodleGroup/UpdateTo/?&ten_to=' + jQuery("#TenTo").val() + '&mo_ta=' + jQuery("#MoTaTo").val() + '&id_to=' + jQuery("#To").val(), "Đang cập nhật tổ trong lớp học phần...", gridgroupingRefresh);
+    })
+
+    $("#assignGrouping").click(function () {
+        if ($('#To').val() == '') {
+            alert('Vui lòng chọn 1 tổ');
+            return;
+        }
+
+        processing('/MoodleGroup/AssignToNhom/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + '&id_to=' + jQuery("#To").val(), "Đang thêm các nhóm vào tổ " + $("#To").data("kendoDropDownList").text() + "...", gridRefresh);
+    })
+
+    $("#unassignGrouping").click(function () {
+        if ($('#To').val() == '') {
+            alert('Vui lòng chọn 1 tổ');
+            return;
+        }
+
+        if (confirm('Bạn muốn xóa các nhóm đã chọn khỏi tổ ' + $("#To").data("kendoDropDownList").text() + '?')) {
+            processing('/MoodleGroup/UnassignToNhom/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + '&id_to=' + jQuery("#To").val(), "Đang xóa các nhóm khỏi tổ " + $("#To").data("kendoDropDownList").text() + "...", gridRefresh);
+        }
+    })
 </script>
