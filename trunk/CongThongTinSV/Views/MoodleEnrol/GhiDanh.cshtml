@@ -127,7 +127,7 @@
 
     function filterGrid() {
         return {
-            id_lop_tc: $("#LopHocPhan").val() == '' ? 0 : $("#LopHocPhan").val()
+            id_lop_tc: $("#LopHocPhan").val()
         }
     }
 
@@ -157,6 +157,10 @@
             var dataItem = grid.dataItem($(this).closest('tr'));
 
             checkVal(dataItem.ID, state, selectedVals);
+            //var s = "";
+            //for (var i = 0; i < selectedVals.length; i++)
+            //    s += selectedVals[i] + ", ";
+            //alert(s);
             $('#masterCheckBox').attr('checked', isCheckedAll('#Grid :checkbox'));
         })
     })
@@ -211,6 +215,7 @@
 
     $("#deleteGroup").click(function () {
         if ($('#Nhom').val() == '') {
+            alert('Vui lòng chọn 1 nhóm');
             return;
         }
         if (confirm('Bạn muốn xóa nhóm học viên ' + $("#Nhom").data("kendoDropDownList").text() + '?')) {
@@ -220,6 +225,7 @@
 
     $("#addMember").click(function () {
         if ($('#Nhom').val() == '') {
+            alert('Vui lòng chọn 1 nhóm');
             return;
         }
         processing('/MoodleEnrol/AddThanhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + '&id_nhom=' + jQuery("#Nhom").val(), "Đang thêm các học viên vào nhóm " + $("#Nhom").data("kendoDropDownList").text() + "...", gridRefresh);
@@ -227,6 +233,7 @@
 
     $("#deleteMember").click(function () {
         if ($('#Nhom').val() == '') {
+            alert('Vui lòng chọn 1 nhóm');
             return;
         }
         if (confirm('Bạn muốn xóa các học viên đã chọn khỏi nhóm ' + $("#Nhom").data("kendoDropDownList").text() + '?')) {

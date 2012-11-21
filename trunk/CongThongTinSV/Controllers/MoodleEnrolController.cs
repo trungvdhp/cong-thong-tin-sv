@@ -354,10 +354,8 @@ namespace CongThongTinSV.Controllers
         public ActionResult DeleteThanhVien(string selectedVals, string id_lop_tc, string id_nhom)
         {
             Entities db = new Entities();
-            int id = Convert.ToInt32(id_nhom);
-
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-            var list = MoodleHocVienDiems(Convert.ToInt32(id_lop_tc)).Where(t => s.Contains(t.ID.ToString()) && t.ID_nhom == id).ToList();
+            var list = MoodleHocVienDiems(Convert.ToInt32(id_lop_tc)).Where(t => s.Contains(t.ID.ToString()) && t.ID_nhom.ToString() == id_nhom).ToList();
 
             if (list.Count() == 0) return View();
 
