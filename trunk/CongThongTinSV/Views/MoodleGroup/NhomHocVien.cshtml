@@ -4,9 +4,10 @@
     ViewBag.Title = "Quản lý nhóm và phân tổ nhóm học viên trên Moodle";
 }
 
-@(Html.Kendo().DropDownList()
+@(Html.Kendo().ComboBox()
     .Name("HocKy")
-    .OptionLabel("Chọn học kỳ")
+    .Placeholder("Chọn học kỳ...")
+    //.OptionLabel("Chọn học kỳ")
     .HtmlAttributes(new { style = "width:180px" })
     .DataTextField("Text")
     .DataValueField("Value")
@@ -17,15 +18,16 @@
             read.Action("GetMoodleHocKy", "MoodleCategory");
         }).ServerFiltering(true);
     })
-    .Events(e =>
-    {
-        e.Change("selectLopHocPhan");
-    })
+    //.Events(e =>
+    //{
+    //    e.Change("selectLopHocPhan");
+    //})
 )
 
 @(Html.Kendo().DropDownList()
     .Name("LopHocPhan")
-    .OptionLabel("Chọn lớp học phần")
+    .Placeholder("Chọn lớp học phần...")
+    //.OptionLabel("Chọn lớp học phần")
     .HtmlAttributes(new { style = "width:320px" })
     .DataTextField("Text")
     .DataValueField("Value")
@@ -130,9 +132,9 @@
         }
     }
 
-    function selectLopHocPhan() {
-        $("#LopHocPhan").data("kendoDropDownList").select(0);
-    }
+    //function selectLopHocPhan() {
+    //    $("#LopHocPhan").data("kendoDropDownList").select(0);
+    //}
 
     function loadGrid() {
         selectedVals.splice(0, selectedVals.length);
