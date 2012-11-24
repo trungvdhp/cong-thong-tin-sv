@@ -17,7 +17,7 @@
         <EntityTypeShape EntityType="DHHHModel.MOD_NguoiDung_VaiTro_HeThong" Width="1.5" PointX="5.25" PointY="7.5" />
         <EntityTypeShape EntityType="DHHHModel.MOD_NguoiDung_VaiTro_LopTinChi" Width="1.5" PointX="5.25" PointY="4.375" />
         <EntityTypeShape EntityType="DHHHModel.MOD_NhomHocVien" Width="1.5" PointX="7.5" PointY="7.125" />
-        <EntityTypeShape EntityType="DHHHModel.MOD_NhomNguoiDung" Width="1.5" PointX="0.75" PointY="1.125" />
+        <EntityTypeShape EntityType="DHHHModel.MOD_NhomNguoiDung" Width="1.5" PointX="0.625" PointY="1.125" />
         <EntityTypeShape EntityType="DHHHModel.MOD_ToNhom" Width="1.5" PointX="5.25" PointY="10.625" />
         <EntityTypeShape EntityType="DHHHModel.MOD_VaiTro" Width="1.5" PointX="3" PointY="7.875" />
         <EntityTypeShape EntityType="DHHHModel.PLAN_ChuongTrinhDaoTao" Width="1.5" PointX="9.75" PointY="12.5" />

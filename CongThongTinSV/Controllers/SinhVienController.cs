@@ -31,5 +31,10 @@ namespace CongThongTinSV.Controllers
         {
             return RedirectToAction("YeuCauMoLop", "LopHocPhan");
         }
+
+        public ActionResult ThongTinCaNhan()
+        {
+            return View();
+        }
     }
 }

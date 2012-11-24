@@ -65,7 +65,6 @@ namespace CongThongTinSV.Controllers
 
             return result;
         }
-
         public JsonResult GetKhoa()
         {
             Entities db = new Entities();
@@ -75,7 +74,6 @@ namespace CongThongTinSV.Controllers
 
             return result;
         }
-
         public JsonResult GetChuyenNganh()
         {
             Entities db = new Entities();
@@ -85,7 +83,6 @@ namespace CongThongTinSV.Controllers
 
             return result;
         }
-
         public JsonResult GetKhoaHoc()
         {
             Entities db = new Entities();
@@ -101,7 +98,6 @@ namespace CongThongTinSV.Controllers
 
             return result;
         }
-
         public JsonResult GetLopTC(int Ky_dang_ky,int ID_khoa,int ID_he,int Khoa_hoc)
         {
             Entities db = new Entities();
@@ -138,13 +134,11 @@ namespace CongThongTinSV.Controllers
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return result;
         }
-
         public ActionResult GetSinhVienLopTC([DataSourceRequest] DataSourceRequest request, int ID_lop_tc)
         {
 
             return Json(SinhVienLopTC(ID_lop_tc).ToDataSourceResult(request));
         }
-
         public static IEnumerable<SinhVien> SinhVienLopTC(int ID_lop_tc)
         {
             Entities db=new Entities();
@@ -157,11 +151,62 @@ namespace CongThongTinSV.Controllers
                 Ma_sv = sv.Ma_sv
             }).ToList();
         }
-        public ActionResult DiemHocTap(string TuKhoa)
+        public JsonResult DiemHocTap([DataSourceRequest] DataSourceRequest request, string TuKhoa, string NamHoc, int HocKy)
         {
             Entities db = new Entities();
-            //var q= from d in 
+            var sv = db.STU_HoSoSinhVien.First(s => s.Ma_sv == TuKhoa);
+
+            var diem = sv.MARK_Diem_TC.Where(t => t.Nam_hoc == NamHoc && t.Hoc_ky == HocKy).Select(t => new DiemHocTap
+            {
+                Ma_mon = t.MARK_MonHoc.Ky_hieu,
+                Ten_mon = t.MARK_MonHoc.Ten_mon,
+                X = t.MARK_DiemThanhPhan_TC.Where(tp => tp.Hoc_ky_TP == HocKy && tp.Nam_hoc_TP == NamHoc).First().Diem,
+                Y = t.MARK_DiemThi_TC.Where(th => th.Hoc_ky_thi == HocKy && th.Nam_hoc_thi == NamHoc).Select(th => new { Diem_thi = th.Diem_thi }).OrderByDescending(th => th.Diem_thi).Distinct().First().Diem_thi,
+                Diem_chu = t.MARK_DiemThi_TC.Where(th => th.Hoc_ky_thi == HocKy && th.Nam_hoc_thi == NamHoc).Select(th => new { Diem_thi = th.Diem_thi, Diem_chu = th.Diem_chu }).OrderByDescending(th => th.Diem_thi).Distinct().First().Diem_chu,
+                Hoc_ky = t.Hoc_ky,
+                Nam_hoc = t.Nam_hoc,
+                Z = t.MARK_DiemThi_TC.Where(th => th.Hoc_ky_thi == HocKy && th.Nam_hoc_thi == NamHoc).Select(th => new { Diem_thi = th.Diem_thi, Z = th.TBCMH }).OrderByDescending(th => th.Diem_thi).Distinct().First().Z,
+            }).ToList();
+
             JsonResult result = new JsonResult();
+            result.Data = diem;
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return Json(diem.ToDataSourceResult(request));
+        }
+        public ActionResult GetNamHocTraCuu(string TuKhoa)
+        {
+            Entities db = new Entities();
+            var sv = db.STU_HoSoSinhVien.First(s => s.Ma_sv == TuKhoa);
+
+            var namhoc = sv.MARK_Diem_TC.Select(t => new
+            {
+                Nam_hoc = t.Nam_hoc
+            }).Distinct().OrderBy(t => t.Nam_hoc).ToList();
+
+            JsonResult result = new JsonResult();
+            result.Data = new SelectList(namhoc, "Nam_hoc", "Nam_hoc");
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return result;
+        }
+        public ActionResult GetHocKyTraCuu(string TuKhoa, string NamHoc)
+        {
+            Entities db = new Entities();
+            var sv = db.STU_HoSoSinhVien.First(s => s.Ma_sv == TuKhoa);
+
+            var namhoc = sv.MARK_Diem_TC.Where(t => t.Nam_hoc == NamHoc).Select(t => new
+            {
+                Hoc_ky = t.Hoc_ky
+            }).Distinct().OrderBy(t => t.Hoc_ky).ToList();
+
+            JsonResult result = new JsonResult();
+            result.Data = new SelectList(namhoc, "Hoc_ky", "Hoc_ky");
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return result;
+        }
+        public ActionResult GetLopHocPhanGiaoVien()
+        {
+            JsonResult result = new JsonResult();
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return result;
         }
     }

@@ -53,6 +53,11 @@
             resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:Kendo.Mvc.Resources.Messages.Editor_BackColor">
+            <summary>
+            Looks up a localized string similar to Background Color.
+            </summary>
+        </member>
         <member name="P:Kendo.Mvc.Resources.Messages.Editor_Bold">
             <summary>
             Looks up a localized string similar to Bold.
@@ -61,6 +66,26 @@
         <member name="P:Kendo.Mvc.Resources.Messages.Editor_CreateLink">
             <summary>
             Looks up a localized string similar to Insert hyperlink.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.Resources.Messages.Editor_DeleteFile">
+            <summary>
+            Looks up a localized string similar to Are you sure you want to delete "{0}"?.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.Resources.Messages.Editor_DirectoryNotFound">
+            <summary>
+            Looks up a localized string similar to A directory with this name was not found..
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.Resources.Messages.Editor_DropFilesHere">
+            <summary>
+            Looks up a localized string similar to drop files here to upload.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.Resources.Messages.Editor_EmptyFolder">
+            <summary>
+            Looks up a localized string similar to Empty Folder.
             </summary>
         </member>
         <member name="P:Kendo.Mvc.Resources.Messages.Editor_FontName">
@@ -81,6 +106,11 @@
         <member name="P:Kendo.Mvc.Resources.Messages.Editor_FontSizeInherit">
             <summary>
             Looks up a localized string similar to (inherited size).
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.Resources.Messages.Editor_ForeColor">
+            <summary>
+            Looks up a localized string similar to Color.
             </summary>
         </member>
         <member name="P:Kendo.Mvc.Resources.Messages.Editor_FormatBlock">
@@ -113,6 +143,11 @@
             Looks up a localized string similar to Insert unordered list.
             </summary>
         </member>
+        <member name="P:Kendo.Mvc.Resources.Messages.Editor_InvalidFileType">
+            <summary>
+            Looks up a localized string similar to The selected file "{0}" is not valid. Supported file types are {1}..
+            </summary>
+        </member>
         <member name="P:Kendo.Mvc.Resources.Messages.Editor_Italic">
             <summary>
             Looks up a localized string similar to Italic.
@@ -138,9 +173,29 @@
             Looks up a localized string similar to Align text right.
             </summary>
         </member>
+        <member name="P:Kendo.Mvc.Resources.Messages.Editor_OrderBy">
+            <summary>
+            Looks up a localized string similar to Arrange by:.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.Resources.Messages.Editor_OrderByName">
+            <summary>
+            Looks up a localized string similar to Name.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.Resources.Messages.Editor_OrderBySize">
+            <summary>
+            Looks up a localized string similar to Size.
+            </summary>
+        </member>
         <member name="P:Kendo.Mvc.Resources.Messages.Editor_Outdent">
             <summary>
             Looks up a localized string similar to Outdent.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.Resources.Messages.Editor_OverwriteFile">
+            <summary>
+            Looks up a localized string similar to 'A file with name "{0}" already exists in the current directory. Do you want to overwrite it?.
             </summary>
         </member>
         <member name="P:Kendo.Mvc.Resources.Messages.Editor_Strikethrough">
@@ -171,6 +226,11 @@
         <member name="P:Kendo.Mvc.Resources.Messages.Editor_Unlink">
             <summary>
             Looks up a localized string similar to Remove hyperlink.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.Resources.Messages.Editor_UploadFile">
+            <summary>
+            Looks up a localized string similar to Upload.
             </summary>
         </member>
         <member name="P:Kendo.Mvc.Resources.Messages.Filter_And">
@@ -809,6 +869,11 @@
             The axis name. Leave empty to use the "primary" default value.
             </summary>
         </member>
+        <member name="P:Kendo.Mvc.UI.ChartAxisBase`2.Pane">
+            <summary>
+            The name of the pane that the axis should be rendered in.
+            </summary>
+        </member>
         <member name="P:Kendo.Mvc.UI.ChartAxisBase`2.Color">
             <summary>
             The color for all axis elements. Can be overriden by individual settings.
@@ -817,6 +882,16 @@
         <member name="P:Kendo.Mvc.UI.ChartAxisBase`2.Reverse">
             <summary>
             A value indicating if the axis labels should be rendered in reverse.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartAxisBase`2.NarrowRange">
+            <summary>
+            A value indicating if the automatic axis range should snap to 0.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartAxisBase`2.Visible">
+            <summary>
+            Gets or sets the axis visibility.
             </summary>
         </member>
         <member name="M:Kendo.Mvc.UI.ChartNumericAxis`1.#ctor(Kendo.Mvc.UI.Chart{`0})">
@@ -1042,6 +1117,16 @@
             The axis plot bands.
             </summary>
         </member>
+        <member name="P:Kendo.Mvc.UI.IChartAxis`1.Pane">
+            <summary>
+            The name of the pane that the axis should be rendered in.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.IChartAxis`1.Visible">
+            <summary>
+            Gets or sets the axis visibility.
+            </summary>
+        </member>
         <member name="P:Kendo.Mvc.UI.IChartDateAxis.BaseUnit">
             <summary>
             The base time interval for the axis labels.
@@ -1149,6 +1234,11 @@
             A value indicating if the axis labels should be rendered in reverse.
             </summary>
         </member>
+        <member name="P:Kendo.Mvc.UI.IChartAxisBase.NarrowRange">
+            <summary>
+            A value indicating if the automatic axis range should snap to 0.
+            </summary>
+        </member>
         <member name="P:Kendo.Mvc.UI.IChartCategoryAxis.Categories">
             <summary>
             The categories displayed on the axis
@@ -1248,6 +1338,11 @@
             Gets the chart series.
             </summary>
         </member>
+        <member name="P:Kendo.Mvc.UI.Chart`1.Panes">
+            <summary>
+            Gets the chart panes.
+            </summary>
+        </member>
         <member name="P:Kendo.Mvc.UI.Chart`1.SeriesDefaults">
             <summary>
             Gets the default settings for all series.
@@ -1283,6 +1378,12 @@
             Gets the data source configuration.
             </summary>
         </member>
+        <member name="P:Kendo.Mvc.UI.Chart`1.AutoBind">
+            <summary>
+            Gets or sets a value indicating if the chart
+            should be data bound during initialization.
+            </summary>
+        </member>
         <member name="P:Kendo.Mvc.UI.Chart`1.SeriesColors">
             <summary>
             Gets or sets the series colors.
@@ -1310,6 +1411,11 @@
             <value>
             Specify a font in CSS format. For example "16px Arial,Helvetica,sans-serif".
             </value>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartTitle.Color">
+            <summary>
+            Gets or sets the title color
+            </summary>
         </member>
         <member name="P:Kendo.Mvc.UI.ChartTitle.Position">
             <summary>
@@ -1605,6 +1711,167 @@
             <value>
             The tooltip opacity.
             </value>
+        </member>
+        <member name="M:Kendo.Mvc.UI.ChartPane.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Kendo.Mvc.UI.ChartPane" /> class
+            with the specified name.
+            </summary>
+            <param name="name">The unique pane name.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.ChartPane.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Kendo.Mvc.UI.ChartPane" /> class.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartPane.Name">
+            <summary>
+            Gets or sets the unique pane name
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartPane.Height">
+            <summary>
+            Gets or sets the pane height in pixels.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartPane.Title">
+            <summary>
+            Gets or sets the pane title.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartPane.Margin">
+            <summary>
+            Gets or sets the pane margin
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartPane.Background">
+            <summary>
+            Gets or sets the pane background color
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartPane.Padding">
+            <summary>
+            Gets or sets the pane padding
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartPane.Border">
+            <summary>
+            Gets or sets the pane border
+            </summary>
+        </member>
+        <member name="T:Kendo.Mvc.UI.Fluent.ChartPanesFactory">
+            <summary>
+            Creates panes for the <see cref="!:Chart{TModel}" />.
+            </summary>
+            <typeparam name="TModel">The type of the data item to which the chart is bound to</typeparam>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartPanesFactory.#ctor(Kendo.Mvc.UI.IChart)">
+            <summary>
+            Initializes a new instance of the <see cref="!:ChartPanesFactory{TModel}" /> class.
+            </summary>
+            <param name="container">The container.</param>
+        </member>
+        <member name="P:Kendo.Mvc.UI.Fluent.ChartPanesFactory.Container">
+            <summary>
+            The parent Chart
+            </summary>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartPanesFactory.Add">
+            <summary>
+            Defines a chart pane.
+            </summary>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartPanesFactory.Add(System.String)">
+            <summary>
+            Defines a named chart pane.
+            </summary>
+            <param name="name">
+            The unique pane name
+            </param>
+        </member>
+        <member name="T:Kendo.Mvc.UI.Fluent.ChartPaneBuilder">
+            <summary>
+            Defines the fluent interface for configuring Pane.
+            </summary>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartPaneBuilder.#ctor(Kendo.Mvc.UI.ChartPane)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Kendo.Mvc.UI.Fluent.ChartPaneBuilder" /> class.
+            </summary>
+            <param name="Pane">The Chart Pane.</param>
+        </member>
+        <member name="P:Kendo.Mvc.UI.Fluent.ChartPaneBuilder.Pane">
+            <summary>
+            Gets or sets the Pane.
+            </summary>
+            <value>The Pane.</value>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartPaneBuilder.Title(System.String)">
+            <summary>
+            Sets the title of the pane.
+            </summary>
+            <param name="title">The pane title.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartPaneBuilder.Title(System.Action{Kendo.Mvc.UI.Fluent.ChartTitleBuilder})">
+            <summary>
+            Defines the title of the pane.
+            </summary>
+            <param name="configurator">The configuration action.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartPaneBuilder.Height(System.Int32)">
+            <summary>
+            Sets the height of the pane.
+            </summary>
+            <param name="height">The pane height.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartPaneBuilder.Background(System.String)">
+            <summary>
+            Sets the pane background color
+            </summary>
+            <param name="background">The background color.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartPaneBuilder.Margin(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Sets the pane margin
+            </summary>
+            <param name="top">The pane top margin.</param>
+            <param name="right">The pane right margin.</param>
+            <param name="bottom">The pane bottom margin.</param>
+            <param name="left">The pane left margin.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartPaneBuilder.Margin(System.Int32)">
+            <summary>
+            Sets the pane margin
+            </summary>
+            <param name="margin">The pane margin.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartPaneBuilder.Padding(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Sets the pane padding
+            </summary>
+            <param name="top">The pane top padding.</param>
+            <param name="right">The pane right padding.</param>
+            <param name="bottom">The pane bottom padding.</param>
+            <param name="left">The pane left padding.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartPaneBuilder.Padding(System.Int32)">
+            <summary>
+            Sets the pane padding
+            </summary>
+            <param name="padding">The pane padding.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartPaneBuilder.Border(System.Int32,System.String,Kendo.Mvc.UI.ChartDashType)">
+            <summary>
+            Sets the pane border
+            </summary>
+            <param name="width">The pane border width.</param>
+            <param name="color">The pane border color.</param>
+            <param name="dashType">The pane dash type.</param>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ISeriesContainer.Series">
+            <summary>
+            The component series.
+            </summary>
         </member>
         <member name="T:Kendo.Mvc.UI.ChartAxisTickType">
             <summary>
@@ -2125,7 +2392,7 @@
             <summary>
             Initializes a new instance of the <see cref="T:Kendo.Mvc.UI.Fluent.ChartPieLabelsBuilder" /> class.
             </summary>
-            <param name="chartBarLabels">The data labels configuration.</param>
+            <param name="chartPieLabels">The data labels configuration.</param>
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.ChartPieLabelsBuilder.Align(Kendo.Mvc.UI.ChartPieLabelsAlign)">
             <summary>
@@ -2646,7 +2913,8 @@
             <summary>
             Defines the fluent interface for configuring scatter series.
             </summary>
-            <typeparam name="T">The type of the data item</typeparam>
+            <typeparam name="TSeries">The type of the data item</typeparam>
+            <typeparam name="TBuilder">The type of the builder</typeparam>
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.ChartScatterSeriesBuilderBase`2.#ctor(`0)">
             <summary>
@@ -2773,7 +3041,7 @@
             <summary>
             Initializes a new instance of the <see cref="T:Kendo.Mvc.UI.Fluent.ChartPieConnectorsBuilder" /> class.
             </summary>
-            <param name="chartBarLabels">The connectors configuration.</param>
+            <param name="pieConnectors">The connectors configuration.</param>
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.ChartPieConnectorsBuilder.Width(System.Int32)">
             <summary>
@@ -2888,7 +3156,7 @@
             <summary>
             Sets the plot band background color
             </summary>
-            <param name="background">The plot band background color.</param>
+            <param name="color">The plot band background color.</param>
             <example>
                 <code lang="CS">
             &lt;% Html.Kendo().Chart()
@@ -3265,7 +3533,9 @@
             <summary>
             Configures the area chart line.
             </summary>
-            <param name="configurator">The configuration action.</param>
+            <param name="width">The line width.</param>
+            <param name="color">The line color.</param>
+            <param name="dashType">The line dashType.</param>
             <example>
                 <code lang="CS">
             &lt;% Html.Kendo().Chart()
@@ -3662,7 +3932,7 @@
             <summary>
             Sets the date category axis maximum (end) date.
             </summary>
-            <param name="min">
+            <param name="max">
             The date category axis maximum (end) date
             </param>
         </member>
@@ -3769,7 +4039,7 @@
             See <a href="http://www.kendoui.com/documentation/framework/globalization/overview.aspx">Globalization</a>
             for more information.
             </summary>
-            <param name="culture">Culture to use for formatting the dates.</param>
+            <param name="configurator">Culture to use for formatting the dates.</param>
             <example>
                 <code lang="CS">
             &lt;%= Html.Kendo().Chart()
@@ -3940,7 +4210,7 @@
             Sets the interval between minor divisions in base units.
             It defaults to 1/5th of the majorUnit
             </summary>
-            <param name="majorUnit">The interval between minor divisions in base units.</param>
+            <param name="minorUnit">The interval between minor divisions in base units.</param>
             <example>
                 <code lang="CS">
             &lt;%= Html.Kendo().Chart(Model)
@@ -4186,6 +4456,158 @@
             .Visible(true)
             );
             )
+            .Render();
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="T:Kendo.Mvc.UI.Fluent.ChartOHLCSeriesBuilder`1">
+            <summary>
+            Defines the fluent interface for configuring bar series.
+            </summary>
+            <typeparam name="T">The type of the data item</typeparam>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartOHLCSeriesBuilder`1.#ctor(Kendo.Mvc.UI.IChartOHLCSeries)">
+            <summary>
+            Initializes a new instance of the <see cref="!:ChartOHLCSeriesBuilder{T}" /> class.
+            </summary>
+            <param name="series">The series.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartOHLCSeriesBuilder`1.Aggregates(System.Nullable{Kendo.Mvc.UI.ChartSeriesAggregate},System.Nullable{Kendo.Mvc.UI.ChartSeriesAggregate},System.Nullable{Kendo.Mvc.UI.ChartSeriesAggregate},System.Nullable{Kendo.Mvc.UI.ChartSeriesAggregate})">
+            <summary>
+            Sets the aggregate function for date series.
+            This function is used when a category (an year, month, etc.) contains two or more points.
+            </summary>
+            <param name="open">Open aggregate name.</param>
+            <param name="high">High aggregate name.</param>
+            <param name="low">Low aggregate name.</param>
+            <param name="close">Close aggregate name.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().Chart(Model)
+            .Name("Chart")
+            .Series(series =&gt; series.OHLC(s =&gt; s.Sales).Aggregates(ChartSeriesAggregate.Avg))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartOHLCSeriesBuilder`1.Gap(System.Double)">
+            <summary>
+            Set distance between category clusters.
+            <param name="gap">
+            A value of 1 means that there is a total of 1 point width between categories.
+            The distance is distributed evenly on each side.
+            The default value is 1
+            </param></summary>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().Chart(Model)
+            .Name("Chart")
+            .Series(series =&gt; series.OHLC(s =&gt; s.Sales).Gap(1.5))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartOHLCSeriesBuilder`1.Spacing(System.Double)">
+            <summary>
+            Sets a value indicating the distance between points in the same category.
+            </summary>
+            <param name="spacing">
+            Value of 1 means that the distance between points in the same category.
+            The default value is 0.3
+            </param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().Chart(Model)
+            .Name("Chart")
+            .Series(series =&gt; series.Spacing(s =&gt; s.Sales).Spacing(1))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartOHLCSeriesBuilder`1.Border(System.Int32,System.String,Kendo.Mvc.UI.ChartDashType)">
+            <summary>
+            Sets the points border
+            </summary>
+            <param name="width">The points border width.</param>
+            <param name="color">The points border color (CSS syntax).</param>
+            <param name="dashType">The points border dash type.</param>
+            <example>
+                <code lang="CS">
+            &lt;% Html.Kendo().Chart()
+            .Name("Chart")
+            .Series(series =&gt; series.OHLC(s =&gt; s.Sales).Border("1", "#000", ChartDashType.Dot))
+            .Render();
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartOHLCSeriesBuilder`1.Line(System.Int32,System.String,Kendo.Mvc.UI.ChartDashType)">
+            <summary>
+            Configures the ohlc chart lines.
+            </summary>
+            <param name="width">The lines width.</param>
+            <param name="color">The lines color.</param>
+            <param name="dashType">The lines dashType.</param>
+            <example>
+                <code lang="CS">
+            &lt;% Html.Kendo().Chart()
+            .Name("Chart")
+            .Series(series =&gt; series
+            .OHLC(s =&gt; s.Sales)
+            .Line(2, "red", ChartDashType.Dot)
+            )
+            .Render();
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartOHLCSeriesBuilder`1.Line(System.Action{Kendo.Mvc.UI.Fluent.ChartAreaLineBuilder})">
+            <summary>
+            Configures the ohlc chart lines.
+            </summary>
+            <param name="configurator">The configuration action.</param>
+            <example>
+                <code lang="CS">
+            &lt;% Html.Kendo().Chart()
+            .Name("Chart")
+            .Series(series =&gt; series
+            .Area(s =&gt; s.Sales)
+            .Line(line =&gt; line.Opacity(0.2))
+            )
+            .Render();
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="T:Kendo.Mvc.UI.Fluent.ChartCandlestickSeriesBuilder`1">
+            <summary>
+            Defines the fluent interface for configuring candlestick series.
+            </summary>
+            <typeparam name="T">The type of the data item</typeparam>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartCandlestickSeriesBuilder`1.#ctor(Kendo.Mvc.UI.IChartCandlestickSeries)">
+            <summary>
+            Initializes a new instance of the <see cref="!:ChartCandlestickSeriesBuilder{T}" /> class.
+            </summary>
+            <param name="series">The series.</param>
+        </member>
+        <member name="P:Kendo.Mvc.UI.Fluent.ChartCandlestickSeriesBuilder`1.Series">
+            <summary>
+            Gets or sets the series.
+            </summary>
+            <value>The series.</value>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartCandlestickSeriesBuilder`1.Overlay(Kendo.Mvc.UI.ChartBarSeriesOverlay)">
+            <summary>
+            Sets the bar effects overlay
+            </summary>
+            <param name="overlay">The candlestick effects overlay. The default is ChartBarSeriesOverlay.Glass</param>
+            <example>
+                <code lang="CS">
+            &lt;% Html.Kendo().Chart()
+            .Name("Chart")
+            .Series(series =&gt; series.Candlestick(s =&gt; s.Sales).Overlay(ChartBarSeriesOverlay.None))
             .Render();
             %&gt;
             </code>
@@ -5060,6 +5482,13 @@
             </code>
             </example>
         </member>
+        <member name="T:Kendo.Mvc.UI.Fluent.ChartSeriesDefaultsBuilder`1">
+            <summary>
+            Defines the fluent API for configuring the chart series defaults.
+            </summary>
+            <typeparam name="TModel">
+            </typeparam>
+        </member>
         <member name="M:Kendo.Mvc.UI.Fluent.ChartSeriesDefaultsBuilder`1.Bar">
             <summary>
             Defines the default settings for bar series.
@@ -5105,6 +5534,11 @@
             Defines the default settings for scatter line series.
             </summary>
         </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartSeriesDefaultsBuilder`1.OHLC">
+            <summary>
+            Defines the default settings for ohlc series.
+            </summary>
+        </member>
         <member name="M:Kendo.Mvc.UI.ChartBarLabels.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:Kendo.Mvc.UI.ChartBarLabels" /> class.
@@ -5130,6 +5564,7 @@
             Initializes a new instance of the <see cref="!:ChartValueAxisFactory{TModel}" /> class.
             </summary>
             <param name="container">The container.</param>
+            <param name="axes">The chart axes.</param>
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.ChartValueAxisFactory`1.Numeric">
             <summary>
@@ -5156,6 +5591,8 @@
             Defines the fluent interface for configuring axes.
             </summary>
             <typeparam name="TAxis">
+            </typeparam>
+            <typeparam name="TValue">
             </typeparam>
             <typeparam name="TAxisBuilder">The type of the series builder.</typeparam>
         </member>
@@ -5230,6 +5667,7 @@
             </summary>
             <param name="color">The major gridlines width</param>
             <param name="width">The major gridlines color (CSS syntax)</param>
+            <param name="dashType">The major gridlines line dashType.</param>
             <example>
                 <code lang="CS">
             &lt;%= Html.Kendo().Chart()
@@ -5300,6 +5738,7 @@
             </summary>
             <param name="color">The axis line width</param>
             <param name="width">The axis line color (CSS syntax)</param>
+            <param name="dashType">The axis line dashType.</param>
             <example>
                 <code lang="CS">
             &lt;%= Html.Kendo().Chart()
@@ -5349,7 +5788,7 @@
             <summary>
             Defines the plot bands items.
             </summary>
-            <param name="addAction">The add action.</param>
+            <param name="configurator">The add action.</param>
             <example>
                 <code lang="CS">
             &lt;%= Html.Kendo().Chart()
@@ -5397,6 +5836,27 @@
             </code>
             </example>
         </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartAxisBuilderBase`3.Pane(System.String)">
+            <summary>
+            Renders the axis in the pane with the specified name.
+            </summary>
+            <param name="pane">The pane name.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().Chart()
+            .Name("Chart")
+            .Panes(panes =&gt; {
+            panes.Add().Title("Value");
+            panes.Add("volumePane").Title("Volume");
+            })
+            .CategoryAxis(axis =&gt; axis
+            .Categories(s =&gt; s.DateString)
+            .Pane("volumePane")
+            )
+            %&gt;
+            </code>
+            </example>
+        </member>
         <member name="M:Kendo.Mvc.UI.Fluent.ChartAxisBuilderBase`3.Color(System.String)">
             <summary>
             Sets the color for all axis elements. Can be overriden by individual settings.
@@ -5430,6 +5890,18 @@
             %&gt;
             </code>
             </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartAxisBuilderBase`3.Visible(System.Boolean)">
+            <summary>
+            Sets the axis visibility
+            </summary>
+            <param name="visible">The axis visibility.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartAxisBuilderBase`3.NarrowRange(System.Boolean)">
+            <summary>
+            A value indicating if the automatic axis range should snap to 0.
+            </summary>
+            <param name="narrowRange">The narrowRange value.</param>
         </member>
         <member name="T:Kendo.Mvc.UI.Fluent.ChartNumericAxisBuilder">
             <summary>
@@ -5585,6 +6057,21 @@
             &lt;% Html.Kendo().Chart()
             .Name("Chart")
             .Title(title =&gt; title.Font("16px Arial,Helvetica,sans-serif"))
+            .Render();
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartTitleBuilder.Color(System.String)">
+            <summary>
+            Sets the title color
+            </summary>
+            <param name="color">The title color (CSS format).</param>
+            <example>
+                <code lang="CS">
+            &lt;% Html.Kendo().Chart()
+            .Name("Chart")
+            .Title(title =&gt; title.Color("#ff0000").Text("Title"))
             .Render();
             %&gt;
             </code>
@@ -5930,7 +6417,7 @@
         </member>
         <member name="T:Kendo.Mvc.UI.Fluent.ChartEventBuilder">
             <summary>
-            Defines the fluent interface for configuring the Chart events.
+            Defines the fluent interface for configuring the <see cref="T:Kendo.Mvc.UI.Fluent.ChartEventBuilder" />.
             </summary>
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.ChartEventBuilder.#ctor(System.Collections.Generic.IDictionary{System.String,System.Object})">
@@ -6114,6 +6601,111 @@
             </code>
             </example>
         </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartEventBuilder.DragStart(System.String)">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the DragStart client-side event.
+            </summary>
+            <param name="onDragStartHandlerName">The name of the JavaScript function that will handle the event.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().Chart()
+            .Name("Chart")
+            .Events(events =&gt; events.DragStart("onDragStart"))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartEventBuilder.DragStart(System.Func{System.Object,System.Object})">
+            <summary>
+            Defines the inline handler of the DragStart client-side event
+            </summary>
+            <param name="inlineCodeBlock">The handler code wrapped in a text tag (Razor syntax).</param>
+            <example>
+                <code lang="CS">
+            &lt;% Html.Kendo().Chart()
+            .Name("Chart")
+            .Events(events =&gt; events.DragStart(
+            @&lt;text&gt;
+            function(e) {
+            //event handling code
+            }
+            &lt;/text&gt;
+            ))
+            .Render();
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartEventBuilder.Drag(System.String)">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the Drag client-side event.
+            </summary>
+            <param name="onDragHandlerName">The name of the JavaScript function that will handle the event.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().Chart()
+            .Name("Chart")
+            .Events(events =&gt; events.Drag("onDrag"))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartEventBuilder.Drag(System.Func{System.Object,System.Object})">
+            <summary>
+            Defines the inline handler of the Drag client-side event
+            </summary>
+            <param name="inlineCodeBlock">The handler code wrapped in a text tag (Razor syntax).</param>
+            <example>
+                <code lang="CS">
+            &lt;% Html.Kendo().Chart()
+            .Name("Chart")
+            .Events(events =&gt; events.Drag(
+            @&lt;text&gt;
+            function(e) {
+            //event handling code
+            }
+            &lt;/text&gt;
+            ))
+            .Render();
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartEventBuilder.DragEnd(System.String)">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the DragEnd client-side event.
+            </summary>
+            <param name="onDragEndHandlerName">The name of the JavaScript function that will handle the event.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().Chart()
+            .Name("Chart")
+            .Events(events =&gt; events.DragEnd("onDragEnd"))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartEventBuilder.DragEnd(System.Func{System.Object,System.Object})">
+            <summary>
+            Defines the inline handler of the DragEnd client-side event
+            </summary>
+            <param name="inlineCodeBlock">The handler code wrapped in a text tag (Razor syntax).</param>
+            <example>
+                <code lang="CS">
+            &lt;% Html.Kendo().Chart()
+            .Name("Chart")
+            .Events(events =&gt; events.DragEnd(
+            @&lt;text&gt;
+            function(e) {
+            //event handling code
+            }
+            &lt;/text&gt;
+            ))
+            .Render();
+            %&gt;
+            </code>
+            </example>
+        </member>
         <member name="M:Kendo.Mvc.UI.Fluent.ChartEventBuilder.PlotAreaClick(System.Func{System.Object,System.Object})">
             <summary>
             Defines the inline handler of the PlotAreaClick client-side event
@@ -6145,6 +6737,111 @@
             &lt;%= Html.Kendo().Chart()
             .Name("Chart")
             .Events(events =&gt; events.PlotAreaClick("onPlotAreaClick"))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartEventBuilder.ZoomStart(System.String)">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the ZoomStart client-side event.
+            </summary>
+            <param name="onZoomStartHandlerName">The name of the JavaScript function that will handle the event.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().Chart()
+            .Name("Chart")
+            .Events(events =&gt; events.ZoomStart("onZoomStart"))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartEventBuilder.ZoomStart(System.Func{System.Object,System.Object})">
+            <summary>
+            Defines the inline handler of the ZoomStart client-side event
+            </summary>
+            <param name="inlineCodeBlock">The handler code wrapped in a text tag (Razor syntax).</param>
+            <example>
+                <code lang="CS">
+            &lt;% Html.Kendo().Chart()
+            .Name("Chart")
+            .Events(events =&gt; events.ZoomStart(
+            @&lt;text&gt;
+            function(e) {
+            //event handling code
+            }
+            &lt;/text&gt;
+            ))
+            .Render();
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartEventBuilder.Zoom(System.String)">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the Zoom client-side event.
+            </summary>
+            <param name="onZoomHandlerName">The name of the JavaScript function that will handle the event.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().Chart()
+            .Name("Chart")
+            .Events(events =&gt; events.Zoom("onZoom"))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartEventBuilder.Zoom(System.Func{System.Object,System.Object})">
+            <summary>
+            Defines the inline handler of the Zoom client-side event
+            </summary>
+            <param name="inlineCodeBlock">The handler code wrapped in a text tag (Razor syntax).</param>
+            <example>
+                <code lang="CS">
+            &lt;% Html.Kendo().Chart()
+            .Name("Chart")
+            .Events(events =&gt; events.Zoom(
+            @&lt;text&gt;
+            function(e) {
+            //event handling code
+            }
+            &lt;/text&gt;
+            ))
+            .Render();
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartEventBuilder.ZoomEnd(System.String)">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the ZoomEnd client-side event.
+            </summary>
+            <param name="onZoomEndHandlerName">The name of the JavaScript function that will handle the event.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().Chart()
+            .Name("Chart")
+            .Events(events =&gt; events.ZoomEnd("onZoomEnd"))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartEventBuilder.ZoomEnd(System.Func{System.Object,System.Object})">
+            <summary>
+            Defines the inline handler of the ZoomEnd client-side event
+            </summary>
+            <param name="inlineCodeBlock">The handler code wrapped in a text tag (Razor syntax).</param>
+            <example>
+                <code lang="CS">
+            &lt;% Html.Kendo().Chart()
+            .Name("Chart")
+            .Events(events =&gt; events.ZoomEnd(
+            @&lt;text&gt;
+            function(e) {
+            //event handling code
+            }
+            &lt;/text&gt;
+            ))
+            .Render();
             %&gt;
             </code>
             </example>
@@ -6305,6 +7002,23 @@
             </code>
             </example>
         </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartBuilder`1.Panes(System.Action{Kendo.Mvc.UI.Fluent.ChartPanesFactory})">
+            <summary>
+            Defines the chart panes.
+            </summary>
+            <param name="configurator">The add action.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().Chart(Model)
+            .Name("Chart")
+            .Panes(panes =&gt;
+            {
+            panes.Add("volume");
+            })
+            %&gt;
+            </code>
+            </example>
+        </member>
         <member name="M:Kendo.Mvc.UI.Fluent.ChartBuilder`1.AxisDefaults(System.Action{Kendo.Mvc.UI.Fluent.ChartAxisDefaultsBuilder{`0}})">
             <summary>
             Defines the options for all chart axes of the specified type.
@@ -6390,6 +7104,28 @@
             {
             ds.Ajax().Read(r =&gt; r.Action("SalesData", "Chart"));
             })
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartBuilder`1.AutoBind(System.Boolean)">
+            <summary>
+            Enables or disables automatic binding.
+            </summary>
+            <param name="visible">
+            Gets or sets a value indicating if the chart
+            should be data bound during initialization.
+            The default value is true.
+            </param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().Chart()
+            .Name("Chart")
+            .DataSource(ds =&gt;
+            {
+            ds.Ajax().Read(r =&gt; r.Action("SalesData", "Chart"));
+            })
+            .AutoBind(false)
             %&gt;
             </code>
             </example>
@@ -6621,7 +7357,7 @@
             </summary>
             <typeparam name="TModel">The type of the data item to which the chart is bound to</typeparam>
         </member>
-        <member name="M:Kendo.Mvc.UI.Fluent.ChartSeriesFactory`1.#ctor(Kendo.Mvc.UI.Chart{`0})">
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartSeriesFactory`1.#ctor(Kendo.Mvc.UI.ISeriesContainer)">
             <summary>
             Initializes a new instance of the <see cref="!:ChartSeriesFactory{TModel}" /> class.
             </summary>
@@ -6882,7 +7618,20 @@
             The name of the Y value member.
             </param>
         </member>
-        <!--FIXME: Invalid documentation markup was found for member M:Kendo.Mvc.UI.Fluent.ChartSeriesFactory`1.Scatter(System.Type,System.String,System.String)-->
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartSeriesFactory`1.Scatter(System.Type,System.String,System.String)">
+            <summary>
+            Defines bound scatter series.
+            </summary>
+            <param name="memberType">
+            The type of the value members.
+            </param>
+            <param name="xMemberName">
+            The name of the X value member.
+            </param>
+            <param name="yMemberName">
+            The name of the Y value member.
+            </param>
+        </member>
         <member name="M:Kendo.Mvc.UI.Fluent.ChartSeriesFactory`1.Scatter(System.Collections.IEnumerable)">
             <summary>
             Defines scatter series bound to inline data.
@@ -6913,7 +7662,20 @@
             The name of the Y value member.
             </param>
         </member>
-        <!--FIXME: Invalid documentation markup was found for member M:Kendo.Mvc.UI.Fluent.ChartSeriesFactory`1.ScatterLine(System.Type,System.String,System.String)-->
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartSeriesFactory`1.ScatterLine(System.Type,System.String,System.String)">
+            <summary>
+            Defines bound scatter line series.
+            </summary>
+            <param name="memberType">
+            The type of the value members.
+            </param>
+            <param name="xMemberName">
+            The name of the X value member.
+            </param>
+            <param name="yMemberName">
+            The name of the Y value member.
+            </param>
+        </member>
         <member name="M:Kendo.Mvc.UI.Fluent.ChartSeriesFactory`1.ScatterLine(System.Collections.IEnumerable)">
             <summary>
             Defines scatter line series bound to inline data.
@@ -6991,6 +7753,52 @@
             The data to bind to
             </param>
         </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartSeriesFactory`1.OHLC``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`0,System.String}})">
+            <summary>
+            Defines bound ohlc series.
+            </summary>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartSeriesFactory`1.OHLC``1(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Defines bound ohlc series.
+            </summary>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartSeriesFactory`1.OHLC``1(System.Type,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Defines bound ohlc series.
+            </summary>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartSeriesFactory`1.OHLC``1(System.Collections.IEnumerable)">
+            <summary>
+            Defines ohlc series bound to inline data.
+            </summary>
+            <param name="data">
+            The data to bind to
+            </param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartSeriesFactory`1.Candlestick``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`0,System.String}},System.Linq.Expressions.Expression{System.Func{`0,System.String}})">
+            <summary>
+            Defines bound candlestick series.
+            </summary>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartSeriesFactory`1.Candlestick``1(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Defines bound candlestick series.
+            </summary>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartSeriesFactory`1.Candlestick``1(System.Type,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Defines bound candlestick series.
+            </summary>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartSeriesFactory`1.Candlestick``1(System.Collections.IEnumerable)">
+            <summary>
+            Defines candlestick series bound to inline data.
+            </summary>
+            <param name="data">
+            The data to bind to
+            </param>
+        </member>
         <member name="T:Kendo.Mvc.UI.Fluent.ChartBarSeriesBuilder`1">
             <summary>
             Defines the fluent interface for configuring bar series.
@@ -7021,7 +7829,7 @@
             <summary>
             Sets the name of the stack that this series belongs to. Each unique name creates a new stack.
             </summary>
-            <param name="stacked">The name of the stack.</param>
+            <param name="stackName">The name of the stack.</param>
             <example>
                 <code lang="CS">
             &lt;%= Html.Kendo().Chart(Model)
@@ -7263,26 +8071,23 @@
             Serializes the current instance
             </summary>
         </member>
-        <member name="M:Kendo.Mvc.UI.ChartBarSeries`2.#ctor(Kendo.Mvc.UI.Chart{`0},System.Linq.Expressions.Expression{System.Func{`0,`1}},System.Linq.Expressions.Expression{System.Func{`0,System.String}})">
+        <member name="M:Kendo.Mvc.UI.ChartBarSeries`2.#ctor(System.Linq.Expressions.Expression{System.Func{`0,`1}},System.Linq.Expressions.Expression{System.Func{`0,System.String}})">
             <summary>
             Initializes a new instance of the <see cref="!:ChartBarSeries{TModel, TValue}" /> class.
             </summary>
-            <param name="chart">The parent chart</param>
             <param name="valueExpression">The expression used to extract the point value from the chart model.</param>
             <param name="colorExpression">The expression used to extract the point color from the chart model.</param>
         </member>
-        <member name="M:Kendo.Mvc.UI.ChartBarSeries`2.#ctor(Kendo.Mvc.UI.Chart{`0},System.Collections.IEnumerable)">
+        <member name="M:Kendo.Mvc.UI.ChartBarSeries`2.#ctor(System.Collections.IEnumerable)">
             <summary>
             Initializes a new instance of the <see cref="!:ChartBarSeries{TModel, TValue}" /> class.
             </summary>
-            <param name="chart">The parent chart</param>
             <param name="data">The data to bind to.</param>
         </member>
-        <member name="M:Kendo.Mvc.UI.ChartBarSeries`2.#ctor(Kendo.Mvc.UI.Chart{`0})">
+        <member name="M:Kendo.Mvc.UI.ChartBarSeries`2.#ctor">
             <summary>
             Initializes a new instance of the <see cref="!:ChartBarSeries{TModel, TValue}" /> class.
             </summary>
-            <param name="chart">The chart.</param>
         </member>
         <member name="P:Kendo.Mvc.UI.ChartBarSeries`2.Stacked">
             <summary>
@@ -7389,29 +8194,26 @@
             Defines the position of the pie labels.
             </summary>
         </member>
-        <member name="M:Kendo.Mvc.UI.ChartPieSeries`2.#ctor(Kendo.Mvc.UI.Chart{`0},System.Linq.Expressions.Expression{System.Func{`0,`1}},System.Linq.Expressions.Expression{System.Func{`0,System.String}},System.Linq.Expressions.Expression{System.Func{`0,System.String}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+        <member name="M:Kendo.Mvc.UI.ChartPieSeries`2.#ctor(System.Linq.Expressions.Expression{System.Func{`0,`1}},System.Linq.Expressions.Expression{System.Func{`0,System.String}},System.Linq.Expressions.Expression{System.Func{`0,System.String}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
             <summary>
             Initializes a new instance of the <see cref="!:ChartPieSeries{TModel, TValue}" /> class.
             </summary>
-            <param name="chart">The chart.</param>
             <param name="expressionValue">The value expression.</param>
             <param name="expressionCategory">The category expression.</param>
             <param name="expressionColor">The color expression.</param>
             <param name="expressionExplode">The explode expression.</param>
             <param name="expressionVisibleInLegend">The visibleInLegend expression.</param>
         </member>
-        <member name="M:Kendo.Mvc.UI.ChartPieSeries`2.#ctor(Kendo.Mvc.UI.Chart{`0},System.Collections.IEnumerable)">
+        <member name="M:Kendo.Mvc.UI.ChartPieSeries`2.#ctor(System.Collections.IEnumerable)">
             <summary>
             Initializes a new instance of the <see cref="!:ChartPieSeries{TModel, TValue}" /> class.
             </summary>
-            <param name="chart">The chart.</param>
             <param name="data">The data.</param>
         </member>
-        <member name="M:Kendo.Mvc.UI.ChartPieSeries`2.#ctor(Kendo.Mvc.UI.Chart{`0})">
+        <member name="M:Kendo.Mvc.UI.ChartPieSeries`2.#ctor">
             <summary>
             Initializes a new instance of the <see cref="!:ChartPieSeries{TModel, TValue}" /> class.
             </summary>
-            <param name="chart">The chart.</param>
         </member>
         <member name="P:Kendo.Mvc.UI.ChartPieSeries`2.Type">
             <summary>
@@ -7503,17 +8305,10 @@
             Gets the pie chart connectors configuration
             </summary>
         </member>
-        <member name="M:Kendo.Mvc.UI.ChartSeriesBase`1.#ctor(Kendo.Mvc.UI.Chart{`0})">
+        <member name="M:Kendo.Mvc.UI.ChartSeriesBase`1.#ctor">
             <summary>
             Initializes a new instance of the <see cref="!:ChartSeriesBase{T}" /> class.
             </summary>
-            <param name="chart">The chart.</param>
-        </member>
-        <member name="P:Kendo.Mvc.UI.ChartSeriesBase`1.Chart">
-            <summary>
-            Gets or sets the chart.
-            </summary>
-            <value>The chart.</value>
         </member>
         <member name="P:Kendo.Mvc.UI.ChartSeriesBase`1.Name">
             <summary>
@@ -7548,21 +8343,21 @@
             Name template for auto-generated series when binding to grouped data.
             </summary>
         </member>
-        <member name="M:Kendo.Mvc.UI.ChartBoundSeries`2.#ctor(Kendo.Mvc.UI.Chart{`0},System.Linq.Expressions.Expression{System.Func{`0,`1}})">
+        <member name="M:Kendo.Mvc.UI.ChartBoundSeries`2.#ctor(System.Linq.Expressions.Expression{System.Func{`0,`1}})">
             <summary>
             Initializes a new instance of the <see cref="!:ChartBoundSeries{TModel, TValue}" /> class.
             </summary>
             <param name="chart">The chart.</param>
             <param name="expression">The expression.</param>
         </member>
-        <member name="M:Kendo.Mvc.UI.ChartBoundSeries`2.#ctor(Kendo.Mvc.UI.Chart{`0},System.Collections.IEnumerable)">
+        <member name="M:Kendo.Mvc.UI.ChartBoundSeries`2.#ctor(System.Collections.IEnumerable)">
             <summary>
             Initializes a new instance of the <see cref="!:ChartBoundSeries{TModel, TValue}" /> class.
             </summary>
             <param name="chart">The chart.</param>
             <param name="data">The data.</param>
         </member>
-        <member name="M:Kendo.Mvc.UI.ChartBoundSeries`2.#ctor(Kendo.Mvc.UI.Chart{`0})">
+        <member name="M:Kendo.Mvc.UI.ChartBoundSeries`2.#ctor">
             <summary>
             Initializes a new instance of the <see cref="!:ChartBoundSeries{TModel, TValue}" /> class.
             </summary>
@@ -7684,11 +8479,10 @@
             The label opacity.
             </value>
         </member>
-        <member name="M:Kendo.Mvc.UI.ChartSeriesDefaults`1.#ctor(Kendo.Mvc.UI.Chart{`0})">
+        <member name="M:Kendo.Mvc.UI.ChartSeriesDefaults`1.#ctor">
             <summary>
             Initializes a new instance of the <see cref="!:ChartSeriesDefaults{T}" /> class.
             </summary>
-            <param name="chart">The chart.</param>
         </member>
         <member name="P:Kendo.Mvc.UI.ChartSeriesDefaults`1.Bar">
             <summary>
@@ -7735,6 +8529,11 @@
             The default settings for all scatter line series.
             </summary>
         </member>
+        <member name="P:Kendo.Mvc.UI.ChartSeriesDefaults`1.OHLC">
+            <summary>
+            The default settings for all ohlc series.
+            </summary>
+        </member>
         <member name="M:Kendo.Mvc.UI.ChartPointLabels.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:Kendo.Mvc.UI.ChartPointLabels" /> class.
@@ -7749,21 +8548,19 @@
             <see cref="F:Kendo.Mvc.UI.ChartPointLabelsPosition.Above" /> for stacked series.
             </remarks>
         </member>
-        <member name="M:Kendo.Mvc.UI.ChartLineSeries`2.#ctor(Kendo.Mvc.UI.Chart{`0},System.Linq.Expressions.Expression{System.Func{`0,`1}})">
+        <member name="M:Kendo.Mvc.UI.ChartLineSeries`2.#ctor(System.Linq.Expressions.Expression{System.Func{`0,`1}})">
             <summary>
             Initializes a new instance of the <see cref="!:ChartBarSeries{TModel, TValue}" /> class.
             </summary>
-            <param name="chart">The parent chart</param>
             <param name="expression">The expression used to extract the series value from the chart model.</param>
         </member>
-        <member name="M:Kendo.Mvc.UI.ChartLineSeries`2.#ctor(Kendo.Mvc.UI.Chart{`0},System.Collections.IEnumerable)">
+        <member name="M:Kendo.Mvc.UI.ChartLineSeries`2.#ctor(System.Collections.IEnumerable)">
             <summary>
             Initializes a new instance of the <see cref="!:ChartLineSeries{TModel, TValue}" /> class.
             </summary>
-            <param name="chart">The parent chart</param>
             <param name="data">The data to bind to.</param>
         </member>
-        <member name="M:Kendo.Mvc.UI.ChartLineSeries`2.#ctor(Kendo.Mvc.UI.Chart{`0})">
+        <member name="M:Kendo.Mvc.UI.ChartLineSeries`2.#ctor">
             <summary>
             Initializes a new instance of the <see cref="!:ChartLineSeries{TModel, TValue}" /> class.
             </summary>
@@ -7829,22 +8626,20 @@
             The bars have glass effect overlay
             </summary>
         </member>
-        <member name="M:Kendo.Mvc.UI.ChartScatterSeries`3.#ctor(Kendo.Mvc.UI.Chart{`0},System.Linq.Expressions.Expression{System.Func{`0,`1}},System.Linq.Expressions.Expression{System.Func{`0,`2}})">
+        <member name="M:Kendo.Mvc.UI.ChartScatterSeries`3.#ctor(System.Linq.Expressions.Expression{System.Func{`0,`1}},System.Linq.Expressions.Expression{System.Func{`0,`2}})">
             <summary>
             Initializes a new instance of the <see cref="!:ChartScatterSeries{TModel, TXValue, TYValue}" /> class.
             </summary>
-            <param name="chart">The chart.</param>
-            <param name="expressionXValue">The X expression.</param>
-            <param name="expressionYValue">The Y expression.</param>
+            <param name="xValueExpression">The X expression.</param>
+            <param name="yValueExpression">The Y expression.</param>
         </member>
-        <member name="M:Kendo.Mvc.UI.ChartScatterSeries`3.#ctor(Kendo.Mvc.UI.Chart{`0},System.Collections.IEnumerable)">
+        <member name="M:Kendo.Mvc.UI.ChartScatterSeries`3.#ctor(System.Collections.IEnumerable)">
             <summary>
             Initializes a new instance of the <see cref="!:ChartScatterSeries{TModel, TXValue, TYValue}" /> class.
             </summary>
-            <param name="chart">The chart.</param>
             <param name="data">The data.</param>
         </member>
-        <member name="M:Kendo.Mvc.UI.ChartScatterSeries`3.#ctor(Kendo.Mvc.UI.Chart{`0})">
+        <member name="M:Kendo.Mvc.UI.ChartScatterSeries`3.#ctor">
             <summary>
             Initializes a new instance of the <see cref="!:ChartScatterSeries{TModel, TXValue, TYValue}" /> class.
             </summary>
@@ -7887,26 +8682,23 @@
             The scatter chart data source.
             </summary>
         </member>
-        <member name="M:Kendo.Mvc.UI.ChartScatterLineSeries`3.#ctor(Kendo.Mvc.UI.Chart{`0},System.Linq.Expressions.Expression{System.Func{`0,`1}},System.Linq.Expressions.Expression{System.Func{`0,`2}})">
+        <member name="M:Kendo.Mvc.UI.ChartScatterLineSeries`3.#ctor(System.Linq.Expressions.Expression{System.Func{`0,`1}},System.Linq.Expressions.Expression{System.Func{`0,`2}})">
             <summary>
             Initializes a new instance of the <see cref="!:ChartScatterLineSeries{TModel, TXValue, TYValue}" /> class.
             </summary>
-            <param name="chart">The chart.</param>
-            <param name="expressionXValue">The X expression.</param>
-            <param name="expressionYValue">The Y expression.</param>
+            <param name="xValueExpression">The X expression.</param>
+            <param name="yValueExpression">The Y expression.</param>
         </member>
-        <member name="M:Kendo.Mvc.UI.ChartScatterLineSeries`3.#ctor(Kendo.Mvc.UI.Chart{`0},System.Collections.IEnumerable)">
+        <member name="M:Kendo.Mvc.UI.ChartScatterLineSeries`3.#ctor(System.Collections.IEnumerable)">
             <summary>
             Initializes a new instance of the <see cref="!:ChartScatterLineSeries{TModel, TXValue, TYValue}" /> class.
             </summary>
-            <param name="chart">The chart.</param>
             <param name="data">The data.</param>
         </member>
-        <member name="M:Kendo.Mvc.UI.ChartScatterLineSeries`3.#ctor(Kendo.Mvc.UI.Chart{`0})">
+        <member name="M:Kendo.Mvc.UI.ChartScatterLineSeries`3.#ctor">
             <summary>
             Initializes a new instance of the <see cref="!:ChartScatterLineSeries{TModel, TXValue, TYValue}" /> class.
             </summary>
-            <param name="chart">The chart.</param>
         </member>
         <member name="P:Kendo.Mvc.UI.ChartScatterLineSeries`3.Width">
             <summary>
@@ -7923,25 +8715,22 @@
             The behavior for handling missing values in scatter line series.
             </summary>
         </member>
-        <member name="M:Kendo.Mvc.UI.ChartAreaSeries`2.#ctor(Kendo.Mvc.UI.Chart{`0},System.Linq.Expressions.Expression{System.Func{`0,`1}})">
+        <member name="M:Kendo.Mvc.UI.ChartAreaSeries`2.#ctor(System.Linq.Expressions.Expression{System.Func{`0,`1}})">
             <summary>
             Initializes a new instance of the <see cref="!:ChartAreaSeries{TModel, TValue}" /> class.
             </summary>
-            <param name="chart">The parent chart</param>
             <param name="expression">The expression used to extract the series value from the chart model.</param>
         </member>
-        <member name="M:Kendo.Mvc.UI.ChartAreaSeries`2.#ctor(Kendo.Mvc.UI.Chart{`0},System.Collections.IEnumerable)">
+        <member name="M:Kendo.Mvc.UI.ChartAreaSeries`2.#ctor(System.Collections.IEnumerable)">
             <summary>
             Initializes a new instance of the <see cref="!:ChartAreaSeries{TModel, TValue}" /> class.
             </summary>
-            <param name="chart">The parent chart</param>
             <param name="data">The data to bind to.</param>
         </member>
-        <member name="M:Kendo.Mvc.UI.ChartAreaSeries`2.#ctor(Kendo.Mvc.UI.Chart{`0})">
+        <member name="M:Kendo.Mvc.UI.ChartAreaSeries`2.#ctor">
             <summary>
             Initializes a new instance of the <see cref="!:ChartAreaSeries{TModel, TValue}" /> class.
             </summary>
-            <param name="chart">The chart.</param>
         </member>
         <member name="P:Kendo.Mvc.UI.ChartAreaSeries`2.Stacked">
             <summary>
@@ -7983,29 +8772,26 @@
             The default value is horizontal.
             </value>
         </member>
-        <member name="M:Kendo.Mvc.UI.ChartDonutSeries`2.#ctor(Kendo.Mvc.UI.Chart{`0},System.Linq.Expressions.Expression{System.Func{`0,`1}},System.Linq.Expressions.Expression{System.Func{`0,System.String}},System.Linq.Expressions.Expression{System.Func{`0,System.String}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+        <member name="M:Kendo.Mvc.UI.ChartDonutSeries`2.#ctor(System.Linq.Expressions.Expression{System.Func{`0,`1}},System.Linq.Expressions.Expression{System.Func{`0,System.String}},System.Linq.Expressions.Expression{System.Func{`0,System.String}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
             <summary>
             Initializes a new instance of the <see cref="!:ChartDonutSeries{TModel, TValue}" /> class.
             </summary>
-            <param name="chart">The chart.</param>
             <param name="expressionValue">The value expression.</param>
             <param name="expressionCategory">The category expression.</param>
             <param name="expressionColor">The color expression.</param>
             <param name="expressionExplode">The explode expression.</param>
             <param name="expressionVisibleInLegend">The visibleInLegend expression.</param>
         </member>
-        <member name="M:Kendo.Mvc.UI.ChartDonutSeries`2.#ctor(Kendo.Mvc.UI.Chart{`0},System.Collections.IEnumerable)">
+        <member name="M:Kendo.Mvc.UI.ChartDonutSeries`2.#ctor(System.Collections.IEnumerable)">
             <summary>
             Initializes a new instance of the <see cref="!:ChartDonutSeries{TModel, TValue}" /> class.
             </summary>
-            <param name="chart">The chart.</param>
             <param name="data">The data.</param>
         </member>
-        <member name="M:Kendo.Mvc.UI.ChartDonutSeries`2.#ctor(Kendo.Mvc.UI.Chart{`0})">
+        <member name="M:Kendo.Mvc.UI.ChartDonutSeries`2.#ctor">
             <summary>
             Initializes a new instance of the <see cref="!:ChartDonutSeries{TModel, TValue}" /> class.
             </summary>
-            <param name="chart">The chart.</param>
         </member>
         <member name="P:Kendo.Mvc.UI.ChartDonutSeries`2.Margin">
             <summary>
@@ -8022,11 +8808,10 @@
             Gets or sets the the size of the donut series.
             </summary>
         </member>
-        <member name="M:Kendo.Mvc.UI.ChartBubbleSeries`4.#ctor(Kendo.Mvc.UI.Chart{`0},System.Linq.Expressions.Expression{System.Func{`0,`1}},System.Linq.Expressions.Expression{System.Func{`0,`2}},System.Linq.Expressions.Expression{System.Func{`0,`3}},System.Linq.Expressions.Expression{System.Func{`0,System.String}},System.Linq.Expressions.Expression{System.Func{`0,System.String}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+        <member name="M:Kendo.Mvc.UI.ChartBubbleSeries`4.#ctor(System.Linq.Expressions.Expression{System.Func{`0,`1}},System.Linq.Expressions.Expression{System.Func{`0,`2}},System.Linq.Expressions.Expression{System.Func{`0,`3}},System.Linq.Expressions.Expression{System.Func{`0,System.String}},System.Linq.Expressions.Expression{System.Func{`0,System.String}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
             <summary>
             Initializes a new instance of the <see cref="!:ChartBubbleSeries{TModel, TXValue, TYValue, TSizeValue}" /> class.
             </summary>
-            <param name="chart">The chart.</param>
             <param name="xValueExpression">The X expression.</param>
             <param name="yValueExpression">The Y expression.</param>
             <param name="sizeExpression">The Size expression.</param>
@@ -8034,18 +8819,16 @@
             <param name="colorExpression">The Color expression.</param>
             <param name="visibleInLegendExpression">The VisibleInLegend expression.</param>
         </member>
-        <member name="M:Kendo.Mvc.UI.ChartBubbleSeries`4.#ctor(Kendo.Mvc.UI.Chart{`0},System.Collections.IEnumerable)">
+        <member name="M:Kendo.Mvc.UI.ChartBubbleSeries`4.#ctor(System.Collections.IEnumerable)">
             <summary>
             Initializes a new instance of the <see cref="!:ChartBubbleSeries{TModel, TXValue, TYValue, TSizeValue}" /> class.
             </summary>
-            <param name="chart">The chart.</param>
             <param name="data">The data.</param>
         </member>
-        <member name="M:Kendo.Mvc.UI.ChartBubbleSeries`4.#ctor(Kendo.Mvc.UI.Chart{`0})">
+        <member name="M:Kendo.Mvc.UI.ChartBubbleSeries`4.#ctor">
             <summary>
             Initializes a new instance of the <see cref="!:ChartBubbleSeries{TModel, TXValue, TYValue, TSizeValue}" /> class.
             </summary>
-            <param name="chart">The chart.</param>
         </member>
         <member name="P:Kendo.Mvc.UI.ChartBubbleSeries`4.SizeMember">
             <summary>
@@ -8101,6 +8884,242 @@
             <summary>
             Gets or sets the markers visibility.
             </summary>
+        </member>
+        <member name="M:Kendo.Mvc.UI.ChartOHLCSeries`2.#ctor(System.Linq.Expressions.Expression{System.Func{`0,`1}},System.Linq.Expressions.Expression{System.Func{`0,`1}},System.Linq.Expressions.Expression{System.Func{`0,`1}},System.Linq.Expressions.Expression{System.Func{`0,`1}},System.Linq.Expressions.Expression{System.Func{`0,System.String}})">
+            <summary>
+            Initializes a new instance of the <see cref="!:ChartOHLCSeries{TModel, TValue}" /> class.
+            </summary>
+            <param name="expressionOpen">The open expression.</param>
+            <param name="expressionHigh">The high expression.</param>
+            <param name="expressionLow">The open expression.</param>
+            <param name="expressionClose">The high expression.</param>
+            <param name="expressionColor">The color expression.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.ChartOHLCSeries`2.#ctor(System.Collections.IEnumerable)">
+            <summary>
+            Initializes a new instance of the <see cref="!:ChartOHLCSeries{TModel, TValue}" /> class.
+            </summary>
+            <param name="data">The data.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.ChartOHLCSeries`2.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="!:ChartOHLCSeries{TModel, TValue}" /> class.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartOHLCSeries`2.Type">
+            <summary>
+            Gets the series type.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartOHLCSeries`2.OpenMember">
+            <summary>
+            Gets the model data open member name.
+            </summary>
+            <value>The model data open member name.</value>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartOHLCSeries`2.HighMember">
+            <summary>
+            Gets the model data high member name.
+            </summary>
+            <value>The model data high member name.</value>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartOHLCSeries`2.LowMember">
+            <summary>
+            Gets the model data low member name.
+            </summary>
+            <value>The model data low member name.</value>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartOHLCSeries`2.CloseMember">
+            <summary>
+            Gets the model data close member name.
+            </summary>
+            <value>The model data close member name.</value>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartOHLCSeries`2.ColorMember">
+            <summary>
+            Gets the model data color member name.
+            </summary>
+            <value>The model data color member name.</value>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartOHLCSeries`2.Border">
+            <summary>
+            Gets or sets the point border
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartOHLCSeries`2.Data">
+            <summary>
+            The ohlc chart data configuration.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartOHLCSeries`2.Aggregates">
+            <summary>
+            Aggregates function for date series.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartOHLCSeries`2.Gap">
+            <summary>
+            The distance between category clusters.
+            </summary>
+            <value>
+            A value of 1 means that there is a total of 1 point width between categories.
+            The distance is distributed evenly on each side.
+            </value>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartOHLCSeries`2.Spacing">
+            <summary>
+            Space between points.
+            </summary>
+            <value>
+            Value of 1 means that the distance between points is equal to their width.
+            </value>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartOHLCSeries`2.Line">
+            <summary>
+            The ohlc chart line configuration.
+            </summary>
+        </member>
+        <member name="M:Kendo.Mvc.UI.ChartOHLCAggregates.#ctor(System.Nullable{Kendo.Mvc.UI.ChartSeriesAggregate},System.Nullable{Kendo.Mvc.UI.ChartSeriesAggregate},System.Nullable{Kendo.Mvc.UI.ChartSeriesAggregate},System.Nullable{Kendo.Mvc.UI.ChartSeriesAggregate})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Kendo.Mvc.UI.ChartOHLCAggregates" /> class.
+            </summary>
+            <param name="open">The open aggregate.</param>
+            <param name="high">The high aggregate.</param>
+            <param name="low">The low aggregate.</param>
+            <param name="close">The close aggregate.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.ChartOHLCAggregates.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Kendo.Mvc.UI.ChartOHLCAggregates" /> class.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartOHLCAggregates.Open">
+            <summary>
+            Gets or sets the open aggregate.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartOHLCAggregates.High">
+            <summary>
+            Gets or sets the high aggregate.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartOHLCAggregates.Low">
+            <summary>
+            Gets or sets the low aggregate.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartOHLCAggregates.Close">
+            <summary>
+            Gets or sets the close aggregate.
+            </summary>
+        </member>
+        <member name="M:Kendo.Mvc.UI.ChartCandlestickSeries`2.#ctor(System.Linq.Expressions.Expression{System.Func{`0,`1}},System.Linq.Expressions.Expression{System.Func{`0,`1}},System.Linq.Expressions.Expression{System.Func{`0,`1}},System.Linq.Expressions.Expression{System.Func{`0,`1}},System.Linq.Expressions.Expression{System.Func{`0,System.String}},System.Linq.Expressions.Expression{System.Func{`0,System.String}})">
+            <summary>
+            Initializes a new instance of the <see cref="!:ChartCandlestickSeries{TModel, TValue}" /> class.
+            </summary>
+            <param name="expressionOpen">The open expression.</param>
+            <param name="expressionHigh">The high expression.</param>
+            <param name="expressionLow">The open expression.</param>
+            <param name="expressionClose">The high expression.</param>
+            <param name="expressionColor">The color expression.</param>
+            <param name="expressionDownColor">The downColor expression.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.ChartCandlestickSeries`2.#ctor(System.Collections.IEnumerable)">
+            <summary>
+            Initializes a new instance of the <see cref="!:ChartCandlestickSeries{TModel, TValue}" /> class.
+            </summary>
+            <param name="data">The data.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.ChartCandlestickSeries`2.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="!:ChartCandlestickSeries{TModel, TValue}" /> class.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartCandlestickSeries`2.DownColorMember">
+            <summary>
+            Gets the model data down color member name.
+            </summary>
+            <value>The model data down color member name.</value>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartCandlestickSeries`2.Overlay">
+            <summary>
+            Gets or sets the effects overlay
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.IChartCandlestickSeries.DownColorMember">
+            <summary>
+            Gets the model down color member name.
+            </summary>
+            <value>The model down color member name.</value>
+        </member>
+        <member name="P:Kendo.Mvc.UI.IChartCandlestickSeries.Overlay">
+            <summary>
+            Gets or sets the effects overlay.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.IChartOHLCSeries.Aggregates">
+            <summary>
+            Aggregates function for date series.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.IChartOHLCSeries.Gap">
+            <summary>
+            The distance between category clusters.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.IChartOHLCSeries.Data">
+            <summary>
+            The data used for binding.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.IChartOHLCSeries.Line">
+            <summary>
+            The ohlc chart line configuration.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.IChartOHLCSeries.Type">
+            <summary>
+            The type of the chart.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.IChartOHLCSeries.Spacing">
+            <summary>
+            Space between points.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.IChartOHLCSeries.Border">
+            <summary>
+            Gets or sets the point border.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.IChartOHLCSeries.ColorMember">
+            <summary>
+            Gets the model color member name.
+            </summary>
+            <value>The model color member name.</value>
+        </member>
+        <member name="P:Kendo.Mvc.UI.IChartOHLCSeries.OpenMember">
+            <summary>
+            Gets the model open member name.
+            </summary>
+            <value>The model open member name.</value>
+        </member>
+        <member name="P:Kendo.Mvc.UI.IChartOHLCSeries.HighMember">
+            <summary>
+            Gets the model high member name.
+            </summary>
+            <value>The model high member name.</value>
+        </member>
+        <member name="P:Kendo.Mvc.UI.IChartOHLCSeries.LowMember">
+            <summary>
+            Gets the model low member name.
+            </summary>
+            <value>The model low member name.</value>
+        </member>
+        <member name="P:Kendo.Mvc.UI.IChartOHLCSeries.CloseMember">
+            <summary>
+            Gets the model close member name.
+            </summary>
+            <value>The model close member name.</value>
         </member>
         <member name="P:Kendo.Mvc.UI.IChartBubbleSeries.SizeMember">
             <summary>
@@ -8435,6 +9454,11 @@
         <member name="P:Kendo.Mvc.UI.IChartSeriesDefaults.ScatterLine">
             <summary>
             The default settings for all scatter line series
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.IChartSeriesDefaults.OHLC">
+            <summary>
+            The default settings for all ohlc series
             </summary>
         </member>
         <member name="P:Kendo.Mvc.UI.IChartBoundSeries.Member">
@@ -8785,11 +9809,6 @@
             <param name="controllerName">Controller Name</param>
             <param name="routeValues">Route values</param>
         </member>
-        <member name="M:Kendo.Mvc.UI.Fluent.AjaxDataSourceBuilder`1.Model(System.Action{Kendo.Mvc.UI.Fluent.DataSourceModelDescriptorFactory{`0}})">
-            <summary>
-            Configures Model properties
-            </summary>
-        </member>
         <member name="M:Kendo.Mvc.UI.Fluent.AjaxDataSourceBuilder`1.Batch(System.Boolean)">
             <summary>
             Determines if modifications will be sent to the server in batches or as individually requests.
@@ -8867,6 +9886,18 @@
             <summary>
             Configures the initial filter.
             </summary>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.AjaxDataSourceBuilderBase`2.Model(System.Action{Kendo.Mvc.UI.Fluent.DataSourceModelDescriptorFactory{`0}})">
+            <summary>
+            Configures Model properties
+            </summary>
+        </member>
+        <member name="T:Kendo.Mvc.UI.Fluent.ReadOnlyAjaxDataSourceBuilder`1">
+            <summary>
+            Defines the fluent API for configuring a readon-only AJAX data source.
+            </summary>
+            <typeparam name="TModel">
+            </typeparam>
         </member>
         <member name="T:Kendo.Mvc.UI.Fluent.ServerCrudOperationBuilder">
             <summary>
@@ -9050,34 +10081,61 @@
             <summary>
             Defines the name of the JavaScript function that will handle the the Change client-side event.
             </summary>
-            <param name="handler">JavaScript function name</param>
+            <param name="handler">The name of the JavaScript function that will handle the event.</param>
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.DataSourceEventBuilder.Change(System.Func{System.Object,System.Object})">
             <summary>
             Defines the inline handler of the Change client-side event.
             </summary>
+            <param name="handler">The handler code wrapped in a text tag (Razor syntax).</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DataSourceEventBuilder.Sync(System.String)">
+            <summary>
+            Defines the name of the JavaScript function that will handle the Sync client-side event.
+            </summary>
+            <param name="handler">The name of the JavaScript function that will handle the event.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DataSourceEventBuilder.Sync(System.Func{System.Object,System.Object})">
+            <summary>
+            Defines the inline handler of the Sync client-side event.
+            </summary>
+            <param name="handler">The handler code wrapped in a text tag (Razor syntax).</param>
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.DataSourceEventBuilder.RequestStart(System.String)">
             <summary>
-            Defines the name of the JavaScript function that will handle the the RequestStart client-side event.
+            Defines the name of the JavaScript function that will handle the RequestStart client-side event.
             </summary>
-            <param name="handler">JavaScript function name</param>
+            <param name="handler">The name of the JavaScript function that will handle the event.</param>
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.DataSourceEventBuilder.RequestStart(System.Func{System.Object,System.Object})">
             <summary>
             Defines the inline handler of the RequestStart client-side event.
             </summary>
+            <param name="handler">The handler code wrapped in a text tag (Razor syntax).</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DataSourceEventBuilder.RequestEnd(System.String)">
+            <summary>
+            Defines the name of the JavaScript function that will handle the RequestEnd client-side event.
+            </summary>
+            <param name="handler">The name of the JavaScript function that will handle the event.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DataSourceEventBuilder.RequestEnd(System.Func{System.Object,System.Object})">
+            <summary>
+            Defines the inline handler of the RequestEnd client-side event.
+            </summary>
+            <param name="handler">The handler code wrapped in a text tag (Razor syntax).</param>
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.DataSourceEventBuilder.Error(System.String)">
             <summary>
-            Defines the name of the JavaScript function that will handle the the Error client-side event.
+            Defines the name of the JavaScript function that will handle the Error client-side event.
             </summary>
-            <param name="handler">JavaScript function name</param>
+            <param name="handler">The name of the JavaScript function that will handle the event.</param>
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.DataSourceEventBuilder.Error(System.Func{System.Object,System.Object})">
             <summary>
             Defines the inline handler of the Error client-side event.
             </summary>
+            <param name="handler">The handler code wrapped in a text tag (Razor syntax).</param>
         </member>
         <member name="T:Kendo.Mvc.UI.Fluent.DataSourceModelFieldDescriptorBuilder`1">
             <summary>
@@ -9085,6 +10143,12 @@
             </summary>
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.DataSourceModelFieldDescriptorBuilder`1.DefaultValue(`0)">
+            <summary>
+            Sets the value which will be used to populate the field when new non-existing model is created.
+            </summary>
+            <param name="value">The value</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DataSourceModelFieldDescriptorBuilder`1.DefaultValue(System.Object)">
             <summary>
             Sets the value which will be used to populate the field when new non-existing model is created.
             </summary>
@@ -9481,6 +10545,99 @@
             Defines the fluent interface for configuring the Editor stylesheets.
             </summary>
         </member>
+        <member name="P:Kendo.Mvc.UI.EditorImageBrowserController.ContentPath">
+            <summary>
+            Gets the base path from which content will be served.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.EditorImageBrowserController.Filter">
+            <summary>
+            Gets the valid file extensions by which served files will be filtered.
+            </summary>
+        </member>
+        <member name="M:Kendo.Mvc.UI.EditorImageBrowserController.AuthorizeRead(System.String)">
+            <summary>
+            Determines if content of a given path can be browsed.
+            </summary>
+            <param name="path">The path which will be browsed.</param>
+            <returns>true if browsing is allowed, otherwise false.</returns>
+        </member>
+        <member name="M:Kendo.Mvc.UI.EditorImageBrowserController.Thumbnail(System.String)">
+            <summary>
+            Serves an image's thumbnail by given path.
+            </summary>
+            <param name="path">The path to the image.</param>
+            <returns>Thumbnail of an image.</returns>
+            <exception cref="T:System.Web.HttpException">Throws 403 Forbidden if the <paramref name="path" /> is outside of the valid paths.</exception>
+            <exception cref="T:System.Web.HttpException">Throws 404 File Not Found if the <paramref name="path" /> refers to a non existant image.</exception>
+        </member>
+        <member name="M:Kendo.Mvc.UI.EditorImageBrowserController.Destroy(System.String,Kendo.Mvc.UI.ImageBrowserEntry)">
+            <summary>
+            Deletes a entry.
+            </summary>
+            <param name="path">The path to the entry.</param>
+            <param name="entry">The entry.</param>
+            <returns>An empty <see cref="T:System.Web.Mvc.ContentResult" />.</returns>
+            <exception cref="T:System.Web.HttpException">Forbidden</exception>
+        </member>
+        <member name="M:Kendo.Mvc.UI.EditorImageBrowserController.AuthorizeDeleteFile(System.String)">
+            <summary>
+            Determines if a file can be deleted.
+            </summary>
+            <param name="path">The path to the file.</param>
+            <returns>true if file can be deleted, otherwise false.</returns>
+        </member>
+        <member name="M:Kendo.Mvc.UI.EditorImageBrowserController.AuthorizeDeleteDirectory(System.String)">
+            <summary>
+            Determines if a folder can be deleted.
+            </summary>
+            <param name="path">The path to the folder.</param>
+            <returns>true if folder can be deleted, otherwise false.</returns>
+        </member>
+        <member name="M:Kendo.Mvc.UI.EditorImageBrowserController.AuthorizeCreateDirectory(System.String,System.String)">
+            <summary>
+            Determines if a folder can be created.
+            </summary>
+            <param name="path">The path to the parent folder in which the folder should be created.</param>
+            <param name="name">Name of the folder.</param>
+            <returns>true if folder can be created, otherwise false.</returns>
+        </member>
+        <member name="M:Kendo.Mvc.UI.EditorImageBrowserController.Create(System.String,Kendo.Mvc.UI.ImageBrowserEntry)">
+            <summary>
+            Creates a folder with a given entry.
+            </summary>
+            <param name="path">The path to the parent folder in which the folder should be created.</param>
+            <param name="entry">The entry.</param>
+            <returns>An empty <see cref="T:System.Web.Mvc.ContentResult" />.</returns>
+            <exception cref="T:System.Web.HttpException">Forbidden</exception>
+        </member>
+        <member name="M:Kendo.Mvc.UI.EditorImageBrowserController.AuthorizeUpload(System.String,System.Web.HttpPostedFileBase)">
+            <summary>
+            Determines if a file can be uploaded to a given path.
+            </summary>
+            <param name="path">The path to which the file should be uploaded.</param>
+            <param name="file">The file which should be uploaded.</param>
+            <returns>true if the upload is allowed, otherwise false.</returns>
+        </member>
+        <member name="M:Kendo.Mvc.UI.EditorImageBrowserController.Upload(System.String,System.Web.HttpPostedFileBase)">
+            <summary>
+            Uploads a file to a given path.
+            </summary>
+            <param name="path">The path to which the file should be uploaded.</param>
+            <param name="file">The file which should be uploaded.</param>
+            <returns>A <see cref="T:System.Web.Mvc.JsonResult" /> containing the uploaded file's size and name.</returns>
+            <exception cref="T:System.Web.HttpException">Forbidden</exception>
+        </member>
+        <member name="T:Kendo.Mvc.UI.Fluent.ExpandableAnimationBuilder">
+            <summary>
+            Defines the fluent API for configuring the <see cref="T:Kendo.Mvc.UI.ExpandableAnimation" /> object.
+            </summary>
+        </member>
+        <member name="T:Kendo.Mvc.UI.Fluent.PopupAnimationBuilder">
+            <summary>
+            Defines the fluent API for configuring the <see cref="T:Kendo.Mvc.UI.PopupAnimation" /> object.
+            </summary>
+        </member>
         <member name="T:Kendo.Mvc.UI.GaugeRadialScaleLabelsPosition">
             <summary>
             Defines the position of the radial gauge labels.
@@ -9505,7 +10662,7 @@
             <summary>
             Initializes a new instance of the <see cref="T:Kendo.Mvc.UI.Fluent.GaugeLinearScaleLabelsBuilder" /> class.
             </summary>
-            <param name="GaugeLinearScaleLabels">The labels configuration.</param>
+            <param name="scaleLabels">The labels configuration.</param>
         </member>
         <member name="T:Kendo.Mvc.UI.Fluent.GaugeRadialScaleLabelsBuilder">
             <summary>
@@ -9516,7 +10673,7 @@
             <summary>
             Initializes a new instance of the <see cref="T:Kendo.Mvc.UI.Fluent.GaugeRadialScaleLabelsBuilder" /> class.
             </summary>
-            <param name="GaugeRadialScaleLabels">The labels configuration.</param>
+            <param name="scaleLabels">The labels configuration.</param>
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.GaugeRadialScaleLabelsBuilder.Position(Kendo.Mvc.UI.GaugeRadialScaleLabelsPosition)">
             <summary>
@@ -9781,12 +10938,7 @@
             Defines the fluent interface for configuring the gauge scale.
             </summary>
         </member>
-        <member name="M:Kendo.Mvc.UI.Fluent.GaugeRadialScaleBuilder.#ctor(Kendo.Mvc.UI.RadialGauge)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Kendo.Mvc.UI.Fluent.GaugeRadialScaleBuilder" /> class.
-            </summary>
-            <param name="gauge">The gauge component.</param>
-        </member>
+        <!--FIXME: Invalid documentation markup was found for member M:Kendo.Mvc.UI.Fluent.GaugeRadialScaleBuilder.#ctor(Kendo.Mvc.UI.RadialGauge)-->
         <member name="P:Kendo.Mvc.UI.Fluent.GaugeRadialScaleBuilder.radialGauge">
             <summary>
             The parent Guage
@@ -9983,6 +11135,19 @@
             		            }
             	           })
             	%&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DatePickerBuilderBase`2.Culture(System.String)">
+            <summary>
+            Specifies the culture info used by the widget.
+            </summary>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().DatePicker()
+            .Name("DatePicker")
+            .Culture("de-DE")
+            %&gt;
             </code>
             </example>
         </member>
@@ -10266,6 +11431,11 @@
             Sets the maximal date, which can be selected in DatePicker.
             </summary>
         </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DateTimePickerBuilder.TimeFormat(System.String)">
+            <summary>
+            Specifies the format, which is used to format the values in the time drop-down list.
+            </summary>
+        </member>
         <member name="T:Kendo.Mvc.UI.Fluent.DropDownListBuilder">
             <summary>
             Defines the fluent interface for configuring the <see cref="T:Kendo.Mvc.UI.DropDownList" /> component.
@@ -10429,7 +11599,41 @@
                 <code lang="CS">
             &lt;%= Html.Kendo().DropDownList()
             .Name("DropDownList")
-            .Events(events =&gt; events.Change("onChange"))
+            .Events(events =&gt; events.Change("change"))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DropDownListEventBuilderBase.DataBound(System.Func{System.Object,System.Object})">
+            <summary>
+            Defines the inline handler of the DataBound client-side event
+            </summary>
+            <param name="handler">The handler code wrapped in a text tag (Razor syntax).</param>
+            <example>
+                <code lang="CS">
+            &lt;% Html.Kendo().DropDownList()
+            .Name("DropDownList")
+            .Events(events =&gt; events.DataBound(
+            @&lt;text&gt;
+            function(e) {
+            //event handling code
+            }
+            &lt;/text&gt;
+            ))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DropDownListEventBuilderBase.DataBound(System.String)">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the DataBound client-side event.
+            </summary>
+            <param name="handler">The name of the JavaScript function that will handle the event.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().DropDownList()
+            .Name("DropDownList")
+            .Events(events =&gt; events.DataBound("dataBound"))
             %&gt;
             </code>
             </example>
@@ -10443,7 +11647,7 @@
                 <code lang="CS">
             &lt;%= Html.Kendo().DropDownList()
             .Name("DropDownList")
-            .Events(events =&gt; events.Open("Open"))
+            .Events(events =&gt; events.Open("open"))
             %&gt;
             </code>
             </example>
@@ -10773,9 +11977,9 @@
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.GaugeLabelsBuilder`1.#ctor(Kendo.Mvc.UI.GaugeScaleLabelsBase)">
             <summary>
-            Initializes a new instance of the <see cref="!:GaugeLabelsBuilder{T}" /> class.
+            Initializes a new instance of the <see cref="!:GaugeLabelsBuilder{TBuilder}" /> class.
             </summary>
-            <param name="chartBarLabels">The labels configuration.</param>
+            <param name="scaleLabels">The labels configuration.</param>
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.GaugeLabelsBuilder`1.Font(System.String)">
             <summary>
@@ -11064,7 +12268,7 @@
             <summary>
             Defines the ranges items.
             </summary>
-            <param name="addAction">The add action.</param>
+            <param name="configurator">The add action.</param>
             <example>
                 <code lang="CS">
             &lt;%= Html.Kendo().LinearGauge()
@@ -11233,7 +12437,7 @@
             <summary>
             Initializes a new instance of the <see cref="T:Kendo.Mvc.UI.Fluent.GaugeLinearTrackBuilder" /> class.
             </summary>
-            <param name="linearGaugeTrack">The linear gauge track.</param>
+            <param name="linearTrack">The linear gauge track.</param>
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.GaugeLinearTrackBuilder.Color(System.String)">
             <summary>
@@ -11307,7 +12511,7 @@
         </member>
         <member name="T:Kendo.Mvc.UI.Fluent.GaugeLinearPointerBuilder">
             <summary>
-            Defines the fluent interface for configuring the <see cref="T:Kendo.Mvc.UI.GaugeLinearPointer" />.
+            Defines the fluent interface for configuring the <see cref="T:Kendo.Mvc.UI.Fluent.GaugeLinearPointerBuilder" />.
             </summary>
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.GaugeLinearPointerBuilder.#ctor(Kendo.Mvc.UI.GaugeLinearPointer)">
@@ -11479,7 +12683,7 @@
         </member>
         <member name="T:Kendo.Mvc.UI.Fluent.GaugeRadialCapBuilder">
             <summary>
-            Defines the fluent interface for configuring the <see cref="T:Kendo.Mvc.UI.GaugeRadialCap" />.
+            Defines the fluent interface for configuring the <see cref="T:Kendo.Mvc.UI.Fluent.GaugeRadialCapBuilder" />.
             </summary>
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.GaugeRadialCapBuilder.#ctor(Kendo.Mvc.UI.GaugeRadialCap)">
@@ -11544,7 +12748,7 @@
         </member>
         <member name="T:Kendo.Mvc.UI.Fluent.GaugeRadialPointerBuilder">
             <summary>
-            Defines the fluent interface for configuring the <see cref="T:Kendo.Mvc.UI.GaugeRadialPointer" />.
+            Defines the fluent interface for configuring the <see cref="T:Kendo.Mvc.UI.Fluent.GaugeRadialPointerBuilder" />.
             </summary>
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.GaugeRadialPointerBuilder.#ctor(Kendo.Mvc.UI.GaugeRadialPointer)">
@@ -11788,7 +12992,7 @@
             Initializes a new instance of the <see cref="T:Kendo.Mvc.UI.LinearGauge" /> class.
             </summary>
             <param name="viewContext">The view context.</param>
-            <param name="IJavaScriptInitializer">The javascript initializer.</param>
+            <param name="initializer">The javascript initializer.</param>
             <param name="urlGenerator">The URL Generator.</param>
         </member>
         <member name="P:Kendo.Mvc.UI.RadialGauge.Scale">
@@ -11806,7 +13010,7 @@
             Initializes a new instance of the <see cref="T:Kendo.Mvc.UI.LinearGauge" /> class.
             </summary>
             <param name="viewContext">The view context.</param>
-            <param name="IJavaScriptInitializer">The javascript initializer.</param>
+            <param name="initializer">The javascript initializer.</param>
             <param name="urlGenerator">The URL Generator.</param>
         </member>
         <member name="P:Kendo.Mvc.UI.LinearGauge.Scale">
@@ -11878,7 +13082,7 @@
             Initializes a new instance of the <see cref="T:Kendo.Mvc.UI.Gauge" /> class.
             </summary>
             <param name="viewContext">The view context.</param>
-            <param name="IJavaScriptInitializer">The javascript initializer.</param>
+            <param name="initializer">The javascript initializer.</param>
             <param name="urlGenerator">The URL Generator.</param>
         </member>
         <member name="P:Kendo.Mvc.UI.Gauge.UrlGenerator">
@@ -12545,6 +13749,11 @@
             <returns>
             </returns>
         </member>
+        <member name="T:Kendo.Mvc.UI.GridAggregateResult">
+            <summary>
+            Represents an aggregate result.
+            </summary>
+        </member>
         <member name="T:Kendo.Mvc.UI.Fluent.DataSourceAggregatesFactory">
             <summary>
             Defines the fluent interface for configuring aggregates for a given field.
@@ -12573,6 +13782,11 @@
         <member name="M:Kendo.Mvc.UI.Fluent.DataSourceAggregatesFactory.Sum">
             <summary>
             Applies the Sum aggregate function.
+            </summary>
+        </member>
+        <member name="T:Kendo.Mvc.UI.GridGroupAggregateResult">
+            <summary>
+            Represents the aggregate result when grouping is enabled
             </summary>
         </member>
         <member name="T:Kendo.Mvc.UI.GridSelectionMode">
@@ -13343,6 +14557,11 @@
             </summary>
             <param name="templateName">name of the editor template</param>
         </member>
+        <member name="T:Kendo.Mvc.UI.Fluent.ListViewEventBuilder">
+            <summary>
+            Defines the fluent API for configuring the Kendo ListView for ASP.NET MVC events.
+            </summary>
+        </member>
         <member name="T:Kendo.Mvc.UI.Fluent.ListViewSelectionSettingsBuilder">
             <summary>
             Defines the fluent interface for configuring <see cref="!:ListView{T}.Selectable" /></summary>
@@ -13503,6 +14722,13 @@
             %&gt;
             </code>
             </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ListViewBuilder`1.AutoBind(System.Boolean)">
+            <summary>
+            Specifies if the ListView should be automatically bound on initial load.
+            This is only possible if AJAX binding is used, and widget is not initialy populated on the server.
+            </summary>
+            <param name="value">If true ListView will be automatically data bound, otherwise false</param>
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.ListViewBuilder`1.TagName(System.String)">
             <summary>
@@ -13927,6 +15153,11 @@
             </summary>
             <value>The subgroups.</value>
         </member>
+        <member name="T:Kendo.Mvc.UI.Fluent.SliderTooltipBuilder">
+            <summary>
+            Defines the fluent API for configuring the Kendo Slider for ASP.NET MVC tooltip
+            </summary>
+        </member>
         <member name="M:Kendo.Mvc.UI.Fluent.SliderTooltipBuilder.Format(System.String)">
             <summary>Gets or sets the format for displaying the value in the tooltip.</summary>
             <param name="value">The value.</param>
@@ -13951,9 +15182,20 @@
             </code>
             </example>
         </member>
-        <!--FIXME: Invalid documentation markup was found for member M:Kendo.Mvc.UI.Fluent.SliderTooltipBuilder.Tempalte(System.String)-->
+        <member name="M:Kendo.Mvc.UI.Fluent.SliderTooltipBuilder.Tempalte(System.String)">
+            <summary>Gets or sets the template for displaying the value in the tooltip.</summary>
+            <param name="template">The template.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().Slider()
+            .Name("Slider")
+            .Tooltip(tooltip =&gt; tooltip.template("${value}"))
+            %&gt;
+            </code>
+            </example>
+        </member>
         <member name="T:Kendo.Mvc.UI.Fluent.RangeSliderEventBuilder">
-            <summary>Defines the fluent interface for configuring the RangeSlider events.</summary>
+            <summary>Defines the fluent interface for configuring the <see cref="P:Kendo.Mvc.UI.Fluent.EventBuilder.Events" />.</summary>
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.RangeSliderEventBuilder.Change(System.Func{System.Object,System.Object})">
             <summary>
@@ -14028,7 +15270,7 @@
             </example>
         </member>
         <member name="T:Kendo.Mvc.UI.Fluent.SliderEventBuilder">
-            <summary>Defines the fluent interface for configuring the Slider events.</summary>
+            <summary>Defines the fluent interface for configuring the <see cref="P:Kendo.Mvc.UI.Fluent.EventBuilder.Events" />.</summary>
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.SliderEventBuilder.Change(System.Func{System.Object,System.Object})">
             <summary>
@@ -14140,7 +15382,7 @@
             <summary>
             Use it to configure tooltip while drag.
             </summary>
-            <param name="configurator">Use builder to set different tooltip options.</param>
+            <param name="action">Use builder to set different tooltip options.</param>
             <example>
                 <code lang="CS">
             &lt;%= Html.Kendo().Slider()
@@ -14166,6 +15408,12 @@
             </code>
             </example>
         </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.RangeSliderBuilder`1.LeftDragHandleTitle(System.String)">
+            <summary>Sets the title of the slider draghandle.</summary>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.RangeSliderBuilder`1.RightDragHandleTitle(System.String)">
+            <summary>Sets the title of the slider draghandle.</summary>
+        </member>
         <member name="T:Kendo.Mvc.UI.Fluent.SliderBuilder`1">
             <summary>Defines the fluent interface for configuring the <see cref="!:Slider{T}" />component.</summary>
         </member>
@@ -14175,6 +15423,9 @@
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.SliderBuilder`1.Value(System.Nullable{`0})">
             <summary>Sets the value of the slider.</summary>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.SliderBuilder`1.DragHandleTitle(System.String)">
+            <summary>Sets the title of the slider draghandle.</summary>
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.SliderBuilder`1.IncreaseButtonTitle(System.String)">
             <summary>Sets the title of the slider increase button.</summary>
@@ -14210,7 +15461,7 @@
             <summary>
             Use it to configure tooltip.
             </summary>
-            <param name="configurator">Use builder to set different tooltip options.</param>
+            <param name="action">Use builder to set different tooltip options.</param>
             <example>
                 <code lang="CS">
             &lt;%= Html.Kendo().Slider()
@@ -14535,6 +15786,11 @@
             Defines the fluent interface for configuring the <see cref="P:Kendo.Mvc.UI.Splitter.Panes" />.
             </summary>
         </member>
+        <member name="T:Kendo.Mvc.UI.Fluent.SplitterEventBuilder">
+            <summary>
+            Defines the fluent API for configuring the Kendo Splitter for ASP.NET MVC events
+            </summary>
+        </member>
         <member name="M:Kendo.Mvc.UI.Fluent.SplitterEventBuilder.Resize(System.Func{System.Object,System.Object})">
             <summary>
             Defines the inline handler of the Resize client-side event
@@ -14791,6 +16047,469 @@
             <summary>
             Specifies the pane contents
             </summary>
+        </member>
+        <member name="M:Kendo.Mvc.UI.ChartNavigator`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="!:ChartNavigator" /> class.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartNavigator`1.Series">
+            <summary>
+            Gets the navigator series.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartNavigator`1.Select">
+            <summary>
+            Gets or sets the navigator selection.
+            </summary>
+        </member>
+        <member name="M:Kendo.Mvc.UI.ChartDateSelection.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Kendo.Mvc.UI.ChartDateSelection" /> class.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartDateSelection.From">
+            <summary>
+            The lower boundary of the range.
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.UI.ChartDateSelection.To">
+            <summary>
+            The upper boundary of the range.
+            </summary>
+        </member>
+        <member name="T:Kendo.Mvc.UI.Fluent.ChartNavigatorBuilder`1">
+            <summary>
+            Defines the fluent interface for configuring the <see cref="!:ChartNavigator" />.
+            </summary>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartNavigatorBuilder`1.#ctor(Kendo.Mvc.UI.ChartNavigator{`0})">
+            <summary>
+            Initializes a new instance of the <see cref="!:ChartNavigatorBuilder" /> class.
+            </summary>
+            <param name="chartTitle">The stock chart navigator.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartNavigatorBuilder`1.Select(System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            Sets the selection range
+            </summary>
+            <param name="text">The selection range.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart(Model)
+            .Name("StockChart")
+            .Navigator(nav =&gt; nav.Select(DateTime.Today.AddMonths(-1), DateTime.Today))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.ChartNavigatorBuilder`1.Series(System.Action{Kendo.Mvc.UI.Fluent.ChartSeriesFactory{`0}})">
+            <summary>
+            Defines the navigator series. At least one series should be configured.
+            </summary>
+            <param name="configurator">The add action.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart(Model)
+            .Name("Chart")
+            .Navigator(nav =&gt;
+            nav.Series(series =&gt;
+            {
+            series.Bar(s =&gt; s.SalesAmount);
+            })
+            )
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="T:Kendo.Mvc.UI.Fluent.StockChartBuilder`1">
+            <summary>
+            Defines the fluent interface for configuring the <see cref="!:Chart{T}" /> component.
+            </summary>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.StockChartBuilder`1.#ctor(Kendo.Mvc.UI.StockChart{`0})">
+            <summary>
+            Initializes a new instance of the <see cref="!:ChartBuilder{T}" /> class.
+            </summary>
+            <param name="component">The component.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.StockChartBuilder`1.DateField(System.String)">
+            <summary>
+            Sets the field used by all date axes (including the navigator).
+            </summary>
+            <param name="theme">The date field.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart(Model)
+            .Name("Chart")
+            .DateField("Date")
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.StockChartBuilder`1.Navigator(System.Action{Kendo.Mvc.UI.Fluent.ChartNavigatorBuilder{`0}})">
+            <summary>
+            Configures the stock chart navigator.
+            </summary>
+            <param name="configurator">The navigator configuration action.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart(Model)
+            .Name("StockChart")
+            .Navigator(nav =&gt; nav
+            .Series(series =&gt;
+            {
+            series.Line(s =&gt; s.Volume);
+            }
+            )
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.StockChartBuilder`1.Events(System.Action{Kendo.Mvc.UI.Fluent.ChartEventBuilder})">
+            <summary>
+            Configures the client-side events.
+            </summary>
+            <param name="configurator">The client events configuration action.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart()
+            .Name("Chart")
+            .Events(events =&gt; events
+            .OnLoad("onLoad")
+            )
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.StockChartBuilder`1.Theme(System.String)">
+            <summary>
+            Sets the theme of the chart.
+            </summary>
+            <param name="theme">The Chart theme.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart()
+            .Name("Chart")
+            .Theme("Telerik")
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.StockChartBuilder`1.ChartArea(System.Action{Kendo.Mvc.UI.Fluent.ChartAreaBuilder})">
+            <summary>
+            Sets the Chart area.
+            </summary>
+            <param name="configurator">The Chart area.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart()
+            .Name("Chart")
+            .ChartArea(chartArea =&gt; chartArea.margin(20))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.StockChartBuilder`1.PlotArea(System.Action{Kendo.Mvc.UI.Fluent.PlotAreaBuilder})">
+            <summary>
+            Sets the Plot area.
+            </summary>
+            <param name="configurator">The Plot area.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart()
+            .Name("Chart")
+            .PlotArea(plotArea =&gt; plotArea.margin(20))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.StockChartBuilder`1.Title(System.String)">
+            <summary>
+            Sets the title of the chart.
+            </summary>
+            <param name="title">The Chart title.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart()
+            .Name("Chart")
+            .Title("Yearly sales")
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.StockChartBuilder`1.Title(System.Action{Kendo.Mvc.UI.Fluent.ChartTitleBuilder})">
+            <summary>
+            Defines the title of the chart.
+            </summary>
+            <param name="configurator">The configuration action.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart()
+            .Name("Chart")
+            .Title(title =&gt; title.Text("Yearly sales"))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.StockChartBuilder`1.Legend(System.Boolean)">
+            <summary>
+            Sets the legend visibility.
+            </summary>
+            <param name="visible">A value indicating whether to show the legend.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart()
+            .Name("Chart")
+            .Legend(false)
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.StockChartBuilder`1.Legend(System.Action{Kendo.Mvc.UI.Fluent.ChartLegendBuilder})">
+            <summary>
+            Configures the legend.
+            </summary>
+            <param name="configurator">The configuration action.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart()
+            .Name("Chart")
+            .Legend(legend =&gt; legend.Visible(true).Position(ChartLegendPosition.Bottom))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.StockChartBuilder`1.Series(System.Action{Kendo.Mvc.UI.Fluent.ChartSeriesFactory{`0}})">
+            <summary>
+            Defines the chart series.
+            </summary>
+            <param name="configurator">The add action.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart(Model)
+            .Name("Chart")
+            .Series(series =&gt;
+            {
+            series.Bar(s =&gt; s.SalesAmount);
+            })
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.StockChartBuilder`1.SeriesDefaults(System.Action{Kendo.Mvc.UI.Fluent.ChartSeriesDefaultsBuilder{`0}})">
+            <summary>
+            Defines the options for all chart series of the specified type.
+            </summary>
+            <param name="configurator">The configurator.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart(Model)
+            .Name("Chart")
+            .SeriesDefaults(series =&gt; series.Bar().Stack(true))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.StockChartBuilder`1.Panes(System.Action{Kendo.Mvc.UI.Fluent.ChartPanesFactory})">
+            <summary>
+            Defines the chart panes.
+            </summary>
+            <param name="configurator">The add action.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart(Model)
+            .Name("Chart")
+            .Panes(panes =&gt;
+            {
+            panes.Add("volume");
+            })
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.StockChartBuilder`1.AxisDefaults(System.Action{Kendo.Mvc.UI.Fluent.ChartAxisDefaultsBuilder{`0}})">
+            <summary>
+            Defines the options for all chart axes of the specified type.
+            </summary>
+            <param name="configurator">The configurator.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart(Model)
+            .Name("Chart")
+            .AxisDefaults(axisDefaults =&gt; axisDefaults.MinorTickSize(5))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.StockChartBuilder`1.CategoryAxis(System.Action{Kendo.Mvc.UI.Fluent.ChartCategoryAxisBuilder{`0}})">
+            <summary>
+            Configures the category axis
+            </summary>
+            <param name="configurator">The configurator</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart(Model)
+            .Name("Chart")
+            .CategoryAxis(axis =&gt; axis
+            .Categories(s =&gt; s.DateString)
+            )
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.StockChartBuilder`1.ValueAxis(System.Action{Kendo.Mvc.UI.Fluent.ChartValueAxisFactory{`0}})">
+            <summary>
+            Defines value axis options
+            </summary>
+            <param name="configurator">The configurator</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart(Model)
+            .Name("Chart")
+            .ValueAxis(a =&gt; a.Numeric().TickSize(4))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.StockChartBuilder`1.XAxis(System.Action{Kendo.Mvc.UI.Fluent.ChartValueAxisFactory{`0}})">
+            <summary>
+            Defines X-axis options for scatter charts
+            </summary>
+            <param name="configurator">The configurator</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart(Model)
+            .Name("Chart")
+            .XAxis(a =&gt; a.Numeric().Max(4))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.StockChartBuilder`1.YAxis(System.Action{Kendo.Mvc.UI.Fluent.ChartValueAxisFactory{`0}})">
+            <summary>
+            Configures Y-axis options for scatter charts.
+            </summary>
+            <param name="configurator">The configurator</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart(Model)
+            .Name("Chart")
+            .YAxis(a =&gt; a.Numeric().Max(4))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.StockChartBuilder`1.DataSource(System.Action{Kendo.Mvc.UI.Fluent.ReadOnlyAjaxDataSourceBuilder{`0}})">
+            <summary>
+            Data Source configuration
+            </summary>
+            <param name="configurator">Use the configurator to set different data binding options.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart()
+            .Name("Chart")
+            .DataSource(ds =&gt;
+            {
+            ds.Ajax().Read(r =&gt; r.Action("SalesData", "Chart"));
+            })
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.StockChartBuilder`1.SeriesColors(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Sets the series colors.
+            </summary>
+            <param name="colors">A list of the series colors.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart()
+            .Name("Chart")
+            .SeriesColors(new string[] { "#f00", "#0f0", "#00f" })
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.StockChartBuilder`1.SeriesColors(System.String[])">
+            <summary>
+            Sets the series colors.
+            </summary>
+            <param name="colors">The series colors.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart()
+            .Name("Chart")
+            .SeriesColors("#f00", "#0f0", "#00f")
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.StockChartBuilder`1.Tooltip(System.Action{Kendo.Mvc.UI.Fluent.ChartTooltipBuilder})">
+            <summary>
+            Use it to configure the data point tooltip.
+            </summary>
+            <param name="configurator">Use the configurator to set data tooltip options.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart()
+            .Name("Chart")
+            .Tooltip(tooltip =&gt;
+            {
+            tooltip.Visible(true).Format("{0:C}");
+            })
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.StockChartBuilder`1.Tooltip(System.Boolean)">
+            <summary>
+            Sets the data point tooltip visibility.
+            </summary>
+            <param name="visible">
+            A value indicating if the data point tooltip should be displayed.
+            The tooltip is not visible by default.
+            </param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart()
+            .Name("Chart")
+            .Tooltip(true)
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.StockChartBuilder`1.Transitions(System.Boolean)">
+            <summary>
+            Enables or disabled animated transitions on initial load and refresh.
+            </summary>
+            <param name="transitions">
+            A value indicating if transition animations should be played.
+            </param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart()
+            .Name("Chart")
+            .Transitions(false)
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="P:Kendo.Mvc.UI.StockChart`1.Navigator">
+            <summary>
+            Gets or sets the stock chart navigator settings.
+            </summary>
+            <value>
+            The Stock Chart navigator settings.
+            </value>
+        </member>
+        <member name="P:Kendo.Mvc.UI.StockChart`1.DateField">
+            <summary>
+            Gets or sets the date field.
+            </summary>
+            <value>
+            The date field.
+            </value>
         </member>
         <member name="T:Kendo.Mvc.SortDescriptor">
             <summary>
@@ -15665,6 +17384,19 @@
             </summary>
             <param name="component">The component.</param>
         </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.CalendarBuilder.Culture(System.String)">
+            <summary>
+            Specifies the culture info used by the Calendar widget.
+            </summary>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().Calendar()
+            .Name("calendar")
+            .Culture("de-DE")
+            %&gt;
+            </code>
+            </example>
+        </member>
         <member name="M:Kendo.Mvc.UI.Fluent.CalendarBuilder.Events(System.Action{Kendo.Mvc.UI.Fluent.CalendarEventBuilder})">
             <summary>
             Configures the client-side events.
@@ -16038,6 +17770,12 @@
             </code>
             </example>
         </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.NumericTextBoxBuilder`1.IncreaseButtonTitle(System.String)">
+            <summary>Sets the title of the NumericTextBox increase button.</summary>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.NumericTextBoxBuilder`1.DecreaseButtonTitle(System.String)">
+            <summary>Sets the title of the NumericTextBox decrease button.</summary>
+        </member>
         <member name="T:Kendo.Mvc.UI.Fluent.NumericTextBoxEventBuilder">
             <summary>
             Defines the fluent interface for configuring the NumericTextBox events.
@@ -16155,6 +17893,79 @@
             </summary>
         </member>
         <!--FIXME: Invalid documentation markup was found for member M:Kendo.Mvc.UI.Fluent.TimePickerBuilder.BindTo(System.Collections.Generic.List{System.DateTime})-->
+        <member name="T:Kendo.Mvc.UI.Fluent.TreeViewCheckboxesBuilder">
+            <summary>
+            Defines the fluent interface for configuring child TreeView items.
+            </summary>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewCheckboxesBuilder.#ctor(Kendo.Mvc.UI.TreeViewCheckboxesSettings)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Kendo.Mvc.UI.Fluent.TreeViewCheckboxesBuilder" /> class.
+            </summary>
+            <param name="settings">The checkbox settings.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewCheckboxesBuilder.Enabled(System.Boolean)">
+            <summary>
+            Enable/disable rendering of checkboxes in the treeview.
+            </summary>
+            <param name="enabled">Whether checkboxes should be rendered.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().TreeView()
+            .Name("TreeView")
+            .Checkboxes(config =&gt; config
+            .Enabled(true)
+            )
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewCheckboxesBuilder.CheckChildren(System.Boolean)">
+            <summary>
+            Enable/disable checking of child checkboxes in the treeview.
+            </summary>
+            <param name="enabled">Whether checking of parent checkboxes should check child checkboxes.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().TreeView()
+            .Name("TreeView")
+            .Checkboxes(config =&gt; config
+            .CheckChildren(true)
+            )
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewCheckboxesBuilder.Template(System.String)">
+            <summary>
+            Client-side template to be used for rendering the items in the treeview.
+            </summary>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().TreeView()
+            .Name("TreeView")
+            .Checkboxes(config =&gt; config
+            .Template("#= data #")
+            )
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewCheckboxesBuilder.TemplateId(System.String)">
+            <summary>
+            Id of the element that holds the client-side template to be used for rendering the items in the treeview.
+            </summary>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().TreeView()
+            .Name("TreeView")
+            .Checkboxes(config =&gt; config
+            .TemplateId("widgetTemplateId")
+            )
+            %&gt;
+            </code>
+            </example>
+        </member>
         <member name="T:Kendo.Mvc.UI.Fluent.TreeViewBindingSettingsBuilder">
             <summary>
             Defines the fluent interface for building <see cref="T:Kendo.Mvc.UI.Fluent.TreeViewBindingSettingsBuilder" /></summary>
@@ -16382,6 +18193,36 @@
             &lt;%= Html.Kendo().TreeView()
             .Name("TreeView")
             .TemplateId("widgetTemplateId")
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewBuilder.Checkboxes(System.Boolean)">
+            <summary>
+            Enable/disable rendering of checkboxes in the treeview.
+            </summary>
+            <param name="enabled">Whether checkboxes should be rendered.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().TreeView()
+            .Name("TreeView")
+            .Checkboxes(true)
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewBuilder.Checkboxes(System.Action{Kendo.Mvc.UI.Fluent.TreeViewCheckboxesBuilder})">
+            <summary>
+            Configures rendering of checkboxes in the treeview.
+            </summary>
+            <param name="configure">Builder of the treeview checkboxes configuration.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().TreeView()
+            .Name("TreeView")
+            .Checkboxes(config =&gt; config
+            .CheckChildren(true)
+            )
             %&gt;
             </code>
             </example>
@@ -16700,44 +18541,28 @@
             </code>
             </example>
         </member>
-        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewEventBuilder.Expand(System.Func{System.Object,System.Object})">
+        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewBuilder.LoadOnDemand(System.Boolean)">
             <summary>
-            Defines the inline handler of the Expand client-side event
+            Allows the treeview to fetch the entire datasource at initialization time.
             </summary>
-            <param name="onExpandAction">The handler code wrapped in a text tag (Razor syntax).</param>
-            <example>
-                <code lang="CS">
-            &lt;% Html.Kendo().TreeView()
-            .Name("TreeView")
-            .Events(events =&gt; events.Expand(
-            @&lt;text&gt;
-            function(e) {
-            // event handling code
-            }
-            &lt;/text&gt;
-            ))
-            .Render();
-            %&gt;
-            </code>
-            </example>
-        </member>
-        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewEventBuilder.Expand(System.String)">
-            <summary>
-            Defines the name of the JavaScript function that will handle the the Expand client-side event.
-            </summary>
-            <param name="onExpandHandlerName">The name of the JavaScript function that will handle the event.</param>
+            <param name="field">Whether the datasource should be loaded on demand.</param>
             <example>
                 <code lang="CS">
             &lt;%= Html.Kendo().TreeView()
             .Name("TreeView")
-            .Events(events =&gt; events.Expand("onExpand"))
+            .LoadOnDemand(false)
             %&gt;
             </code>
             </example>
         </member>
+        <member name="T:Kendo.Mvc.UI.Fluent.TreeViewEventBuilder">
+            <summary>
+            Defines the fluent API for configuring the events of the Kendo TreeView for ASP.NET MVC
+            </summary>
+        </member>
         <member name="M:Kendo.Mvc.UI.Fluent.TreeViewEventBuilder.Collapse(System.Func{System.Object,System.Object})">
             <summary>
-            Defines the inline handler of the Collapse client-side event
+            Defines the inline handler of the collapse client-side event
             </summary>
             <param name="onCollapseAction">The handler code wrapped in a text tag (Razor syntax).</param>
             <example>
@@ -16758,21 +18583,231 @@
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.TreeViewEventBuilder.Collapse(System.String)">
             <summary>
-            Defines the name of the JavaScript function that will handle the the Collapse client-side event.
+            Defines the name of the JavaScript function that will handle the the collapse client-side event.
             </summary>
             <param name="onCollapseHandlerName">The name of the JavaScript function that will handle the event.</param>
             <example>
                 <code lang="CS">
             &lt;%= Html.Kendo().TreeView()
             .Name("TreeView")
-            .Events(events =&gt; events.Collapse("onCollapse"))
+            .Events(events =&gt; events.Collapse("onExpand"))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewEventBuilder.DataBound(System.Func{System.Object,System.Object})">
+            <summary>
+            Defines the inline handler of the dataBound client-side event
+            </summary>
+            <param name="onDataBoundAction">The handler code wrapped in a text tag (Razor syntax).</param>
+            <example>
+                <code lang="CS">
+            &lt;% Html.Kendo().TreeView()
+            .Name("TreeView")
+            .Events(events =&gt; events.DataBound(
+            @&lt;text&gt;
+            function(e) {
+            // event handling code
+            }
+            &lt;/text&gt;
+            ))
+            .Render();
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewEventBuilder.DataBound(System.String)">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the dataBound client-side event.
+            </summary>
+            <param name="onDataBoundHandlerName">The name of the JavaScript function that will handle the event.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().TreeView()
+            .Name("TreeView")
+            .Events(events =&gt; events.DataBound("onExpand"))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewEventBuilder.Drag(System.Func{System.Object,System.Object})">
+            <summary>
+            Defines the inline handler of the drag client-side event
+            </summary>
+            <param name="onDragAction">The handler code wrapped in a text tag (Razor syntax).</param>
+            <example>
+                <code lang="CS">
+            &lt;% Html.Kendo().TreeView()
+            .Name("TreeView")
+            .Events(events =&gt; events.Drag(
+            @&lt;text&gt;
+            function(e) {
+            // event handling code
+            }
+            &lt;/text&gt;
+            ))
+            .Render();
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewEventBuilder.Drag(System.String)">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the drag client-side event.
+            </summary>
+            <param name="onDragHandlerName">The name of the JavaScript function that will handle the event.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().TreeView()
+            .Name("TreeView")
+            .Events(events =&gt; events.Drag("onExpand"))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewEventBuilder.DragEnd(System.Func{System.Object,System.Object})">
+            <summary>
+            Defines the inline handler of the dragend client-side event
+            </summary>
+            <param name="onDragEndAction">The handler code wrapped in a text tag (Razor syntax).</param>
+            <example>
+                <code lang="CS">
+            &lt;% Html.Kendo().TreeView()
+            .Name("TreeView")
+            .Events(events =&gt; events.DragEnd(
+            @&lt;text&gt;
+            function(e) {
+            // event handling code
+            }
+            &lt;/text&gt;
+            ))
+            .Render();
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewEventBuilder.DragEnd(System.String)">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the dragend client-side event.
+            </summary>
+            <param name="onDragEndHandlerName">The name of the JavaScript function that will handle the event.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().TreeView()
+            .Name("TreeView")
+            .Events(events =&gt; events.DragEnd("onExpand"))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewEventBuilder.DragStart(System.Func{System.Object,System.Object})">
+            <summary>
+            Defines the inline handler of the dragstart client-side event
+            </summary>
+            <param name="onDragStartAction">The handler code wrapped in a text tag (Razor syntax).</param>
+            <example>
+                <code lang="CS">
+            &lt;% Html.Kendo().TreeView()
+            .Name("TreeView")
+            .Events(events =&gt; events.DragStart(
+            @&lt;text&gt;
+            function(e) {
+            // event handling code
+            }
+            &lt;/text&gt;
+            ))
+            .Render();
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewEventBuilder.DragStart(System.String)">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the dragstart client-side event.
+            </summary>
+            <param name="onDragStartHandlerName">The name of the JavaScript function that will handle the event.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().TreeView()
+            .Name("TreeView")
+            .Events(events =&gt; events.DragStart("onExpand"))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewEventBuilder.Drop(System.Func{System.Object,System.Object})">
+            <summary>
+            Defines the inline handler of the drop client-side event
+            </summary>
+            <param name="onDropAction">The handler code wrapped in a text tag (Razor syntax).</param>
+            <example>
+                <code lang="CS">
+            &lt;% Html.Kendo().TreeView()
+            .Name("TreeView")
+            .Events(events =&gt; events.Drop(
+            @&lt;text&gt;
+            function(e) {
+            // event handling code
+            }
+            &lt;/text&gt;
+            ))
+            .Render();
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewEventBuilder.Drop(System.String)">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the drop client-side event.
+            </summary>
+            <param name="onDropHandlerName">The name of the JavaScript function that will handle the event.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().TreeView()
+            .Name("TreeView")
+            .Events(events =&gt; events.Drop("onExpand"))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewEventBuilder.Expand(System.Func{System.Object,System.Object})">
+            <summary>
+            Defines the inline handler of the expand client-side event
+            </summary>
+            <param name="onExpandAction">The handler code wrapped in a text tag (Razor syntax).</param>
+            <example>
+                <code lang="CS">
+            &lt;% Html.Kendo().TreeView()
+            .Name("TreeView")
+            .Events(events =&gt; events.Expand(
+            @&lt;text&gt;
+            function(e) {
+            // event handling code
+            }
+            &lt;/text&gt;
+            ))
+            .Render();
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewEventBuilder.Expand(System.String)">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the expand client-side event.
+            </summary>
+            <param name="onExpandHandlerName">The name of the JavaScript function that will handle the event.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().TreeView()
+            .Name("TreeView")
+            .Events(events =&gt; events.Expand("onExpand"))
             %&gt;
             </code>
             </example>
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.TreeViewEventBuilder.Select(System.Func{System.Object,System.Object})">
             <summary>
-            Defines the inline handler of the Select client-side event
+            Defines the inline handler of the select client-side event
             </summary>
             <param name="onSelectAction">The handler code wrapped in a text tag (Razor syntax).</param>
             <example>
@@ -16793,134 +18828,14 @@
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.TreeViewEventBuilder.Select(System.String)">
             <summary>
-            Defines the name of the JavaScript function that will handle the the Select client-side event.
+            Defines the name of the JavaScript function that will handle the the select client-side event.
             </summary>
             <param name="onSelectHandlerName">The name of the JavaScript function that will handle the event.</param>
             <example>
                 <code lang="CS">
             &lt;%= Html.Kendo().TreeView()
             .Name("TreeView")
-            .Events(events =&gt; events.Select("onSelect"))
-            %&gt;
-            </code>
-            </example>
-        </member>
-        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewEventBuilder.DragStart(System.Func{System.Object,System.Object})">
-            <summary>
-            Defines the inline handler of the DragStart client-side event
-            </summary>
-            <param name="onNodeDragAction">The handler code wrapped in a text tag (Razor syntax).</param>
-            <example>
-                <code lang="CS">
-            &lt;% Html.Kendo().TreeView()
-            .Name("TreeView")
-            .Events(events =&gt; events.DragStart(
-            @&lt;text&gt;
-            function(e) {
-            // event handling code
-            }
-            &lt;/text&gt;
-            ))
-            .Render();
-            %&gt;
-            </code>
-            </example>
-        </member>
-        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewEventBuilder.DragStart(System.String)">
-            <summary>
-            Defines the name of the JavaScript function that will handle the the DragStart client-side event.
-            </summary>
-            <param name="onNodeDragHandlerName">The name of the JavaScript function that will handle the event.</param>
-            <example>
-                <code lang="CS">
-            &lt;%= Html.Kendo().TreeView()
-            .Name("TreeView")
-            .Events(events =&gt; events.DragStart("onNodeDragStrat"))
-            %&gt;
-            </code>
-            </example>
-        </member>
-        <!--FIXME: Invalid documentation markup was found for member M:Kendo.Mvc.UI.Fluent.TreeViewEventBuilder.Drop(System.Func{System.Object,System.Object})-->
-        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewEventBuilder.Drop(System.String)">
-            <summary>
-            Defines the name of the JavaScript function that will handle the the Drop client-side event.
-            </summary>
-            <param name="DropHandlerName">The name of the JavaScript function that will handle the event.</param>
-            <example>
-                <code lang="CS">
-            &lt;%= Html.Kendo().TreeView()
-            .Name("TreeView")
-            .Events(events =&gt; events.Drop("Drop"))
-            %&gt;
-            </code>
-            </example>
-        </member>
-        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewEventBuilder.DragEnd(System.Func{System.Object,System.Object})">
-            <summary>
-            Defines the inline handler of the DragEnd client-side event
-            </summary>
-            <param name="DragEndAction">The handler code wrapped in a text tag (Razor syntax).</param>
-            <example>
-                <code lang="CS">
-            &lt;% Html.Kendo().TreeView()
-            .Name("TreeView")
-            .Events(events =&gt; events.DragEnd(
-            @&lt;text&gt;
-            function(e) {
-            // event handling code
-            }
-            &lt;/text&gt;
-            ))
-            .Render();
-            %&gt;
-            </code>
-            </example>
-        </member>
-        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewEventBuilder.DragEnd(System.String)">
-            <summary>
-            Defines the name of the JavaScript function that will handle the the DragEnd client-side event.
-            </summary>
-            <param name="DragEndHandlerName">The name of the JavaScript function that will handle the event.</param>
-            <example>
-                <code lang="CS">
-            &lt;%= Html.Kendo().TreeView()
-            .Name("TreeView")
-            .Events(events =&gt; events.DragEnd("DragEnd"))
-            %&gt;
-            </code>
-            </example>
-        </member>
-        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewEventBuilder.Drag(System.Func{System.Object,System.Object})">
-            <summary>
-            Defines the inline handler of the Drag client-side event
-            </summary>
-            <param name="onNodeDragging">The handler code wrapped in a text tag (Razor syntax).</param>
-            <example>
-                <code lang="CS">
-            &lt;% Html.Kendo().TreeView()
-            .Name("TreeView")
-            .Events(events =&gt; events.Drag(
-            @&lt;text&gt;
-            function(e) {
-            // event handling code
-            }
-            &lt;/text&gt;
-            ))
-            .Render();
-            %&gt;
-            </code>
-            </example>
-        </member>
-        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewEventBuilder.Drag(System.String)">
-            <summary>
-            Defines the name of the JavaScript function that will handle the the Drag client-side event.
-            </summary>
-            <param name="onNodeDragging">The name of the JavaScript function that will handle the event.</param>
-            <example>
-                <code lang="CS">
-            &lt;%= Html.Kendo().TreeView()
-            .Name("TreeView")
-            .Events(events =&gt; events.Drag("Drag"))
+            .Events(events =&gt; events.Select("onExpand"))
             %&gt;
             </code>
             </example>
@@ -16993,6 +18908,24 @@
             </code>
             </example>
         </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.TreeViewItemBuilder.Checked(System.Boolean)">
+            <summary>
+            Specify whether the item should be initially checked.
+            </summary>
+            <param name="value">If true, the item will be checked.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Telerik().TreeView()
+            .Name("TreeView")
+            .Checkboxes(true)
+            .Items(items =&gt;
+            {
+            items.Add().Text("Item").Checked(true);
+            })
+            %&gt;
+            </code>
+            </example>
+        </member>
         <member name="M:Kendo.Mvc.UI.Fluent.TreeViewItemBuilder.HasChildren(System.Boolean)">
             <summary>
             Sets the expand mode of the treeview item.
@@ -17033,6 +18966,11 @@
             <returns>
             </returns>
         </member>
+        <member name="T:Kendo.Mvc.UI.TreeViewItemModel">
+            <summary>
+            Used for serializing <see cref="T:Kendo.Mvc.UI.TreeViewItem" /> objects.
+            </summary>
+        </member>
         <member name="P:Kendo.Mvc.UI.TreeView.Items">
             <summary>
             Gets the items of the treeview.
@@ -17054,6 +18992,11 @@
             </summary>
             <value>
                 <c>true</c> if expand all is enabled; otherwise, <c>false</c>. The default value is <c>false</c></value>
+        </member>
+        <member name="T:Kendo.Mvc.UI.TreeViewItem">
+            <summary>
+            Represents an item from Kendo TreeView for ASP.NET MVC
+            </summary>
         </member>
         <member name="T:Kendo.Mvc.UI.Fluent.DatePickerBuilder">
             <summary>
@@ -17477,6 +19420,460 @@
             </summary>
             <param name="template">The action defining the template.</param>
         </member>
+        <member name="T:Kendo.Mvc.UI.Fluent.GridEventBuilder">
+            <summary>
+            Defines the fluent API for configuring the Kendo Grid for ASP.NET MVC events.
+            </summary>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.GridEventBuilder.Change(System.Func{System.Object,System.Object})">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the Change client-side event.
+            </summary>
+            <param name="handler">The handler code wrapped in a text tag (Razor syntax).</param>
+            <example>
+                <code lang="CS">
+            @(Html.Kendo().Grid()
+            .Name("Grid")
+            .Events(events =&gt; events.Change(
+            @&lt;text&gt;
+            function(e) {
+            //event handling code
+            }
+            &lt;/text&gt;
+            ))
+            )
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.GridEventBuilder.Change(System.String)">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the Change client-side event.
+            </summary>
+            <param name="handler">The name of the JavaScript function that will handle the event.</param>
+            <example>
+                <code lang="CS">
+            @(Html.Kendo().Grid()
+            .Name("Grid")
+            .Events(events =&gt; events.Change("gridChange"))
+            )
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.GridEventBuilder.Edit(System.Func{System.Object,System.Object})">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the Edit client-side event.
+            </summary>
+            <param name="handler">The handler code wrapped in a text tag (Razor syntax).</param>
+            <example>
+                <code lang="CS">
+            @(Html.Kendo().Grid()
+            .Name("Grid")
+            .Events(events =&gt; events.Edit(
+            @&lt;text&gt;
+            function(e) {
+            //event handling code
+            }
+            &lt;/text&gt;
+            ))
+            )
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.GridEventBuilder.Edit(System.String)">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the Edit client-side event.
+            </summary>
+            <param name="handler">The name of the JavaScript function that will handle the event.</param>
+            <example>
+                <code lang="CS">
+            @(Html.Kendo().Grid()
+            .Name("Grid")
+            .Events(events =&gt; events.Edit("gridEdit"))
+            )
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.GridEventBuilder.Save(System.Func{System.Object,System.Object})">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the Save client-side event.
+            </summary>
+            <param name="handler">The handler code wrapped in a text tag (Razor syntax).</param>
+            <example>
+                <code lang="CS">
+            @(Html.Kendo().Grid()
+            .Name("Grid")
+            .Events(events =&gt; events.Save(
+            @&lt;text&gt;
+            function(e) {
+            //event handling code
+            }
+            &lt;/text&gt;
+            ))
+            )
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.GridEventBuilder.Save(System.String)">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the Save client-side event.
+            </summary>
+            <param name="handler">The name of the JavaScript function that will handle the event.</param>
+            <example>
+                <code lang="CS">
+            @(Html.Kendo().Grid()
+            .Name("Grid")
+            .Events(events =&gt; events.Save("gridSave"))
+            )
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.GridEventBuilder.SaveChanges(System.Func{System.Object,System.Object})">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the SaveChanges client-side event.
+            </summary>
+            <param name="handler">The handler code wrapped in a text tag (Razor syntax).</param>
+            <example>
+                <code lang="CS">
+            @(Html.Kendo().Grid()
+            .Name("Grid")
+            .Events(events =&gt; events.SaveChanges(
+            @&lt;text&gt;
+            function(e) {
+            //event handling code
+            }
+            &lt;/text&gt;
+            ))
+            )
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.GridEventBuilder.SaveChanges(System.String)">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the SaveChanges client-side event.
+            </summary>
+            <param name="handler">The name of the JavaScript function that will handle the event.</param>
+            <example>
+                <code lang="CS">
+            @(Html.Kendo().Grid()
+            .Name("Grid")
+            .Events(events =&gt; events.SaveChanges("gridSaveChanges"))
+            )
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.GridEventBuilder.DetailExpand(System.Func{System.Object,System.Object})">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the DetailExpand client-side event.
+            </summary>
+            <param name="handler">The handler code wrapped in a text tag (Razor syntax).</param>
+            <example>
+                <code lang="CS">
+            @(Html.Kendo().Grid()
+            .Name("Grid")
+            .Events(events =&gt; events.DetailExpand(
+            @&lt;text&gt;
+            function(e) {
+            //event handling code
+            }
+            &lt;/text&gt;
+            ))
+            )
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.GridEventBuilder.DetailExpand(System.String)">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the DetailExpand client-side event.
+            </summary>
+            <param name="handler">The name of the JavaScript function that will handle the event.</param>
+            <example>
+                <code lang="CS">
+            @(Html.Kendo().Grid()
+            .Name("Grid")
+            .Events(events =&gt; events.DetailExpand("gridDetailExpand"))
+            )
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.GridEventBuilder.DetailInit(System.Func{System.Object,System.Object})">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the DetailInit client-side event.
+            </summary>
+            <param name="handler">The handler code wrapped in a text tag (Razor syntax).</param>
+            <example>
+                <code lang="CS">
+            @(Html.Kendo().Grid()
+            .Name("Grid")
+            .Events(events =&gt; events.DetailInit(
+            @&lt;text&gt;
+            function(e) {
+            //event handling code
+            }
+            &lt;/text&gt;
+            ))
+            )
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.GridEventBuilder.DetailInit(System.String)">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the DetailInit client-side event.
+            </summary>
+            <param name="handler">The name of the JavaScript function that will handle the event.</param>
+            <example>
+                <code lang="CS">
+            @(Html.Kendo().Grid()
+            .Name("Grid")
+            .Events(events =&gt; events.DetailInit("gridDetailInit"))
+            )
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.GridEventBuilder.DetailCollapse(System.Func{System.Object,System.Object})">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the DetailCollapse client-side event.
+            </summary>
+            <param name="handler">The handler code wrapped in a text tag (Razor syntax).</param>
+            <example>
+                <code lang="CS">
+            @(Html.Kendo().Grid()
+            .Name("Grid")
+            .Events(events =&gt; events.DetailCollapse(
+            @&lt;text&gt;
+            function(e) {
+            //event handling code
+            }
+            &lt;/text&gt;
+            ))
+            )
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.GridEventBuilder.DetailCollapse(System.String)">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the DetailCollapse client-side event.
+            </summary>
+            <param name="handler">The name of the JavaScript function that will handle the event.</param>
+            <example>
+                <code lang="CS">
+            @(Html.Kendo().Grid()
+            .Name("Grid")
+            .Events(events =&gt; events.DetailCollapse("gridDetailCollapse"))
+            )
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.GridEventBuilder.Remove(System.Func{System.Object,System.Object})">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the Remove client-side event.
+            </summary>
+            <param name="handler">The handler code wrapped in a text tag (Razor syntax).</param>
+            <example>
+                <code lang="CS">
+            @(Html.Kendo().Grid()
+            .Name("Grid")
+            .Events(events =&gt; events.Remove(
+            @&lt;text&gt;
+            function(e) {
+            //event handling code
+            }
+            &lt;/text&gt;
+            ))
+            )
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.GridEventBuilder.Remove(System.String)">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the Remove client-side event.
+            </summary>
+            <param name="handler">The name of the JavaScript function that will handle the event.</param>
+            <example>
+                <code lang="CS">
+            @(Html.Kendo().Grid()
+            .Name("Grid")
+            .Events(events =&gt; events.Remove("gridRemove"))
+            )
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.GridEventBuilder.DataBound(System.Func{System.Object,System.Object})">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the DataBound client-side event.
+            </summary>
+            <param name="handler">The handler code wrapped in a text tag (Razor syntax).</param>
+            <example>
+                <code lang="CS">
+            @(Html.Kendo().Grid()
+            .Name("Grid")
+            .Events(events =&gt; events.DataBound(
+            @&lt;text&gt;
+            function(e) {
+            //event handling code
+            }
+            &lt;/text&gt;
+            ))
+            )
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.GridEventBuilder.DataBound(System.String)">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the DataBound client-side event.
+            </summary>
+            <param name="handler">The name of the JavaScript function that will handle the event.</param>
+            <example>
+                <code lang="CS">
+            @(Html.Kendo().Grid()
+            .Name("Grid")
+            .Events(events =&gt; events.DataBound("gridDataBound"))
+            )
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.GridEventBuilder.ColumnResize(System.Func{System.Object,System.Object})">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the ColumnResize client-side event.
+            </summary>
+            <param name="handler">The handler code wrapped in a text tag (Razor syntax).</param>
+            <example>
+                <code lang="CS">
+            @(Html.Kendo().Grid()
+            .Name("Grid")
+            .Events(events =&gt; events.ColumnResize(
+            @&lt;text&gt;
+            function(e) {
+            //event handling code
+            }
+            &lt;/text&gt;
+            ))
+            )
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.GridEventBuilder.ColumnResize(System.String)">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the ColumnResize client-side event.
+            </summary>
+            <param name="handler">The name of the JavaScript function that will handle the event.</param>
+            <example>
+                <code lang="CS">
+            @(Html.Kendo().Grid()
+            .Name("Grid")
+            .Events(events =&gt; events.ColumnResize("gridColumnResize"))
+            )
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.GridEventBuilder.ColumnReorder(System.Func{System.Object,System.Object})">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the ColumnReorder client-side event.
+            </summary>
+            <param name="handler">The handler code wrapped in a text tag (Razor syntax).</param>
+            <example>
+                <code lang="CS">
+            @(Html.Kendo().Grid()
+            .Name("Grid")
+            .Events(events =&gt; events.ColumnReorder(
+            @&lt;text&gt;
+            function(e) {
+            //event handling code
+            }
+            &lt;/text&gt;
+            ))
+            )
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.GridEventBuilder.ColumnReorder(System.String)">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the ColumnReorder client-side event.
+            </summary>
+            <param name="handler">The name of the JavaScript function that will handle the event.</param>
+            <example>
+                <code lang="CS">
+            @(Html.Kendo().Grid()
+            .Name("Grid")
+            .Events(events =&gt; events.ColumnReorder("gridColumnReorder"))
+            )
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.GridEventBuilder.ColumnHide(System.Func{System.Object,System.Object})">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the ColumnHide client-side event.
+            </summary>
+            <param name="handler">The handler code wrapped in a text tag (Razor syntax).</param>
+            <example>
+                <code lang="CS">
+            @(Html.Kendo().Grid()
+            .Name("Grid")
+            .Events(events =&gt; events.ColumnHide(
+            @&lt;text&gt;
+            function(e) {
+            //event handling code
+            }
+            &lt;/text&gt;
+            ))
+            )
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.GridEventBuilder.ColumnHide(System.String)">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the ColumnHide client-side event.
+            </summary>
+            <param name="handler">The name of the JavaScript function that will handle the event.</param>
+            <example>
+                <code lang="CS">
+            @(Html.Kendo().Grid()
+            .Name("Grid")
+            .Events(events =&gt; events.ColumnHide("gridColumnHide"))
+            )
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.GridEventBuilder.ColumnShow(System.Func{System.Object,System.Object})">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the ColumnShow client-side event.
+            </summary>
+            <param name="handler">The handler code wrapped in a text tag (Razor syntax).</param>
+            <example>
+                <code lang="CS">
+            @(Html.Kendo().Grid()
+            .Name("Grid")
+            .Events(events =&gt; events.ColumnShow(
+            @&lt;text&gt;
+            function(e) {
+            //event handling code
+            }
+            &lt;/text&gt;
+            ))
+            )
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.GridEventBuilder.ColumnShow(System.String)">
+            <summary>
+            Defines the name of the JavaScript function that will handle the the ColumnShow client-side event.
+            </summary>
+            <param name="handler">The name of the JavaScript function that will handle the event.</param>
+            <example>
+                <code lang="CS">
+            @(Html.Kendo().Grid()
+            .Name("Grid")
+            .Events(events =&gt; events.ColumnShow("gridColumnShow"))
+            )
+            </code>
+            </example>
+        </member>
+        <member name="T:Kendo.Mvc.UI.GridCell`1">
+            <summary>
+            Represents a cell from Kendo Grid for ASP.NET MVC
+            </summary>
+            <typeparam name="T">
+            </typeparam>
+        </member>
         <member name="T:Kendo.Mvc.UI.Fluent.GridActionColumnBuilder">
             <summary>
             Defines the fluent interface for configuring the <see cref="T:Kendo.Mvc.UI.Fluent.GridActionColumnBuilder" /> component.
@@ -17578,6 +19975,13 @@
             <param name="value">True to show the extra inputs, otherwise false</param>
             <returns>
             </returns>
+        </member>
+        <member name="T:Kendo.Mvc.UI.GridRow`1">
+            <summary>
+            Represents a row from Kendo Grid for ASP.NET MVC
+            </summary>
+            <typeparam name="T">
+            </typeparam>
         </member>
         <member name="T:Kendo.Mvc.UI.Fluent.GridScrollSettingsBuilder">
             <summary>
@@ -17789,6 +20193,13 @@
             <summary>
             The user can sort by more than one column at the same time.
             </summary>
+        </member>
+        <member name="T:Kendo.Mvc.UI.Grid`1">
+            <summary>
+            The server side wrapper for Kendo UI Grid
+            </summary>
+            <typeparam name="T">
+            </typeparam>
         </member>
         <member name="P:Kendo.Mvc.UI.Grid`1.Selectable">
             <summary>
@@ -18007,6 +20418,11 @@
             %&gt;
             </code>
             </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.GridBuilder`1.Editable">
+            <summary>
+            Enables the grid editing.
+            </summary>
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.GridBuilder`1.ToolBar(System.Action{Kendo.Mvc.UI.Fluent.GridToolBarCommandFactory{`0}})">
             <summary>
@@ -18470,6 +20886,13 @@
             </code>
             </example>
         </member>
+        <member name="T:Kendo.Mvc.UI.GridColumnBase`1">
+            <summary>
+            The base class for all columns in Kendo Grid for ASP.NET MVC.
+            </summary>
+            <typeparam name="T">
+            </typeparam>
+        </member>
         <member name="P:Kendo.Mvc.UI.GridColumnBase`1.Grid">
             <summary>
             Gets or sets the grid.
@@ -18896,6 +21319,12 @@
             </summary>
             <param name="enabled">A value indicating whether to enable the page sizes dropdown</param>
         </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.PageableBuilder.ButtonCount(System.Int32)">
+            <summary>
+            Sets the number of buttons displayed in the numeric pager. Default is 10.
+            </summary>
+            <param name="pageSizes">The value</param>
+        </member>
         <member name="M:Kendo.Mvc.UI.Fluent.PageableBuilder.Enabled(System.Boolean)">
             <summary>
             Enables or disables paging.
@@ -19117,6 +21546,34 @@
             </code>
             </example>
         </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.MenuBuilder.Direction(Kendo.Mvc.UI.MenuDirection)">
+            <summary>
+            Specifies Menu opening direction.
+            </summary>
+            <param name="value">The desired direction.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().Menu()
+            .Name("Menu")
+            .Direction(MenuDirection.Left)
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.MenuBuilder.Direction(System.String)">
+            <summary>
+            Specifies Menu opening direction.
+            </summary>
+            <param name="value">The desired direction.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().Menu()
+            .Name("Menu")
+            .Direction("top")
+            %&gt;
+            </code>
+            </example>
+        </member>
         <member name="M:Kendo.Mvc.UI.Fluent.MenuBuilder.Orientation(Kendo.Mvc.UI.MenuOrientation)">
             <summary>
             Sets the menu orientation.
@@ -19294,6 +21751,11 @@
             </code>
             </example>
         </member>
+        <member name="T:Kendo.Mvc.UI.MenuItem">
+            <summary>
+            Represents an item from Kendo Menu for ASP.NET MVC
+            </summary>
+        </member>
         <member name="T:Kendo.Mvc.UI.Fluent.MenuItemBuilder">
             <summary>
             Defines the fluent interface for configuring child menu items.
@@ -19327,6 +21789,11 @@
             </example>
         </member>
         <!--FIXME: Invalid documentation markup was found for member M:Kendo.Mvc.UI.Fluent.MenuItemBuilder.Items(System.Collections.Generic.IEnumerable{Kendo.Mvc.UI.MenuItem})-->
+        <member name="T:Kendo.Mvc.UI.Fluent.MenuItemFactory">
+            <summary>
+            Defines the fluent API for adding items to Kendo Menu for ASP.NET MVC
+            </summary>
+        </member>
         <member name="T:Kendo.Mvc.UI.MenuOrientation">
             <summary>
             Specifies the orientation in which the menu items will be ordered
@@ -19555,6 +22022,13 @@
             Determines whether this instance has value.
             </summary>
             <returns>true if either ActionName and ControllerName, RouteName or Url are set; false otherwise</returns>
+        </member>
+        <member name="T:Kendo.Mvc.UI.Fluent.NavigationBindingFactory`1">
+            <summary>
+            Defines the fluent API for creating bindings for Kendo Menu, TreeView and PanelBar
+            </summary>
+            <typeparam name="TNavigationItem">
+            </typeparam>
         </member>
         <member name="T:Kendo.Mvc.UI.Fluent.NavigationItemBuilder`2">
             <summary>
@@ -20373,6 +22847,11 @@
             All items can be expanded
             </summary>
         </member>
+        <member name="T:Kendo.Mvc.UI.PanelBarItem">
+            <summary>
+            Represents an item from Kendo PanelBar for ASP.NET MVC
+            </summary>
+        </member>
         <member name="T:Kendo.Mvc.UI.Fluent.PanelBarItemBuilder">
             <summary>
             Defines the fluent interface for configuring child panelbar items.
@@ -20427,6 +22906,11 @@
             %&gt;
             </code>
             </example>
+        </member>
+        <member name="T:Kendo.Mvc.UI.Fluent.PanelBarItemFactory">
+            <summary>
+            Defines the fluent API for adding items to Kendo PanelBar for ASP.NET MVC
+            </summary>
         </member>
         <member name="T:Kendo.Mvc.UI.Fluent.TabStripEventBuilder">
             <summary>
@@ -20760,6 +23244,11 @@
             </code>
             </example>
         </member>
+        <member name="T:Kendo.Mvc.UI.TabStripItem">
+            <summary>
+            Represents an item from Kendo TabStrip for ASP.NET MVC
+            </summary>
+        </member>
         <member name="T:Kendo.Mvc.UI.Fluent.TabStripItemBuilder">
             <summary>
             Defines the fluent interface for configuring child tabstrip items.
@@ -20771,6 +23260,11 @@
             </summary>
             <param name="item">The item.</param>
             <param name="viewContext">The context of the View.</param>
+        </member>
+        <member name="T:Kendo.Mvc.UI.Fluent.TabStripItemFactory">
+            <summary>
+            Defines the fluent API for adding items to Kendo TabStrip for ASP.NET MVC
+            </summary>
         </member>
         <member name="T:Kendo.Mvc.UI.UIPrimitives.Icons">
             <summary>
@@ -21246,6 +23740,14 @@
             Sets a value indicating whether to start the upload immediately after selecting a file
             </summary>
             <param name="value">true if the upload should start immediately after selecting a file, false otherwise; true by default</param>
+            <remarks>
+            </remarks>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.UploadAsyncSettingsBuilder.Batch(System.Boolean)">
+            <summary>
+            Sets a value indicating whether to upload selected files in one batch (request)
+            </summary>
+            <param name="value">true if the files should be uploaded in a single request, false otherwise; false by default</param>
             <remarks>
             </remarks>
         </member>
@@ -22020,6 +24522,11 @@
             Gets or sets a value indicating whether to start the upload immediately after selecting a file
             </summary>
         </member>
+        <member name="P:Kendo.Mvc.UI.IUploadAsyncSettings.Batch">
+            <summary>
+            Gets or sets a value indicating whether to upload selected files in one batch (request)
+            </summary>
+        </member>
         <member name="M:Kendo.Mvc.UI.UploadAsyncSettings.#ctor(Kendo.Mvc.UI.Upload)">
             <summary>
             Initializes a new instance of the <see cref="T:Kendo.Mvc.UI.UploadAsyncSettings" /> class.
@@ -22055,6 +24562,11 @@
             true if the upload should start immediately after selecting a file, false otherwise; true by default
             </value>
         </member>
+        <member name="P:Kendo.Mvc.UI.UploadAsyncSettings.Batch">
+            <summary>
+            Gets or sets a value indicating whether to upload selected files in one batch (request)
+            </summary>
+        </member>
         <member name="M:Kendo.Mvc.UI.UploadAsyncSettings.SerializeTo(System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Serializes the asynchronous uploading settings to the writer.
@@ -22066,7 +24578,8 @@
             Initializes a new instance of the <see cref="T:Kendo.Mvc.UI.Upload" /> class.
             </summary>
             <param name="viewContext">The view context.</param>
-            <param name="clientSideObjectWriterFactory">The client side object writer factory.</param>
+            <param name="initializer">The javascript initializer.</param>
+            <param name="urlGenerator">The URL Generator.</param>
         </member>
         <member name="P:Kendo.Mvc.UI.Upload.Enabled">
             <summary>
@@ -22605,8 +25118,62 @@
             </summary>
             <example>
                 <code lang="CS">
-            &lt;%= Html.Kendo().Chart("sales")
+            &lt;%= Html.Kendo().Chart()
             .Name("Chart")
+            .Series(series =&gt; {
+            series.Bar(new int[] { 1, 2, 3 }).Name("Total Sales");
+            })
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.WidgetFactory.StockChart``1">
+            <summary>
+            Creates a <see cref="!:Kendo.Mvc.UI.StockChart{T}" /></summary>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart()
+            .Name("StockChart")
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.WidgetFactory.StockChart``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Creates a new <see cref="!:Kendo.Mvc.UI.StockChart{T}" /> bound to the specified data source.
+            </summary>
+            <typeparam name="T">The type of the data item</typeparam>
+            <param name="data">The data source.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart(Model)
+            .Name("StockChart")
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.WidgetFactory.StockChart``1(System.String)">
+            <summary>
+            Creates a new <see cref="!:Kendo.Mvc.UI.StockChart{T}" /> bound an item in ViewData.
+            </summary>
+            <typeparam name="T">Type of the data item</typeparam>
+            <param name="dataSourceViewDataKey">The data source view data key.</param>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart&lt;SalesData&gt;("sales")
+            .Name("StockChart")
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.WidgetFactory.StockChart">
+            <summary>
+            Creates a new unbound <see cref="M:Kendo.Mvc.UI.Fluent.WidgetFactory.StockChart" />.
+            </summary>
+            <example>
+                <code lang="CS">
+            &lt;%= Html.Kendo().StockChart()
+            .Name("StockChart")
             .Series(series =&gt; {
             series.Bar(new int[] { 1, 2, 3 }).Name("Total Sales");
             })
@@ -22997,6 +25564,11 @@
             %&gt;
             </code>
             </example>
+        </member>
+        <member name="T:Kendo.Mvc.UI.Fluent.WindowResizingSettingsBuilder">
+            <summary>
+            Defines the fluent API for configuring the Kendo Window resizing settings
+            </summary>
         </member>
         <member name="T:Kendo.Mvc.UI.Fluent.WindowEventBuilder">
             <summary>
@@ -23492,6 +26064,11 @@
             Sets whether the window can be moved.
             </summary>
         </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.WindowBuilder.Iframe(System.Boolean)">
+            <summary>
+            Explicitly specifies whether the loaded window content will be rendered as an iframe or in-line
+            </summary>
+        </member>
         <member name="M:Kendo.Mvc.Infrastructure.IPathResolver.Resolve(System.String)">
             <summary>
             Returns the physical path for the specified virtual path.
@@ -23719,12 +26296,17 @@
         </member>
         <member name="P:Kendo.Mvc.Resources.Exceptions.CannotSetAutoBindIfBoundDuringInitialization">
             <summary>
-            Looks up a localized string similar to Cannot set AutoBind if grid is populated during initialization.
+            Looks up a localized string similar to Cannot set AutoBind if widget is populated during initialization.
             </summary>
         </member>
         <member name="P:Kendo.Mvc.Resources.Exceptions.CannotUseAjaxAndWebServiceAtTheSameTime">
             <summary>
             Looks up a localized string similar to Cannot use Ajax and WebService binding at the same time..
+            </summary>
+        </member>
+        <member name="P:Kendo.Mvc.Resources.Exceptions.CannotUseGroupingAndVirtualization">
+            <summary>
+            Looks up a localized string similar to Grouping and Virtual Scrolling is not supported..
             </summary>
         </member>
         <member name="P:Kendo.Mvc.Resources.Exceptions.CannotUseTemplatesInAjaxOrWebService">

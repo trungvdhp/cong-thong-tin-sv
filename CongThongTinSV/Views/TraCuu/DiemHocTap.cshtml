@@ -1,22 +1,89 @@
-﻿@using CongThongTinSV.Models;
+﻿@using Kendo.Mvc.UI;
+@using CongThongTinSV.Models;
 @{
     ViewBag.Title = "Tra cứu điểm học tập";
 }
 
 <h2>Tra cứu điểm học tập</h2>
-<div class="clear: both" />
+
+<br />
 
 @(Html.Kendo().AutoComplete()
         .Name("TuKhoa")
         .Filter("startswith")
         .Placeholder("Nhập từ khóa...")
 )
+
+@(Html.Kendo().DropDownList()
+    .Name("NamHoc")
+    .OptionLabel("Chọn năm học")
+    .HtmlAttributes(new { style = "width:120px" })
+    .DataTextField("Text")
+    .DataValueField("Value")
+    .DataSource(source =>
+    {
+        source.Read(read =>
+        {
+            read.Action("GetNamHocTraCuu", "JSON")
+                .Data("getTuKhoa");
+        });
+    })
+    //.Enable(false)
+    .AutoBind(false)
+    .CascadeFrom("TuKhoa")
+)
+@(Html.Kendo().DropDownList()
+    .Name("HocKy")
+    .HtmlAttributes(new {style="width:120px"})
+    .OptionLabel("Chọn học kỳ")
+    .DataTextField("Text")
+    .DataValueField("Value")
+    .DataSource(source =>
+    {
+        source.Read(read =>
+        {
+            read.Action("GetHocKyTraCuu", "JSON")
+                .Data("getTuKhoa");
+        }).ServerFiltering(true);
+    })
+    .Enable(false)
+    .AutoBind(false)
+        .CascadeFrom("NamHoc")
+)
+
 <input type="submit" value="Tra cứu" id="TraCuuButton"/>
+
+@(Html.Kendo().Grid<CongThongTinSV.Models.DiemHocTap>()
+    .Name("GridBangDiem")
+    .Columns(columns => {
+        columns.Bound(diem => diem.Ma_mon).Width(50);
+        columns.Bound(diem => diem.Ten_mon).Width(150);
+        columns.Bound(diem => diem.X).Width(50);
+        columns.Bound(diem => diem.Y).Width(50);
+        columns.Bound(diem => diem.Z).Width(50);
+        columns.Bound(diem => diem.Diem_chu).Width(50);
+        columns.Bound(diem => diem.Nam_hoc).Width(100);//.Visible(false);
+        columns.Bound(diem => diem.Hoc_ky).Width(50);//.Visible(false);
+    })
+    .Groupable()
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    
+    .DataSource( 
+        dataSource => dataSource.Ajax()
+                .Group(group => group.Add(diem => diem.Nam_hoc))
+                .Group(group => group.Add(diem => diem.Hoc_ky))
+            .Read(read => read.Action("DiemHocTap","JSON").Data("getTuKhoa"))
+    )
+)
 
 <script>
     function getTuKhoa() {
         return {
-            TuKhoa: $("#TuKhoa").val()
+            TuKhoa: $("#TuKhoa").val(),
+            NamHoc: $("#NamHoc").val(),
+            HocKy: $("#HocKy").val()
         };
     }
 
@@ -25,24 +92,3 @@
         $("#GridBangDiem").data("kendoGrid").dataSource.read();
     });
 </script>
-@(Html.Kendo().Grid<CongThongTinSV.Models.DiemHocTap>()
-    .Name("GridBangDiem")
-    .Pageable()
-    .Sortable()
-    .Filterable()
-    .Scrollable()
-    .Groupable()
-    .Columns(columns => {
-        columns.Bound(diem => diem.Ma_mon);
-        columns.Bound(diem => diem.Ten_mon);
-        columns.Bound(diem => diem.X);
-        columns.Bound(diem => diem.Y);
-        columns.Bound(diem => diem.Z);
-        columns.Bound(diem => diem.Diem_chu);
-    })
-    .DataSource( 
-        dataSource => dataSource.Ajax().Read(
-            read => read.Action("DiemHocTap","JSON").Data("getTuKhoa")
-        )
-    )
-)
