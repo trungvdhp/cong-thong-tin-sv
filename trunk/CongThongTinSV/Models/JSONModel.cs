@@ -46,15 +46,21 @@ namespace CongThongTinSV.Models
         public string Ten_mon { get; set; }
 
         [DisplayName("Điểm X")]
-        public string X { get; set; }
+        public float X { get; set; }
 
         [DisplayName("Điểm Y")]
-        public string Y { get; set; }
+        public float Y { get; set; }
 
         [DisplayName("Điểm Z")]
-        public string Z { get; set; }
+        public float Z { get; set; }
 
         [DisplayName("Điểm chữ")]
         public string Diem_chu { get; set; }
+
+        [DisplayName("Học kỳ")]
+        public int Hoc_ky { get; set; }
+
+        [DisplayName("Năm học")]
+        public string Nam_hoc { get; set; }
     }
 }

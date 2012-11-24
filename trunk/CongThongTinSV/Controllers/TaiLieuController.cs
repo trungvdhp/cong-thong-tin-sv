@@ -19,5 +19,6 @@ namespace CongThongTinSV.Controllers
         {
             return View();
         }
+
     }
 }

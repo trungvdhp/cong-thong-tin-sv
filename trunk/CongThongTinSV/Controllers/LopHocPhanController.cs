@@ -27,5 +27,10 @@ namespace CongThongTinSV.Controllers
         {
             return View();
         }
+        public ActionResult MoLopHocPhan()
+        {
+            return View();
+        }
+
     }
 }
