@@ -28,10 +28,20 @@
         </script>
     	<link href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.common.min.css")" rel="stylesheet" type="text/css" />
 	<link href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" />
-	<link href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.metro.min.css")" rel="stylesheet" type="text/css" />
-	<script src="@Url.Content("~/Scripts/kendo/2012.3.1114/jquery.min.js")"></script>
-	<script src="@Url.Content("~/Scripts/kendo/2012.3.1114/kendo.all.min.js")"></script>
-	<script src="@Url.Content("~/Scripts/kendo/2012.3.1114/kendo.aspnetmvc.min.js")"></script>
+        <link href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.common.min.css")" rel="stylesheet" />
+        <link href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.default.min.css")" rel="stylesheet" />
+         <link rel="alternate stylesheet" type="text/css" media="screen" title="black" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.black.min.css")" />
+        <link rel="alternate stylesheet" type="text/css" media="screen" title="blueopal" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.blueopal.min.css")" />
+        <link rel="alternate stylesheet" type="text/css" media="screen" title="bootstrap" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.bootstrap.min.css")" />
+        <link rel="alternate stylesheet" type="text/css" media="screen" title="highcontrast" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.highcontrast.min.css")" />
+        <link rel="alternate stylesheet" type="text/css" media="screen" title="metro" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.metro.min.css")" />
+        <link rel="alternate stylesheet" type="text/css" media="screen" title="metroblack" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.metroblack.min.css")" />
+        <link rel="alternate stylesheet" type="text/css" media="screen" title="moonlight" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.moonlight.min.css")" />
+        <link rel="alternate stylesheet" type="text/css" media="screen" title="silver" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.silver.min.css")" />
+        <link rel="alternate stylesheet" type="text/css" media="screen" title="uniform" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.uniform.min.css")" />
+	    <script src="@Url.Content("~/Scripts/kendo/2012.3.1114/jquery.min.js")"></script>
+	    <script src="@Url.Content("~/Scripts/kendo/2012.3.1114/kendo.all.min.js")"></script>
+	    <script src="@Url.Content("~/Scripts/kendo/2012.3.1114/kendo.aspnetmvc.min.js")"></script>
 </head>
     <body>
         <header>
@@ -143,12 +153,32 @@
                                 Value = "blueopal"
                             },
                             new SelectListItem() {
+                                Text = "Bootstrap",
+                                Value = "bootstrap"
+                            },
+                            new SelectListItem() {
+                                Text = "HighContrast",
+                                Value = "highcontrast"
+                            },
+                            new SelectListItem() {
                                 Text = "Metro",
                                 Value = "metro"
                             },
                             new SelectListItem() {
+                                Text = "MetroBlack",
+                                Value = "metroblack"
+                            },
+                            new SelectListItem() {
+                                Text = "MoonLight",
+                                Value = "moonlight"
+                            },
+                            new SelectListItem() {
                                 Text = "Silver",
                                 Value = "silver"
+                            },
+                            new SelectListItem() {
+                                Text = "Uniform",
+                                Value = "uniform"
                             }
                         })
                     )
