@@ -42,7 +42,6 @@ namespace CongThongTinSV
         public DbSet<MOD_NhomHocVien> MOD_NhomHocVien { get; set; }
         public DbSet<MOD_NhomNguoiDung> MOD_NhomNguoiDung { get; set; }
         public DbSet<MOD_ToNhom> MOD_ToNhom { get; set; }
-        public DbSet<MOD_VaiTro> MOD_VaiTro { get; set; }
         public DbSet<PLAN_ChuongTrinhDaoTao> PLAN_ChuongTrinhDaoTao { get; set; }
         public DbSet<PLAN_ChuongTrinhDaoTaoChiTiet> PLAN_ChuongTrinhDaoTaoChiTiet { get; set; }
         public DbSet<PLAN_GiaoVien> PLAN_GiaoVien { get; set; }

@@ -1,12 +1,12 @@
 ﻿@using Kendo.Mvc.UI;
 @using CongThongTinSV.Models;
 @{
-    ViewBag.Title = "Quản lý tài khoản sinh viên trên Moodle";
+    ViewBag.Title = "Quản lý tài khoản giáo viên trên Moodle";
 }
 
 @(Html.Kendo().ComboBox()
-    .Name("ChuyenNganh")
-    .Placeholder("Chọn chuyên ngành")
+    .Name("Khoa")
+    .Placeholder("Chọn khoa")
     .HtmlAttributes(new {style="width:260px"})
     .DataTextField("Text")
     .DataValueField("Value")
@@ -15,7 +15,7 @@
     {
         source.Read(read =>
         {
-            read.Action("GetChuyenNganh", "ChuyenNganh");
+            read.Action("GetKhoa", "Khoa");
         }).ServerFiltering(true);
     })
     .Events(e =>
@@ -25,26 +25,25 @@
     //.HtmlAttributes(new { style = "display: block;"})
 )
 
-@(Html.Kendo().Grid<CongThongTinSV.Models.MoodleSinhVien>()
+@(Html.Kendo().Grid<CongThongTinSV.Models.MoodleGiaoVien>()
     .Name("Grid")
     .Columns(columns => {
-        columns.Bound(sv => sv.ID_sv)
-            .ClientTemplate("<input type='checkbox' class='chkbx' value='#= ID_sv #'/>")
+        columns.Bound(c => c.ID_cb)
+            .ClientTemplate("<input type='checkbox' class='chkbx' value='#= ID_cb #'/>")
             .HeaderTemplate("<input type='checkbox' id='masterCheckBox'/>")
             .Width(40)
             .Title("")
             .HeaderHtmlAttributes(new { style = "text-align:center" })
             .HtmlAttributes(new { style = "text-align:center" })
             .Filterable(false).Groupable(false).Sortable(false);
-        columns.Bound(sv => sv.Ma_sv).Width(80);
-        columns.Bound(sv => sv.ID_moodle).Width(105);
-        columns.Bound(sv => sv.Ho_dem).Width(150);
-        columns.Bound(sv => sv.Ten).Width(80);
-        columns.Bound(sv => sv.Ngay_sinh).Width(120).Format("{0:dd-MM-yyyy}");
-        columns.Bound(sv => sv.Gioi_tinh).Width(100);
-        columns.Bound(sv => sv.Lop);
+        columns.Bound(c => c.Ma_cb).Width(120).HtmlAttributes(new { style = "text-align:center" });
+        columns.Bound(c => c.ID_moodle).Width(105);
+        columns.Bound(c => c.Ho_dem).Width(150);
+        columns.Bound(c => c.Ten).Width(80);
+        columns.Bound(c => c.Ngay_sinh).Width(120).Format("{0:dd-MM-yyyy}");
+        columns.Bound(c => c.Gioi_tinh);
     })
-    .Pageable(pager => pager.PageSizes(new int[]{5, 10, 20, 50, 100, 1000}).Refresh(true).Input(true).Numeric(false))
+    .Pageable(pager => pager.PageSizes(new int[]{5, 10, 20, 50, 80}).Refresh(true).Input(true).Numeric(false))
     .Sortable(s => s.SortMode(GridSortMode.MultipleColumn))
     .Filterable()
     .Scrollable()
@@ -60,7 +59,7 @@
     .DataSource(
         dataSource => dataSource
             .Ajax()
-            .Read(read => read.Action("GetSinhVien", "MoodleUser").Data("filterGrid"))
+            .Read(read => read.Action("GetGiaoVien", "MoodleUser").Data("filterGrid"))
             .PageSize(50)
     )
 )
@@ -74,7 +73,7 @@
 
     function filterGrid() {
         return {
-            id_chuyen_nganh: $("#ChuyenNganh").val()
+            id_khoa: $("#Khoa").val()
         }
     }
     
@@ -93,7 +92,7 @@
             var grid = $('#Grid').data().kendoGrid;
             var dataItem = grid.dataItem($(this).closest('tr'));
 
-            checkVal(dataItem.ID_sv, state, selectedVals);
+            checkVal(dataItem.ID_cb, state, selectedVals);
             $('#masterCheckBox').attr('checked', isCheckedAll('#Grid :checkbox'));
         })
     })
@@ -105,14 +104,12 @@
     }
 
     $("#create").click(function () {
-        //window.location.href = '/MoodleUser/CreateSinhVien/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals;
-        processing('/MoodleUser/CreateSinhVien/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals, "Đang tạo tài khoản moodle cho các sinh viên...", gridRefresh);
+        processing('/MoodleUser/CreateGiaoVien/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVals, "Đang tạo tài khoản moodle cho các giáo viên...", gridRefresh);
     })
 
     $("#delete").click(function () {
-        if (confirm('Bạn muốn xóa tài khoản moodle của các sinh viên đã chọn?')) {
-            //window.location.href = '/MoodleUser/DeleteSinhVien/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals;
-            processing('/MoodleUser/DeleteSinhVien/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals, "Đang xóa tài khoản moodle của các sinh viên...", gridRefresh);
+        if (confirm('Bạn muốn xóa tài khoản moodle của các giáo viên đã chọn?')) {
+            processing('/MoodleUser/DeleteGiaoVien/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVals, "Đang xóa tài khoản moodle của các giáo viên...", gridRefresh);
         }
     })
 

@@ -16,7 +16,7 @@ body
     border-top-width: thin;
 }
 
-a {
+/*a {
     color: #333;
     outline: none;
     padding-left: 3px;
@@ -31,7 +31,7 @@ a {
 
     a:hover {
         background-color: #c7d1d6;
-    }
+    }*/
 
 header, footer, hgroup,
 nav, section {
@@ -156,10 +156,10 @@ footer {
 }
 
     #login a {
-        background-color: #d3dce0;
+        /*background-color: #d3dce0;*/
         margin-left: 10px;
-        margin-right: 3px;
-        padding: 2px 3px;
+        /*margin-right: 3px;*/
+        /*padding: 2px 3px;*/
         text-decoration: none;
     }
 
@@ -193,7 +193,7 @@ footer {
     ul#menu li {
         display: inline;
         list-style: none;
-        /*padding-left: 15px;*/
+        /*padding-left: 15px;
     }
 
         ul#menu li a {

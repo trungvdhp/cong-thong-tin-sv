@@ -12,13 +12,11 @@ namespace CongThongTinSV
     using System;
     using System.Collections.Generic;
     
-    public partial class MOD_NguoiDung_VaiTro_LopTinChi
+    public partial class fit_message_contacts
     {
-        public int UserID { get; set; }
-        public int ID_lop_tc { get; set; }
-        public int ID_vai_tro { get; set; }
-    
-        public virtual MOD_LopTinChi_TC MOD_LopTinChi_TC { get; set; }
-        public virtual MOD_NguoiDung MOD_NguoiDung { get; set; }
+        public long id { get; set; }
+        public long userid { get; set; }
+        public long contactid { get; set; }
+        public bool blocked { get; set; }
     }
 }

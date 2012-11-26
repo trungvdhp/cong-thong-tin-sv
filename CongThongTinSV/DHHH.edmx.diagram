@@ -19,7 +19,6 @@
         <EntityTypeShape EntityType="DHHHModel.MOD_NhomHocVien" Width="1.5" PointX="7.5" PointY="7.125" />
         <EntityTypeShape EntityType="DHHHModel.MOD_NhomNguoiDung" Width="1.5" PointX="0.625" PointY="1.125" />
         <EntityTypeShape EntityType="DHHHModel.MOD_ToNhom" Width="1.5" PointX="5.25" PointY="10.625" />
-        <EntityTypeShape EntityType="DHHHModel.MOD_VaiTro" Width="1.5" PointX="3" PointY="7.875" />
         <EntityTypeShape EntityType="DHHHModel.PLAN_ChuongTrinhDaoTao" Width="1.5" PointX="9.75" PointY="12.5" />
         <EntityTypeShape EntityType="DHHHModel.PLAN_ChuongTrinhDaoTaoChiTiet" Width="1.5" PointX="15" PointY="17.625" />
         <EntityTypeShape EntityType="DHHHModel.PLAN_GiaoVien" Width="1.5" PointX="10.75" PointY="1" />
@@ -54,8 +53,6 @@
         <AssociationConnector Association="DHHHModel.FK_MOD_NguoiDung_MOD_NhomNguoiDung" />
         <AssociationConnector Association="DHHHModel.FK_MOD_NguoiDung_VaiTro_HeThong_MOD_NguoiDung" />
         <AssociationConnector Association="DHHHModel.FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_NguoiDung" />
-        <AssociationConnector Association="DHHHModel.FK_MOD_NguoiDung_VaiTro_HeThong_MOD_VaiTro" />
-        <AssociationConnector Association="DHHHModel.FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_VaiTro" />
         <AssociationConnector Association="DHHHModel.FK_Nhom_To" />
         <AssociationConnector Association="DHHHModel.FK_PLAN_ChuongTrinhDaoTao_STU_He" />
         <AssociationConnector Association="DHHHModel.FK_PLAN_ChuongTrinhDaoTao_STU_Khoa" />

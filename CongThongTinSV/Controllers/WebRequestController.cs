@@ -7,6 +7,7 @@ using System.Text;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace CongThongTinSV.Controllers
 {
@@ -38,6 +39,11 @@ namespace CongThongTinSV.Controllers
                 MyRequest = WebRequest.Create(RestUrl);
         }
 
+        private string Token()
+        {
+            return (((FormsIdentity)System.Web.HttpContext.Current.User.Identity).Ticket.UserData.Split('|'))[1];
+        }
+
         public WebRequestController(int scriptType, string queryData)
         {
             if(scriptType == 1)
@@ -45,9 +51,9 @@ namespace CongThongTinSV.Controllers
             else if(scriptType == 2)
                 queryData = SoapUrl + "?" + queryData;
             else if(scriptType == 3)
-                queryData = RestUrl + "?" + queryData + "&wstoken=" + System.Web.HttpContext.Current.Session["token"];
+                queryData = RestUrl + "?" + queryData + "&wstoken=" + Token();
             else
-                queryData = RestUrl + "?" + queryData + "&moodlewsrestformat=json" + "&wstoken=" + System.Web.HttpContext.Current.Session["token"];
+                queryData = RestUrl + "?" + queryData + "&moodlewsrestformat=json" + "&wstoken=" + Token();
 
             MyRequest = WebRequest.Create(queryData);
         }
@@ -99,7 +105,7 @@ namespace CongThongTinSV.Controllers
             if (scriptType == 3)
                 queryData += "&wstoken=" + System.Web.HttpContext.Current.Session["token"];
             else if (scriptType > 3)
-                queryData += "&moodlewsrestformat=json" + "&wstoken=" + System.Web.HttpContext.Current.Session["token"];
+                queryData += "&moodlewsrestformat=json" + "&wstoken=" + Token();
             //UtilityController.WriteTextToFile("D:\\Query.txt", queryData);
             SetMethod(method);
             ProcessData(queryData);

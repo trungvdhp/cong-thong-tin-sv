@@ -57,4 +57,37 @@ namespace CongThongTinSV.Models
         [DisplayName("Nhóm")]
         public string Ten_nhom { get; set; }
     }
+
+    public class MoodleGiaoVien
+    {
+        [DisplayName("ID đăng ký")]
+        public int ID { get; set; }
+
+        [DisplayName("ID lớp học phần")]
+        public int ID_lop_tc { get; set; }
+
+        [DisplayName("ID giáo viên")]
+        public int ID_cb { get; set; }
+
+        [DisplayName("ID moodle")]
+        public int ID_moodle { get; set; }
+
+        [DisplayName("Mã giáo viên")]
+        public string Ma_cb { get; set; }
+
+        [DisplayName("Họ và đệm")]
+        public string Ho_dem { get; set; }
+
+        [DisplayName("Tên")]
+        public string Ten { get; set; }
+
+        [DisplayName("Ngày sinh")]
+        public DateTime? Ngay_sinh { get; set; }
+
+        [DisplayName("Giới tính")]
+        public string Gioi_tinh { get; set; }
+
+        [DisplayName("Ghi danh")]
+        public bool Ghi_danh { get; set; }
+    }
 }

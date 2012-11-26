@@ -36,13 +36,13 @@ namespace CongThongTinSV.Models
         [DisplayName("Tên nhóm")]
         public string Ten_nhom { get; set; }
 
-        [DisplayName("Mô tả")]
+        [DisplayName("Mô tả nhóm")]
         public string Mo_ta { get; set; }
 
         [DisplayName("ID tổ")]
         public int ID_to { get; set; }
 
-        [DisplayName("Tên_to")]
+        [DisplayName("Tổ")]
         public string Ten_to { get; set; }
     }
 }
