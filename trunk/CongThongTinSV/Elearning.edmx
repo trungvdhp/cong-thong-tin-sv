@@ -1,0 +1,1577 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="moodleModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="moodleModelStoreContainer">
+          <EntitySet Name="fit_course" EntityType="moodleModel.Store.fit_course" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_enrol" EntityType="moodleModel.Store.fit_enrol" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_external_services" EntityType="moodleModel.Store.fit_external_services" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_grade_grades" EntityType="moodleModel.Store.fit_grade_grades" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_grade_grades_history" EntityType="moodleModel.Store.fit_grade_grades_history" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_grade_import_newitem" EntityType="moodleModel.Store.fit_grade_import_newitem" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_grade_import_values" EntityType="moodleModel.Store.fit_grade_import_values" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_grade_items" EntityType="moodleModel.Store.fit_grade_items" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_grade_items_history" EntityType="moodleModel.Store.fit_grade_items_history" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_grade_letters" EntityType="moodleModel.Store.fit_grade_letters" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_grade_outcomes" EntityType="moodleModel.Store.fit_grade_outcomes" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_grade_outcomes_courses" EntityType="moodleModel.Store.fit_grade_outcomes_courses" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_grade_outcomes_history" EntityType="moodleModel.Store.fit_grade_outcomes_history" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_grade_settings" EntityType="moodleModel.Store.fit_grade_settings" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_grading_areas" EntityType="moodleModel.Store.fit_grading_areas" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_grading_definitions" EntityType="moodleModel.Store.fit_grading_definitions" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_grading_instances" EntityType="moodleModel.Store.fit_grading_instances" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_message" EntityType="moodleModel.Store.fit_message" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_message_contacts" EntityType="moodleModel.Store.fit_message_contacts" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_message_read" EntityType="moodleModel.Store.fit_message_read" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_message_working" EntityType="moodleModel.Store.fit_message_working" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_role" EntityType="moodleModel.Store.fit_role" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_role_context_levels" EntityType="moodleModel.Store.fit_role_context_levels" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_role_names" EntityType="moodleModel.Store.fit_role_names" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_user" EntityType="moodleModel.Store.fit_user" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_user_enrolments" EntityType="moodleModel.Store.fit_user_enrolments" store:Type="Tables" Schema="moodle" />
+        </EntityContainer>
+        <EntityType Name="fit_course">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="category" Type="bigint" Nullable="false" />
+          <Property Name="sortorder" Type="bigint" Nullable="false" />
+          <Property Name="fullname" Type="varchar" Nullable="false" MaxLength="254" />
+          <Property Name="shortname" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="idnumber" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="summary" Type="longtext" />
+          <Property Name="summaryformat" Type="tinyint" Nullable="false" />
+          <Property Name="format" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="showgrades" Type="tinyint" Nullable="false" />
+          <Property Name="sectioncache" Type="longtext" />
+          <Property Name="modinfo" Type="longtext" />
+          <Property Name="newsitems" Type="mediumint" Nullable="false" />
+          <Property Name="startdate" Type="bigint" Nullable="false" />
+          <Property Name="numsections" Type="mediumint" Nullable="false" />
+          <Property Name="marker" Type="bigint" Nullable="false" />
+          <Property Name="maxbytes" Type="bigint" Nullable="false" />
+          <Property Name="legacyfiles" Type="smallint" Nullable="false" />
+          <Property Name="showreports" Type="smallint" Nullable="false" />
+          <Property Name="visible" Type="bool" Nullable="false" />
+          <Property Name="visibleold" Type="bool" Nullable="false" />
+          <Property Name="hiddensections" Type="tinyint" Nullable="false" />
+          <Property Name="groupmode" Type="smallint" Nullable="false" />
+          <Property Name="groupmodeforce" Type="smallint" Nullable="false" />
+          <Property Name="defaultgroupingid" Type="bigint" Nullable="false" />
+          <Property Name="lang" Type="varchar" Nullable="false" MaxLength="30" />
+          <Property Name="theme" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="timecreated" Type="bigint" Nullable="false" />
+          <Property Name="timemodified" Type="bigint" Nullable="false" />
+          <Property Name="requested" Type="bool" Nullable="false" />
+          <Property Name="enablecompletion" Type="bool" Nullable="false" />
+          <Property Name="completionstartonenrol" Type="bool" Nullable="false" />
+          <Property Name="completionnotify" Type="bool" Nullable="false" />
+          <Property Name="coursedisplay" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_enrol">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="enrol" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="status" Type="bigint" Nullable="false" />
+          <Property Name="courseid" Type="bigint" Nullable="false" />
+          <Property Name="sortorder" Type="bigint" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" />
+          <Property Name="enrolperiod" Type="bigint" />
+          <Property Name="enrolstartdate" Type="bigint" />
+          <Property Name="enrolenddate" Type="bigint" />
+          <Property Name="expirynotify" Type="bool" />
+          <Property Name="expirythreshold" Type="bigint" />
+          <Property Name="notifyall" Type="bool" />
+          <Property Name="password" Type="varchar" MaxLength="50" />
+          <Property Name="cost" Type="varchar" MaxLength="20" />
+          <Property Name="currency" Type="varchar" MaxLength="3" />
+          <Property Name="roleid" Type="bigint" />
+          <Property Name="customint1" Type="bigint" />
+          <Property Name="customint2" Type="bigint" />
+          <Property Name="customint3" Type="bigint" />
+          <Property Name="customint4" Type="bigint" />
+          <Property Name="customchar1" Type="varchar" MaxLength="255" />
+          <Property Name="customchar2" Type="varchar" MaxLength="255" />
+          <Property Name="customdec1" Type="decimal" Precision="12" Scale="7" />
+          <Property Name="customdec2" Type="decimal" Precision="12" Scale="7" />
+          <Property Name="customtext1" Type="longtext" />
+          <Property Name="customtext2" Type="longtext" />
+          <Property Name="timecreated" Type="bigint" Nullable="false" />
+          <Property Name="timemodified" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_external_services">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="200" />
+          <Property Name="enabled" Type="bool" Nullable="false" />
+          <Property Name="requiredcapability" Type="varchar" MaxLength="150" />
+          <Property Name="restrictedusers" Type="bool" Nullable="false" />
+          <Property Name="component" Type="varchar" MaxLength="100" />
+          <Property Name="timecreated" Type="bigint" Nullable="false" />
+          <Property Name="timemodified" Type="bigint" />
+          <Property Name="shortname" Type="varchar" MaxLength="255" />
+          <Property Name="downloadfiles" Type="bool" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_grade_grades">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="itemid" Type="bigint" Nullable="false" />
+          <Property Name="userid" Type="bigint" Nullable="false" />
+          <Property Name="rawgrade" Type="decimal" Scale="5" />
+          <Property Name="rawgrademax" Type="decimal" Nullable="false" Scale="5" />
+          <Property Name="rawgrademin" Type="decimal" Nullable="false" Scale="5" />
+          <Property Name="rawscaleid" Type="bigint" />
+          <Property Name="usermodified" Type="bigint" />
+          <Property Name="finalgrade" Type="decimal" Scale="5" />
+          <Property Name="hidden" Type="bigint" Nullable="false" />
+          <Property Name="locked" Type="bigint" Nullable="false" />
+          <Property Name="locktime" Type="bigint" Nullable="false" />
+          <Property Name="exported" Type="bigint" Nullable="false" />
+          <Property Name="overridden" Type="bigint" Nullable="false" />
+          <Property Name="excluded" Type="bigint" Nullable="false" />
+          <Property Name="feedback" Type="longtext" />
+          <Property Name="feedbackformat" Type="bigint" Nullable="false" />
+          <Property Name="information" Type="longtext" />
+          <Property Name="informationformat" Type="bigint" Nullable="false" />
+          <Property Name="timecreated" Type="bigint" />
+          <Property Name="timemodified" Type="bigint" />
+        </EntityType>
+        <EntityType Name="fit_grade_grades_history">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="action" Type="bigint" Nullable="false" />
+          <Property Name="oldid" Type="bigint" Nullable="false" />
+          <Property Name="source" Type="varchar" MaxLength="255" />
+          <Property Name="timemodified" Type="bigint" />
+          <Property Name="loggeduser" Type="bigint" />
+          <Property Name="itemid" Type="bigint" Nullable="false" />
+          <Property Name="userid" Type="bigint" Nullable="false" />
+          <Property Name="rawgrade" Type="decimal" Scale="5" />
+          <Property Name="rawgrademax" Type="decimal" Nullable="false" Scale="5" />
+          <Property Name="rawgrademin" Type="decimal" Nullable="false" Scale="5" />
+          <Property Name="rawscaleid" Type="bigint" />
+          <Property Name="usermodified" Type="bigint" />
+          <Property Name="finalgrade" Type="decimal" Scale="5" />
+          <Property Name="hidden" Type="bigint" Nullable="false" />
+          <Property Name="locked" Type="bigint" Nullable="false" />
+          <Property Name="locktime" Type="bigint" Nullable="false" />
+          <Property Name="exported" Type="bigint" Nullable="false" />
+          <Property Name="overridden" Type="bigint" Nullable="false" />
+          <Property Name="excluded" Type="bigint" Nullable="false" />
+          <Property Name="feedback" Type="longtext" />
+          <Property Name="feedbackformat" Type="bigint" Nullable="false" />
+          <Property Name="information" Type="longtext" />
+          <Property Name="informationformat" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_grade_import_newitem">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="itemname" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="importcode" Type="bigint" Nullable="false" />
+          <Property Name="importer" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_grade_import_values">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="itemid" Type="bigint" />
+          <Property Name="newgradeitem" Type="bigint" />
+          <Property Name="userid" Type="bigint" Nullable="false" />
+          <Property Name="finalgrade" Type="decimal" Scale="5" />
+          <Property Name="feedback" Type="longtext" />
+          <Property Name="importcode" Type="bigint" Nullable="false" />
+          <Property Name="importer" Type="bigint" />
+        </EntityType>
+        <EntityType Name="fit_grade_items">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="courseid" Type="bigint" />
+          <Property Name="categoryid" Type="bigint" />
+          <Property Name="itemname" Type="varchar" MaxLength="255" />
+          <Property Name="itemtype" Type="varchar" Nullable="false" MaxLength="30" />
+          <Property Name="itemmodule" Type="varchar" MaxLength="30" />
+          <Property Name="iteminstance" Type="bigint" />
+          <Property Name="itemnumber" Type="bigint" />
+          <Property Name="iteminfo" Type="longtext" />
+          <Property Name="idnumber" Type="varchar" MaxLength="255" />
+          <Property Name="calculation" Type="longtext" />
+          <Property Name="gradetype" Type="smallint" Nullable="false" />
+          <Property Name="grademax" Type="decimal" Nullable="false" Scale="5" />
+          <Property Name="grademin" Type="decimal" Nullable="false" Scale="5" />
+          <Property Name="scaleid" Type="bigint" />
+          <Property Name="outcomeid" Type="bigint" />
+          <Property Name="gradepass" Type="decimal" Nullable="false" Scale="5" />
+          <Property Name="multfactor" Type="decimal" Nullable="false" Scale="5" />
+          <Property Name="plusfactor" Type="decimal" Nullable="false" Scale="5" />
+          <Property Name="aggregationcoef" Type="decimal" Nullable="false" Scale="5" />
+          <Property Name="sortorder" Type="bigint" Nullable="false" />
+          <Property Name="display" Type="bigint" Nullable="false" />
+          <Property Name="decimals" Type="bool" />
+          <Property Name="hidden" Type="bigint" Nullable="false" />
+          <Property Name="locked" Type="bigint" Nullable="false" />
+          <Property Name="locktime" Type="bigint" Nullable="false" />
+          <Property Name="needsupdate" Type="bigint" Nullable="false" />
+          <Property Name="timecreated" Type="bigint" />
+          <Property Name="timemodified" Type="bigint" />
+        </EntityType>
+        <EntityType Name="fit_grade_items_history">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="action" Type="bigint" Nullable="false" />
+          <Property Name="oldid" Type="bigint" Nullable="false" />
+          <Property Name="source" Type="varchar" MaxLength="255" />
+          <Property Name="timemodified" Type="bigint" />
+          <Property Name="loggeduser" Type="bigint" />
+          <Property Name="courseid" Type="bigint" />
+          <Property Name="categoryid" Type="bigint" />
+          <Property Name="itemname" Type="varchar" MaxLength="255" />
+          <Property Name="itemtype" Type="varchar" Nullable="false" MaxLength="30" />
+          <Property Name="itemmodule" Type="varchar" MaxLength="30" />
+          <Property Name="iteminstance" Type="bigint" />
+          <Property Name="itemnumber" Type="bigint" />
+          <Property Name="iteminfo" Type="longtext" />
+          <Property Name="idnumber" Type="varchar" MaxLength="255" />
+          <Property Name="calculation" Type="longtext" />
+          <Property Name="gradetype" Type="smallint" Nullable="false" />
+          <Property Name="grademax" Type="decimal" Nullable="false" Scale="5" />
+          <Property Name="grademin" Type="decimal" Nullable="false" Scale="5" />
+          <Property Name="scaleid" Type="bigint" />
+          <Property Name="outcomeid" Type="bigint" />
+          <Property Name="gradepass" Type="decimal" Nullable="false" Scale="5" />
+          <Property Name="multfactor" Type="decimal" Nullable="false" Scale="5" />
+          <Property Name="plusfactor" Type="decimal" Nullable="false" Scale="5" />
+          <Property Name="aggregationcoef" Type="decimal" Nullable="false" Scale="5" />
+          <Property Name="sortorder" Type="bigint" Nullable="false" />
+          <Property Name="hidden" Type="bigint" Nullable="false" />
+          <Property Name="locked" Type="bigint" Nullable="false" />
+          <Property Name="locktime" Type="bigint" Nullable="false" />
+          <Property Name="needsupdate" Type="bigint" Nullable="false" />
+          <Property Name="display" Type="bigint" Nullable="false" />
+          <Property Name="decimals" Type="bool" />
+        </EntityType>
+        <EntityType Name="fit_grade_letters">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="contextid" Type="bigint" Nullable="false" />
+          <Property Name="lowerboundary" Type="decimal" Nullable="false" Scale="5" />
+          <Property Name="letter" Type="varchar" Nullable="false" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="fit_grade_outcomes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="courseid" Type="bigint" />
+          <Property Name="shortname" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="fullname" Type="longtext" Nullable="false" />
+          <Property Name="scaleid" Type="bigint" />
+          <Property Name="description" Type="longtext" />
+          <Property Name="descriptionformat" Type="tinyint" Nullable="false" />
+          <Property Name="timecreated" Type="bigint" />
+          <Property Name="timemodified" Type="bigint" />
+          <Property Name="usermodified" Type="bigint" />
+        </EntityType>
+        <EntityType Name="fit_grade_outcomes_courses">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="courseid" Type="bigint" Nullable="false" />
+          <Property Name="outcomeid" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_grade_outcomes_history">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="action" Type="bigint" Nullable="false" />
+          <Property Name="oldid" Type="bigint" Nullable="false" />
+          <Property Name="source" Type="varchar" MaxLength="255" />
+          <Property Name="timemodified" Type="bigint" />
+          <Property Name="loggeduser" Type="bigint" />
+          <Property Name="courseid" Type="bigint" />
+          <Property Name="shortname" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="fullname" Type="longtext" Nullable="false" />
+          <Property Name="scaleid" Type="bigint" />
+          <Property Name="description" Type="longtext" />
+          <Property Name="descriptionformat" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_grade_settings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="courseid" Type="bigint" Nullable="false" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="value" Type="longtext" />
+        </EntityType>
+        <EntityType Name="fit_grading_areas">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="contextid" Type="bigint" Nullable="false" />
+          <Property Name="component" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="areaname" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="activemethod" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="fit_grading_definitions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="areaid" Type="bigint" Nullable="false" />
+          <Property Name="method" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="description" Type="longtext" />
+          <Property Name="descriptionformat" Type="tinyint" />
+          <Property Name="status" Type="bigint" Nullable="false" />
+          <Property Name="copiedfromid" Type="bigint" />
+          <Property Name="timecreated" Type="bigint" Nullable="false" />
+          <Property Name="usercreated" Type="bigint" Nullable="false" />
+          <Property Name="timemodified" Type="bigint" Nullable="false" />
+          <Property Name="usermodified" Type="bigint" Nullable="false" />
+          <Property Name="timecopied" Type="bigint" />
+          <Property Name="options" Type="longtext" />
+        </EntityType>
+        <EntityType Name="fit_grading_instances">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="definitionid" Type="bigint" Nullable="false" />
+          <Property Name="raterid" Type="bigint" Nullable="false" />
+          <Property Name="itemid" Type="bigint" />
+          <Property Name="rawgrade" Type="decimal" Scale="5" />
+          <Property Name="status" Type="bigint" Nullable="false" />
+          <Property Name="feedback" Type="longtext" />
+          <Property Name="feedbackformat" Type="tinyint" />
+          <Property Name="timemodified" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_message">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="useridfrom" Type="bigint" Nullable="false" />
+          <Property Name="useridto" Type="bigint" Nullable="false" />
+          <Property Name="subject" Type="longtext" />
+          <Property Name="fullmessage" Type="longtext" />
+          <Property Name="fullmessageformat" Type="smallint" />
+          <Property Name="fullmessagehtml" Type="longtext" />
+          <Property Name="smallmessage" Type="longtext" />
+          <Property Name="notification" Type="bool" />
+          <Property Name="contexturl" Type="longtext" />
+          <Property Name="contexturlname" Type="longtext" />
+          <Property Name="timecreated" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_message_contacts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="userid" Type="bigint" Nullable="false" />
+          <Property Name="contactid" Type="bigint" Nullable="false" />
+          <Property Name="blocked" Type="bool" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_message_read">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="useridfrom" Type="bigint" Nullable="false" />
+          <Property Name="useridto" Type="bigint" Nullable="false" />
+          <Property Name="subject" Type="longtext" />
+          <Property Name="fullmessage" Type="longtext" />
+          <Property Name="fullmessageformat" Type="smallint" />
+          <Property Name="fullmessagehtml" Type="longtext" />
+          <Property Name="smallmessage" Type="longtext" />
+          <Property Name="notification" Type="bool" />
+          <Property Name="contexturl" Type="longtext" />
+          <Property Name="contexturlname" Type="longtext" />
+          <Property Name="timecreated" Type="bigint" Nullable="false" />
+          <Property Name="timeread" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_message_working">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="unreadmessageid" Type="bigint" Nullable="false" />
+          <Property Name="processorid" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_role">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="shortname" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="description" Type="longtext" Nullable="false" />
+          <Property Name="sortorder" Type="bigint" Nullable="false" />
+          <Property Name="archetype" Type="varchar" Nullable="false" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="fit_role_context_levels">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="roleid" Type="bigint" Nullable="false" />
+          <Property Name="contextlevel" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_role_names">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="roleid" Type="bigint" Nullable="false" />
+          <Property Name="contextid" Type="bigint" Nullable="false" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="fit_user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="auth" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="confirmed" Type="bool" Nullable="false" />
+          <Property Name="policyagreed" Type="bool" Nullable="false" />
+          <Property Name="deleted" Type="bool" Nullable="false" />
+          <Property Name="suspended" Type="bool" Nullable="false" />
+          <Property Name="mnethostid" Type="bigint" Nullable="false" />
+          <Property Name="username" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="password" Type="varchar" Nullable="false" MaxLength="32" />
+          <Property Name="idnumber" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="firstname" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="lastname" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="email" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="emailstop" Type="bool" Nullable="false" />
+          <Property Name="icq" Type="varchar" Nullable="false" MaxLength="15" />
+          <Property Name="skype" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="yahoo" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="aim" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="msn" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="phone1" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="phone2" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="institution" Type="varchar" Nullable="false" MaxLength="40" />
+          <Property Name="department" Type="varchar" Nullable="false" MaxLength="30" />
+          <Property Name="address" Type="varchar" Nullable="false" MaxLength="70" />
+          <Property Name="city" Type="varchar" Nullable="false" MaxLength="120" />
+          <Property Name="country" Type="varchar" Nullable="false" MaxLength="2" />
+          <Property Name="lang" Type="varchar" Nullable="false" MaxLength="30" />
+          <Property Name="theme" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="timezone" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="firstaccess" Type="bigint" Nullable="false" />
+          <Property Name="lastaccess" Type="bigint" Nullable="false" />
+          <Property Name="lastlogin" Type="bigint" Nullable="false" />
+          <Property Name="currentlogin" Type="bigint" Nullable="false" />
+          <Property Name="lastip" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="secret" Type="varchar" Nullable="false" MaxLength="15" />
+          <Property Name="picture" Type="bigint" Nullable="false" />
+          <Property Name="url" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="description" Type="longtext" />
+          <Property Name="descriptionformat" Type="tinyint" Nullable="false" />
+          <Property Name="mailformat" Type="bool" Nullable="false" />
+          <Property Name="maildigest" Type="bool" Nullable="false" />
+          <Property Name="maildisplay" Type="tinyint" Nullable="false" />
+          <Property Name="htmleditor" Type="bool" Nullable="false" />
+          <Property Name="autosubscribe" Type="bool" Nullable="false" />
+          <Property Name="trackforums" Type="bool" Nullable="false" />
+          <Property Name="timecreated" Type="bigint" Nullable="false" />
+          <Property Name="timemodified" Type="bigint" Nullable="false" />
+          <Property Name="trustbitmask" Type="bigint" Nullable="false" />
+          <Property Name="imagealt" Type="varchar" MaxLength="255" />
+          <Property Name="screenreader" Type="bool" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_user_enrolments">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="status" Type="bigint" Nullable="false" />
+          <Property Name="enrolid" Type="bigint" Nullable="false" />
+          <Property Name="userid" Type="bigint" Nullable="false" />
+          <Property Name="timestart" Type="bigint" Nullable="false" />
+          <Property Name="timeend" Type="bigint" Nullable="false" />
+          <Property Name="modifierid" Type="bigint" Nullable="false" />
+          <Property Name="timecreated" Type="bigint" Nullable="false" />
+          <Property Name="timemodified" Type="bigint" Nullable="false" />
+        </EntityType>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="moodleModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="MoodleEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="fit_course" EntityType="moodleModel.fit_course" />
+          <EntitySet Name="fit_enrol" EntityType="moodleModel.fit_enrol" />
+          <EntitySet Name="fit_external_services" EntityType="moodleModel.fit_external_services" />
+          <EntitySet Name="fit_grade_grades" EntityType="moodleModel.fit_grade_grades" />
+          <EntitySet Name="fit_grade_grades_history" EntityType="moodleModel.fit_grade_grades_history" />
+          <EntitySet Name="fit_grade_import_newitem" EntityType="moodleModel.fit_grade_import_newitem" />
+          <EntitySet Name="fit_grade_import_values" EntityType="moodleModel.fit_grade_import_values" />
+          <EntitySet Name="fit_grade_items" EntityType="moodleModel.fit_grade_items" />
+          <EntitySet Name="fit_grade_items_history" EntityType="moodleModel.fit_grade_items_history" />
+          <EntitySet Name="fit_grade_letters" EntityType="moodleModel.fit_grade_letters" />
+          <EntitySet Name="fit_grade_outcomes" EntityType="moodleModel.fit_grade_outcomes" />
+          <EntitySet Name="fit_grade_outcomes_courses" EntityType="moodleModel.fit_grade_outcomes_courses" />
+          <EntitySet Name="fit_grade_outcomes_history" EntityType="moodleModel.fit_grade_outcomes_history" />
+          <EntitySet Name="fit_grade_settings" EntityType="moodleModel.fit_grade_settings" />
+          <EntitySet Name="fit_grading_areas" EntityType="moodleModel.fit_grading_areas" />
+          <EntitySet Name="fit_grading_definitions" EntityType="moodleModel.fit_grading_definitions" />
+          <EntitySet Name="fit_grading_instances" EntityType="moodleModel.fit_grading_instances" />
+          <EntitySet Name="fit_message" EntityType="moodleModel.fit_message" />
+          <EntitySet Name="fit_message_contacts" EntityType="moodleModel.fit_message_contacts" />
+          <EntitySet Name="fit_message_read" EntityType="moodleModel.fit_message_read" />
+          <EntitySet Name="fit_message_working" EntityType="moodleModel.fit_message_working" />
+          <EntitySet Name="fit_user" EntityType="moodleModel.fit_user" />
+          <EntitySet Name="fit_user_enrolments" EntityType="moodleModel.fit_user_enrolments" />
+          <EntitySet Name="fit_role" EntityType="moodleModel.fit_role" />
+          <EntitySet Name="fit_role_context_levels" EntityType="moodleModel.fit_role_context_levels" />
+          <EntitySet Name="fit_role_names" EntityType="moodleModel.fit_role_names" />
+        </EntityContainer>
+        <EntityType Name="fit_course">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="category" Type="Int64" Nullable="false" />
+          <Property Name="sortorder" Type="Int64" Nullable="false" />
+          <Property Name="fullname" Type="String" Nullable="false" MaxLength="254" Unicode="false" FixedLength="false" />
+          <Property Name="shortname" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="idnumber" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="summary" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="summaryformat" Type="SByte" Nullable="false" />
+          <Property Name="format" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="showgrades" Type="SByte" Nullable="false" />
+          <Property Name="sectioncache" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="modinfo" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="newsitems" Type="Int32" Nullable="false" />
+          <Property Name="startdate" Type="Int64" Nullable="false" />
+          <Property Name="numsections" Type="Int32" Nullable="false" />
+          <Property Name="marker" Type="Int64" Nullable="false" />
+          <Property Name="maxbytes" Type="Int64" Nullable="false" />
+          <Property Name="legacyfiles" Type="Int16" Nullable="false" />
+          <Property Name="showreports" Type="Int16" Nullable="false" />
+          <Property Name="visible" Type="Boolean" Nullable="false" />
+          <Property Name="visibleold" Type="Boolean" Nullable="false" />
+          <Property Name="hiddensections" Type="SByte" Nullable="false" />
+          <Property Name="groupmode" Type="Int16" Nullable="false" />
+          <Property Name="groupmodeforce" Type="Int16" Nullable="false" />
+          <Property Name="defaultgroupingid" Type="Int64" Nullable="false" />
+          <Property Name="lang" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="theme" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="timecreated" Type="Int64" Nullable="false" />
+          <Property Name="timemodified" Type="Int64" Nullable="false" />
+          <Property Name="requested" Type="Boolean" Nullable="false" />
+          <Property Name="enablecompletion" Type="Boolean" Nullable="false" />
+          <Property Name="completionstartonenrol" Type="Boolean" Nullable="false" />
+          <Property Name="completionnotify" Type="Boolean" Nullable="false" />
+          <Property Name="coursedisplay" Type="SByte" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_enrol">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="enrol" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="status" Type="Int64" Nullable="false" />
+          <Property Name="courseid" Type="Int64" Nullable="false" />
+          <Property Name="sortorder" Type="Int64" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="enrolperiod" Type="Int64" />
+          <Property Name="enrolstartdate" Type="Int64" />
+          <Property Name="enrolenddate" Type="Int64" />
+          <Property Name="expirynotify" Type="Boolean" />
+          <Property Name="expirythreshold" Type="Int64" />
+          <Property Name="notifyall" Type="Boolean" />
+          <Property Name="password" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="cost" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="currency" Type="String" MaxLength="3" Unicode="false" FixedLength="false" />
+          <Property Name="roleid" Type="Int64" />
+          <Property Name="customint1" Type="Int64" />
+          <Property Name="customint2" Type="Int64" />
+          <Property Name="customint3" Type="Int64" />
+          <Property Name="customint4" Type="Int64" />
+          <Property Name="customchar1" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="customchar2" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="customdec1" Type="Decimal" Precision="12" Scale="7" />
+          <Property Name="customdec2" Type="Decimal" Precision="12" Scale="7" />
+          <Property Name="customtext1" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="customtext2" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="timecreated" Type="Int64" Nullable="false" />
+          <Property Name="timemodified" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_external_services">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+          <Property Name="enabled" Type="Boolean" Nullable="false" />
+          <Property Name="requiredcapability" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
+          <Property Name="restrictedusers" Type="Boolean" Nullable="false" />
+          <Property Name="component" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="timecreated" Type="Int64" Nullable="false" />
+          <Property Name="timemodified" Type="Int64" />
+          <Property Name="shortname" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="downloadfiles" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_grade_grades">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="itemid" Type="Int64" Nullable="false" />
+          <Property Name="userid" Type="Int64" Nullable="false" />
+          <Property Name="rawgrade" Type="Decimal" Precision="10" Scale="5" />
+          <Property Name="rawgrademax" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+          <Property Name="rawgrademin" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+          <Property Name="rawscaleid" Type="Int64" />
+          <Property Name="usermodified" Type="Int64" />
+          <Property Name="finalgrade" Type="Decimal" Precision="10" Scale="5" />
+          <Property Name="hidden" Type="Int64" Nullable="false" />
+          <Property Name="locked" Type="Int64" Nullable="false" />
+          <Property Name="locktime" Type="Int64" Nullable="false" />
+          <Property Name="exported" Type="Int64" Nullable="false" />
+          <Property Name="overridden" Type="Int64" Nullable="false" />
+          <Property Name="excluded" Type="Int64" Nullable="false" />
+          <Property Name="feedback" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="feedbackformat" Type="Int64" Nullable="false" />
+          <Property Name="information" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="informationformat" Type="Int64" Nullable="false" />
+          <Property Name="timecreated" Type="Int64" />
+          <Property Name="timemodified" Type="Int64" />
+        </EntityType>
+        <EntityType Name="fit_grade_grades_history">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="action" Type="Int64" Nullable="false" />
+          <Property Name="oldid" Type="Int64" Nullable="false" />
+          <Property Name="source" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="timemodified" Type="Int64" />
+          <Property Name="loggeduser" Type="Int64" />
+          <Property Name="itemid" Type="Int64" Nullable="false" />
+          <Property Name="userid" Type="Int64" Nullable="false" />
+          <Property Name="rawgrade" Type="Decimal" Precision="10" Scale="5" />
+          <Property Name="rawgrademax" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+          <Property Name="rawgrademin" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+          <Property Name="rawscaleid" Type="Int64" />
+          <Property Name="usermodified" Type="Int64" />
+          <Property Name="finalgrade" Type="Decimal" Precision="10" Scale="5" />
+          <Property Name="hidden" Type="Int64" Nullable="false" />
+          <Property Name="locked" Type="Int64" Nullable="false" />
+          <Property Name="locktime" Type="Int64" Nullable="false" />
+          <Property Name="exported" Type="Int64" Nullable="false" />
+          <Property Name="overridden" Type="Int64" Nullable="false" />
+          <Property Name="excluded" Type="Int64" Nullable="false" />
+          <Property Name="feedback" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="feedbackformat" Type="Int64" Nullable="false" />
+          <Property Name="information" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="informationformat" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_grade_import_newitem">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="itemname" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="importcode" Type="Int64" Nullable="false" />
+          <Property Name="importer" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_grade_import_values">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="itemid" Type="Int64" />
+          <Property Name="newgradeitem" Type="Int64" />
+          <Property Name="userid" Type="Int64" Nullable="false" />
+          <Property Name="finalgrade" Type="Decimal" Precision="10" Scale="5" />
+          <Property Name="feedback" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="importcode" Type="Int64" Nullable="false" />
+          <Property Name="importer" Type="Int64" />
+        </EntityType>
+        <EntityType Name="fit_grade_items">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="courseid" Type="Int64" />
+          <Property Name="categoryid" Type="Int64" />
+          <Property Name="itemname" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="itemtype" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="itemmodule" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="iteminstance" Type="Int64" />
+          <Property Name="itemnumber" Type="Int64" />
+          <Property Name="iteminfo" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="idnumber" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="calculation" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="gradetype" Type="Int16" Nullable="false" />
+          <Property Name="grademax" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+          <Property Name="grademin" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+          <Property Name="scaleid" Type="Int64" />
+          <Property Name="outcomeid" Type="Int64" />
+          <Property Name="gradepass" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+          <Property Name="multfactor" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+          <Property Name="plusfactor" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+          <Property Name="aggregationcoef" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+          <Property Name="sortorder" Type="Int64" Nullable="false" />
+          <Property Name="display" Type="Int64" Nullable="false" />
+          <Property Name="decimals" Type="Boolean" />
+          <Property Name="hidden" Type="Int64" Nullable="false" />
+          <Property Name="locked" Type="Int64" Nullable="false" />
+          <Property Name="locktime" Type="Int64" Nullable="false" />
+          <Property Name="needsupdate" Type="Int64" Nullable="false" />
+          <Property Name="timecreated" Type="Int64" />
+          <Property Name="timemodified" Type="Int64" />
+        </EntityType>
+        <EntityType Name="fit_grade_items_history">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="action" Type="Int64" Nullable="false" />
+          <Property Name="oldid" Type="Int64" Nullable="false" />
+          <Property Name="source" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="timemodified" Type="Int64" />
+          <Property Name="loggeduser" Type="Int64" />
+          <Property Name="courseid" Type="Int64" />
+          <Property Name="categoryid" Type="Int64" />
+          <Property Name="itemname" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="itemtype" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="itemmodule" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="iteminstance" Type="Int64" />
+          <Property Name="itemnumber" Type="Int64" />
+          <Property Name="iteminfo" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="idnumber" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="calculation" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="gradetype" Type="Int16" Nullable="false" />
+          <Property Name="grademax" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+          <Property Name="grademin" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+          <Property Name="scaleid" Type="Int64" />
+          <Property Name="outcomeid" Type="Int64" />
+          <Property Name="gradepass" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+          <Property Name="multfactor" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+          <Property Name="plusfactor" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+          <Property Name="aggregationcoef" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+          <Property Name="sortorder" Type="Int64" Nullable="false" />
+          <Property Name="hidden" Type="Int64" Nullable="false" />
+          <Property Name="locked" Type="Int64" Nullable="false" />
+          <Property Name="locktime" Type="Int64" Nullable="false" />
+          <Property Name="needsupdate" Type="Int64" Nullable="false" />
+          <Property Name="display" Type="Int64" Nullable="false" />
+          <Property Name="decimals" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="fit_grade_letters">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="contextid" Type="Int64" Nullable="false" />
+          <Property Name="lowerboundary" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+          <Property Name="letter" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="fit_grade_outcomes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="courseid" Type="Int64" />
+          <Property Name="shortname" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="fullname" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="scaleid" Type="Int64" />
+          <Property Name="description" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="descriptionformat" Type="SByte" Nullable="false" />
+          <Property Name="timecreated" Type="Int64" />
+          <Property Name="timemodified" Type="Int64" />
+          <Property Name="usermodified" Type="Int64" />
+        </EntityType>
+        <EntityType Name="fit_grade_outcomes_courses">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="courseid" Type="Int64" Nullable="false" />
+          <Property Name="outcomeid" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_grade_outcomes_history">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="action" Type="Int64" Nullable="false" />
+          <Property Name="oldid" Type="Int64" Nullable="false" />
+          <Property Name="source" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="timemodified" Type="Int64" />
+          <Property Name="loggeduser" Type="Int64" />
+          <Property Name="courseid" Type="Int64" />
+          <Property Name="shortname" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="fullname" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="scaleid" Type="Int64" />
+          <Property Name="description" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="descriptionformat" Type="SByte" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_grade_settings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="courseid" Type="Int64" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="value" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="fit_grading_areas">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="contextid" Type="Int64" Nullable="false" />
+          <Property Name="component" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="areaname" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="activemethod" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="fit_grading_definitions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="areaid" Type="Int64" Nullable="false" />
+          <Property Name="method" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="description" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="descriptionformat" Type="SByte" />
+          <Property Name="status" Type="Int64" Nullable="false" />
+          <Property Name="copiedfromid" Type="Int64" />
+          <Property Name="timecreated" Type="Int64" Nullable="false" />
+          <Property Name="usercreated" Type="Int64" Nullable="false" />
+          <Property Name="timemodified" Type="Int64" Nullable="false" />
+          <Property Name="usermodified" Type="Int64" Nullable="false" />
+          <Property Name="timecopied" Type="Int64" />
+          <Property Name="options" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="fit_grading_instances">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="definitionid" Type="Int64" Nullable="false" />
+          <Property Name="raterid" Type="Int64" Nullable="false" />
+          <Property Name="itemid" Type="Int64" />
+          <Property Name="rawgrade" Type="Decimal" Precision="10" Scale="5" />
+          <Property Name="status" Type="Int64" Nullable="false" />
+          <Property Name="feedback" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="feedbackformat" Type="SByte" />
+          <Property Name="timemodified" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_message">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="useridfrom" Type="Int64" Nullable="false" />
+          <Property Name="useridto" Type="Int64" Nullable="false" />
+          <Property Name="subject" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="fullmessage" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="fullmessageformat" Type="Int16" />
+          <Property Name="fullmessagehtml" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="smallmessage" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="notification" Type="Boolean" />
+          <Property Name="contexturl" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="contexturlname" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="timecreated" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_message_contacts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="userid" Type="Int64" Nullable="false" />
+          <Property Name="contactid" Type="Int64" Nullable="false" />
+          <Property Name="blocked" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_message_read">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="useridfrom" Type="Int64" Nullable="false" />
+          <Property Name="useridto" Type="Int64" Nullable="false" />
+          <Property Name="subject" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="fullmessage" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="fullmessageformat" Type="Int16" />
+          <Property Name="fullmessagehtml" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="smallmessage" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="notification" Type="Boolean" />
+          <Property Name="contexturl" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="contexturlname" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="timecreated" Type="Int64" Nullable="false" />
+          <Property Name="timeread" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_message_working">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="unreadmessageid" Type="Int64" Nullable="false" />
+          <Property Name="processorid" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="auth" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="confirmed" Type="Boolean" Nullable="false" />
+          <Property Name="policyagreed" Type="Boolean" Nullable="false" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="suspended" Type="Boolean" Nullable="false" />
+          <Property Name="mnethostid" Type="Int64" Nullable="false" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="32" Unicode="false" FixedLength="false" />
+          <Property Name="idnumber" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="firstname" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="lastname" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="emailstop" Type="Boolean" Nullable="false" />
+          <Property Name="icq" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="skype" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="yahoo" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="aim" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="msn" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="phone1" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="phone2" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="institution" Type="String" Nullable="false" MaxLength="40" Unicode="false" FixedLength="false" />
+          <Property Name="department" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="address" Type="String" Nullable="false" MaxLength="70" Unicode="false" FixedLength="false" />
+          <Property Name="city" Type="String" Nullable="false" MaxLength="120" Unicode="false" FixedLength="false" />
+          <Property Name="country" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="false" />
+          <Property Name="lang" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="theme" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="timezone" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="firstaccess" Type="Int64" Nullable="false" />
+          <Property Name="lastaccess" Type="Int64" Nullable="false" />
+          <Property Name="lastlogin" Type="Int64" Nullable="false" />
+          <Property Name="currentlogin" Type="Int64" Nullable="false" />
+          <Property Name="lastip" Type="String" Nullable="false" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="secret" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="picture" Type="Int64" Nullable="false" />
+          <Property Name="url" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="description" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="descriptionformat" Type="SByte" Nullable="false" />
+          <Property Name="mailformat" Type="Boolean" Nullable="false" />
+          <Property Name="maildigest" Type="Boolean" Nullable="false" />
+          <Property Name="maildisplay" Type="SByte" Nullable="false" />
+          <Property Name="htmleditor" Type="Boolean" Nullable="false" />
+          <Property Name="autosubscribe" Type="Boolean" Nullable="false" />
+          <Property Name="trackforums" Type="Boolean" Nullable="false" />
+          <Property Name="timecreated" Type="Int64" Nullable="false" />
+          <Property Name="timemodified" Type="Int64" Nullable="false" />
+          <Property Name="trustbitmask" Type="Int64" Nullable="false" />
+          <Property Name="imagealt" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="screenreader" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_user_enrolments">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="status" Type="Int64" Nullable="false" />
+          <Property Name="enrolid" Type="Int64" Nullable="false" />
+          <Property Name="userid" Type="Int64" Nullable="false" />
+          <Property Name="timestart" Type="Int64" Nullable="false" />
+          <Property Name="timeend" Type="Int64" Nullable="false" />
+          <Property Name="modifierid" Type="Int64" Nullable="false" />
+          <Property Name="timecreated" Type="Int64" Nullable="false" />
+          <Property Name="timemodified" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_role">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="shortname" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="description" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Int64" Name="sortorder" Nullable="false" />
+          <Property Type="String" Name="archetype" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="fit_role_context_levels">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="roleid" Nullable="false" />
+          <Property Type="Int64" Name="contextlevel" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_role_names">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="roleid" Nullable="false" />
+          <Property Type="Int64" Name="contextid" Nullable="false" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="moodleModelStoreContainer" CdmEntityContainer="MoodleEntities">
+          <EntitySetMapping Name="fit_course">
+            <EntityTypeMapping TypeName="moodleModel.fit_course">
+              <MappingFragment StoreEntitySet="fit_course">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="sortorder" ColumnName="sortorder" />
+                <ScalarProperty Name="fullname" ColumnName="fullname" />
+                <ScalarProperty Name="shortname" ColumnName="shortname" />
+                <ScalarProperty Name="idnumber" ColumnName="idnumber" />
+                <ScalarProperty Name="summary" ColumnName="summary" />
+                <ScalarProperty Name="summaryformat" ColumnName="summaryformat" />
+                <ScalarProperty Name="format" ColumnName="format" />
+                <ScalarProperty Name="showgrades" ColumnName="showgrades" />
+                <ScalarProperty Name="sectioncache" ColumnName="sectioncache" />
+                <ScalarProperty Name="modinfo" ColumnName="modinfo" />
+                <ScalarProperty Name="newsitems" ColumnName="newsitems" />
+                <ScalarProperty Name="startdate" ColumnName="startdate" />
+                <ScalarProperty Name="numsections" ColumnName="numsections" />
+                <ScalarProperty Name="marker" ColumnName="marker" />
+                <ScalarProperty Name="maxbytes" ColumnName="maxbytes" />
+                <ScalarProperty Name="legacyfiles" ColumnName="legacyfiles" />
+                <ScalarProperty Name="showreports" ColumnName="showreports" />
+                <ScalarProperty Name="visible" ColumnName="visible" />
+                <ScalarProperty Name="visibleold" ColumnName="visibleold" />
+                <ScalarProperty Name="hiddensections" ColumnName="hiddensections" />
+                <ScalarProperty Name="groupmode" ColumnName="groupmode" />
+                <ScalarProperty Name="groupmodeforce" ColumnName="groupmodeforce" />
+                <ScalarProperty Name="defaultgroupingid" ColumnName="defaultgroupingid" />
+                <ScalarProperty Name="lang" ColumnName="lang" />
+                <ScalarProperty Name="theme" ColumnName="theme" />
+                <ScalarProperty Name="timecreated" ColumnName="timecreated" />
+                <ScalarProperty Name="timemodified" ColumnName="timemodified" />
+                <ScalarProperty Name="requested" ColumnName="requested" />
+                <ScalarProperty Name="enablecompletion" ColumnName="enablecompletion" />
+                <ScalarProperty Name="completionstartonenrol" ColumnName="completionstartonenrol" />
+                <ScalarProperty Name="completionnotify" ColumnName="completionnotify" />
+                <ScalarProperty Name="coursedisplay" ColumnName="coursedisplay" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_enrol">
+            <EntityTypeMapping TypeName="moodleModel.fit_enrol">
+              <MappingFragment StoreEntitySet="fit_enrol">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="enrol" ColumnName="enrol" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="courseid" ColumnName="courseid" />
+                <ScalarProperty Name="sortorder" ColumnName="sortorder" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="enrolperiod" ColumnName="enrolperiod" />
+                <ScalarProperty Name="enrolstartdate" ColumnName="enrolstartdate" />
+                <ScalarProperty Name="enrolenddate" ColumnName="enrolenddate" />
+                <ScalarProperty Name="expirynotify" ColumnName="expirynotify" />
+                <ScalarProperty Name="expirythreshold" ColumnName="expirythreshold" />
+                <ScalarProperty Name="notifyall" ColumnName="notifyall" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="currency" ColumnName="currency" />
+                <ScalarProperty Name="roleid" ColumnName="roleid" />
+                <ScalarProperty Name="customint1" ColumnName="customint1" />
+                <ScalarProperty Name="customint2" ColumnName="customint2" />
+                <ScalarProperty Name="customint3" ColumnName="customint3" />
+                <ScalarProperty Name="customint4" ColumnName="customint4" />
+                <ScalarProperty Name="customchar1" ColumnName="customchar1" />
+                <ScalarProperty Name="customchar2" ColumnName="customchar2" />
+                <ScalarProperty Name="customdec1" ColumnName="customdec1" />
+                <ScalarProperty Name="customdec2" ColumnName="customdec2" />
+                <ScalarProperty Name="customtext1" ColumnName="customtext1" />
+                <ScalarProperty Name="customtext2" ColumnName="customtext2" />
+                <ScalarProperty Name="timecreated" ColumnName="timecreated" />
+                <ScalarProperty Name="timemodified" ColumnName="timemodified" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_external_services">
+            <EntityTypeMapping TypeName="moodleModel.fit_external_services">
+              <MappingFragment StoreEntitySet="fit_external_services">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="enabled" ColumnName="enabled" />
+                <ScalarProperty Name="requiredcapability" ColumnName="requiredcapability" />
+                <ScalarProperty Name="restrictedusers" ColumnName="restrictedusers" />
+                <ScalarProperty Name="component" ColumnName="component" />
+                <ScalarProperty Name="timecreated" ColumnName="timecreated" />
+                <ScalarProperty Name="timemodified" ColumnName="timemodified" />
+                <ScalarProperty Name="shortname" ColumnName="shortname" />
+                <ScalarProperty Name="downloadfiles" ColumnName="downloadfiles" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_grade_grades">
+            <EntityTypeMapping TypeName="moodleModel.fit_grade_grades">
+              <MappingFragment StoreEntitySet="fit_grade_grades">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="itemid" ColumnName="itemid" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="rawgrade" ColumnName="rawgrade" />
+                <ScalarProperty Name="rawgrademax" ColumnName="rawgrademax" />
+                <ScalarProperty Name="rawgrademin" ColumnName="rawgrademin" />
+                <ScalarProperty Name="rawscaleid" ColumnName="rawscaleid" />
+                <ScalarProperty Name="usermodified" ColumnName="usermodified" />
+                <ScalarProperty Name="finalgrade" ColumnName="finalgrade" />
+                <ScalarProperty Name="hidden" ColumnName="hidden" />
+                <ScalarProperty Name="locked" ColumnName="locked" />
+                <ScalarProperty Name="locktime" ColumnName="locktime" />
+                <ScalarProperty Name="exported" ColumnName="exported" />
+                <ScalarProperty Name="overridden" ColumnName="overridden" />
+                <ScalarProperty Name="excluded" ColumnName="excluded" />
+                <ScalarProperty Name="feedback" ColumnName="feedback" />
+                <ScalarProperty Name="feedbackformat" ColumnName="feedbackformat" />
+                <ScalarProperty Name="information" ColumnName="information" />
+                <ScalarProperty Name="informationformat" ColumnName="informationformat" />
+                <ScalarProperty Name="timecreated" ColumnName="timecreated" />
+                <ScalarProperty Name="timemodified" ColumnName="timemodified" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_grade_grades_history">
+            <EntityTypeMapping TypeName="moodleModel.fit_grade_grades_history">
+              <MappingFragment StoreEntitySet="fit_grade_grades_history">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="action" ColumnName="action" />
+                <ScalarProperty Name="oldid" ColumnName="oldid" />
+                <ScalarProperty Name="source" ColumnName="source" />
+                <ScalarProperty Name="timemodified" ColumnName="timemodified" />
+                <ScalarProperty Name="loggeduser" ColumnName="loggeduser" />
+                <ScalarProperty Name="itemid" ColumnName="itemid" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="rawgrade" ColumnName="rawgrade" />
+                <ScalarProperty Name="rawgrademax" ColumnName="rawgrademax" />
+                <ScalarProperty Name="rawgrademin" ColumnName="rawgrademin" />
+                <ScalarProperty Name="rawscaleid" ColumnName="rawscaleid" />
+                <ScalarProperty Name="usermodified" ColumnName="usermodified" />
+                <ScalarProperty Name="finalgrade" ColumnName="finalgrade" />
+                <ScalarProperty Name="hidden" ColumnName="hidden" />
+                <ScalarProperty Name="locked" ColumnName="locked" />
+                <ScalarProperty Name="locktime" ColumnName="locktime" />
+                <ScalarProperty Name="exported" ColumnName="exported" />
+                <ScalarProperty Name="overridden" ColumnName="overridden" />
+                <ScalarProperty Name="excluded" ColumnName="excluded" />
+                <ScalarProperty Name="feedback" ColumnName="feedback" />
+                <ScalarProperty Name="feedbackformat" ColumnName="feedbackformat" />
+                <ScalarProperty Name="information" ColumnName="information" />
+                <ScalarProperty Name="informationformat" ColumnName="informationformat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_grade_import_newitem">
+            <EntityTypeMapping TypeName="moodleModel.fit_grade_import_newitem">
+              <MappingFragment StoreEntitySet="fit_grade_import_newitem">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="itemname" ColumnName="itemname" />
+                <ScalarProperty Name="importcode" ColumnName="importcode" />
+                <ScalarProperty Name="importer" ColumnName="importer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_grade_import_values">
+            <EntityTypeMapping TypeName="moodleModel.fit_grade_import_values">
+              <MappingFragment StoreEntitySet="fit_grade_import_values">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="itemid" ColumnName="itemid" />
+                <ScalarProperty Name="newgradeitem" ColumnName="newgradeitem" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="finalgrade" ColumnName="finalgrade" />
+                <ScalarProperty Name="feedback" ColumnName="feedback" />
+                <ScalarProperty Name="importcode" ColumnName="importcode" />
+                <ScalarProperty Name="importer" ColumnName="importer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_grade_items">
+            <EntityTypeMapping TypeName="moodleModel.fit_grade_items">
+              <MappingFragment StoreEntitySet="fit_grade_items">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="courseid" ColumnName="courseid" />
+                <ScalarProperty Name="categoryid" ColumnName="categoryid" />
+                <ScalarProperty Name="itemname" ColumnName="itemname" />
+                <ScalarProperty Name="itemtype" ColumnName="itemtype" />
+                <ScalarProperty Name="itemmodule" ColumnName="itemmodule" />
+                <ScalarProperty Name="iteminstance" ColumnName="iteminstance" />
+                <ScalarProperty Name="itemnumber" ColumnName="itemnumber" />
+                <ScalarProperty Name="iteminfo" ColumnName="iteminfo" />
+                <ScalarProperty Name="idnumber" ColumnName="idnumber" />
+                <ScalarProperty Name="calculation" ColumnName="calculation" />
+                <ScalarProperty Name="gradetype" ColumnName="gradetype" />
+                <ScalarProperty Name="grademax" ColumnName="grademax" />
+                <ScalarProperty Name="grademin" ColumnName="grademin" />
+                <ScalarProperty Name="scaleid" ColumnName="scaleid" />
+                <ScalarProperty Name="outcomeid" ColumnName="outcomeid" />
+                <ScalarProperty Name="gradepass" ColumnName="gradepass" />
+                <ScalarProperty Name="multfactor" ColumnName="multfactor" />
+                <ScalarProperty Name="plusfactor" ColumnName="plusfactor" />
+                <ScalarProperty Name="aggregationcoef" ColumnName="aggregationcoef" />
+                <ScalarProperty Name="sortorder" ColumnName="sortorder" />
+                <ScalarProperty Name="display" ColumnName="display" />
+                <ScalarProperty Name="decimals" ColumnName="decimals" />
+                <ScalarProperty Name="hidden" ColumnName="hidden" />
+                <ScalarProperty Name="locked" ColumnName="locked" />
+                <ScalarProperty Name="locktime" ColumnName="locktime" />
+                <ScalarProperty Name="needsupdate" ColumnName="needsupdate" />
+                <ScalarProperty Name="timecreated" ColumnName="timecreated" />
+                <ScalarProperty Name="timemodified" ColumnName="timemodified" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_grade_items_history">
+            <EntityTypeMapping TypeName="moodleModel.fit_grade_items_history">
+              <MappingFragment StoreEntitySet="fit_grade_items_history">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="action" ColumnName="action" />
+                <ScalarProperty Name="oldid" ColumnName="oldid" />
+                <ScalarProperty Name="source" ColumnName="source" />
+                <ScalarProperty Name="timemodified" ColumnName="timemodified" />
+                <ScalarProperty Name="loggeduser" ColumnName="loggeduser" />
+                <ScalarProperty Name="courseid" ColumnName="courseid" />
+                <ScalarProperty Name="categoryid" ColumnName="categoryid" />
+                <ScalarProperty Name="itemname" ColumnName="itemname" />
+                <ScalarProperty Name="itemtype" ColumnName="itemtype" />
+                <ScalarProperty Name="itemmodule" ColumnName="itemmodule" />
+                <ScalarProperty Name="iteminstance" ColumnName="iteminstance" />
+                <ScalarProperty Name="itemnumber" ColumnName="itemnumber" />
+                <ScalarProperty Name="iteminfo" ColumnName="iteminfo" />
+                <ScalarProperty Name="idnumber" ColumnName="idnumber" />
+                <ScalarProperty Name="calculation" ColumnName="calculation" />
+                <ScalarProperty Name="gradetype" ColumnName="gradetype" />
+                <ScalarProperty Name="grademax" ColumnName="grademax" />
+                <ScalarProperty Name="grademin" ColumnName="grademin" />
+                <ScalarProperty Name="scaleid" ColumnName="scaleid" />
+                <ScalarProperty Name="outcomeid" ColumnName="outcomeid" />
+                <ScalarProperty Name="gradepass" ColumnName="gradepass" />
+                <ScalarProperty Name="multfactor" ColumnName="multfactor" />
+                <ScalarProperty Name="plusfactor" ColumnName="plusfactor" />
+                <ScalarProperty Name="aggregationcoef" ColumnName="aggregationcoef" />
+                <ScalarProperty Name="sortorder" ColumnName="sortorder" />
+                <ScalarProperty Name="hidden" ColumnName="hidden" />
+                <ScalarProperty Name="locked" ColumnName="locked" />
+                <ScalarProperty Name="locktime" ColumnName="locktime" />
+                <ScalarProperty Name="needsupdate" ColumnName="needsupdate" />
+                <ScalarProperty Name="display" ColumnName="display" />
+                <ScalarProperty Name="decimals" ColumnName="decimals" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_grade_letters">
+            <EntityTypeMapping TypeName="moodleModel.fit_grade_letters">
+              <MappingFragment StoreEntitySet="fit_grade_letters">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="contextid" ColumnName="contextid" />
+                <ScalarProperty Name="lowerboundary" ColumnName="lowerboundary" />
+                <ScalarProperty Name="letter" ColumnName="letter" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_grade_outcomes">
+            <EntityTypeMapping TypeName="moodleModel.fit_grade_outcomes">
+              <MappingFragment StoreEntitySet="fit_grade_outcomes">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="courseid" ColumnName="courseid" />
+                <ScalarProperty Name="shortname" ColumnName="shortname" />
+                <ScalarProperty Name="fullname" ColumnName="fullname" />
+                <ScalarProperty Name="scaleid" ColumnName="scaleid" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="descriptionformat" ColumnName="descriptionformat" />
+                <ScalarProperty Name="timecreated" ColumnName="timecreated" />
+                <ScalarProperty Name="timemodified" ColumnName="timemodified" />
+                <ScalarProperty Name="usermodified" ColumnName="usermodified" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_grade_outcomes_courses">
+            <EntityTypeMapping TypeName="moodleModel.fit_grade_outcomes_courses">
+              <MappingFragment StoreEntitySet="fit_grade_outcomes_courses">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="courseid" ColumnName="courseid" />
+                <ScalarProperty Name="outcomeid" ColumnName="outcomeid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_grade_outcomes_history">
+            <EntityTypeMapping TypeName="moodleModel.fit_grade_outcomes_history">
+              <MappingFragment StoreEntitySet="fit_grade_outcomes_history">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="action" ColumnName="action" />
+                <ScalarProperty Name="oldid" ColumnName="oldid" />
+                <ScalarProperty Name="source" ColumnName="source" />
+                <ScalarProperty Name="timemodified" ColumnName="timemodified" />
+                <ScalarProperty Name="loggeduser" ColumnName="loggeduser" />
+                <ScalarProperty Name="courseid" ColumnName="courseid" />
+                <ScalarProperty Name="shortname" ColumnName="shortname" />
+                <ScalarProperty Name="fullname" ColumnName="fullname" />
+                <ScalarProperty Name="scaleid" ColumnName="scaleid" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="descriptionformat" ColumnName="descriptionformat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_grade_settings">
+            <EntityTypeMapping TypeName="moodleModel.fit_grade_settings">
+              <MappingFragment StoreEntitySet="fit_grade_settings">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="courseid" ColumnName="courseid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="value" ColumnName="value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_grading_areas">
+            <EntityTypeMapping TypeName="moodleModel.fit_grading_areas">
+              <MappingFragment StoreEntitySet="fit_grading_areas">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="contextid" ColumnName="contextid" />
+                <ScalarProperty Name="component" ColumnName="component" />
+                <ScalarProperty Name="areaname" ColumnName="areaname" />
+                <ScalarProperty Name="activemethod" ColumnName="activemethod" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_grading_definitions">
+            <EntityTypeMapping TypeName="moodleModel.fit_grading_definitions">
+              <MappingFragment StoreEntitySet="fit_grading_definitions">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="areaid" ColumnName="areaid" />
+                <ScalarProperty Name="method" ColumnName="method" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="descriptionformat" ColumnName="descriptionformat" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="copiedfromid" ColumnName="copiedfromid" />
+                <ScalarProperty Name="timecreated" ColumnName="timecreated" />
+                <ScalarProperty Name="usercreated" ColumnName="usercreated" />
+                <ScalarProperty Name="timemodified" ColumnName="timemodified" />
+                <ScalarProperty Name="usermodified" ColumnName="usermodified" />
+                <ScalarProperty Name="timecopied" ColumnName="timecopied" />
+                <ScalarProperty Name="options" ColumnName="options" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_grading_instances">
+            <EntityTypeMapping TypeName="moodleModel.fit_grading_instances">
+              <MappingFragment StoreEntitySet="fit_grading_instances">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="definitionid" ColumnName="definitionid" />
+                <ScalarProperty Name="raterid" ColumnName="raterid" />
+                <ScalarProperty Name="itemid" ColumnName="itemid" />
+                <ScalarProperty Name="rawgrade" ColumnName="rawgrade" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="feedback" ColumnName="feedback" />
+                <ScalarProperty Name="feedbackformat" ColumnName="feedbackformat" />
+                <ScalarProperty Name="timemodified" ColumnName="timemodified" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_message">
+            <EntityTypeMapping TypeName="moodleModel.fit_message">
+              <MappingFragment StoreEntitySet="fit_message">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="useridfrom" ColumnName="useridfrom" />
+                <ScalarProperty Name="useridto" ColumnName="useridto" />
+                <ScalarProperty Name="subject" ColumnName="subject" />
+                <ScalarProperty Name="fullmessage" ColumnName="fullmessage" />
+                <ScalarProperty Name="fullmessageformat" ColumnName="fullmessageformat" />
+                <ScalarProperty Name="fullmessagehtml" ColumnName="fullmessagehtml" />
+                <ScalarProperty Name="smallmessage" ColumnName="smallmessage" />
+                <ScalarProperty Name="notification" ColumnName="notification" />
+                <ScalarProperty Name="contexturl" ColumnName="contexturl" />
+                <ScalarProperty Name="contexturlname" ColumnName="contexturlname" />
+                <ScalarProperty Name="timecreated" ColumnName="timecreated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_message_contacts">
+            <EntityTypeMapping TypeName="moodleModel.fit_message_contacts">
+              <MappingFragment StoreEntitySet="fit_message_contacts">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="contactid" ColumnName="contactid" />
+                <ScalarProperty Name="blocked" ColumnName="blocked" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_message_read">
+            <EntityTypeMapping TypeName="moodleModel.fit_message_read">
+              <MappingFragment StoreEntitySet="fit_message_read">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="useridfrom" ColumnName="useridfrom" />
+                <ScalarProperty Name="useridto" ColumnName="useridto" />
+                <ScalarProperty Name="subject" ColumnName="subject" />
+                <ScalarProperty Name="fullmessage" ColumnName="fullmessage" />
+                <ScalarProperty Name="fullmessageformat" ColumnName="fullmessageformat" />
+                <ScalarProperty Name="fullmessagehtml" ColumnName="fullmessagehtml" />
+                <ScalarProperty Name="smallmessage" ColumnName="smallmessage" />
+                <ScalarProperty Name="notification" ColumnName="notification" />
+                <ScalarProperty Name="contexturl" ColumnName="contexturl" />
+                <ScalarProperty Name="contexturlname" ColumnName="contexturlname" />
+                <ScalarProperty Name="timecreated" ColumnName="timecreated" />
+                <ScalarProperty Name="timeread" ColumnName="timeread" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_message_working">
+            <EntityTypeMapping TypeName="moodleModel.fit_message_working">
+              <MappingFragment StoreEntitySet="fit_message_working">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="unreadmessageid" ColumnName="unreadmessageid" />
+                <ScalarProperty Name="processorid" ColumnName="processorid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_user">
+            <EntityTypeMapping TypeName="moodleModel.fit_user">
+              <MappingFragment StoreEntitySet="fit_user">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="auth" ColumnName="auth" />
+                <ScalarProperty Name="confirmed" ColumnName="confirmed" />
+                <ScalarProperty Name="policyagreed" ColumnName="policyagreed" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="suspended" ColumnName="suspended" />
+                <ScalarProperty Name="mnethostid" ColumnName="mnethostid" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="idnumber" ColumnName="idnumber" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="emailstop" ColumnName="emailstop" />
+                <ScalarProperty Name="icq" ColumnName="icq" />
+                <ScalarProperty Name="skype" ColumnName="skype" />
+                <ScalarProperty Name="yahoo" ColumnName="yahoo" />
+                <ScalarProperty Name="aim" ColumnName="aim" />
+                <ScalarProperty Name="msn" ColumnName="msn" />
+                <ScalarProperty Name="phone1" ColumnName="phone1" />
+                <ScalarProperty Name="phone2" ColumnName="phone2" />
+                <ScalarProperty Name="institution" ColumnName="institution" />
+                <ScalarProperty Name="department" ColumnName="department" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="lang" ColumnName="lang" />
+                <ScalarProperty Name="theme" ColumnName="theme" />
+                <ScalarProperty Name="timezone" ColumnName="timezone" />
+                <ScalarProperty Name="firstaccess" ColumnName="firstaccess" />
+                <ScalarProperty Name="lastaccess" ColumnName="lastaccess" />
+                <ScalarProperty Name="lastlogin" ColumnName="lastlogin" />
+                <ScalarProperty Name="currentlogin" ColumnName="currentlogin" />
+                <ScalarProperty Name="lastip" ColumnName="lastip" />
+                <ScalarProperty Name="secret" ColumnName="secret" />
+                <ScalarProperty Name="picture" ColumnName="picture" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="descriptionformat" ColumnName="descriptionformat" />
+                <ScalarProperty Name="mailformat" ColumnName="mailformat" />
+                <ScalarProperty Name="maildigest" ColumnName="maildigest" />
+                <ScalarProperty Name="maildisplay" ColumnName="maildisplay" />
+                <ScalarProperty Name="htmleditor" ColumnName="htmleditor" />
+                <ScalarProperty Name="autosubscribe" ColumnName="autosubscribe" />
+                <ScalarProperty Name="trackforums" ColumnName="trackforums" />
+                <ScalarProperty Name="timecreated" ColumnName="timecreated" />
+                <ScalarProperty Name="timemodified" ColumnName="timemodified" />
+                <ScalarProperty Name="trustbitmask" ColumnName="trustbitmask" />
+                <ScalarProperty Name="imagealt" ColumnName="imagealt" />
+                <ScalarProperty Name="screenreader" ColumnName="screenreader" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_user_enrolments">
+            <EntityTypeMapping TypeName="moodleModel.fit_user_enrolments">
+              <MappingFragment StoreEntitySet="fit_user_enrolments">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="enrolid" ColumnName="enrolid" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="timestart" ColumnName="timestart" />
+                <ScalarProperty Name="timeend" ColumnName="timeend" />
+                <ScalarProperty Name="modifierid" ColumnName="modifierid" />
+                <ScalarProperty Name="timecreated" ColumnName="timecreated" />
+                <ScalarProperty Name="timemodified" ColumnName="timemodified" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_role">
+            <EntityTypeMapping TypeName="moodleModel.fit_role">
+              <MappingFragment StoreEntitySet="fit_role">
+                <ScalarProperty Name="archetype" ColumnName="archetype" />
+                <ScalarProperty Name="sortorder" ColumnName="sortorder" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="shortname" ColumnName="shortname" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_role_context_levels">
+            <EntityTypeMapping TypeName="moodleModel.fit_role_context_levels">
+              <MappingFragment StoreEntitySet="fit_role_context_levels">
+                <ScalarProperty Name="contextlevel" ColumnName="contextlevel" />
+                <ScalarProperty Name="roleid" ColumnName="roleid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_role_names">
+            <EntityTypeMapping TypeName="moodleModel.fit_role_names">
+              <MappingFragment StoreEntitySet="fit_role_names">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="contextid" ColumnName="contextid" />
+                <ScalarProperty Name="roleid" ColumnName="roleid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

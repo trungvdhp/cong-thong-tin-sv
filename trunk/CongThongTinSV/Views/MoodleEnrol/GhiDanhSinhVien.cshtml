@@ -1,7 +1,7 @@
 ﻿@using Kendo.Mvc.UI;
 @using CongThongTinSV.Models;
 @{
-    ViewBag.Title = "Ghi danh học viên vào khóa học trên Moodle";
+    ViewBag.Title = "Ghi danh sinh viên vào khóa học trên Moodle";
 }
 
 @(Html.Kendo().ComboBox()
@@ -93,14 +93,16 @@
             .PageSize(50)
     )
 )
+<div style="margin-top:5px">
+    <button id="createEnrol" class="k-button">Ghi danh</button>
+    <button id="deleteEnrol" class="k-button">Hủy ghi danh</button>
+    <button id="createUser" class="k-button">Đăng ký tài khoản</button>
+    <button id="deleteUser" class="k-button">Hủy đăng ký</button>
+</div>
 <div>
-    <button id="createEnrol">Ghi danh</button>
-    <button id="deleteEnrol">Hủy ghi danh</button>
-    <button id="createUser">Đăng ký</button>
-    <button id="deleteUser">Hủy đăng ký</button>
-    @(Html.Kendo().DropDownList()
+     @(Html.Kendo().ComboBox()
         .Name("Nhom")
-        .OptionLabel("Chọn nhóm")
+        .Placeholder("Chọn nhóm...")
         .HtmlAttributes(new { style = "width:150px" })
         .DataTextField("Text")
         .DataValueField("Value")
@@ -115,14 +117,13 @@
         .AutoBind(false)
         .CascadeFrom("LopHocPhan")
     )
-    <button id="addMember">Thêm thành viên</button>
-    <button id="deleteMember">Bớt thành viên</button>
-    <button id="deleteGroup">Xóa nhóm</button>
-</div>
-<div>
-    @Html.TextBox("TenNhom", "", new { placeholder = "Nhập tên nhóm", style = "width:120px" })
-    @Html.TextBox("MoTa", "", new { placeholder = "Mô tả nhóm", style = "width:200px" })
-    <button id="createGroup">Tạo nhóm</button>
+    @Html.TextBox("TenNhom", "", new { placeholder = "Nhập tên nhóm", style = "width:120px", @class = "k-textbox" })
+    @Html.TextBox("MoTa", "", new { placeholder = "Mô tả nhóm", style = "width:200px", @class = "k-textbox"})
+    <button id="createGroup" class="k-button">Tạo nhóm</button>
+    <button id="deleteGroup" class="k-button">Xóa nhóm</button>
+    <button id="addMember" class="k-button">Thêm thành viên</button>
+    <button id="deleteMember" class="k-button">Bớt thành viên</button>
+
 </div>
 <script type="text/javascript">
     var selectedVals = [];
@@ -196,14 +197,14 @@
     })
 
     $("#createEnrol").click(function () {
-        //window.location.href = '/MoodleEnrol/CreateGhiDanh/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
-        processing('/MoodleEnrol/CreateGhiDanh/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals, "Đang ghi danh cho các sinh viên...", gridRefresh);
+        //window.location.href = '/MoodleEnrol/CreateGhiDanhSinhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
+        processing('/MoodleEnrol/CreateGhiDanhSinhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals, "Đang ghi danh cho các sinh viên...", gridRefresh);
     })
 
     $("#deleteEnrol").click(function () {
         if (confirm('Bạn muốn hủy ghi danh của các sinh viên đã chọn?')) {
-            //window.location.href = '/MoodleEnrol/DeleteGhiDanh/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
-            processing('/MoodleEnrol/DeleteGhiDanh/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals, "Đang hủy ghi danh của các sinh viên...", gridRefresh);
+            //window.location.href = '/MoodleEnrol/DeleteGhiDanhSinhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
+            processing('/MoodleEnrol/DeleteGhiDanhSinhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals, "Đang hủy ghi danh của các sinh viên...", gridRefresh);
         }
     })
 

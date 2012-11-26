@@ -8,11 +8,27 @@
         @Styles.Render("~/Content/css")
         <link href="@Url.Content("~/Content/jqGrid/redmond/jquery-ui-1.9.0.custom.css")" rel="stylesheet" type="text/css" />
         <link href="@Url.Content("~/Content/jqGrid/ui.jqgrid.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.common.min.css")" rel="stylesheet" type="text/css" />
+	    <link href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.common.min.css")" rel="stylesheet" />
+        <link href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.default.min.css")" rel="stylesheet" />
+         <link rel="alternate stylesheet" type="text/css" media="screen" title="black" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.black.min.css")" />
+        <link rel="alternate stylesheet" type="text/css" media="screen" title="blueopal" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.blueopal.min.css")" />
+        <link rel="alternate stylesheet" type="text/css" media="screen" title="bootstrap" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.bootstrap.min.css")" />
+        <link rel="alternate stylesheet" type="text/css" media="screen" title="highcontrast" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.highcontrast.min.css")" />
+        <link rel="alternate stylesheet" type="text/css" media="screen" title="metro" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.metro.min.css")" />
+        <link rel="alternate stylesheet" type="text/css" media="screen" title="metroblack" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.metroblack.min.css")" />
+        <link rel="alternate stylesheet" type="text/css" media="screen" title="moonlight" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.moonlight.min.css")" />
+        <link rel="alternate stylesheet" type="text/css" media="screen" title="silver" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.silver.min.css")" />
+        <link rel="alternate stylesheet" type="text/css" media="screen" title="uniform" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.uniform.min.css")" />
+         @Scripts.Render("~/bundles/jquery")
         <script src="@Url.Content("~/Scripts/jqGrid/jquery-1.7.2.min.js")" type="text/javascript"></script>
         <script src="@Url.Content("~/Scripts/jqGrid/i18n/grid.locale-en.js")" type="text/javascript"></script>
         <script src="@Url.Content("~/Scripts/jqGrid/jquery.jqGrid.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/kendo/2012.3.1114/jquery.min.js")"></script>
+	    <script src="@Url.Content("~/Scripts/kendo/2012.3.1114/kendo.all.min.js")"></script>
+	    <script src="@Url.Content("~/Scripts/kendo/2012.3.1114/kendo.aspnetmvc.min.js")"></script>
         <script src="@Url.Content("~/Scripts/jquery.blockUI.js")"></script>
-        <!--script src="@Url.Content("~/Scripts/kendo/2012.3.1114/kendo.web.min.js")"></script-->
         <script src="@Url.Content("~/Scripts/myscript.js")"></script>
         <script src="@Url.Content("~/Scripts/styleswitch.js")"></script>
         @Scripts.Render("~/bundles/modernizr")
@@ -26,22 +42,6 @@
                 $("#menu").kendoMenu();
             });
         </script>
-    	<link href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.common.min.css")" rel="stylesheet" type="text/css" />
-	<link href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" />
-        <link href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.common.min.css")" rel="stylesheet" />
-        <link href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.default.min.css")" rel="stylesheet" />
-         <link rel="alternate stylesheet" type="text/css" media="screen" title="black" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.black.min.css")" />
-        <link rel="alternate stylesheet" type="text/css" media="screen" title="blueopal" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.blueopal.min.css")" />
-        <link rel="alternate stylesheet" type="text/css" media="screen" title="bootstrap" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.bootstrap.min.css")" />
-        <link rel="alternate stylesheet" type="text/css" media="screen" title="highcontrast" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.highcontrast.min.css")" />
-        <link rel="alternate stylesheet" type="text/css" media="screen" title="metro" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.metro.min.css")" />
-        <link rel="alternate stylesheet" type="text/css" media="screen" title="metroblack" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.metroblack.min.css")" />
-        <link rel="alternate stylesheet" type="text/css" media="screen" title="moonlight" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.moonlight.min.css")" />
-        <link rel="alternate stylesheet" type="text/css" media="screen" title="silver" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.silver.min.css")" />
-        <link rel="alternate stylesheet" type="text/css" media="screen" title="uniform" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.uniform.min.css")" />
-	    <script src="@Url.Content("~/Scripts/kendo/2012.3.1114/jquery.min.js")"></script>
-	    <script src="@Url.Content("~/Scripts/kendo/2012.3.1114/kendo.all.min.js")"></script>
-	    <script src="@Url.Content("~/Scripts/kendo/2012.3.1114/kendo.aspnetmvc.min.js")"></script>
 </head>
     <body>
         <header>
@@ -98,6 +98,7 @@
                                         Tài khoản
                                         <ul> <!-- moving the UL to the next line will cause an IE7 problem -->
                                             <li>@Html.ActionLink("Sinh viên", "SinhVien", "MoodleUser")</li>
+                                            <li>@Html.ActionLink("Giáo viên", "GiaoVien", "MoodleUser")</li>
                                         </ul>
                                     </li>
                                     <li>
@@ -110,7 +111,7 @@
                                         Khóa học
                                         <ul> <!-- moving the UL to the next line will cause an IE7 problem -->
                                             <li>@Html.ActionLink("Lớp học phần", "LopHocPhan", "MoodleCourse")</li>
-                                            <li>@Html.ActionLink("Ghi danh", "GhiDanh", "MoodleEnrol")</li>
+                                            <li>@Html.ActionLink("Ghi danh sinh viên", "GhiDanhSinhVien", "MoodleEnrol")</li>
                                              <li>@Html.ActionLink("Nhóm học viên", "NhomHocVien", "MoodleGroup")</li>
                                         </ul>
                                     </li>
@@ -185,8 +186,6 @@
                 </div>
             </div>
         </footer>
-
-        
         @RenderSection("scripts", required: false)
     </body>
 </html>

@@ -22,14 +22,6 @@ namespace CongThongTinSV.Controllers
 
         public ActionResult SinhVien()
         {
-            //Entities db = new Entities();
-            //SelectList cn = new SelectList(db.STU_ChuyenNganh.OrderBy(f => f.Chuyen_nganh), "ID_chuyen_nganh", "Chuyen_nganh");
-            //SelectListItem first = cn.First();
-            //first.Selected = true;
-            //int ID_chuyen_nganh = Convert.ToInt32(first.Value);
-            //ViewBag.Message = "Danh sách sinh viên!";
-            //ViewBag.ChuyenNganh = cn;
-            //ViewBag.Lop = new SelectList(db.STU_Lop.Where(t=>t.ID_chuyen_nganh == ID_chuyen_nganh).OrderBy(o=>o.Ten_lop), "ID_lop", "Ten_lop");
             return View();
         }
 
@@ -72,6 +64,7 @@ namespace CongThongTinSV.Controllers
                       on ds.ID_sv equals nd.ID_nd
                       into nguoidung
                       from nd1 in nguoidung.DefaultIfEmpty()
+                      where nd1 == null || (nd1 != null && nd1.ID_nhom_nd == 3)
                       select new MoodleSinhVien
                       {
                           ID_sv = ds.ID_sv,
@@ -86,42 +79,6 @@ namespace CongThongTinSV.Controllers
 
             return sv4.OrderByDescending(t => t.ID_moodle).ToList();
         }
-
-        //public ActionResult GetSinhVienLop(string sidx, string sord, int page, int rows, string id_lop="", string ma_sv="", string ho_dem="", string ten="", string ngay_sinh="", string gioi_tinh="")
-        //{
-        //    // Get the list of students
-        //    Entities db = new Entities();
-        //    List<SP_SinhVien_Result> sv = db.SP_SinhVien(id_lop, ma_sv, ho_dem, ten, ngay_sinh, gioi_tinh).ToList();
-        //    var students = sv.AsQueryable();
-
-        //    // Sort the student list
-        //    var sortedStudents = UtilityController.SortIQueryable<SP_SinhVien_Result>(students, sidx, sord);
-        //    // Calculate the total number of pages
-        //    var totalRecords = students.Count();
-        //    var totalPages = (int)Math.Ceiling((double)totalRecords / (double)rows);
-        //    // Prepare the data to fit the requirement of jQGrid
-        //    var data = (from s in sortedStudents
-        //                select new
-        //                {
-        //                    id = s.ID_sv,
-        //                    cell = new object[] { s.ID_sv, (object)s.Ma_sv.ToString(),
-        //                        s.ID_moodle==null?0:s.ID_moodle,
-        //                        (object)s.Ho_dem.ToString(),
-        //                        (object)s.Ten.ToString(),
-        //                        (object)(s.Ngay_sinh==null?"":s.Ngay_sinh.Value.ToString("yyyy/MM/dd")),
-        //                        (object)s.Gioi_tinh.ToString()}
-        //                }).ToArray();
-        //    // Send the data to the jQGrid
-        //    var jsonData = new
-        //    {
-        //        total = totalPages,
-        //        page = page,
-        //        records = totalRecords,
-        //        rows = data.Skip((page - 1) * rows).Take(rows)
-        //    };
-
-        //    return Json(jsonData, JsonRequestBehavior.AllowGet);
-        //}
 
         public static void CreateSinhVien(List<MoodleSinhVien> list)
         {
@@ -221,7 +178,7 @@ namespace CongThongTinSV.Controllers
 
                 foreach (MoodleSinhVien item in list)
                 {
-                    MOD_NguoiDung entity = db.MOD_NguoiDung.FirstOrDefault(t => t.ID_moodle == item.ID_moodle);
+                    MOD_NguoiDung entity = db.MOD_NguoiDung.Find(item.ID_moodle);
                     db.MOD_NguoiDung.Remove(entity);
                     i++;
                 }
@@ -247,5 +204,179 @@ namespace CongThongTinSV.Controllers
 
             return View();
         }
+
+        public ActionResult GiaoVien()
+        {
+            return View();
+        }
+
+        public ActionResult GetGiaoVien([DataSourceRequest] DataSourceRequest request, int id_khoa)
+        {
+
+            return Json(MoodleGiaoViens(id_khoa).ToDataSourceResult(request));
+        }
+
+        public IEnumerable<MoodleGiaoVien> MoodleGiaoViens(int id_khoa)
+        {
+            Entities db = new Entities();
+
+            var gv1 = from  gv in db.PLAN_GiaoVien
+                      join gt in db.STU_GioiTinh
+                      on gv.ID_gioi_tinh equals gt.ID_gioi_tinh
+                      where gv.ID_khoa == id_khoa
+                      select new
+                      {
+                          gv.Ho_ten,
+                          gv.ID_cb,
+                          gv.Ma_cb,
+                          gv.Ngay_sinh,
+                          gt.Gioi_tinh
+                      };
+
+            var gv2 = from gv in gv1.AsEnumerable()
+                      join nd in db.MOD_NguoiDung.AsEnumerable()
+                      on gv.ID_cb equals nd.ID_nd
+                      into nguoidung
+                      from nd1 in nguoidung.DefaultIfEmpty()
+                      where nd1 == null || (nd1 != null && nd1.ID_nhom_nd == 2)
+                      select new MoodleGiaoVien
+                      {
+                          ID_cb = gv.ID_cb,
+                          ID_moodle = (nd1 == null ? 0 : nd1.ID_moodle),
+                          Ma_cb = gv.Ma_cb,
+                          Ho_dem = UtilityController.GetLastName(gv.Ho_ten),
+                          Ten = UtilityController.GetFirstName(gv.Ho_ten),
+                          Ngay_sinh = gv.Ngay_sinh,
+                          Gioi_tinh = gv.Gioi_tinh
+                      };
+
+            return gv2.OrderByDescending(t => t.ID_moodle).ToList();
+        }
+
+        public static void CreateGiaoVien(List<MoodleGiaoVien> list)
+        {
+            Entities db = new Entities();
+            int i = 0;
+            string postData = "wsfunction=core_user_create_users";
+
+            foreach (MoodleGiaoVien item in list)
+            {
+                postData += "&users[" + i + "][username]=" + item.Ma_cb;
+                postData += "&users[" + i + "][password]=" + ((DateTime)item.Ngay_sinh).ToString("ddMMyyyy");
+                postData += "&users[" + i + "][firstname]=" + HttpUtility.UrlEncode(item.Ten);
+                postData += "&users[" + i + "][lastname]=" + HttpUtility.UrlEncode(item.Ho_dem);
+                postData += "&users[" + i + "][email]=" + "st" + item.Ma_cb + "@st.vimaru.edu.vn";
+                postData += "&users[" + i + "][timezone]=7.0";
+                postData += "&users[" + i + "][city]=Hai Phong";
+                postData += "&users[" + i + "][country]=VN";
+                i++;
+            }
+
+            WebRequestController web = new WebRequestController(4, "POST", postData);
+            string response = web.GetResponse();
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            // MoodleException moodleError = new MoodleException();
+            List<MoodleCreateUserResponse> results = new List<MoodleCreateUserResponse>();
+
+            if (response.Contains("exception"))
+            {
+                // Error
+                // moodleError = serializer.Deserialize<MoodleException>(rs);
+            }
+            else
+            {
+                // Good
+                results = serializer.Deserialize<List<MoodleCreateUserResponse>>(response);
+                i = 0;
+
+                foreach (MoodleGiaoVien item in list)
+                {
+                    MOD_NguoiDung entity = new MOD_NguoiDung();
+
+                    entity.ID_moodle = Convert.ToInt32(results[i].id);
+                    entity.ID_nd = item.ID_cb;
+                    entity.ID_nhom_nd = 2;
+
+                    db.MOD_NguoiDung.Add(entity);
+                    i++;
+                }
+
+                db.SaveChanges();
+            }
+
+            UtilityController.WriteTextToFile("D:\\GiaoVienCreate.txt", response);
+        }
+
+        public ActionResult CreateGiaoVien(string selectedVals, string id_khoa)
+        {
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+
+            var list = MoodleGiaoViens(Convert.ToInt32(id_khoa)).Where(t => t.ID_moodle == 0 && s.Contains(t.ID_cb.ToString())).ToList();
+
+            //ViewBag.SelectedIds = new SelectList(list, "Ma_sv", "ID_moodle");
+            //ViewBag.Result = new SelectList(list, "ID_moodle", "Ma_sv");
+
+            if (list.Count() == 0) return View();
+
+            CreateGiaoVien(list);
+
+            return View();
+        }
+
+        public static void DeleteGiaoVien(List<MoodleGiaoVien> list)
+        {
+            Entities db = new Entities();
+            int i = 0;
+            string postData = "wsfunction=core_user_delete_users";
+
+            foreach (MoodleGiaoVien item in list)
+            {
+                postData += "&userids[" + i + "]=" + item.ID_moodle;
+                i++;
+            }
+
+            WebRequestController web = new WebRequestController(4, "POST", postData);
+            string response = web.GetResponse();
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //MoodleException moodleError = new MoodleException();
+
+            if (response.Contains("exception"))
+            {
+                // Error
+                //moodleError = serializer.Deserialize<MoodleException>(rs);
+            }
+            else
+            {
+                i = 0;
+
+                foreach (MoodleGiaoVien item in list)
+                {
+                    MOD_NguoiDung entity = db.MOD_NguoiDung.Find(item.ID_moodle);
+                    db.MOD_NguoiDung.Remove(entity);
+                    i++;
+                }
+
+                db.SaveChanges();
+            }
+
+            UtilityController.WriteTextToFile("D:\\GiaoVienDelete.txt", response);
+        }
+
+        public ActionResult DeleteGiaoVien(string selectedVals, string id_khoa)
+        {
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+
+            var list = MoodleGiaoViens(Convert.ToInt32(id_khoa)).Where(t => t.ID_moodle > 0 && s.Contains(t.ID_cb.ToString())).ToList();
+
+            //ViewBag.SelectedIds = new SelectList(list, "Ma_sv", "ID_moodle");
+            //ViewBag.Result = new SelectList(list, "ID_moodle", "Ma_sv");
+
+            if (list.Count() == 0) return View();
+
+            DeleteGiaoVien(list);
+
+            return View();
+        }
+
     }
 }

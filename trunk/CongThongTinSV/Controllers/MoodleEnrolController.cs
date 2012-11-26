@@ -19,7 +19,7 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        public ActionResult GhiDanh()
+        public ActionResult GhiDanhSinhVien()
         {
             return View();
         }
@@ -168,6 +168,7 @@ namespace CongThongTinSV.Controllers
                       on ds.ID_sv equals nd1.ID_nd
                       into nguoidung
                       from nd in nguoidung.DefaultIfEmpty()
+                      where nd == null || (nd != null && nd.ID_nhom_nd == 3)
                       select new MoodleSinhVien
                       {
                           ID_sv = ds.ID_sv,
@@ -217,7 +218,7 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        public static void CreateGhiDanh(List<MoodleSinhVien> list)
+        public static void CreateGhiDanhSinhVien(List<MoodleSinhVien> list)
         {
             Entities db = new Entities();
             int i = 0;
@@ -268,7 +269,7 @@ namespace CongThongTinSV.Controllers
             UtilityController.WriteTextToFile("D:\\GhiDanhCreate.txt", response);
         }
 
-        public ActionResult CreateGhiDanh(string selectedVals, string id_lop_tc)
+        public ActionResult CreateGhiDanhSinhVien(string selectedVals, string id_lop_tc)
         {
 
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
@@ -276,12 +277,12 @@ namespace CongThongTinSV.Controllers
 
             if (list.Count() == 0) return View();
 
-            CreateGhiDanh(list);
+            CreateGhiDanhSinhVien(list);
 
             return View();
         }
 
-        public static void DeleteGhiDanh(List<MoodleSinhVien> list)
+        public static void DeleteGhiDanhSinhVien(List<MoodleSinhVien> list)
         {
             Entities db = new Entities();
             int i = 0;
@@ -325,7 +326,7 @@ namespace CongThongTinSV.Controllers
             UtilityController.WriteTextToFile("D:\\GhiDanhDelete.txt", response);
         }
 
-        public ActionResult DeleteGhiDanh(string selectedVals, string id_lop_tc)
+        public ActionResult DeleteGhiDanhSinhVien(string selectedVals, string id_lop_tc)
         {
 
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
@@ -333,7 +334,7 @@ namespace CongThongTinSV.Controllers
 
             if (list.Count() == 0) return View();
 
-            DeleteGhiDanh(list);
+            DeleteGhiDanhSinhVien(list);
 
             return View();
         }

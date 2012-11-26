@@ -12,13 +12,17 @@ namespace CongThongTinSV
     using System;
     using System.Collections.Generic;
     
-    public partial class MOD_NguoiDung_VaiTro_LopTinChi
+    public partial class fit_external_services
     {
-        public int UserID { get; set; }
-        public int ID_lop_tc { get; set; }
-        public int ID_vai_tro { get; set; }
-    
-        public virtual MOD_LopTinChi_TC MOD_LopTinChi_TC { get; set; }
-        public virtual MOD_NguoiDung MOD_NguoiDung { get; set; }
+        public long id { get; set; }
+        public string name { get; set; }
+        public bool enabled { get; set; }
+        public string requiredcapability { get; set; }
+        public bool restrictedusers { get; set; }
+        public string component { get; set; }
+        public long timecreated { get; set; }
+        public Nullable<long> timemodified { get; set; }
+        public string shortname { get; set; }
+        public bool downloadfiles { get; set; }
     }
 }

@@ -45,10 +45,11 @@ namespace CongThongTinSV.Controllers
 
             if (ModelState.IsValid)
             {
-                if (Service == "user" || Service == "admin")
+                Entities db = new Entities();
+                ViewBag.Service = new SelectList(db.MOD_DichVu, "Ten_rut_gon", "Ten_dv");
+
+                if (true)
                 {
-                    Entities db = new Entities();
-                    ViewBag.Service = new SelectList(db.MOD_DichVu, "Ten_rut_gon", "Ten_dv");
                     var q = from sv in db.STU_HoSoSinhVien
                             join ds in db.STU_DanhSach on sv.ID_sv equals ds.ID_sv
                             where sv.Ma_sv == model.UserName
@@ -114,20 +115,50 @@ namespace CongThongTinSV.Controllers
                     string s = web.GetResponse();
                     string[] rs = s.Split(new char[] { '"' });
                     UtilityController.WriteTextToFile("D:\\token.txt", Service + " : " + s);
-                    if (rs.Length == 5)
+
+                    MoodleEntities mdb = new MoodleEntities();
+                    string cookieString;
+                    HttpCookie cookie;
+                    string[] userData = new string[3];
+
+                    try
                     {
-                        Session["token"] = rs[3].Trim();
+                        userData[0] = mdb.fit_user.Single(t => t.username == model.UserName).id.ToString();
+                    }
+                    catch
+                    {
+                        userData[0] = "0";
                     }
 
-                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                    if (rs.Length == 5)
+                    {
+                        userData[1] = rs[3].Trim();
+                    }
+                    else
+                    {
+                        userData[1] = "error";
+                    }
+
+                    userData[2] = Service;
+                   
+                    // create a Forms Auth ticket with the username and the user data. 
+                    FormsAuthenticationTicket formsTicket = new FormsAuthenticationTicket(
+                        1,
+                        model.UserName,
+                        DateTime.Now,
+                        DateTime.Now.AddMinutes(120),
+                        model.RememberMe,
+                        string.Join("|", userData)
+                        );
+                    // encrypt the ticket
+                    cookieString = FormsAuthentication.Encrypt(formsTicket);
+                    cookie = new HttpCookie(FormsAuthentication.FormsCookieName, cookieString);
+                    if (model.RememberMe)
+                        cookie.Expires = formsTicket.Expiration;
+                    cookie.Path = FormsAuthentication.FormsCookiePath;
+                    Response.Cookies.Add(cookie);
                     return RedirectToLocal(returnUrl);
                 }
-                //if (hssv.Mat_khau == model.Password)
-                //{
-                //    FormsAuthentication.SetAuthCookie(hssv.Ma_sv, model.RememberMe);
-                //    return RedirectToLocal(returnUrl);
-                //}
-
             }
             // If we got this far, something failed, redisplay form
             //ModelState.AddModelError("", "Tên đăng nhập hoặc mật khẩu không hợp lệ.");

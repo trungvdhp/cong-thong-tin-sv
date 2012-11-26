@@ -12,13 +12,16 @@ namespace CongThongTinSV
     using System;
     using System.Collections.Generic;
     
-    public partial class MOD_NguoiDung_VaiTro_LopTinChi
+    public partial class fit_grading_instances
     {
-        public int UserID { get; set; }
-        public int ID_lop_tc { get; set; }
-        public int ID_vai_tro { get; set; }
-    
-        public virtual MOD_LopTinChi_TC MOD_LopTinChi_TC { get; set; }
-        public virtual MOD_NguoiDung MOD_NguoiDung { get; set; }
+        public long id { get; set; }
+        public long definitionid { get; set; }
+        public long raterid { get; set; }
+        public Nullable<long> itemid { get; set; }
+        public Nullable<decimal> rawgrade { get; set; }
+        public long status { get; set; }
+        public string feedback { get; set; }
+        public Nullable<sbyte> feedbackformat { get; set; }
+        public long timemodified { get; set; }
     }
 }

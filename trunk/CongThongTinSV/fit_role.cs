@@ -12,13 +12,13 @@ namespace CongThongTinSV
     using System;
     using System.Collections.Generic;
     
-    public partial class MOD_NguoiDung_VaiTro_LopTinChi
+    public partial class fit_role
     {
-        public int UserID { get; set; }
-        public int ID_lop_tc { get; set; }
-        public int ID_vai_tro { get; set; }
-    
-        public virtual MOD_LopTinChi_TC MOD_LopTinChi_TC { get; set; }
-        public virtual MOD_NguoiDung MOD_NguoiDung { get; set; }
+        public long id { get; set; }
+        public string name { get; set; }
+        public string shortname { get; set; }
+        public string description { get; set; }
+        public long sortorder { get; set; }
+        public string archetype { get; set; }
     }
 }

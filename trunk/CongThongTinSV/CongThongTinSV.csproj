@@ -173,6 +173,7 @@
     <Compile Include="Controllers\HocKyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JSONController.cs" />
+    <Compile Include="Controllers\KhoaController.cs" />
     <Compile Include="Controllers\LopController.cs" />
     <Compile Include="Controllers\LopHocPhanController.cs" />
     <Compile Include="Controllers\MoodleCategoryController.cs" />
@@ -204,7 +205,100 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DHHH.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Elearning.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Elearning.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Elearning.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Elearning.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Elearning.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
+    <Compile Include="fit_course.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_enrol.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_external_services.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_grade_grades.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_grade_grades_history.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_grade_import_newitem.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_grade_import_values.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_grade_items.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_grade_items_history.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_grade_letters.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_grade_outcomes.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_grade_outcomes_courses.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_grade_outcomes_history.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_grade_settings.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_grading_areas.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_grading_definitions.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_grading_instances.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_message.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_message_contacts.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_message_read.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_message_working.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_role.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_role_context_levels.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_role_names.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_user.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_user_enrolments.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -259,9 +353,6 @@
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
     <Compile Include="MOD_ToNhom.cs">
-      <DependentUpon>DHHH.tt</DependentUpon>
-    </Compile>
-    <Compile Include="MOD_VaiTro.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
     <Compile Include="PLAN_ChuongTrinhDaoTao.cs">
@@ -556,6 +647,23 @@
     </Content>
     <Content Include="Content\kendo\2012.3.1114\images\KendoUI.ttf" />
     <Content Include="Content\kendo\2012.3.1114\images\KendoUI.woff" />
+    <EntityDeploy Include="Elearning.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Elearning.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Elearning.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Elearning.edmx</DependentUpon>
+      <LastGenOutput>Elearning.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Elearning.edmx.diagram">
+      <DependentUpon>Elearning.edmx</DependentUpon>
+    </Content>
+    <Content Include="Elearning.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Elearning.edmx</DependentUpon>
+      <LastGenOutput>Elearning.cs</LastGenOutput>
+    </Content>
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jqGrid\Changes.txt" />
     <Content Include="Scripts\jqGrid\i18n\grid.locale-en.js" />
@@ -704,9 +812,11 @@
     <Content Include="Views\TaiLieu\Upload.cshtml" />
     <Content Include="Views\TraCuu\SinhVien.cshtml" />
     <Content Include="Views\TraCuu\DiemHocTap.cshtml" />
-    <Content Include="Views\MoodleEnrol\GhiDanh.cshtml" />
+    <Content Include="Views\MoodleEnrol\GhiDanhSinhVien.cshtml" />
     <Content Include="Views\MoodleGroup\NhomHocVien.cshtml" />
     <Content Include="Views\ThongBao\Gui.cshtml" />
+    <Content Include="Views\MoodleRole\Index.cshtml" />
+    <Content Include="Views\MoodleUser\GiaoVien.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

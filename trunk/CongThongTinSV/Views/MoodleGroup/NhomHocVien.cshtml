@@ -24,7 +24,7 @@
     //})
 )
 
-@(Html.Kendo().DropDownList()
+@(Html.Kendo().ComboBox()
     .Name("LopHocPhan")
     .Placeholder("Chọn lớp học phần...")
     //.OptionLabel("Chọn lớp học phần")
@@ -86,14 +86,14 @@
     )
 )
 <div>
-    @Html.TextBox("TenNhom", "", new { placeholder = "Nhập tên nhóm", style = "width:110px" })
-    @Html.TextBox("MoTaNhom", "", new { placeholder = "Mô tả nhóm", style = "width:150px" })
-    <button id="createGroup">Tạo nhóm</button>
-    <button id="deleteGroup">Xóa nhóm</button>
-     @Html.TextBox("TenTo", "", new { placeholder = "Nhập tên tổ", style = "width:100px" })
-    @Html.TextBox("MoTaTo", "", new { placeholder = "Mô tả tổ", style = "width:150px" })
-    <button id="createGrouping">Tạo tổ</button>
-    <button id="updateGrouping">Cập nhật tổ</button>
+    @Html.TextBox("TenTo", "", new { placeholder = "Nhập tên tổ", style = "width:100px", @class = "k-textbox" })
+    @Html.TextBox("MoTaTo", "", new { placeholder = "Mô tả tổ", style = "width:150px", @class = "k-textbox" })
+    <button id="createGrouping" class="k-button">Tạo tổ</button>
+    <button id="updateGrouping" class="k-button">Cập nhật tổ</button>
+    @Html.TextBox("TenNhom", "", new { placeholder = "Nhập tên nhóm", style = "width:110px", @class = "k-textbox" })
+    @Html.TextBox("MoTaNhom", "", new { placeholder = "Mô tả nhóm", style = "width:150px", @class = "k-textbox" })
+    <button id="createGroup" class="k-button">Tạo nhóm</button>
+    <button id="deleteGroup" class="k-button">Xóa nhóm</button>
 </div>
 <div>
     @(Html.Kendo().DropDownList()
@@ -113,9 +113,9 @@
         .AutoBind(false)
         .CascadeFrom("LopHocPhan")
     )
-    <button id="assignGrouping">Thêm nhóm vào tổ</button>
-    <button id="unassignGrouping">Xóa nhóm khỏi tổ</button>
-    <button id="deleteGrouping">Xóa tổ</button>
+    <button id="assignGrouping" class="k-button">Thêm nhóm vào tổ</button>
+    <button id="unassignGrouping" class="k-button">Xóa nhóm khỏi tổ</button>
+    <button id="deleteGrouping" class="k-button">Xóa tổ</button>
 </div>
 <script type="text/javascript">
     var selectedVals = [];
