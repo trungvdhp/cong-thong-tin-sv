@@ -104,12 +104,22 @@
     }
 
     $("#create").click(function () {
-        processing('/MoodleUser/CreateGiaoVien/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVals, "Đang tạo tài khoản moodle cho các giáo viên...", gridRefresh);
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một giáo viên!');
+            return;
+        }
+
+        processing('/MoodleUser/CreateGiaoVien/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVals, "Đang tạo tài khoản moodle cho các giáo viên đã chọn...", gridRefresh);
     })
 
     $("#delete").click(function () {
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một giáo viên!');
+            return;
+        }
+
         if (confirm('Bạn muốn xóa tài khoản moodle của các giáo viên đã chọn?')) {
-            processing('/MoodleUser/DeleteGiaoVien/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVals, "Đang xóa tài khoản moodle của các giáo viên...", gridRefresh);
+            processing('/MoodleUser/DeleteGiaoVien/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVals, "Đang xóa tài khoản moodle của các giáo viên đã chọn...", gridRefresh);
         }
     })
 

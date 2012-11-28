@@ -221,6 +221,9 @@
       <DependentUpon>Elearning.edmx</DependentUpon>
     </Compile>
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
+    <Compile Include="fit_context.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
     <Compile Include="fit_course.cs">
       <DependentUpon>Elearning.tt</DependentUpon>
     </Compile>
@@ -817,6 +820,7 @@
     <Content Include="Views\ThongBao\Gui.cshtml" />
     <Content Include="Views\MoodleRole\Index.cshtml" />
     <Content Include="Views\MoodleUser\GiaoVien.cshtml" />
+    <Content Include="Views\MoodleEnrol\GhiDanhGiaoVien.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

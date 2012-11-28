@@ -249,7 +249,6 @@ namespace CongThongTinSV.Controllers
             {
                 // Good
                 //results = serializer.Deserialize<List<MoodleCreateUserResponse>>(response);
-                i = 0;
 
                 foreach (MoodleSinhVien item in list)
                 {
@@ -260,13 +259,12 @@ namespace CongThongTinSV.Controllers
                     entity.ID_lop_tc = item.ID_lop_tc;
 
                     db.MOD_DanhSachLopTinChi.Add(entity);
-                    i++;
                 }
 
                 db.SaveChanges();
             }
 
-            UtilityController.WriteTextToFile("D:\\GhiDanhCreate.txt", response);
+            UtilityController.WriteTextToFile("D:\\GhiDanhSinhVienCreate.txt", response);
         }
 
         public ActionResult CreateGhiDanhSinhVien(string selectedVals, string id_lop_tc)
@@ -311,19 +309,17 @@ namespace CongThongTinSV.Controllers
             {
                 // Good
                 //results = serializer.Deserialize<List<MoodleCreateUserResponse>>(response);
-                i = 0;
 
                 foreach (MoodleSinhVien item in list)
                 {
                     MOD_DanhSachLopTinChi entity = db.MOD_DanhSachLopTinChi.FirstOrDefault(t => t.ID == item.ID);
                     db.MOD_DanhSachLopTinChi.Remove(entity);
-                    i++;
                 }
 
                 db.SaveChanges();
             }
 
-            UtilityController.WriteTextToFile("D:\\GhiDanhDelete.txt", response);
+            UtilityController.WriteTextToFile("D:\\GhiDanhSinhVienDelete.txt", response);
         }
 
         public ActionResult DeleteGhiDanhSinhVien(string selectedVals, string id_lop_tc)
@@ -361,6 +357,285 @@ namespace CongThongTinSV.Controllers
             if (list.Count() == 0) return View();
 
             MoodleGroupController.DeleteThanhVien(list, id_nhom);
+
+            return View();
+        }
+
+        public ActionResult GhiDanhGiaoVien()
+        {
+            return View();
+        }
+
+        public ActionResult GetGiaoVien([DataSourceRequest] DataSourceRequest request, int id_lop_tc)
+        {
+            return Json(MoodleGiaoViens(id_lop_tc).ToDataSourceResult(request));
+        }
+
+        public IEnumerable<MoodleGiaoVien> MoodleGiaoViens(int id_lop_tc)
+        {
+            Entities db = new Entities();
+            MoodleEntities mdb = new MoodleEntities();
+
+            var danhsach = from ds in db.MOD_NguoiDung_VaiTro_LopTinChi.AsEnumerable()
+                           where ds.ID_lop_tc == id_lop_tc
+                           select new 
+                           {
+                               UserID = ds.UserID,
+                               ID_lop_tc = ds.ID_lop_tc,
+                               ID_vai_tro = ds.ID_vai_tro,
+                               Vai_tro = string.Join(("\n"), MoodleRoleController.GetVaiTroKhoaHoc(ds.ID_vai_tro, new char[]{','})),
+                               Dinh_chi = ds.Dinh_chi
+                           };
+
+            var giaovien = from gv1 in db.MOD_NguoiDung.AsEnumerable()
+                           join gv2 in db.PLAN_GiaoVien.AsEnumerable()
+                           on gv1.ID_nd equals gv2.ID_cb
+                           join gt in db.STU_GioiTinh.AsEnumerable()
+                           on gv2.ID_gioi_tinh equals gt.ID_gioi_tinh
+                           where gv1.ID_nhom_nd == 2
+                           select new
+                           {
+                               ID_cb = gv2.ID_cb,
+                               ID_khoa = gv2.ID_khoa,
+                               ID_moodle = gv1.ID_moodle,
+                               Ma_cb = gv2.Ma_cb,
+                               Ho_dem = UtilityController.GetLastName(gv2.Ho_ten),
+                               Ten = UtilityController.GetFirstName(gv2.Ho_ten),
+                               Ngay_sinh = gv2.Ngay_sinh,
+                               Gioi_tinh = gt.Gioi_tinh
+                           };
+
+            var q = from gv1 in giaovien.AsEnumerable()
+                    join khoa in db.STU_Khoa.AsEnumerable()
+                    on gv1.ID_khoa equals khoa.ID_khoa
+                    join gv2 in danhsach.AsEnumerable()
+                    on gv1.ID_moodle equals gv2.UserID
+                    into danhsach1
+                    from gv in danhsach1.DefaultIfEmpty()
+                    select new MoodleGiaoVien
+                    {
+                        ID_lop_tc = id_lop_tc,
+                        ID_cb = gv1.ID_cb,
+                        ID_moodle = gv1.ID_moodle,
+                        Ma_cb = gv1.Ma_cb,
+                        Ho_dem = gv1.Ho_dem,
+                        Ten = gv1.Ten,
+                        Khoa = khoa.Ten_khoa,
+                        Ngay_sinh = gv1.Ngay_sinh,
+                        Gioi_tinh = gv1.Gioi_tinh,
+                        ID_vai_tro = (gv == null ? "" : gv.ID_vai_tro),
+                        Vai_tro = (gv == null ? "" : gv.Vai_tro),
+                        Tinh_trang = (gv == null ? "Chưa ghi danh" : gv.Dinh_chi ? "Chưa kích hoạt":"Đã kích hoạt")
+                    };
+
+            return q.OrderByDescending(t => t.ID_vai_tro).ToList();
+        }
+
+        public static void CreateGhiDanhGiaoVien(List<MoodleGiaoVien> list, string id_vai_tro, string suspended)
+        {
+            Entities db = new Entities();
+            int i = 0;
+
+            string postData = "wsfunction=enrol_manual_enrol_users";
+
+            foreach (MoodleGiaoVien item in list)
+            {
+                postData += "&enrolments[" + i + "][roleid]=" + id_vai_tro;
+                postData += "&enrolments[" + i + "][userid]=" + item.ID_moodle;
+                postData += "&enrolments[" + i + "][courseid]=" + item.ID_lop_tc;
+                postData += "&enrolments[" + i + "][timestart]=" + UtilityController.ConvertToTimestamp(DateTime.Now);
+                //postData += "&enrolments[" + i + "][timeend]=0";
+                postData += "&enrolments[" + i + "][suspend]="  + suspended;
+                i++;
+            }
+
+            WebRequestController web = new WebRequestController(4, "POST", postData);
+            string response = web.GetResponse();
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //MoodleException moodleError = new MoodleException();
+
+            if (response.Contains("exception"))
+            {
+                // Error
+                //moodleError = serializer.Deserialize<MoodleException>(rs);
+            }
+            else
+            {
+                // Good
+                //results = serializer.Deserialize<List<MoodleCreateUserResponse>>(response);
+
+                foreach (MoodleGiaoVien item in list)
+                {
+                    MOD_NguoiDung_VaiTro_LopTinChi entity;
+
+                    if (item.Tinh_trang == "Chưa ghi danh")
+                    {
+                        entity = new MOD_NguoiDung_VaiTro_LopTinChi();
+                        entity.UserID = item.ID_moodle;
+                        entity.ID_vai_tro = "" + id_vai_tro;
+                        entity.ID_lop_tc = item.ID_lop_tc;
+                        entity.Dinh_chi = suspended == "0" ? false : true;
+                        db.MOD_NguoiDung_VaiTro_LopTinChi.Add(entity);
+                    }
+                    else
+                    {
+                        entity = db.MOD_NguoiDung_VaiTro_LopTinChi.SingleOrDefault(t => t.ID_lop_tc == item.ID_lop_tc && t.UserID == item.ID_moodle);
+                        if (!UtilityController.InArray(item.ID_vai_tro, new char[] { ',' }, id_vai_tro))
+                        {
+                            if (entity.ID_vai_tro == "")
+                            {
+                                entity.ID_vai_tro = id_vai_tro;
+                            }
+                            else
+                            {
+                                entity.ID_vai_tro += "," + id_vai_tro;
+                            }
+
+                        }
+                        entity.Dinh_chi = suspended == "0" ? false : true;
+
+                        db.Entry(entity).State = System.Data.EntityState.Modified;
+                    }
+                }
+
+                db.SaveChanges();
+            }
+
+            UtilityController.WriteTextToFile("D:\\GhiDanhGiaoVienCreate.txt", response);
+        }
+
+        public ActionResult CreateGhiDanhGiaoVien(string selectedVals, string id_lop_tc, string id_vai_tro, string suspended)
+        {
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+            var list = MoodleGiaoViens(Convert.ToInt32(id_lop_tc)).Where(t => s.Contains(t.ID_moodle.ToString())).ToList();
+
+            if (list.Count() == 0) return View();
+
+            CreateGhiDanhGiaoVien(list, id_vai_tro, suspended);
+
+            return View();
+        }
+
+        public static void UnassignVaiTroGiaoVien(List<MoodleGiaoVien> list, string id_vai_tro)
+        {
+            Entities db = new Entities();
+            int i = 0;
+
+            string postData = "wsfunction=core_role_unassign_roles";
+
+            foreach (MoodleGiaoVien item in list)
+            {
+                postData += "&unassignments[" + i + "][roleid]=" + id_vai_tro;
+                postData += "&unassignments[" + i + "][userid]=" + item.ID_moodle;
+                postData += "&unassignments[" + i + "][contextid]=" + UtilityController.GetContextID(50, Convert.ToInt64(item.ID_lop_tc));
+                i++;
+            }
+
+            WebRequestController web = new WebRequestController(4, "POST", postData);
+            string response = web.GetResponse();
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //MoodleException moodleError = new MoodleException();
+
+            if (response.Contains("exception"))
+            {
+                // Error
+                //moodleError = serializer.Deserialize<MoodleException>(rs);
+            }
+            else
+            {
+                // Good
+                //results = serializer.Deserialize<List<MoodleCreateUserResponse>>(response);
+
+                foreach (MoodleGiaoVien item in list)
+                {
+                    MOD_NguoiDung_VaiTro_LopTinChi entity;
+                    entity = db.MOD_NguoiDung_VaiTro_LopTinChi.SingleOrDefault(t => t.ID_lop_tc == item.ID_lop_tc && t.UserID == item.ID_moodle);
+                    List<string> vaitro = entity.ID_vai_tro.Split(new char[]{','}).ToList();
+
+                    if (vaitro.Remove(id_vai_tro))
+                    {
+                        entity.ID_vai_tro = string.Join(",", vaitro);
+                    }
+
+                    db.Entry(entity).State = System.Data.EntityState.Modified;
+                }
+
+                db.SaveChanges();
+            }
+
+            UtilityController.WriteTextToFile("D:\\GhiDanhGiaoVien_Unassign_VaiTro.txt", response);
+        }
+
+        public ActionResult UnassignVaiTroGiaoVien(string selectedVals, string id_lop_tc, string id_vai_tro)
+        {
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+            var list = MoodleGiaoViens(Convert.ToInt32(id_lop_tc)).Where(t => s.Contains(t.ID_moodle.ToString()) && UtilityController.InArray(t.ID_vai_tro, new char[] { ',' }, id_vai_tro)).ToList();
+
+            if (list.Count() == 0) return View();
+
+            UnassignVaiTroGiaoVien(list, id_vai_tro);
+
+            return View();
+        }
+            
+        public static void UnassignAllVaiTroGiaoVien(List<MoodleGiaoVien> list)
+        {
+            Entities db = new Entities();
+            int i = 0;
+
+            string postData = "wsfunction=core_role_unassign_roles";
+
+            foreach (MoodleGiaoVien item in list)
+            {
+                string[] ids = item.ID_vai_tro.Split(new char[]{','});
+
+                foreach(string id in ids)
+                {
+                    postData += "&unassignments[" + i + "][roleid]=" + id;
+                    postData += "&unassignments[" + i + "][userid]=" + item.ID_moodle;
+                    postData += "&unassignments[" + i + "][contextid]=" + UtilityController.GetContextID(50, Convert.ToInt64(item.ID_lop_tc));
+                    i++;
+                }
+            }
+
+            WebRequestController web = new WebRequestController(4, "POST", postData);
+            string response = web.GetResponse();
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //MoodleException moodleError = new MoodleException();
+
+            if (response.Contains("exception"))
+            {
+                // Error
+                //moodleError = serializer.Deserialize<MoodleException>(rs);
+            }
+            else
+            {
+                // Good
+                //results = serializer.Deserialize<List<MoodleCreateUserResponse>>(response);
+
+                foreach (MoodleGiaoVien item in list)
+                {
+                    MOD_NguoiDung_VaiTro_LopTinChi entity;
+                    entity = db.MOD_NguoiDung_VaiTro_LopTinChi.SingleOrDefault(t => t.ID_lop_tc == item.ID_lop_tc && t.UserID == item.ID_moodle);
+                    entity.ID_vai_tro = "";
+
+                    db.Entry(entity).State = System.Data.EntityState.Modified;
+                }
+
+                db.SaveChanges();
+            }
+
+            UtilityController.WriteTextToFile("D:\\GhiDanhGiaoVien_UnassignAll_VaiTro.txt", response);
+        }
+
+        public ActionResult UnassignAllVaiTroGiaoVien(string selectedVals, string id_lop_tc)
+        {
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+            var list = MoodleGiaoViens(Convert.ToInt32(id_lop_tc)).Where(t => s.Contains(t.ID_moodle.ToString()) && t.ID_vai_tro != "").ToList();
+
+            if (list.Count() == 0) return View();
+
+            UnassignAllVaiTroGiaoVien(list);
 
             return View();
         }

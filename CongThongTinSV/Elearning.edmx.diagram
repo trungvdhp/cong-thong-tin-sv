@@ -31,6 +31,7 @@
         <EntityTypeShape EntityType="moodleModel.fit_role" Width="1.5" PointX="8.7458666678265971" PointY="15.758068166560525" />
         <EntityTypeShape EntityType="moodleModel.fit_role_context_levels" Width="1.5" PointX="1.6045720715097021" PointY="30.924657344317371" />
         <EntityTypeShape EntityType="moodleModel.fit_role_names" Width="1.5" PointX="1.6049963410967014" PointY="24.235265817602755" />
+        <EntityTypeShape EntityType="moodleModel.fit_context" Width="1.5" PointX="5.2909148043444922" PointY="5.7221775677624054" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

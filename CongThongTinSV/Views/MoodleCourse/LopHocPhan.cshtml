@@ -23,28 +23,6 @@
     })
 )
 
-@*@(Html.Kendo().DropDownList()
-    .Name("ChuyenNganh")
-    .OptionLabel("Chọn chuyên ngành")
-    .HtmlAttributes(new {style="width:260px"})
-    .DataTextField("Text")
-    .DataValueField("Value")
-    .DataSource(source =>
-    {
-        source.Read(read =>
-        {
-            read.Action("GetMoodleChuyenNganh", "MoodleCategory").Data("filterHocKy");
-        }).ServerFiltering(true);
-    })
-    .Events(e =>
-    {
-        e.Change("loadGrid");
-    })
-    .Enable(false)
-    .AutoBind(false)
-        .CascadeFrom("HocKy")
-)*@
-
 @(Html.Kendo().Grid<CongThongTinSV.Models.MoodleLopHocPhan>()
     .Name("Grid")
     .Columns(columns => {
@@ -125,14 +103,22 @@
     }
 
     $("#create").click(function () {
-        //window.location.href = '/MoodleCourse/CreateLopHocPhan/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals;
-        processing('/MoodleCourse/CreateLopHocPhan/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals, "Đang tạo các lớp học phần trên moodle...", gridRefresh);
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một lớp học phần!');
+            return;
+        }
+
+        processing('/MoodleCourse/CreateLopHocPhan/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals, "Đang tạo các lớp học phần đã chọn trên moodle...", gridRefresh);
     })
 
     $("#delete").click(function () {
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một lớp học phần!');
+            return;
+        }
+
         if (confirm('Bạn muốn xóa toàn bộ các lớp học phần thuộc chuyên ngành đã chọn?')) {
-            //window.location.href = '/MoodleCourse/DeleteLopHocPhan/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals;
-            processing('/MoodleCourse/DeleteLopHocPhan/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals, "Đang xóa các lớp học phần trên moodle...", gridRefresh);
+            processing('/MoodleCourse/DeleteLopHocPhan/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals, "Đang xóa các lớp học phần đã chọn trên moodle...", gridRefresh);
         }
     })
 </script>

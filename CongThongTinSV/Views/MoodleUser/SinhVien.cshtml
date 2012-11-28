@@ -28,7 +28,7 @@
 @(Html.Kendo().Grid<CongThongTinSV.Models.MoodleSinhVien>()
     .Name("Grid")
     .Columns(columns => {
-        columns.Bound(sv => sv.ID_sv)
+        columns.Bound(c => c.ID_sv)
             .ClientTemplate("<input type='checkbox' class='chkbx' value='#= ID_sv #'/>")
             .HeaderTemplate("<input type='checkbox' id='masterCheckBox'/>")
             .Width(40)
@@ -36,13 +36,13 @@
             .HeaderHtmlAttributes(new { style = "text-align:center" })
             .HtmlAttributes(new { style = "text-align:center" })
             .Filterable(false).Groupable(false).Sortable(false);
-        columns.Bound(sv => sv.Ma_sv).Width(80);
-        columns.Bound(sv => sv.ID_moodle).Width(105);
-        columns.Bound(sv => sv.Ho_dem).Width(150);
-        columns.Bound(sv => sv.Ten).Width(80);
-        columns.Bound(sv => sv.Ngay_sinh).Width(120).Format("{0:dd-MM-yyyy}");
-        columns.Bound(sv => sv.Gioi_tinh).Width(100);
-        columns.Bound(sv => sv.Lop);
+        columns.Bound(c => c.Ma_sv).Width(80);
+        columns.Bound(c => c.ID_moodle).Width(105);
+        columns.Bound(c => c.Ho_dem).Width(150);
+        columns.Bound(c => c.Ten).Width(80);
+        columns.Bound(c => c.Ngay_sinh).Width(120).Format("{0:dd-MM-yyyy}");
+        columns.Bound(c => c.Gioi_tinh).Width(100);
+        columns.Bound(c => c.Lop);
     })
     .Pageable(pager => pager.PageSizes(new int[]{5, 10, 20, 50, 100, 1000}).Refresh(true).Input(true).Numeric(false))
     .Sortable(s => s.SortMode(GridSortMode.MultipleColumn))
@@ -105,14 +105,22 @@
     }
 
     $("#create").click(function () {
-        //window.location.href = '/MoodleUser/CreateSinhVien/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals;
-        processing('/MoodleUser/CreateSinhVien/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals, "Đang tạo tài khoản moodle cho các sinh viên...", gridRefresh);
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một sinh viên!');
+            return;
+        }
+
+        processing('/MoodleUser/CreateSinhVien/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals, "Đang tạo tài khoản moodle cho các sinh viên đã chọn...", gridRefresh);
     })
 
     $("#delete").click(function () {
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một sinh viên!');
+            return;
+        }
+
         if (confirm('Bạn muốn xóa tài khoản moodle của các sinh viên đã chọn?')) {
-            //window.location.href = '/MoodleUser/DeleteSinhVien/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals;
-            processing('/MoodleUser/DeleteSinhVien/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals, "Đang xóa tài khoản moodle của các sinh viên...", gridRefresh);
+            processing('/MoodleUser/DeleteSinhVien/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals, "Đang xóa tài khoản moodle của các sinh viên đã chọn...", gridRefresh);
         }
     })
 

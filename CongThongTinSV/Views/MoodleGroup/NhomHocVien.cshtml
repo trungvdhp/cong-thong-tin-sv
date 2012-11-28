@@ -189,7 +189,7 @@
 
     $("#deleteGroup").click(function () {
         if (selectedVals.length == 0) {
-            alert('Vui lòng chọn 1 nhóm');
+            alert('Vui lòng chọn 1 nhóm!');
             return;
         }
 
@@ -214,7 +214,7 @@
 
     $("#deleteGrouping").click(function () {
         if ($('#To').val() == '') {
-            alert('Vui lòng chọn 1 tổ');
+            alert('Vui lòng chọn 1 tổ!');
             return;
         }
 
@@ -233,8 +233,13 @@
     })
 
     $("#assignGrouping").click(function () {
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một nhóm!');
+            return;
+        }
+
         if ($('#To').val() == '') {
-            alert('Vui lòng chọn 1 tổ');
+            alert('Vui lòng chọn 1 tổ!');
             return;
         }
 
@@ -242,8 +247,13 @@
     })
 
     $("#unassignGrouping").click(function () {
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một nhóm!');
+            return;
+        }
+
         if ($('#To').val() == '') {
-            alert('Vui lòng chọn 1 tổ');
+            alert('Vui lòng chọn 1 tổ!');
             return;
         }
 

@@ -95,7 +95,7 @@
 )
 <div style="margin-top:5px">
     <button id="createEnrol" class="k-button">Ghi danh</button>
-    <button id="deleteEnrol" class="k-button">Hủy ghi danh</button>
+    <button id="deleteEnrol" class="k-button">Đình chỉ ghi danh</button>
     <button id="createUser" class="k-button">Đăng ký tài khoản</button>
     <button id="deleteUser" class="k-button">Hủy đăng ký</button>
 </div>
@@ -185,25 +185,41 @@
     }
 
     $("#createUser").click(function () {
-        //window.location.href = '/MoodleEnrol/CreateSinhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một sinh viên!');
+            return;
+        }
+
         processing('/MoodleEnrol/CreateSinhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals, "Đang tạo tài khoản moodle cho các sinh viên...", gridRefresh);
     })
 
     $("#deleteUser").click(function () {
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một sinh viên!');
+            return;
+        }
+
         if (confirm('Bạn muốn xóa tài khoản moodle của các sinh viên đã chọn?')) {
-            //window.location.href = '/MoodleEnrol/DeleteSinhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
             processing('/MoodleEnrol/DeleteSinhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals, "Đang xóa tài khoản moodle của các sinh viên...", gridRefresh);
         }
     })
 
     $("#createEnrol").click(function () {
-        //window.location.href = '/MoodleEnrol/CreateGhiDanhSinhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một sinh viên!');
+            return;
+        }
+
         processing('/MoodleEnrol/CreateGhiDanhSinhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals, "Đang ghi danh cho các sinh viên...", gridRefresh);
     })
 
     $("#deleteEnrol").click(function () {
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một sinh viên!');
+            return;
+        }
+
         if (confirm('Bạn muốn hủy ghi danh của các sinh viên đã chọn?')) {
-            //window.location.href = '/MoodleEnrol/DeleteGhiDanhSinhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
             processing('/MoodleEnrol/DeleteGhiDanhSinhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals, "Đang hủy ghi danh của các sinh viên...", gridRefresh);
         }
     })
@@ -213,6 +229,7 @@
             alert('Tên nhóm không được để trống!');
             return;
         }
+
         processing('/MoodleGroup/CreateNhom/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&ten_nhom=' + jQuery("#TenNhom").val() + '&mo_ta=' + jQuery("#MoTa").val(), "Đang tạo nhóm học viên trong lớp học phần...", groupRefresh);
     })
 
@@ -221,20 +238,32 @@
             alert('Vui lòng chọn 1 nhóm');
             return;
         }
+
         if (confirm('Bạn muốn xóa nhóm học viên ' + $("#Nhom").data("kendoDropDownList").text() + '?')) {
             processing('/MoodleGroup/DeleteNhom/?selectedVals=' + jQuery("#Nhom").val(), "Đang xóa nhóm học viên " + $("#Nhom").data("kendoDropDownList").text() + "...", gridgroupRefresh);
         }
     })
 
     $("#addMember").click(function () {
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một sinh viên!');
+            return;
+        }
+
         if ($('#Nhom').val() == '') {
             alert('Vui lòng chọn 1 nhóm');
             return;
         }
+
         processing('/MoodleEnrol/AddThanhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + '&id_nhom=' + jQuery("#Nhom").val(), "Đang thêm các học viên vào nhóm " + $("#Nhom").data("kendoDropDownList").text() + "...", gridRefresh);
     })
 
     $("#deleteMember").click(function () {
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một sinh viên!');
+            return;
+        }
+
         if ($('#Nhom').val() == '') {
             alert('Vui lòng chọn 1 nhóm');
             return;
