@@ -14,28 +14,6 @@ namespace CongThongTinSV.Controllers
     public class UtilityController : Controller
     {
         /// <summary>
-        /// Utility method to sort IQueryable given a field name as "string"
-        /// </summary>
-        /// <typeparam name="T">data type</typeparam>
-        /// <param name="data">iqueryable data</param>
-        /// <param name="fieldName">field name</param>
-        /// <param name="sortOrder">sort oder</param>
-        /// <returns>sorted iqueryable data</returns>
-        public static IQueryable<T> SortIQueryable<T>(IQueryable<T> data,
-            string fieldName, string sortOrder)
-        {
-            if (string.IsNullOrWhiteSpace(fieldName)) return data;
-            if (string.IsNullOrWhiteSpace(sortOrder)) return data;
-
-            var param = Expression.Parameter(typeof(T), "i");
-            Expression conversion = Expression.Convert
-        (Expression.Property(param, fieldName), typeof(object));
-            var mySortExpression = Expression.Lambda<Func<T, object>>(conversion, param);
-
-            return (sortOrder == "desc") ? data.OrderByDescending(mySortExpression)
-                : data.OrderBy(mySortExpression);
-        }
-        /// <summary>
         /// Write text to a file
         /// </summary>
         /// <param name="filePath">file path</param>
@@ -284,6 +262,39 @@ namespace CongThongTinSV.Controllers
             int startIndex = input.Length - length;
 
             return input.Substring(startIndex);
+        }
+
+        /// <summary>
+        /// Checks if a specified value exists in a string array that contains the substrings in this string that are delimited by a separator string
+        /// </summary>
+        /// <param name="array">string array</param>
+        /// <param name="separator">separator</param>
+        /// <param name="value">value needs to check</param>
+        /// <returns></returns>
+        public static bool InArray(string array, char[] separator,  string value)
+        {
+            string[] arr = array.Split(separator);
+            return arr.Contains(value);
+        }
+        /// <summary>
+        /// Get context id in moodle elearning
+        /// </summary>
+        /// <param name="contextLevel">context level</param>
+        /// <param name="instanceID">instance id</param>
+        /// <returns></returns>
+        public static long GetContextID(long contextLevel, long instanceID)
+        {
+            MoodleEntities mdb = new MoodleEntities();
+            var q = mdb.fit_context.FirstOrDefault(t => t.contextlevel == contextLevel && t.instanceid == instanceID);
+
+            if (q == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return q.id;
+            }
         }
     }
 }

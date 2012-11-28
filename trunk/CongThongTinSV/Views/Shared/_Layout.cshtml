@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+        <title>@ViewBag.Title - Vimaru Student Portal</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
         @Styles.Render("~/Content/css")
@@ -112,6 +112,7 @@
                                         <ul> <!-- moving the UL to the next line will cause an IE7 problem -->
                                             <li>@Html.ActionLink("Lớp học phần", "LopHocPhan", "MoodleCourse")</li>
                                             <li>@Html.ActionLink("Ghi danh sinh viên", "GhiDanhSinhVien", "MoodleEnrol")</li>
+                                             <li>@Html.ActionLink("Ghi danh giáo viên", "GhiDanhGiaoVien", "MoodleEnrol")</li>
                                              <li>@Html.ActionLink("Nhóm học viên", "NhomHocVien", "MoodleGroup")</li>
                                         </ul>
                                     </li>

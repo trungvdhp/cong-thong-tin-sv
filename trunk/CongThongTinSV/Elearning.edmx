@@ -6,6 +6,7 @@
     <edmx:StorageModels>
     <Schema Namespace="moodleModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="moodleModelStoreContainer">
+          <EntitySet Name="fit_context" EntityType="moodleModel.Store.fit_context" store:Type="Tables" Schema="moodle" />
           <EntitySet Name="fit_course" EntityType="moodleModel.Store.fit_course" store:Type="Tables" Schema="moodle" />
           <EntitySet Name="fit_enrol" EntityType="moodleModel.Store.fit_enrol" store:Type="Tables" Schema="moodle" />
           <EntitySet Name="fit_external_services" EntityType="moodleModel.Store.fit_external_services" store:Type="Tables" Schema="moodle" />
@@ -33,6 +34,16 @@
           <EntitySet Name="fit_user" EntityType="moodleModel.Store.fit_user" store:Type="Tables" Schema="moodle" />
           <EntitySet Name="fit_user_enrolments" EntityType="moodleModel.Store.fit_user_enrolments" store:Type="Tables" Schema="moodle" />
         </EntityContainer>
+        <EntityType Name="fit_context">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="contextlevel" Type="bigint" Nullable="false" />
+          <Property Name="instanceid" Type="bigint" Nullable="false" />
+          <Property Name="path" Type="varchar" MaxLength="255" />
+          <Property Name="depth" Type="tinyint" Nullable="false" />
+        </EntityType>
         <EntityType Name="fit_course">
           <Key>
             <PropertyRef Name="id" />
@@ -549,6 +560,7 @@
           <EntitySet Name="fit_role" EntityType="moodleModel.fit_role" />
           <EntitySet Name="fit_role_context_levels" EntityType="moodleModel.fit_role_context_levels" />
           <EntitySet Name="fit_role_names" EntityType="moodleModel.fit_role_names" />
+          <EntitySet Name="fit_context" EntityType="moodleModel.fit_context" />
         </EntityContainer>
         <EntityType Name="fit_course">
           <Key>
@@ -1034,6 +1046,16 @@
           <Property Type="Int64" Name="roleid" Nullable="false" />
           <Property Type="Int64" Name="contextid" Nullable="false" />
           <Property Type="String" Name="name" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="fit_context">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="contextlevel" Nullable="false" />
+          <Property Type="Int64" Name="instanceid" Nullable="false" />
+          <Property Type="String" Name="path" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="SByte" Name="depth" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1548,6 +1570,17 @@
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="contextid" ColumnName="contextid" />
                 <ScalarProperty Name="roleid" ColumnName="roleid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_context">
+            <EntityTypeMapping TypeName="moodleModel.fit_context">
+              <MappingFragment StoreEntitySet="fit_context">
+                <ScalarProperty Name="depth" ColumnName="depth" />
+                <ScalarProperty Name="path" ColumnName="path" />
+                <ScalarProperty Name="instanceid" ColumnName="instanceid" />
+                <ScalarProperty Name="contextlevel" ColumnName="contextlevel" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -146,7 +146,7 @@ namespace CongThongTinSV.Controllers
                         1,
                         model.UserName,
                         DateTime.Now,
-                        DateTime.Now.AddMinutes(120),
+                        DateTime.Now.AddMinutes(60),
                         model.RememberMe,
                         string.Join("|", userData)
                         );

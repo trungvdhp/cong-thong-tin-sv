@@ -74,14 +74,22 @@
         $("#Grid").data("kendoGrid").dataSource.read();
     }
     $("#create").click(function () {
-        //window.location.href = '/MoodleCategory/CreateHocKy/?selectedVals=' + selectedVals;
-        processing('/MoodleCategory/CreateHocKy/?selectedVals='+ selectedVals, "Đang tạo các danh mục học kỳ trên Moodle...", gridRefresh);
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một học kỳ!');
+            return;
+        }
+
+        processing('/MoodleCategory/CreateHocKy/?selectedVals='+ selectedVals, "Đang tạo các danh mục học kỳ đã chọn trên Moodle...", gridRefresh);
     })
 
     $("#delete").click(function () {
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một học kỳ!');
+            return;
+        }
+
         if (confirm('Bạn muốn xóa toàn bộ các danh mục học kỳ đã chọn trên Moodle?')) {
-            //window.location.href = '/MoodleCategory/DeleteHocKy/?selectedVals=' + selectedVals;
-            processing('/MoodleCategory/DeleteHocKy/?selectedVals='+ selectedVals, "Đang xóa các danh mục học kỳ trên Moodle...", gridRefresh)
+            processing('/MoodleCategory/DeleteHocKy/?selectedVals='+ selectedVals, "Đang xóa các danh mục học kỳ đã chọn trên Moodle...", gridRefresh)
         }
     })
 

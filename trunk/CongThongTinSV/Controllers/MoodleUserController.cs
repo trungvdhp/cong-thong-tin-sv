@@ -89,7 +89,14 @@ namespace CongThongTinSV.Controllers
             foreach (MoodleSinhVien item in list)
             {
                 postData += "&users[" + i + "][username]=" + item.Ma_sv;
-                postData += "&users[" + i + "][password]=" + ((DateTime)item.Ngay_sinh).ToString("ddMMyyyy");
+                try
+                {
+                    postData += "&users[" + i + "][password]=" + ((DateTime)item.Ngay_sinh).ToString("ddMMyyyy");
+                }
+                catch
+                {
+                    postData += "&users[" + i + "][password]=" + item.Ma_sv;
+                }
                 postData += "&users[" + i + "][firstname]=" + HttpUtility.UrlEncode(item.Ten);
                 postData += "&users[" + i + "][lastname]=" + HttpUtility.UrlEncode(item.Ho_dem);
                 postData += "&users[" + i + "][email]=" + "st" + item.Ma_sv + "@st.vimaru.edu.vn";
@@ -174,13 +181,10 @@ namespace CongThongTinSV.Controllers
             }
             else
             {
-                i = 0;
-
                 foreach (MoodleSinhVien item in list)
                 {
                     MOD_NguoiDung entity = db.MOD_NguoiDung.Find(item.ID_moodle);
                     db.MOD_NguoiDung.Remove(entity);
-                    i++;
                 }
 
                 db.SaveChanges();
@@ -262,10 +266,17 @@ namespace CongThongTinSV.Controllers
             foreach (MoodleGiaoVien item in list)
             {
                 postData += "&users[" + i + "][username]=" + item.Ma_cb;
-                postData += "&users[" + i + "][password]=" + ((DateTime)item.Ngay_sinh).ToString("ddMMyyyy");
+                try
+                {
+                    postData += "&users[" + i + "][password]=" + ((DateTime)item.Ngay_sinh).ToString("ddMMyyyy");
+                }
+                catch
+                {
+                    postData += "&users[" + i + "][password]=" + item.Ma_cb;
+                }
                 postData += "&users[" + i + "][firstname]=" + HttpUtility.UrlEncode(item.Ten);
                 postData += "&users[" + i + "][lastname]=" + HttpUtility.UrlEncode(item.Ho_dem);
-                postData += "&users[" + i + "][email]=" + "st" + item.Ma_cb + "@st.vimaru.edu.vn";
+                postData += "&users[" + i + "][email]=" + "te" + item.Ma_cb + "@te.vimaru.edu.vn";
                 postData += "&users[" + i + "][timezone]=7.0";
                 postData += "&users[" + i + "][city]=Hai Phong";
                 postData += "&users[" + i + "][country]=VN";
@@ -347,13 +358,10 @@ namespace CongThongTinSV.Controllers
             }
             else
             {
-                i = 0;
-
                 foreach (MoodleGiaoVien item in list)
                 {
                     MOD_NguoiDung entity = db.MOD_NguoiDung.Find(item.ID_moodle);
                     db.MOD_NguoiDung.Remove(entity);
-                    i++;
                 }
 
                 db.SaveChanges();

@@ -81,13 +81,22 @@ namespace CongThongTinSV.Models
         [DisplayName("Tên")]
         public string Ten { get; set; }
 
+        [DisplayName("Khoa")]
+        public string Khoa { get; set; }
+
         [DisplayName("Ngày sinh")]
         public DateTime? Ngay_sinh { get; set; }
 
         [DisplayName("Giới tính")]
         public string Gioi_tinh { get; set; }
 
-        [DisplayName("Ghi danh")]
-        public bool Ghi_danh { get; set; }
+        [DisplayName("ID vai trò")]
+        public string ID_vai_tro { get; set; }
+
+        [DisplayName("Vai trò")]
+        public string Vai_tro { get; set; }
+
+        [DisplayName("Tình trạng")]
+        public string Tinh_trang { get; set; }
     }
 }

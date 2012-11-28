@@ -51,5 +51,6 @@ namespace CongThongTinSV
         public DbSet<fit_role> fit_role { get; set; }
         public DbSet<fit_role_context_levels> fit_role_context_levels { get; set; }
         public DbSet<fit_role_names> fit_role_names { get; set; }
+        public DbSet<fit_context> fit_context { get; set; }
     }
 }

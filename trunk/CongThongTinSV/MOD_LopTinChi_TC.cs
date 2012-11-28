@@ -16,10 +16,10 @@ namespace CongThongTinSV
     {
         public MOD_LopTinChi_TC()
         {
-            this.MOD_NguoiDung_VaiTro_LopTinChi = new HashSet<MOD_NguoiDung_VaiTro_LopTinChi>();
             this.MOD_NhomHocVien = new HashSet<MOD_NhomHocVien>();
             this.MOD_ToNhom = new HashSet<MOD_ToNhom>();
             this.MOD_DanhSachLopTinChi = new HashSet<MOD_DanhSachLopTinChi>();
+            this.MOD_NguoiDung_VaiTro_LopTinChi = new HashSet<MOD_NguoiDung_VaiTro_LopTinChi>();
         }
     
         public int ID_moodle { get; set; }
@@ -27,9 +27,9 @@ namespace CongThongTinSV
         public int ID_danhmuc { get; set; }
     
         public virtual MOD_HocKy MOD_HocKy { get; set; }
-        public virtual ICollection<MOD_NguoiDung_VaiTro_LopTinChi> MOD_NguoiDung_VaiTro_LopTinChi { get; set; }
         public virtual ICollection<MOD_NhomHocVien> MOD_NhomHocVien { get; set; }
         public virtual ICollection<MOD_ToNhom> MOD_ToNhom { get; set; }
         public virtual ICollection<MOD_DanhSachLopTinChi> MOD_DanhSachLopTinChi { get; set; }
+        public virtual ICollection<MOD_NguoiDung_VaiTro_LopTinChi> MOD_NguoiDung_VaiTro_LopTinChi { get; set; }
     }
 }
