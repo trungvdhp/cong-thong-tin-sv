@@ -14,8 +14,9 @@ namespace CongThongTinSV
     
     public partial class MOD_NguoiDung_VaiTro_HeThong
     {
+        public int STT { get; set; }
         public int UserID { get; set; }
-        public string ID_vai_tro { get; set; }
+        public int ID_vai_tro { get; set; }
     
         public virtual MOD_NguoiDung MOD_NguoiDung { get; set; }
     }

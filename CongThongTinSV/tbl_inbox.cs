@@ -23,6 +23,7 @@ namespace CongThongTinSV
         public Nullable<int> ID_nguoi_tra_loi { get; set; }
         public string Id_nguoi_gui { get; set; }
         public string Id_nguoi_nhan { get; set; }
-        public Nullable<int> Doi_tuong_nhan { get; set; }
+        public Nullable<byte> Doi_tuong_nhan { get; set; }
+        public Nullable<bool> Da_doc { get; set; }
     }
 }

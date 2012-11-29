@@ -398,7 +398,6 @@
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
     <Compile Include="STU_DanhSachLopTinChi.cs">
-      <SubType>Code</SubType>
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
     <Compile Include="STU_GioiTinh.cs">
