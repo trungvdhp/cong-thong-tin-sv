@@ -187,7 +187,6 @@
     <Compile Include="Controllers\ThongBaoController.cs" />
     <Compile Include="Controllers\TraCuuController.cs" />
     <Compile Include="Controllers\TaiLieuController.cs" />
-    <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\UtilityController.cs" />
     <Compile Include="Controllers\WebRequestController.cs" />
     <Compile Include="DHHH.Context.cs">
@@ -421,6 +420,9 @@
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
     <Compile Include="STU_Nganh.cs">
+      <DependentUpon>DHHH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_inbox.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewLopTC.cs">
@@ -817,15 +819,17 @@
     <Content Include="Views\TraCuu\DiemHocTap.cshtml" />
     <Content Include="Views\MoodleEnrol\GhiDanhSinhVien.cshtml" />
     <Content Include="Views\MoodleGroup\NhomHocVien.cshtml" />
-    <Content Include="Views\ThongBao\Gui.cshtml" />
+    <Content Include="Views\ThongBao\GuiThongBao.cshtml" />
     <Content Include="Views\MoodleRole\Index.cshtml" />
     <Content Include="Views\MoodleUser\GiaoVien.cshtml" />
+    <Content Include="Views\SinhVien\ThongTinCaNhan.cshtml">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="Views\MoodleEnrol\GhiDanhGiaoVien.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\GiangVien\" />
-    <Folder Include="Views\SinhVien\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

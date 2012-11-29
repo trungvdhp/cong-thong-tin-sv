@@ -108,7 +108,7 @@ namespace CongThongTinSV.Controllers
                 queryData += "&moodlewsrestformat=json" + "&wstoken=" + Token();
             //UtilityController.WriteTextToFile("D:\\Query.txt", queryData);
             SetMethod(method);
-            ProcessData(queryData);
+            //ProcessData(queryData);
         }
 
         public string GetResponse()

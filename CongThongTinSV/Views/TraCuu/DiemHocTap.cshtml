@@ -69,13 +69,14 @@
     .Pageable()
     .Sortable()
     .Scrollable()
-    
+    .Pageable(pager =>pager.Enabled(false))
     .DataSource( 
         dataSource => dataSource.Ajax()
                 .Group(group => group.Add(diem => diem.Nam_hoc))
                 .Group(group => group.Add(diem => diem.Hoc_ky))
             .Read(read => read.Action("DiemHocTap","JSON").Data("getTuKhoa"))
     )
+    .HtmlAttributes(new {style = "height:400px"})
 )
 
 <script>

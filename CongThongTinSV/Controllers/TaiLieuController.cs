@@ -19,6 +19,9 @@ namespace CongThongTinSV.Controllers
         {
             return View();
         }
-
+        public ActionResult TaiLieuDaUp()
+        {
+            return View();
+        }
     }
 }

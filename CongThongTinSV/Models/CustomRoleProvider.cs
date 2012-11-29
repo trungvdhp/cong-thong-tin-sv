@@ -10,13 +10,14 @@ namespace CongThongTinSV.Models
     {
         public override string[] GetRolesForUser(string username)
         {
-            Entities db = new Entities();
-            return new string[] { "" };
+            throw new NotImplementedException();
         }
+
         public override bool IsUserInRole(string username, string roleName)
         {
             throw new NotImplementedException();
         }
+
         public override void AddUsersToRoles(string[] usernames, string[] roleNames)
         {
             throw new NotImplementedException();
@@ -58,8 +59,6 @@ namespace CongThongTinSV.Models
         {
             throw new NotImplementedException();
         }
-
-
 
         public override void RemoveUsersFromRoles(string[] usernames, string[] roleNames)
         {

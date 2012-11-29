@@ -151,23 +151,28 @@ namespace CongThongTinSV.Controllers
                 Ma_sv = sv.Ma_sv
             }).ToList();
         }
-        public JsonResult DiemHocTap([DataSourceRequest] DataSourceRequest request, string TuKhoa, string NamHoc, int HocKy)
+        public JsonResult DiemHocTap([DataSourceRequest] DataSourceRequest request, string TuKhoa, string NamHoc, string HocKy)
         {
             Entities db = new Entities();
-            var sv = db.STU_HoSoSinhVien.First(s => s.Ma_sv == TuKhoa);
+            int hk = HocKy == "" ? 0 : Convert.ToInt32(HocKy);
 
-            var diem = sv.MARK_Diem_TC.Where(t => t.Nam_hoc == NamHoc && t.Hoc_ky == HocKy).Select(t => new DiemHocTap
-            {
-                Ma_mon = t.MARK_MonHoc.Ky_hieu,
-                Ten_mon = t.MARK_MonHoc.Ten_mon,
-                X = t.MARK_DiemThanhPhan_TC.Where(tp => tp.Hoc_ky_TP == HocKy && tp.Nam_hoc_TP == NamHoc).First().Diem,
-                Y = t.MARK_DiemThi_TC.Where(th => th.Hoc_ky_thi == HocKy && th.Nam_hoc_thi == NamHoc).Select(th => new { Diem_thi = th.Diem_thi }).OrderByDescending(th => th.Diem_thi).Distinct().First().Diem_thi,
-                Diem_chu = t.MARK_DiemThi_TC.Where(th => th.Hoc_ky_thi == HocKy && th.Nam_hoc_thi == NamHoc).Select(th => new { Diem_thi = th.Diem_thi, Diem_chu = th.Diem_chu }).OrderByDescending(th => th.Diem_thi).Distinct().First().Diem_chu,
-                Hoc_ky = t.Hoc_ky,
-                Nam_hoc = t.Nam_hoc,
-                Z = t.MARK_DiemThi_TC.Where(th => th.Hoc_ky_thi == HocKy && th.Nam_hoc_thi == NamHoc).Select(th => new { Diem_thi = th.Diem_thi, Z = th.TBCMH }).OrderByDescending(th => th.Diem_thi).Distinct().First().Z,
+            var diem = db.MARK_DiemThanhPhan_TC.Where(t => t.MARK_Diem_TC.STU_HoSoSinhVien.Ma_sv == TuKhoa && t.MARK_ThanhPhanMon_TC.Ky_hieu=="X").Select(t => new DiemHocTap{ 
+                Id_diem = t.MARK_Diem_TC.ID_diem,
+                Ma_mon = t.MARK_Diem_TC.MARK_MonHoc.Ky_hieu,
+                Ten_mon = t.MARK_Diem_TC.MARK_MonHoc.Ten_mon,
+                X=t.Diem,
+                Hoc_ky = t.Hoc_ky_TP,
+                Nam_hoc = t.Nam_hoc_TP
             }).ToList();
-
+            foreach (var d in diem)
+            {
+                MARK_DiemThi_TC dt = db.MARK_DiemThi_TC.Where(t => t.ID_diem == d.Id_diem && t.Nam_hoc_thi == d.Nam_hoc && t.Hoc_ky_thi == d.Hoc_ky).First();
+                d.Y = dt.Diem_thi;
+                d.Z = dt.TBCMH;
+                d.Diem_chu = dt.Diem_chu;
+            }
+            if (NamHoc != "") diem = diem.Where(t => t.Nam_hoc == NamHoc).ToList();
+            if (hk != 0) diem = diem.Where(t => t.Hoc_ky == hk).ToList();
             JsonResult result = new JsonResult();
             result.Data = diem;
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
