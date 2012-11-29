@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Gửi thông báo";
+}
+
+<h2>Gửi thông báo</h2>
+@using(Html.BeginForm("Gui","ThongBao")){
+@(Html.Kendo().DropDownList()
+          .Name("DoiTuong")
+          .DataTextField("Text")
+          .DataValueField("Value")
+          .BindTo(new List<SelectListItem>() {
+              new SelectListItem() {
+                  Text = "Sinh viên",
+                  Value = "1"
+              },
+              new SelectListItem() {
+                  Text = "Lớp học phần",
+                  Value = "2"
+              },
+              new SelectListItem() {
+                  Text = "Giảng viên",
+                  Value = "3"
+              }
+          })
+          //.OptionLabel("Chọn đối tượng nhận")
+    )
+@(Html.Kendo().AutoComplete()
+          .Name("NguoiNhan")
+          .Filter("startswith")
+          .Placeholder("Người nhận...")
+          .Separator("; ")
+          .HtmlAttributes(new {style = "width: 560px"})
+    )
+@(Html.Kendo().Editor()
+      .Name("NoiDung")
+      .HtmlAttributes(new { style = "width: 740px;height:440px" })
+      .Tools(tools => tools
+        .SubScript()
+        .SuperScript()
+        .ViewHtml()
+      )
+      //.Value(@<text></text>)
+)
+<input type="submit" value="Gửi" />
+<input type="button" value="Hủy bỏ" />
+}
+

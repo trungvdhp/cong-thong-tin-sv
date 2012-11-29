@@ -1,5 +1,80 @@
 ﻿@{
-    ViewBag.Title = "ThongTinCaNhan";
+    ViewBag.Title = "Thông tin cá nhân - "+ViewBag.sinhvien.Ho_ten;
 }
 
-<h2>ThongTinCaNhan</h2>
+	<fieldset style="width:100%; border:1px solid #ccc;"><legend><b>THÔNG TIN CÁ NHÂN</b></legend>
+		  <table width="100%" cellspacing="0">
+					<tbody><tr>
+					<td align="right" nowrap="" width="15%"><nobr>Mã sinh viên: </nobr>&nbsp;</td>
+					<td width="35%"> @ViewBag.sinhvien.Ma_sv&nbsp;</td>
+					<td align="right" nowrap="" width="15%"><nobr>Số hồ sơ: </nobr>&nbsp;</td>
+				  <td width="35%"> &nbsp;</td>
+				</tr>
+				<tr>
+					<td align="right" nowrap="" width="15%"><nobr>Họ và tên: </nobr>&nbsp;</td>
+					<td width="35%"> @ViewBag.sinhvien.Ho_ten&nbsp;</td>
+					<td align="right" nowrap="" width="15%"><nobr>Giới tính: </nobr>&nbsp;</td>
+					<td width="35%"> 
+						Nữ
+				  </td>
+				</tr>
+			<tr>
+					<td align="right" nowrap="" width="15%"><nobr>Ngày sinh: </nobr>&nbsp;</td>
+					<td width="35%"> @ViewBag.sinhvien.Ngay_sinh.ToString("dd/MM/yyyy")&nbsp;</td>
+					<td align="right" nowrap="" width="15%"><nobr>Nơi sinh: </nobr>&nbsp;</td>
+					<td width="35%"> &nbsp;</td>
+			</tr>
+			<tr>
+					<td align="right" nowrap="" width="14%" title="Số chứng minh thư nhân dân"><nobr>Số CMT: </nobr>&nbsp;</td>
+					<td width="20%"> @ViewBag.sinhvien.CMND&nbsp;</td>
+					<td align="right" nowrap="" width="15%" title="Sở trường và năng khiếu"><nobr>Sở trường &amp; NK: </nobr>&nbsp;</td>
+				  <td width="35%"> &nbsp;</td>
+			</tr>
+				<tr>
+					<td align="right" nowrap="" width="15%"><nobr>Đối tượng ưu tiên: </nobr>&nbsp;</td>
+					<td width="35%"> @ViewBag.sinhvien.Doi_tuong_du_thi&nbsp;</td>					
+					<td align="right" nowrap="" width="15%"><nobr>Quốc tịch: </nobr>&nbsp;</td>
+					<td width="35%"> @ViewBag.sinhvien.ID_quoc_tich&nbsp;</td>	
+				</tr>
+				<tr>
+					<td align="right" nowrap="" width="15%"><nobr>Dân tộc: </nobr>&nbsp;</td>
+					<td width="30%"> @ViewBag.sinhvien.ID_dan_toc&nbsp;</td>
+					<td align="right" nowrap="" width="15%"><nobr>Tôn giáo: </nobr>&nbsp;</td>
+					<td>  @ViewBag.sinhvien.Ton_giao&nbsp;</td>
+				</tr>
+							
+				<tr>
+					<td align="right" nowrap<nobr="">Tỉnh/Thành phố: &nbsp;</td>
+					<td> &nbsp;</td>
+					<td align="right" nowrap=""><nobr>Quận/Huyện: </nobr>&nbsp;</td>
+					<td> Huyện An Lão&nbsp;</td>
+				</tr>
+				<tr>
+					<td align="right" nowrap="" title="Nguyên quán"><nobr>Nguyên quán: </nobr>&nbsp;</td>
+					<td> @ViewBag.sinhvien.Que_quan&nbsp;</td>
+					<td align="right" nowrap="" title="Hộ khẩu thường trú"><nobr>HK thường trú: </nobr>&nbsp;</td>
+					<td> @ViewBag.sinhvien.Dia_chi_tt&nbsp;</td>
+				</tr>
+				<tr>
+					<td align="right" nowrap<nobr="">Nơi ở hiện nay: &nbsp;</td>
+					<td> @ViewBag.sinhvien.Dia_chi_tt&nbsp;</td>
+					<td align="right" nowrap=""><nobr>Địa chỉ liên lạc: </nobr>&nbsp;</td>
+					<td> @ViewBag.sinhvien.Dia_chi_bao_tin&nbsp;</td>
+				</tr>
+				
+				<tr>
+					<td align="right" nowrap<nobr="">Khu vực đăng ký: &nbsp;</td>
+					<td> Khu vực 2&nbsp;</td>
+					<td align="right" nowrap="" title="Điện thoại nhà riêng"><nobr>ĐT nhà riêng: </nobr>&nbsp;</td>
+					<td> &nbsp;</td>
+				</tr>
+				<tr>
+					<td align="right" nowrap="" title="Điện thoại di động"><nobr>ĐT di động: </nobr>&nbsp;</td>
+					<td> 0973397642&nbsp;</td>
+					<td align="right" nowrap=""><nobr>Thư điện tử: </nobr>&nbsp;</td>
+					<td> @ViewBag.sinhvien.Email&nbsp;</td>
+				</tr> 
+				
+	  </tbody></table>	 
+	  </fieldset>
+		

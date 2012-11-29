@@ -55,12 +55,13 @@ namespace CongThongTinSV
         public DbSet<STU_HeChuyenNganh> STU_HeChuyenNganh { get; set; }
         public DbSet<STU_HoSoSinhVien> STU_HoSoSinhVien { get; set; }
         public DbSet<STU_Khoa> STU_Khoa { get; set; }
-        public DbSet<STU_Lop> STU_Lop { get; set; }
         public DbSet<STU_Nganh> STU_Nganh { get; set; }
         public DbSet<ViewLopTC> ViewLopTCs { get; set; }
         public DbSet<ViewNamHoc> ViewNamHocs { get; set; }
         public DbSet<STU_DanhSachLopTinChi> STU_DanhSachLopTinChi { get; set; }
+        public DbSet<STU_Lop> STU_Lop { get; set; }
         public DbSet<MOD_DanhSachLopTinChi> MOD_DanhSachLopTinChi { get; set; }
+        public DbSet<tbl_inbox> tbl_inbox { get; set; }
         public DbSet<MOD_NguoiDung_VaiTro_LopTinChi> MOD_NguoiDung_VaiTro_LopTinChi { get; set; }
         public DbSet<MOD_NguoiDung_VaiTro_HeThong> MOD_NguoiDung_VaiTro_HeThong { get; set; }
     

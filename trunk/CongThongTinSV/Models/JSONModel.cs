@@ -39,6 +39,8 @@ namespace CongThongTinSV.Models
     }
     public class DiemHocTap
     {
+        public int Id_diem;
+
         [DisplayName("Mã MH")]
         public string Ma_mon { get; set; }
 
