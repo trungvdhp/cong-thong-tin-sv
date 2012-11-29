@@ -97,7 +97,21 @@
           <EntitySet Name="STU_Khoa" EntityType="DHHHModel.Store.STU_Khoa" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="STU_Lop" EntityType="DHHHModel.Store.STU_Lop" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="STU_Nganh" EntityType="DHHHModel.Store.STU_Nganh" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_inbox" EntityType="DHHHModel.Store.tbl_inbox" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_inbox" EntityType="DHHHModel.Store.tbl_inbox" store:Type="Tables" store:Schema="dbo" store:Name="tbl_inbox">
+            <DefiningQuery>SELECT 
+      [tbl_inbox].[ID] AS [ID], 
+      [tbl_inbox].[Title] AS [Title], 
+      [tbl_inbox].[Contents] AS [Contents], 
+      [tbl_inbox].[PostDate] AS [PostDate], 
+      [tbl_inbox].[Ma_sv] AS [Ma_sv], 
+      [tbl_inbox].[Status] AS [Status], 
+      [tbl_inbox].[ID_nguoi_tra_loi] AS [ID_nguoi_tra_loi], 
+      [tbl_inbox].[Id_nguoi_gui] AS [Id_nguoi_gui], 
+      [tbl_inbox].[Id_nguoi_nhan] AS [Id_nguoi_nhan], 
+      [tbl_inbox].[Doi_tuong_nhan] AS [Doi_tuong_nhan], 
+      [tbl_inbox].[Da_doc] AS [Da_doc]
+      FROM [dbo].[tbl_inbox] AS [tbl_inbox]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="ViewLopTC" EntityType="DHHHModel.Store.ViewLopTC" store:Type="Views" store:Schema="dbo" store:Name="ViewLopTC">
             <DefiningQuery>SELECT 
       [ViewLopTC].[ID_lop_tc] AS [ID_lop_tc], 
@@ -193,6 +207,14 @@
           <AssociationSet Name="FK_PLAN_ChuongTrinhDaoTao_STU_Khoa" Association="DHHHModel.Store.FK_PLAN_ChuongTrinhDaoTao_STU_Khoa">
             <End Role="STU_Khoa" EntitySet="STU_Khoa" />
             <End Role="PLAN_ChuongTrinhDaoTao" EntitySet="PLAN_ChuongTrinhDaoTao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PLAN_ChuongTrinhDaoTaoChiTiet_MARK_MonHoc" Association="DHHHModel.Store.FK_PLAN_ChuongTrinhDaoTaoChiTiet_MARK_MonHoc">
+            <End Role="MARK_MonHoc" EntitySet="MARK_MonHoc" />
+            <End Role="PLAN_ChuongTrinhDaoTaoChiTiet" EntitySet="PLAN_ChuongTrinhDaoTaoChiTiet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PLAN_ChuongTrinhDaoTaoChiTiet_PLAN_ChuongTrinhDaoTao" Association="DHHHModel.Store.FK_PLAN_ChuongTrinhDaoTaoChiTiet_PLAN_ChuongTrinhDaoTao">
+            <End Role="PLAN_ChuongTrinhDaoTao" EntitySet="PLAN_ChuongTrinhDaoTao" />
+            <End Role="PLAN_ChuongTrinhDaoTaoChiTiet" EntitySet="PLAN_ChuongTrinhDaoTaoChiTiet" />
           </AssociationSet>
           <AssociationSet Name="FK_PLAN_LopTinChi_TC_PLAN_MonTinChi_TC" Association="DHHHModel.Store.FK_PLAN_LopTinChi_TC_PLAN_MonTinChi_TC">
             <End Role="PLAN_MonTinChi_TC" EntitySet="PLAN_MonTinChi_TC" />
@@ -330,11 +352,10 @@
         </EntityType>
         <EntityType Name="MOD_NguoiDung_VaiTro_HeThong">
           <Key>
-            <PropertyRef Name="STT" />
+            <PropertyRef Name="UserID" />
           </Key>
-          <Property Name="STT" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="UserID" Type="int" Nullable="false" />
-          <Property Name="ID_vai_tro" Type="int" Nullable="false" />
+          <Property Name="ID_vai_tro" Type="varchar" Nullable="false" MaxLength="50" />
         </EntityType>
         <EntityType Name="MOD_NguoiDung_VaiTro_LopTinChi">
           <Key>
@@ -757,11 +778,14 @@
           <Property Name="Ten_nganh" Type="nvarchar" MaxLength="300" />
           <Property Name="Ten_nganh_En" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'DHHH.dbo.tbl_inbox' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
         <EntityType Name="tbl_inbox">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="255" />
           <Property Name="Contents" Type="ntext" />
           <Property Name="PostDate" Type="smalldatetime" />
@@ -950,7 +974,7 @@
           <End Role="MOD_NguoiDung" Type="DHHHModel.Store.MOD_NguoiDung" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="MOD_NguoiDung_VaiTro_HeThong" Type="DHHHModel.Store.MOD_NguoiDung_VaiTro_HeThong" Multiplicity="*" />
+          <End Role="MOD_NguoiDung_VaiTro_HeThong" Type="DHHHModel.Store.MOD_NguoiDung_VaiTro_HeThong" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="MOD_NguoiDung">
               <PropertyRef Name="ID_moodle" />
@@ -1049,6 +1073,30 @@
             </Principal>
             <Dependent Role="PLAN_ChuongTrinhDaoTao">
               <PropertyRef Name="ID_khoa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PLAN_ChuongTrinhDaoTaoChiTiet_MARK_MonHoc">
+          <End Role="MARK_MonHoc" Type="DHHHModel.Store.MARK_MonHoc" Multiplicity="1" />
+          <End Role="PLAN_ChuongTrinhDaoTaoChiTiet" Type="DHHHModel.Store.PLAN_ChuongTrinhDaoTaoChiTiet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MARK_MonHoc">
+              <PropertyRef Name="ID_mon" />
+            </Principal>
+            <Dependent Role="PLAN_ChuongTrinhDaoTaoChiTiet">
+              <PropertyRef Name="ID_mon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PLAN_ChuongTrinhDaoTaoChiTiet_PLAN_ChuongTrinhDaoTao">
+          <End Role="PLAN_ChuongTrinhDaoTao" Type="DHHHModel.Store.PLAN_ChuongTrinhDaoTao" Multiplicity="1" />
+          <End Role="PLAN_ChuongTrinhDaoTaoChiTiet" Type="DHHHModel.Store.PLAN_ChuongTrinhDaoTaoChiTiet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PLAN_ChuongTrinhDaoTao">
+              <PropertyRef Name="ID_dt" />
+            </Principal>
+            <Dependent Role="PLAN_ChuongTrinhDaoTaoChiTiet">
+              <PropertyRef Name="ID_dt" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1262,9 +1310,7 @@
             <End Role="MOD_LopTinChi_TC" EntitySet="MOD_LopTinChi_TC" />
             <End Role="MOD_NguoiDung_VaiTro_LopTinChi" EntitySet="MOD_NguoiDung_VaiTro_LopTinChi" />
           </AssociationSet>
-          <EntitySet Name="tbl_inbox" EntityType="DHHHModel.tbl_inbox" />
           <EntitySet Name="MOD_NguoiDung" EntityType="DHHHModel.MOD_NguoiDung" />
-          <EntitySet Name="MOD_NguoiDung_VaiTro_HeThong" EntityType="DHHHModel.MOD_NguoiDung_VaiTro_HeThong" />
           <AssociationSet Name="FK_MOD_DanhSachLopTinChi_MOD_NguoiDung" Association="DHHHModel.FK_MOD_DanhSachLopTinChi_MOD_NguoiDung">
             <End Role="MOD_NguoiDung" EntitySet="MOD_NguoiDung" />
             <End Role="MOD_DanhSachLopTinChi" EntitySet="MOD_DanhSachLopTinChi" />
@@ -1273,14 +1319,16 @@
             <End Role="MOD_NhomNguoiDung" EntitySet="MOD_NhomNguoiDung" />
             <End Role="MOD_NguoiDung" EntitySet="MOD_NguoiDung" />
           </AssociationSet>
-          <AssociationSet Name="FK_MOD_NguoiDung_VaiTro_HeThong_MOD_NguoiDung" Association="DHHHModel.FK_MOD_NguoiDung_VaiTro_HeThong_MOD_NguoiDung">
-            <End Role="MOD_NguoiDung" EntitySet="MOD_NguoiDung" />
-            <End Role="MOD_NguoiDung_VaiTro_HeThong" EntitySet="MOD_NguoiDung_VaiTro_HeThong" />
-          </AssociationSet>
           <AssociationSet Name="FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_NguoiDung" Association="DHHHModel.FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_NguoiDung">
             <End Role="MOD_NguoiDung" EntitySet="MOD_NguoiDung" />
             <End Role="MOD_NguoiDung_VaiTro_LopTinChi" EntitySet="MOD_NguoiDung_VaiTro_LopTinChi" />
           </AssociationSet>
+          <EntitySet Name="MOD_NguoiDung_VaiTro_HeThong" EntityType="DHHHModel.MOD_NguoiDung_VaiTro_HeThong" />
+          <AssociationSet Name="FK_MOD_NguoiDung_VaiTro_HeThong_MOD_NguoiDung" Association="DHHHModel.FK_MOD_NguoiDung_VaiTro_HeThong_MOD_NguoiDung">
+            <End Role="MOD_NguoiDung" EntitySet="MOD_NguoiDung" />
+            <End Role="MOD_NguoiDung_VaiTro_HeThong" EntitySet="MOD_NguoiDung_VaiTro_HeThong" />
+          </AssociationSet>
+          <EntitySet Name="tbl_inbox" EntityType="DHHHModel.tbl_inbox" />
           <EntitySet Name="STU_Lop" EntityType="DHHHModel.STU_Lop" />
           </EntityContainer>
         <ComplexType Name="SP_SinhVienLopTC_Result">
@@ -2144,22 +2192,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="tbl_inbox">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Title" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Contents" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="PostDate" Precision="0" />
-          <Property Type="String" Name="Ma_sv" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="Boolean" Name="Status" />
-          <Property Type="Int32" Name="ID_nguoi_tra_loi" />
-          <Property Type="String" Name="Id_nguoi_gui" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Id_nguoi_nhan" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="Byte" Name="Doi_tuong_nhan" />
-          <Property Type="Boolean" Name="Da_doc" />
-        </EntityType>
         <EntityType Name="MOD_NguoiDung">
           <Key>
             <PropertyRef Name="ID_moodle" />
@@ -2169,17 +2201,8 @@
           <Property Type="Int32" Name="ID_nhom_nd" Nullable="false" />
           <NavigationProperty Name="MOD_DanhSachLopTinChi" Relationship="DHHHModel.FK_MOD_DanhSachLopTinChi_MOD_NguoiDung" FromRole="MOD_NguoiDung" ToRole="MOD_DanhSachLopTinChi" />
           <NavigationProperty Name="MOD_NhomNguoiDung" Relationship="DHHHModel.FK_MOD_NguoiDung_MOD_NhomNguoiDung" FromRole="MOD_NguoiDung" ToRole="MOD_NhomNguoiDung" />
-          <NavigationProperty Name="MOD_NguoiDung_VaiTro_HeThong" Relationship="DHHHModel.FK_MOD_NguoiDung_VaiTro_HeThong_MOD_NguoiDung" FromRole="MOD_NguoiDung" ToRole="MOD_NguoiDung_VaiTro_HeThong" />
           <NavigationProperty Name="MOD_NguoiDung_VaiTro_LopTinChi" Relationship="DHHHModel.FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_NguoiDung" FromRole="MOD_NguoiDung" ToRole="MOD_NguoiDung_VaiTro_LopTinChi" />
-        </EntityType>
-        <EntityType Name="MOD_NguoiDung_VaiTro_HeThong">
-          <Key>
-            <PropertyRef Name="STT" />
-          </Key>
-          <Property Type="Int32" Name="STT" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="UserID" Nullable="false" />
-          <Property Type="Int32" Name="ID_vai_tro" Nullable="false" />
-          <NavigationProperty Name="MOD_NguoiDung" Relationship="DHHHModel.FK_MOD_NguoiDung_VaiTro_HeThong_MOD_NguoiDung" FromRole="MOD_NguoiDung_VaiTro_HeThong" ToRole="MOD_NguoiDung" />
+          <NavigationProperty Name="MOD_NguoiDung_VaiTro_HeThong" Relationship="DHHHModel.FK_MOD_NguoiDung_VaiTro_HeThong_MOD_NguoiDung" FromRole="MOD_NguoiDung" ToRole="MOD_NguoiDung_VaiTro_HeThong" />
         </EntityType>
         <Association Name="FK_MOD_DanhSachLopTinChi_MOD_NguoiDung">
           <End Type="DHHHModel.MOD_NguoiDung" Role="MOD_NguoiDung" Multiplicity="1">
@@ -2207,20 +2230,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_MOD_NguoiDung_VaiTro_HeThong_MOD_NguoiDung">
-          <End Type="DHHHModel.MOD_NguoiDung" Role="MOD_NguoiDung" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="DHHHModel.MOD_NguoiDung_VaiTro_HeThong" Role="MOD_NguoiDung_VaiTro_HeThong" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MOD_NguoiDung">
-              <PropertyRef Name="ID_moodle" />
-            </Principal>
-            <Dependent Role="MOD_NguoiDung_VaiTro_HeThong">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_MOD_NguoiDung_VaiTro_LopTinChi_MOD_NguoiDung">
           <End Type="DHHHModel.MOD_NguoiDung" Role="MOD_NguoiDung" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -2235,6 +2244,44 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="MOD_NguoiDung_VaiTro_HeThong">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="ID_vai_tro" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MOD_NguoiDung" Relationship="DHHHModel.FK_MOD_NguoiDung_VaiTro_HeThong_MOD_NguoiDung" FromRole="MOD_NguoiDung_VaiTro_HeThong" ToRole="MOD_NguoiDung" />
+        </EntityType>
+        <Association Name="FK_MOD_NguoiDung_VaiTro_HeThong_MOD_NguoiDung">
+          <End Type="DHHHModel.MOD_NguoiDung" Role="MOD_NguoiDung" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DHHHModel.MOD_NguoiDung_VaiTro_HeThong" Role="MOD_NguoiDung_VaiTro_HeThong" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="MOD_NguoiDung">
+              <PropertyRef Name="ID_moodle" />
+            </Principal>
+            <Dependent Role="MOD_NguoiDung_VaiTro_HeThong">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tbl_inbox">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Title" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Contents" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="PostDate" Precision="0" />
+          <Property Type="String" Name="Ma_sv" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="Status" />
+          <Property Type="Int32" Name="ID_nguoi_tra_loi" />
+          <Property Type="String" Name="Id_nguoi_gui" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Id_nguoi_nhan" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Byte" Name="Doi_tuong_nhan" />
+          <Property Type="Boolean" Name="Da_doc" />
+        </EntityType>
         <EntityType Name="STU_Lop">
           <Key>
             <PropertyRef Name="ID_lop" />
@@ -2800,23 +2847,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tbl_inbox">
-            <EntityTypeMapping TypeName="DHHHModel.tbl_inbox">
-              <MappingFragment StoreEntitySet="tbl_inbox">
-                <ScalarProperty Name="Da_doc" ColumnName="Da_doc" />
-                <ScalarProperty Name="Doi_tuong_nhan" ColumnName="Doi_tuong_nhan" />
-                <ScalarProperty Name="Id_nguoi_nhan" ColumnName="Id_nguoi_nhan" />
-                <ScalarProperty Name="Id_nguoi_gui" ColumnName="Id_nguoi_gui" />
-                <ScalarProperty Name="ID_nguoi_tra_loi" ColumnName="ID_nguoi_tra_loi" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Ma_sv" ColumnName="Ma_sv" />
-                <ScalarProperty Name="PostDate" ColumnName="PostDate" />
-                <ScalarProperty Name="Contents" ColumnName="Contents" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="MOD_NguoiDung">
             <EntityTypeMapping TypeName="DHHHModel.MOD_NguoiDung">
               <MappingFragment StoreEntitySet="MOD_NguoiDung">
@@ -2831,7 +2861,23 @@
               <MappingFragment StoreEntitySet="MOD_NguoiDung_VaiTro_HeThong">
                 <ScalarProperty Name="ID_vai_tro" ColumnName="ID_vai_tro" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="STT" ColumnName="STT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_inbox">
+            <EntityTypeMapping TypeName="DHHHModel.tbl_inbox">
+              <MappingFragment StoreEntitySet="tbl_inbox">
+                <ScalarProperty Name="Da_doc" ColumnName="Da_doc" />
+                <ScalarProperty Name="Doi_tuong_nhan" ColumnName="Doi_tuong_nhan" />
+                <ScalarProperty Name="Id_nguoi_nhan" ColumnName="Id_nguoi_nhan" />
+                <ScalarProperty Name="Id_nguoi_gui" ColumnName="Id_nguoi_gui" />
+                <ScalarProperty Name="ID_nguoi_tra_loi" ColumnName="ID_nguoi_tra_loi" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Ma_sv" ColumnName="Ma_sv" />
+                <ScalarProperty Name="PostDate" ColumnName="PostDate" />
+                <ScalarProperty Name="Contents" ColumnName="Contents" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

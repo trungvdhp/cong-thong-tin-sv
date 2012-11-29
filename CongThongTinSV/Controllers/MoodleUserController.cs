@@ -56,6 +56,7 @@ namespace CongThongTinSV.Controllers
                           ds2.ds1.hs.Ho_ten,
                           ds2.ds1.hs.Ngay_sinh,
                           ds2.lop.Ten_lop,
+                          ds2.ds1.ds.Mat_khau,
                           gt.Gioi_tinh
                       };
 
@@ -74,7 +75,8 @@ namespace CongThongTinSV.Controllers
                           Ten = UtilityController.GetFirstName(ds.Ho_ten),
                           Ngay_sinh = ds.Ngay_sinh,
                           Gioi_tinh = ds.Gioi_tinh,
-                          Lop = ds.Ten_lop
+                          Lop = ds.Ten_lop,
+                          Mat_khau = ds.Mat_khau
                       };
 
             return sv4.OrderByDescending(t => t.ID_moodle).ToList();
@@ -89,14 +91,23 @@ namespace CongThongTinSV.Controllers
             foreach (MoodleSinhVien item in list)
             {
                 postData += "&users[" + i + "][username]=" + item.Ma_sv;
-                try
+
+                if (item.Mat_khau != "")
                 {
-                    postData += "&users[" + i + "][password]=" + ((DateTime)item.Ngay_sinh).ToString("ddMMyyyy");
+                    postData += "&users[" + i + "][password]=" + item.Mat_khau;
                 }
-                catch
+                else
                 {
-                    postData += "&users[" + i + "][password]=" + item.Ma_sv;
+                    try
+                    {
+                        postData += "&users[" + i + "][password]=" + ((DateTime)item.Ngay_sinh).ToString("ddMMyyyy");
+                    }
+                    catch
+                    {
+                        postData += "&users[" + i + "][password]=" + item.Ma_sv;
+                    }
                 }
+
                 postData += "&users[" + i + "][firstname]=" + HttpUtility.UrlEncode(item.Ten);
                 postData += "&users[" + i + "][lastname]=" + HttpUtility.UrlEncode(item.Ho_dem);
                 postData += "&users[" + i + "][email]=" + "st" + item.Ma_sv + "@st.vimaru.edu.vn";
@@ -386,5 +397,122 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
+        public static string[] GetCurrentUserData()
+        {
+            return (((FormsIdentity)System.Web.HttpContext.Current.User.Identity).Ticket.UserData.Split('|'));
+        }
+
+        public static string GetToken(string username, string password, string service)
+        {
+            //Get user token
+            WebRequestController web = new WebRequestController(1, "POST", "username=" + username + "&password=" + password + "&service=" + service);
+            string s = web.GetResponse();
+            string[] rs = s.Split(new char[] { '"' });
+            UtilityController.WriteTextToFile("D:\\token.txt", service + " : " + s);
+
+            if(rs.Length == 5) 
+                return rs[3].Trim();
+            
+            return "exception";
+        }
+
+        public static bool UpdateUser(List<MoodleUser> list)
+        {
+            int i = 0;
+            string postData = "wsfunction=core_user_update_users";
+
+            foreach (MoodleUser item in list)
+            {
+                if(item.ID == "0") continue;
+                    postData += "&users[" + i + "][id]=" + item.ID;
+                if(item.Username != null)
+                    postData += "&users[" + i + "][username]=" + item.Username;
+                if(item.Password != null)
+                    postData += "&users[" + i + "][password]=" + item.Password;
+                if(item.Firstname != null)
+                    postData += "&users[" + i + "][firstname]=" + HttpUtility.UrlEncode(item.Firstname);
+                if(item.Lastname != null)
+                    postData += "&users[" + i + "][lastname]=" + HttpUtility.UrlEncode(item.Lastname);
+                if(item.Email != null)
+                    postData += "&users[" + i + "][email]=" + "st" + item.Email;
+                i++;
+            }
+
+            WebRequestController web = new WebRequestController(4, "POST", postData);
+            string response = web.GetResponse();
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            // MoodleException moodleError = new MoodleException();
+            //List<MoodleCreateUserResponse> results = new List<MoodleCreateUserResponse>();
+
+            if (response.Contains("exception"))
+            {
+                // Error
+                // moodleError = serializer.Deserialize<MoodleException>(rs);
+                return false;
+            }
+
+            UtilityController.WriteTextToFile("D:\\MoodleUserUpdate.txt", response);
+            return true;
+        }
+        //
+        // GET: /MoodleUser/DoiMatKhau
+
+        public ActionResult DoiMatKhau(string message)
+        {
+            ViewBag.StatusMessage = message;
+            ViewBag.ReturnUrl = Url.Action("DoiMatKhau");
+            return View();
+        }
+
+        //
+        // POST: /MoodleUser/DoiMatKhau
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DoiMatKhau(LocalPasswordModel model)
+        {
+            ViewBag.ReturnUrl = Url.Action("DoiMatKhau");
+
+            if (ModelState.IsValid)
+            {
+                // ChangePassword will throw an exception rather than return false in certain failure scenarios.
+                bool changePasswordSucceeded;
+                try
+                {
+                    string[] userData = GetCurrentUserData();
+
+                    if(GetToken(userData[0], model.OldPassword, userData[2]) == userData[1])
+                    {
+                        List<MoodleUser> list = new List<MoodleUser>();
+                        list.Add(new MoodleUser
+                        {
+                            ID = userData[3],
+                            Password = model.NewPassword
+                        });
+
+                        changePasswordSucceeded = UpdateUser(list);
+                    }
+                    else
+                    {
+                         changePasswordSucceeded = false;
+                    }
+                }
+                catch (Exception)
+                {
+                    changePasswordSucceeded = false;
+                }
+
+                if (changePasswordSucceeded)
+                {
+                    return RedirectToAction("DoiMatKhau", new { Message = "Bạn đã đổi mật khẩu thành công." });
+                }
+                else
+                {
+                    ModelState.AddModelError("","Bạn nhập sai mật khẩu cũ hoặc mật khẩu mới không hợp lệ.");
+                }
+            }
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
     }
 }

@@ -36,7 +36,6 @@ namespace CongThongTinSV
         public DbSet<MOD_DichVu> MOD_DichVu { get; set; }
         public DbSet<MOD_HocKy> MOD_HocKy { get; set; }
         public DbSet<MOD_LopTinChi_TC> MOD_LopTinChi_TC { get; set; }
-        public DbSet<MOD_NguoiDung> MOD_NguoiDung { get; set; }
         public DbSet<MOD_NhomHocVien> MOD_NhomHocVien { get; set; }
         public DbSet<MOD_NhomNguoiDung> MOD_NhomNguoiDung { get; set; }
         public DbSet<MOD_ToNhom> MOD_ToNhom { get; set; }
@@ -59,11 +58,12 @@ namespace CongThongTinSV
         public DbSet<ViewLopTC> ViewLopTCs { get; set; }
         public DbSet<ViewNamHoc> ViewNamHocs { get; set; }
         public DbSet<STU_DanhSachLopTinChi> STU_DanhSachLopTinChi { get; set; }
-        public DbSet<STU_Lop> STU_Lop { get; set; }
         public DbSet<MOD_DanhSachLopTinChi> MOD_DanhSachLopTinChi { get; set; }
-        public DbSet<tbl_inbox> tbl_inbox { get; set; }
         public DbSet<MOD_NguoiDung_VaiTro_LopTinChi> MOD_NguoiDung_VaiTro_LopTinChi { get; set; }
+        public DbSet<MOD_NguoiDung> MOD_NguoiDung { get; set; }
         public DbSet<MOD_NguoiDung_VaiTro_HeThong> MOD_NguoiDung_VaiTro_HeThong { get; set; }
+        public DbSet<tbl_inbox> tbl_inbox { get; set; }
+        public DbSet<STU_Lop> STU_Lop { get; set; }
     
         public virtual ObjectResult<SP_SinhVienLopTC_Result> SP_SinhVienLopTC(Nullable<int> id_lop_tc)
         {

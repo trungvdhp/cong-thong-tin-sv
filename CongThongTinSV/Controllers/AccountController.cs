@@ -110,37 +110,22 @@ namespace CongThongTinSV.Controllers
 
                 if (ok)
                 {
-                    //Get user token
-                    WebRequestController web = new WebRequestController(1, "POST", "username=" + model.UserName + "&password=" + model.Password + "&service=" + Service);
-                    string s = web.GetResponse();
-                    string[] rs = s.Split(new char[] { '"' });
-                    UtilityController.WriteTextToFile("D:\\token.txt", Service + " : " + s);
-
+                    //Get user token and save user data to cookie
                     MoodleEntities mdb = new MoodleEntities();
                     string cookieString;
                     HttpCookie cookie;
-                    string[] userData = new string[3];
-
+                    string[] userData = new string[4];
+                    userData[0] = model.UserName;
+                    userData[1] =  MoodleUserController.GetToken(model.UserName, model.Password, Service);
+                    userData[2] = Service;
                     try
                     {
-                        userData[0] = mdb.fit_user.Single(t => t.username == model.UserName).id.ToString();
+                        userData[3] = mdb.fit_user.Single(t => t.username == model.UserName).id.ToString();
                     }
                     catch
                     {
-                        userData[0] = "0";
+                        userData[3] = "0";
                     }
-
-                    if (rs.Length == 5)
-                    {
-                        userData[1] = rs[3].Trim();
-                    }
-                    else
-                    {
-                        userData[1] = "error";
-                    }
-
-                    userData[2] = Service;
-                   
                     // create a Forms Auth ticket with the username and the user data. 
                     FormsAuthenticationTicket formsTicket = new FormsAuthenticationTicket(
                         1,
@@ -174,7 +159,6 @@ namespace CongThongTinSV.Controllers
         public ActionResult LogOff()
         {
             WebSecurity.Logout();
-            Session["token"] = "";
 
             return RedirectToAction("Index", "Home");
         }

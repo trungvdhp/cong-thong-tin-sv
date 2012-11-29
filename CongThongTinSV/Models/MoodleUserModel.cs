@@ -13,6 +13,16 @@ namespace CongThongTinSV.Models
         public string username { get; set; }
     }
 
+    public class MoodleUser
+    {
+        public string ID { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
+        public string Email { get; set; }
+    }
+
     public class MoodleSinhVien
     {
         [DisplayName("ID đăng ký")]
@@ -56,6 +66,9 @@ namespace CongThongTinSV.Models
 
         [DisplayName("Nhóm")]
         public string Ten_nhom { get; set; }
+
+        [DisplayName("Mật khẩu")]
+        public string Mat_khau { get; set; }
     }
 
     public class MoodleGiaoVien
