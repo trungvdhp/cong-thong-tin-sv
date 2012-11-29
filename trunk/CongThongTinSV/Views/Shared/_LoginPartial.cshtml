@@ -3,7 +3,7 @@
     string token = (ticket.UserData.Split('|'))[1];
     <text>
         Hello, @Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" })!
-        @if (token != "error")
+        @if (token != "exception")
         {
             <label style="display:inline">Đã đăng nhập Elearning</label>
         }

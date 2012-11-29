@@ -1,0 +1,40 @@
+﻿@model CongThongTinSV.Models.LocalPasswordModel
+@{
+    ViewBag.Title = "Đổi mật khẩu trên Moodle";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+</hgroup>
+
+<p class="message-success">@ViewBag.StatusMessage</p>
+
+<p>Bạn đang đăng nhập với tên <strong>@User.Identity.Name</strong>.</p>
+
+@using (Html.BeginForm("DoiMatKhau", "MoodleUser")) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <fieldset>
+        <legend>Nhập thông tin đổi mật khẩu</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.OldPassword)
+                @Html.PasswordFor(m => m.OldPassword)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.NewPassword)
+                @Html.PasswordFor(m => m.NewPassword)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.ConfirmPassword)
+                @Html.PasswordFor(m => m.ConfirmPassword)
+            </li>
+        </ol>
+        <input type="submit" value="Đổi mật khẩu" />
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
