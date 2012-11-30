@@ -1,22 +1,32 @@
 ﻿@if (Request.IsAuthenticated) {
     FormsAuthenticationTicket ticket = ((FormsIdentity)HttpContext.Current.User.Identity).Ticket;
-    string token = (ticket.UserData.Split('|'))[1];
-    <text>
-        Hello, @Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" })!
-        @if (token != "exception")
+    string[] userData = ticket.UserData.Split('|');
+
+    if (userData[2] != "")
+    {
+        if(userData[0] == "3")
         {
-            <label style="display:inline">Đã đăng nhập Elearning</label>
+            <text>
+            Chào bạn, @Html.ActionLink(userData[2], "ThongTinCaNhan", "SinhVien", routeValues: null, htmlAttributes: new { @class = "username", title = "Thông tin sinh viên" })!
+            </text>
         }
-        else
-        {
-            <label  style="display:inline">Chưa đăng nhập Elearning</label>
+        else if(userData[0] == "2"){
+             <text>
+            Chào bạn, @Html.ActionLink(userData[2], "ThongTinCaNhan", "GiangVien", routeValues: null, htmlAttributes: new { @class = "username", title = "Thông tin giảng viên" })!
+            </text>
         }
-        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))        
-        {
-            @Html.AntiForgeryToken()
-            <button class="k-button" type="submit">Log off</button>
-        }
-    </text>
+    }
+    if(userData[3] != "exception")
+    {
+        <text>
+        (@Html.ActionLink(userData[6], "UserProfile", "MoodleUser", routeValues: null, htmlAttributes: new { @class = "username", title = "Thông tin tài khoản Elearning" }))
+        </text>
+    }
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))        
+    {
+        @Html.AntiForgeryToken()
+        <button class="k-button" type="submit">Log off</button>
+    }
 } else {
     <ul>
         <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class="k-button" })</li>
