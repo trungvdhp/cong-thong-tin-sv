@@ -36,7 +36,6 @@ namespace CongThongTinSV.Controllers
         public ActionResult ThongTinCaNhan()
         {
             Entities db = new Entities();
-            STU_HoSoSinhVien sv;
             ViewBag.sinhvien = db.STU_HoSoSinhVien.Single(t => t.Ma_sv == ticket.Name);
             return View();
         }

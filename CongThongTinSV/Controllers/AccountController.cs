@@ -41,7 +41,10 @@ namespace CongThongTinSV.Controllers
             //{
             //    return RedirectToLocal(returnUrl);
             //}
-            bool ok = false;
+            string portalUserGroup = "0";
+            string portalUserID = "0";
+            bool portalOK = false;
+            string portalFullname = "";
 
             if (ModelState.IsValid)
             {
@@ -55,77 +58,114 @@ namespace CongThongTinSV.Controllers
                             where sv.Ma_sv == model.UserName
                             select new
                             {
+                                ID = ds.ID_sv,
                                 Ma_sv = sv.Ma_sv,
                                 Mat_khau = ds.Mat_khau,
                                 Ho_ten = sv.Ho_ten
                             };
+
                     if (q.Count() > 0)
                     {
                         var hssv = q.First();
 
                         if (hssv.Mat_khau == model.Password)
                         {
-                            ok = true;
+                            portalOK = true;
+                            portalFullname = hssv.Ho_ten;
+                            portalUserGroup = "3";
+                            portalUserID = hssv.ID.ToString();
                         }
                     }
 
-                    var q1 = from gv in db.PLAN_GiaoVien
-                             where gv.Ma_cb == model.UserName
-                             select gv;
-
-                    if (q1.Count() > 0)
+                    if (!portalOK)
                     {
-                        string matkhau = ((DateTime)q1.First().Ngay_sinh).ToString("ddMMyyyy");
-                        var giaovien = (from gv1 in q1
-                                       join gv2 in db.POR_GiaoVien 
-                                       on gv1.ID_cb equals gv2.ID_cb 
-                                       select new
-                                       {
-                                            ID_cb = gv2.ID_cb,
-                                            Mat_khau = gv2.Mat_khau,
-                                            Ngay_sinh = gv1.Ngay_sinh
-                                       });
-                                        
-                        if (giaovien.Count() == 0)
+                        var q1 = from gv in db.PLAN_GiaoVien
+                                 where gv.Ma_cb == model.UserName
+                                 select gv;
+
+                        if (q1.Count() > 0)
                         {
-                            if (model.Password == matkhau)
+                            var gv = q1.First();
+                            string matkhau = ((DateTime)gv.Ngay_sinh).ToString("ddMMyyyy");
+
+                            var giaovien = (from gv1 in q1
+                                            join gv2 in db.POR_GiaoVien
+                                            on gv1.ID_cb equals gv2.ID_cb
+                                            select new
+                                            {
+                                                ID_cb = gv2.ID_cb.ToString(),
+                                                Mat_khau = gv2.Mat_khau,
+                                                Ngay_sinh = gv1.Ngay_sinh
+                                            });
+
+                            if (giaovien.Count() == 0)
                             {
-                                db.POR_GiaoVien.Add(new POR_GiaoVien()
+                                if (model.Password == matkhau)
                                 {
-                                    ID_cb = q1.First().ID_cb,
-                                    Mat_khau = matkhau
-                                });
-                                db.SaveChanges();
-                                ok = true;
+                                    db.POR_GiaoVien.Add(new POR_GiaoVien()
+                                    {
+                                        ID_cb = gv.ID_cb,
+                                        Mat_khau = matkhau
+                                    });
+
+                                    db.SaveChanges();
+                                    portalOK = true;
+                                    portalFullname = gv.Ho_ten;
+                                    portalUserGroup = "2";
+                                    portalUserID = gv.ID_cb.ToString();
+                                }
                             }
-                        }
-                        else {
-                            if (giaovien.First().Mat_khau == model.Password)
+                            else
                             {
-                                ok = true;
+                                if (giaovien.First().Mat_khau == model.Password)
+                                {
+                                    portalOK = true;
+                                    portalFullname = gv.Ho_ten;
+                                    portalUserGroup = "2";
+                                    portalUserID = gv.ID_cb.ToString();
+                                }
                             }
                         }
                     }
                 }
 
-                if (ok)
+                string token = MoodleUserController.GetToken(model.UserName, model.Password, Service);
+
+                if (token == "exception" && !portalOK)
                 {
-                    //Get user token and save user data to cookie
+                }
+                else
+                {
+                    // save authentication
                     MoodleEntities mdb = new MoodleEntities();
                     string cookieString;
                     HttpCookie cookie;
-                    string[] userData = new string[4];
-                    userData[0] = model.UserName;
-                    userData[1] =  MoodleUserController.GetToken(model.UserName, model.Password, Service);
-                    userData[2] = Service;
+                    string[] userData = new string[7];
+                    // save portal user group name
+                    userData[0] = portalUserGroup;
+                    // save portal user id
+                    userData[1] = portalUserID;
+                    // save portal user fullname
+                    userData[2] = portalFullname;
+                    // save moodle user token
+                    userData[3] = token;
+                    // save moodle user group name
+                    userData[4] = Service;
+
                     try
                     {
-                        userData[3] = mdb.fit_user.Single(t => t.username == model.UserName).id.ToString();
+                        var moodleUser = mdb.fit_user.Single(t => t.username == model.UserName);
+                        // save moodle user id
+                        userData[5] = moodleUser.id.ToString();
+                        // save moodle user fullname
+                        userData[6] = moodleUser.firstname + " " + moodleUser.lastname;
                     }
                     catch
                     {
-                        userData[3] = "0";
+                        userData[5] = "0";
+                        userData[6] = "";
                     }
+
                     // create a Forms Auth ticket with the username and the user data. 
                     FormsAuthenticationTicket formsTicket = new FormsAuthenticationTicket(
                         1,
@@ -158,7 +198,7 @@ namespace CongThongTinSV.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            WebSecurity.Logout();
+            FormsAuthentication.SignOut();
 
             return RedirectToAction("Index", "Home");
         }

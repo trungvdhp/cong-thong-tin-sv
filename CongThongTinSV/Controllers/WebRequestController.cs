@@ -46,9 +46,9 @@ namespace CongThongTinSV.Controllers
             else if(scriptType == 2)
                 queryData = SoapUrl + "?" + queryData;
             else if(scriptType == 3)
-                queryData = RestUrl + "?" + queryData + "&wstoken=" + MoodleUserController.GetCurrentUserData()[1];
+                queryData = RestUrl + "?" + queryData + "&wstoken=" + MoodleUserController.GetCurrentUserData()[3];
             else
-                queryData = RestUrl + "?" + queryData + "&moodlewsrestformat=json" + "&wstoken=" + MoodleUserController.GetCurrentUserData()[1];
+                queryData = RestUrl + "?" + queryData + "&moodlewsrestformat=json" + "&wstoken=" + MoodleUserController.GetCurrentUserData()[3];
 
             MyRequest = WebRequest.Create(queryData);
         }
@@ -98,12 +98,12 @@ namespace CongThongTinSV.Controllers
             : this(scriptType)
         {
             if (scriptType == 3)
-                queryData += "&wstoken=" + MoodleUserController.GetCurrentUserData()[1];
+                queryData += "&wstoken=" + MoodleUserController.GetCurrentUserData()[3];
             else if (scriptType > 3)
-                queryData += "&moodlewsrestformat=json" + "&wstoken=" + MoodleUserController.GetCurrentUserData()[1];
+                queryData += "&moodlewsrestformat=json" + "&wstoken=" + MoodleUserController.GetCurrentUserData()[3];
             //UtilityController.WriteTextToFile("D:\\Query.txt", queryData);
             SetMethod(method);
-            //ProcessData(queryData);
+            ProcessData(queryData);
         }
 
         public string GetResponse()

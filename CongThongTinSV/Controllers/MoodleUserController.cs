@@ -408,7 +408,7 @@ namespace CongThongTinSV.Controllers
             WebRequestController web = new WebRequestController(1, "POST", "username=" + username + "&password=" + password + "&service=" + service);
             string s = web.GetResponse();
             string[] rs = s.Split(new char[] { '"' });
-            UtilityController.WriteTextToFile("D:\\token.txt", service + " : " + s);
+            UtilityController.WriteTextToFile("D:\\token.txt", service + " : " + s + " username: " + username);
 
             if(rs.Length == 5) 
                 return rs[3].Trim();
