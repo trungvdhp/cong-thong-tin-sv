@@ -198,6 +198,7 @@ namespace CongThongTinSV.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            //WebSecurity.Logout();
             FormsAuthentication.SignOut();
 
             return RedirectToAction("Index", "Home");
@@ -301,7 +302,10 @@ namespace CongThongTinSV.Controllers
                     bool changePasswordSucceeded;
                     try
                     {
+                        Entities db = new Entities();
+                        
                         changePasswordSucceeded = WebSecurity.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword);
+
                     }
                     catch (Exception)
                     {

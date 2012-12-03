@@ -17,6 +17,7 @@ namespace CongThongTinSV
         public STU_HoSoSinhVien()
         {
             this.MARK_Diem_TC = new HashSet<MARK_Diem_TC>();
+            this.POR_YeuCauMoLop = new HashSet<POR_YeuCauMoLop>();
         }
     
         public int ID_sv { get; set; }
@@ -117,5 +118,6 @@ namespace CongThongTinSV
         public Nullable<int> Trang_thai_hoc { get; set; }
     
         public virtual ICollection<MARK_Diem_TC> MARK_Diem_TC { get; set; }
+        public virtual ICollection<POR_YeuCauMoLop> POR_YeuCauMoLop { get; set; }
     }
 }

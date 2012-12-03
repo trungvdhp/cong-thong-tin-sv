@@ -119,7 +119,7 @@ namespace CongThongTinSV.Controllers
             Dictionary<int, PLAN_ChuongTrinhDaoTaoChiTiet> mon = new Dictionary<int, PLAN_ChuongTrinhDaoTaoChiTiet>();
             foreach (var m in q1) if (!mon.ContainsKey(m.ID_mon)) mon.Add(m.ID_mon, m);
 
-            var q = from ltc in db.ViewLopTCs
+            var q = from ltc in db.ViewLopTC
                     select ltc;
             List<ViewLopTC> list = new List<ViewLopTC>();
             
@@ -151,31 +151,15 @@ namespace CongThongTinSV.Controllers
                 Ma_sv = sv.Ma_sv
             }).ToList();
         }
+       
         public JsonResult DiemHocTap([DataSourceRequest] DataSourceRequest request, string TuKhoa, string NamHoc, string HocKy)
         {
             Entities db = new Entities();
             int hk = HocKy == "" ? 0 : Convert.ToInt32(HocKy);
 
-            var diem = db.MARK_DiemThanhPhan_TC.Where(t => t.MARK_Diem_TC.STU_HoSoSinhVien.Ma_sv == TuKhoa && t.MARK_ThanhPhanMon_TC.Ky_hieu=="X").Select(t => new DiemHocTap{ 
-                Id_diem = t.MARK_Diem_TC.ID_diem,
-                Ma_mon = t.MARK_Diem_TC.MARK_MonHoc.Ky_hieu,
-                Ten_mon = t.MARK_Diem_TC.MARK_MonHoc.Ten_mon,
-                X=t.Diem,
-                Hoc_ky = t.Hoc_ky_TP,
-                Nam_hoc = t.Nam_hoc_TP
-            }).ToList();
-            foreach (var d in diem)
-            {
-                MARK_DiemThi_TC dt = db.MARK_DiemThi_TC.Where(t => t.ID_diem == d.Id_diem && t.Nam_hoc_thi == d.Nam_hoc && t.Hoc_ky_thi == d.Hoc_ky).First();
-                d.Y = dt.Diem_thi;
-                d.Z = dt.TBCMH;
-                d.Diem_chu = dt.Diem_chu;
-            }
+            var diem = TraCuuController.GetDiemHocTap(TuKhoa);
             if (NamHoc != "") diem = diem.Where(t => t.Nam_hoc == NamHoc).ToList();
             if (hk != 0) diem = diem.Where(t => t.Hoc_ky == hk).ToList();
-            JsonResult result = new JsonResult();
-            result.Data = diem;
-            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return Json(diem.ToDataSourceResult(request));
         }
         public ActionResult GetNamHocTraCuu(string TuKhoa)

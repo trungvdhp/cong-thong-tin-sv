@@ -2,4 +2,81 @@
     ViewBag.Title = "Yêu cầu mở lớp";
 }
 
-<h2>YeucauMoLop</h2>
+@(Html.Kendo().DropDownList()
+          .Name("filter")
+          .DataTextField("Text")
+          .DataValueField("Value")
+          .Events(e => e.Change("change"))
+          .BindTo(new List<SelectListItem>() {
+              new SelectListItem() {
+                  Text = "Học lại",
+                  Value = "4"
+              },
+              new SelectListItem() {
+                  Text = "Học cải thiện",
+                  Value = "5.5"
+              }
+          })
+    )
+
+@(Html.Kendo().Grid<CongThongTinSV.Models.DiemHocTap>()
+    .Name("GridBangDiem")
+    .Columns(columns => {
+        columns.Bound(diem => diem.Ma_mon).Width(50);
+        columns.Bound(diem => diem.Ten_mon).Width(150);
+        columns.Bound(diem => diem.Z).Width(50);
+        columns.Bound(diem => diem.Diem_chu).Width(50);
+        columns.Bound(diem => diem.Nam_hoc).Width(100);//.Visible(false);
+        columns.Bound(diem => diem.Hoc_ky).Width(50);//.Visible(false);
+        columns.Command(command => command.Custom("Gửi yêu cầu").Click("GuiYeuCau")).Width(100);
+    })
+    .Groupable()
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .Pageable(pager =>pager.Enabled(false))
+    .DataSource( 
+        dataSource => dataSource.Ajax()
+                .Group(group => group.Add(diem => diem.Nam_hoc))
+                .Group(group => group.Add(diem => diem.Hoc_ky))
+            .Read(read => read.Action("MonYeuCau","LopHocPhan").Data("filterData"))
+    )
+    .HtmlAttributes(new {style = "height:400px"})
+)
+@(Html.Kendo().Window().Name("Details")
+    .Title("Customer Details")
+    .Visible(false)
+    .Modal(true)
+    .Draggable(true)
+    .Width(300)       
+)
+
+ <script type="text/x-kendo-template" id="template">
+    <div id="details-container">
+        <h2>#= FirstName # #= LastName #</h2>
+        <em>#= Title #</em>
+        <dl>
+            <dt>City: #= City #</dt>
+            <dt>Address: #= Address #</dt>
+        </dl>
+    </div>
+</script>
+<script>
+    function GuiYeuCau(e) {
+        e.preventDefault();
+
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        var wnd = $("#Details").data("kendoWindow");
+
+        wnd.content(detailsTemplate(dataItem));
+        wnd.center().open();
+    }
+    function filterData() {
+        return {
+            filterDiem: $("#filter").val()
+        };
+    }
+    function change() {
+        $("#GridBangDiem").data("kendoGrid").dataSource.read();
+    }
+</script>

@@ -18,6 +18,7 @@ namespace CongThongTinSV
         public int ID_mon { get; set; }
         public string Ten_mon { get; set; }
         public string Ky_hieu_lop_tc { get; set; }
+        public int ID_cb { get; set; }
         public int Ky_dang_ky { get; set; }
         public int Dot { get; set; }
         public int Hoc_ky { get; set; }
