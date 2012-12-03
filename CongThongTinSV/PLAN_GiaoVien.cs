@@ -14,6 +14,11 @@ namespace CongThongTinSV
     
     public partial class PLAN_GiaoVien
     {
+        public PLAN_GiaoVien()
+        {
+            this.POR_TaiLieu = new HashSet<POR_TaiLieu>();
+        }
+    
         public int ID_cb { get; set; }
         public string Ma_cb { get; set; }
         public string Ten { get; set; }
@@ -27,5 +32,6 @@ namespace CongThongTinSV
         public int ID_chuc_vu { get; set; }
     
         public virtual POR_GiaoVien POR_GiaoVien { get; set; }
+        public virtual ICollection<POR_TaiLieu> POR_TaiLieu { get; set; }
     }
 }

@@ -61,9 +61,5 @@ namespace CongThongTinSV.Controllers
             }
             return View();
         }
-        public ActionResult Moi()
-        {
-            return View();
-        }
     }
 }

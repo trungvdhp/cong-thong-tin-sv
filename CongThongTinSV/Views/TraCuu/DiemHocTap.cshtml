@@ -16,7 +16,7 @@
 
 @(Html.Kendo().DropDownList()
     .Name("NamHoc")
-    .OptionLabel("Chọn năm học")
+    .OptionLabel("Toàn khóa")
     .HtmlAttributes(new { style = "width:120px" })
     .DataTextField("Text")
     .DataValueField("Value")
@@ -35,7 +35,7 @@
 @(Html.Kendo().DropDownList()
     .Name("HocKy")
     .HtmlAttributes(new {style="width:120px"})
-    .OptionLabel("Chọn học kỳ")
+    .OptionLabel("Cả năm")
     .DataTextField("Text")
     .DataValueField("Value")
     .DataSource(source =>
@@ -52,7 +52,9 @@
 )
 
 <input type="submit" value="Tra cứu" id="TraCuuButton"/>
+<div id="ThongTin">
 
+</div>
 @(Html.Kendo().Grid<CongThongTinSV.Models.DiemHocTap>()
     .Name("GridBangDiem")
     .Columns(columns => {

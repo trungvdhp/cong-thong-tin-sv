@@ -18,7 +18,28 @@ namespace CongThongTinSV.Controllers
         {
             return View();
         }
+        public static List<DiemHocTap> GetDiemHocTap(string MaSV)
+        {
+            Entities db = new Entities();
 
+            var diem = db.MARK_DiemThanhPhan_TC.Where(t => t.MARK_Diem_TC.STU_HoSoSinhVien.Ma_sv == MaSV && t.MARK_ThanhPhanMon_TC.Ky_hieu == "X").Select(t => new DiemHocTap
+            {
+                Id_diem = t.MARK_Diem_TC.ID_diem,
+                Ma_mon = t.MARK_Diem_TC.MARK_MonHoc.Ky_hieu,
+                Ten_mon = t.MARK_Diem_TC.MARK_MonHoc.Ten_mon,
+                X = t.Diem,
+                Hoc_ky = t.Hoc_ky_TP,
+                Nam_hoc = t.Nam_hoc_TP
+            }).ToList();
+            foreach (var d in diem)
+            {
+                MARK_DiemThi_TC dt = db.MARK_DiemThi_TC.Where(t => t.ID_diem == d.Id_diem && t.Nam_hoc_thi == d.Nam_hoc && t.Hoc_ky_thi == d.Hoc_ky).First();
+                d.Y = dt.Diem_thi;
+                d.Z = dt.TBCMH;
+                d.Diem_chu = dt.Diem_chu;
+            }
+            return diem;
+        }
         public ActionResult DiemHocTap()
         {
             return View();

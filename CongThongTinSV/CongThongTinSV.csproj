@@ -385,6 +385,12 @@
     <Compile Include="POR_GiaoVien.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
+    <Compile Include="POR_TaiLieu.cs">
+      <DependentUpon>DHHH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POR_YeuCauMoLop.cs">
+      <DependentUpon>DHHH.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SP_Moodle_SinhVien_Result.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
@@ -830,6 +836,7 @@
     </Content>
     <Content Include="Views\MoodleEnrol\GhiDanhGiaoVien.cshtml" />
     <Content Include="Views\MoodleUser\DoiMatKhau.cshtml" />
+    <Content Include="Views\TaiLieu\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

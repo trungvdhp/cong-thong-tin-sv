@@ -55,7 +55,6 @@ namespace CongThongTinSV
         public DbSet<STU_HoSoSinhVien> STU_HoSoSinhVien { get; set; }
         public DbSet<STU_Khoa> STU_Khoa { get; set; }
         public DbSet<STU_Nganh> STU_Nganh { get; set; }
-        public DbSet<ViewLopTC> ViewLopTCs { get; set; }
         public DbSet<ViewNamHoc> ViewNamHocs { get; set; }
         public DbSet<STU_DanhSachLopTinChi> STU_DanhSachLopTinChi { get; set; }
         public DbSet<MOD_DanhSachLopTinChi> MOD_DanhSachLopTinChi { get; set; }
@@ -64,6 +63,9 @@ namespace CongThongTinSV
         public DbSet<MOD_NguoiDung_VaiTro_HeThong> MOD_NguoiDung_VaiTro_HeThong { get; set; }
         public DbSet<tbl_inbox> tbl_inbox { get; set; }
         public DbSet<STU_Lop> STU_Lop { get; set; }
+        public DbSet<ViewLopTC> ViewLopTC { get; set; }
+        public DbSet<POR_TaiLieu> POR_TaiLieu { get; set; }
+        public DbSet<POR_YeuCauMoLop> POR_YeuCauMoLop { get; set; }
     
         public virtual ObjectResult<SP_SinhVienLopTC_Result> SP_SinhVienLopTC(Nullable<int> id_lop_tc)
         {
