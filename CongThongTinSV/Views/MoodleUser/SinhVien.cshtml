@@ -66,7 +66,9 @@
 )
 <div>
     <button id="create" class="k-button">Đăng ký tài khoản</button>
-    <button id="delete" class="k-button">Hủy đăng ký</button>
+    <button id="delete" class="k-button">Hủy đăng ký</button> 
+    <button id="update" class="k-button">Đồng bộ tài khoản</button>
+
 </div>
 
 <script type="text/javascript">
@@ -121,6 +123,17 @@
 
         if (confirm('Bạn muốn xóa tài khoản moodle của các sinh viên đã chọn?')) {
             processing('/MoodleUser/DeleteSinhVien/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals, "Đang xóa tài khoản moodle của các sinh viên đã chọn...", gridRefresh);
+        }
+    })
+
+    $("#update").click(function () {
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một sinh viên!');
+            return;
+        }
+
+        if (confirm('Bạn muốn đồng bộ tài khoản cổng thông tin và tài khoản moodle của các sinh viên đã chọn?')) {
+            processing('/MoodleUser/UpdateSinhVien/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals, "Đang đồng bộ tài khoản của các sinh viên đã chọn...", gridRefresh);
         }
     })
 

@@ -1,11 +1,8 @@
 ﻿@if (Request.IsAuthenticated) {
-    FormsAuthenticationTicket ticket = ((FormsIdentity)HttpContext.Current.User.Identity).Ticket;
-    string[] userData = ticket.UserData.Split('|');
+    string[] userData = CongThongTinSV.Controllers.AccountController.GetCurrentUserData();
 
-    if (userData[2] != "")
-    {
-        if(userData[0] == "3")
-        {
+    if (userData[2] != ""){
+        if(userData[0] == "3"){
             <text>
             Chào bạn, @Html.ActionLink(userData[2], "ThongTinCaNhan", "SinhVien", routeValues: null, htmlAttributes: new { @class = "username", title = "Thông tin sinh viên" })!
             </text>
@@ -16,18 +13,18 @@
             </text>
         }
     }
-    if(userData[3] != "exception")
-    {
+    
+    if(userData[3] != "exception"){
         <text>
-        (@Html.ActionLink(userData[6], "UserProfile", "MoodleUser", routeValues: null, htmlAttributes: new { @class = "username", title = "Thông tin tài khoản Elearning" }))
+        (@Html.ActionLink(userData[6], "UserProfile", "MoodleUser", routeValues: new {userid = userData[5] }, htmlAttributes: new { @class = "username", title = "Thông tin tài khoản moodle Elearning" }))
         </text>
     }
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))        
-    {
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })){
         @Html.AntiForgeryToken()
         <button class="k-button" type="submit">Log off</button>
     }
-} else {
+}
+else {
     <ul>
         <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class="k-button" })</li>
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class="k-button" })</li>

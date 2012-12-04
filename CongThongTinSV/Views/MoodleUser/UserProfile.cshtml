@@ -1,0 +1,10 @@
+﻿@using CongThongTinSV.Models
+@{
+    ViewBag.Title = "Thông tin tài khoản moodle Elearning";
+}
+@{
+    MoodleGetUserResponse userProfile = ViewBag.UserProfile;
+}
+<h2>Thông tin tài khoản moodle Elearning</h2>
+<label>@userProfile.username;
+</label>

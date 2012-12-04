@@ -38,6 +38,7 @@ namespace CongThongTinSV.Controllers
             var sv1 = from ds in db.STU_DanhSach
                       join hs in db.STU_HoSoSinhVien
                       on ds.ID_sv equals hs.ID_sv
+                      where ds.Active == true
                       select new { ds, hs };
 
             var sv2 = from ds1 in sv1
@@ -158,9 +159,6 @@ namespace CongThongTinSV.Controllers
 
             var list = MoodleSinhViens(Convert.ToInt32(id_chuyen_nganh)).Where(t => t.ID_moodle == 0 && s.Contains(t.ID_sv.ToString())).ToList();
 
-            //ViewBag.SelectedIds = new SelectList(list, "Ma_sv", "ID_moodle");
-            //ViewBag.Result = new SelectList(list, "ID_moodle", "Ma_sv");
-
             if (list.Count() == 0) return View();
 
             CreateSinhVien(list);
@@ -210,12 +208,71 @@ namespace CongThongTinSV.Controllers
 
             var list = MoodleSinhViens(Convert.ToInt32(id_chuyen_nganh)).Where(t => t.ID_moodle > 0 && s.Contains(t.ID_sv.ToString())).ToList();
 
-            //ViewBag.SelectedIds = new SelectList(list, "Ma_sv", "ID_moodle");
-            //ViewBag.Result = new SelectList(list, "ID_moodle", "Ma_sv");
-
             if (list.Count() == 0) return View();
 
             DeleteSinhVien(list);
+
+            return View();
+        }
+
+        public static bool UpdateSinhVien(List<MoodleSinhVien> list)
+        {
+            int i = 0;
+            string postData = "wsfunction=core_user_update_users";
+
+            foreach (MoodleSinhVien item in list)
+            {
+                postData += "&users[" + i + "][id]=" + item.ID_moodle;
+                postData += "&users[" + i + "][username]=" + item.Ma_sv;
+
+                if (item.Mat_khau != "")
+                {
+                    postData += "&users[" + i + "][password]=" + item.Mat_khau;
+                }
+                else
+                {
+                    try
+                    {
+                        postData += "&users[" + i + "][password]=" + ((DateTime)item.Ngay_sinh).ToString("ddMMyyyy");
+                    }
+                    catch
+                    {
+                        postData += "&users[" + i + "][password]=" + item.Ma_sv;
+                    }
+                }
+
+                postData += "&users[" + i + "][firstname]=" + HttpUtility.UrlEncode(item.Ten);
+                postData += "&users[" + i + "][lastname]=" + HttpUtility.UrlEncode(item.Ho_dem);
+                postData += "&users[" + i + "][email]=" + "st" + item.Ma_sv + "@st.vimaru.edu.vn";
+                i++;
+            }
+
+            WebRequestController web = new WebRequestController(4, "POST", postData);
+            string response = web.GetResponse();
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            // MoodleException moodleError = new MoodleException();
+            //List<MoodleCreateUserResponse> results = new List<MoodleCreateUserResponse>();
+            UtilityController.WriteTextToFile("D:\\SinhVienUpdate.txt", response);
+
+            if (response.Contains("exception"))
+            {
+                // Error
+                // moodleError = serializer.Deserialize<MoodleException>(rs);
+                return false;
+            }
+
+            return true;
+        }
+
+        public ActionResult UpdateSinhVien(string selectedVals, string id_chuyen_nganh)
+        {
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+
+            var list = MoodleSinhViens(Convert.ToInt32(id_chuyen_nganh)).Where(t => t.ID_moodle > 0 && s.Contains(t.ID_sv.ToString())).ToList();
+
+            if (list.Count() == 0) return View();
+
+            UpdateSinhVien(list);
 
             return View();
         }
@@ -387,9 +444,6 @@ namespace CongThongTinSV.Controllers
 
             var list = MoodleGiaoViens(Convert.ToInt32(id_khoa)).Where(t => t.ID_moodle > 0 && s.Contains(t.ID_cb.ToString())).ToList();
 
-            //ViewBag.SelectedIds = new SelectList(list, "Ma_sv", "ID_moodle");
-            //ViewBag.Result = new SelectList(list, "ID_moodle", "Ma_sv");
-
             if (list.Count() == 0) return View();
 
             DeleteGiaoVien(list);
@@ -397,16 +451,17 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        public static string[] GetCurrentUserData()
-        {
-            return (((FormsIdentity)System.Web.HttpContext.Current.User.Identity).Ticket.UserData.Split('|'));
-        }
-
         public static string GetToken(string username, string password, string service)
         {
             //Get user token
             WebRequestController web = new WebRequestController(1, "POST", "username=" + username + "&password=" + password + "&service=" + service);
             string s = web.GetResponse();
+
+            if(s.Contains("exception")) 
+            {
+                return "exception";
+            }
+
             string[] rs = s.Split(new char[] { '"' });
             UtilityController.WriteTextToFile("D:\\token.txt", service + " : " + s + " username: " + username);
 
@@ -443,6 +498,7 @@ namespace CongThongTinSV.Controllers
             //JavaScriptSerializer serializer = new JavaScriptSerializer();
             // MoodleException moodleError = new MoodleException();
             //List<MoodleCreateUserResponse> results = new List<MoodleCreateUserResponse>();
+            UtilityController.WriteTextToFile("D:\\MoodleUserUpdate.txt", response);
 
             if (response.Contains("exception"))
             {
@@ -451,7 +507,6 @@ namespace CongThongTinSV.Controllers
                 return false;
             }
 
-            UtilityController.WriteTextToFile("D:\\MoodleUserUpdate.txt", response);
             return true;
         }
         //
@@ -479,14 +534,14 @@ namespace CongThongTinSV.Controllers
                 bool changePasswordSucceeded;
                 try
                 {
-                    string[] userData = GetCurrentUserData();
+                    string[] userData = AccountController.GetCurrentUserData();
 
-                    if(GetToken(userData[0], model.OldPassword, userData[2]) == userData[1])
+                    if(GetToken(User.Identity.Name, model.OldPassword, userData[4]) == userData[3])
                     {
                         List<MoodleUser> list = new List<MoodleUser>();
                         list.Add(new MoodleUser
                         {
-                            ID = userData[3],
+                            ID = userData[5],
                             Password = model.NewPassword
                         });
 
@@ -497,8 +552,9 @@ namespace CongThongTinSV.Controllers
                          changePasswordSucceeded = false;
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    string s = ex.Message;
                     changePasswordSucceeded = false;
                 }
 
@@ -513,6 +569,51 @@ namespace CongThongTinSV.Controllers
             }
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+        
+        public static List<MoodleGetUserResponse> GetUserByID(List<string> list)
+        {
+            Entities db = new Entities();
+            int i = 0;
+            string postData = "wsfunction=core_user_get_users_by_id ";
+
+            foreach (string item in list)
+            {
+                postData += "&userids[" + i + "]=" + item;
+                i++;
+            }
+
+            WebRequestController web = new WebRequestController(4, "POST", postData);
+            string response = web.GetResponse();
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            // MoodleException moodleError = new MoodleException();
+            List<MoodleGetUserResponse> results = new List<MoodleGetUserResponse>();
+
+            if (response.Contains("exception"))
+            {
+                // Error
+                // moodleError = serializer.Deserialize<MoodleException>(rs);
+            }
+            else
+            {
+                // Good
+                results = serializer.Deserialize<List<MoodleGetUserResponse>>(response);
+            }
+
+            UtilityController.WriteTextToFile("D:\\MoodleGetUserByID.txt", response);
+            return results; ;
+        }
+
+        public ActionResult UserProfile(string userid)
+        {
+            List<string> list = new List<string>();
+            list.Add(userid);
+            var q = GetUserByID(list);
+            if (q.Count() > 0)
+                ViewBag.UserProfile = q.ElementAt(0);
+            else
+                ViewBag.UserProfile = new MoodleGetUserResponse();
+            return View();
         }
     }
 }

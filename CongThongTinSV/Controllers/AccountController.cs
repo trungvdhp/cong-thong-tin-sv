@@ -17,6 +17,15 @@ namespace CongThongTinSV.Controllers
     [InitializeSimpleMembership]
     public class AccountController : Controller
     {
+        /// <summary>
+        /// Get current user data
+        /// </summary>
+        /// <returns>Current user data</returns>
+        public static string[] GetCurrentUserData()
+        {
+            return (((FormsIdentity)System.Web.HttpContext.Current.User.Identity).Ticket.UserData.Split('|'));
+        }
+
         //
         // GET: /Account/Login
 
@@ -158,7 +167,7 @@ namespace CongThongTinSV.Controllers
                         // save moodle user id
                         userData[5] = moodleUser.id.ToString();
                         // save moodle user fullname
-                        userData[6] = moodleUser.firstname + " " + moodleUser.lastname;
+                        userData[6] = moodleUser.lastname + " " + moodleUser.firstname;
                     }
                     catch
                     {
