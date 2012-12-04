@@ -12,6 +12,13 @@ namespace CongThongTinSV.Models
         public string shortname { get; set; }
     }
 
+    public class MoodleEnrolledCourseResponse
+    {
+        public string id { get; set; }
+        public string fullname { get; set; }
+        public string shortname { get; set; }
+    }
+
     public class MoodleLopHocPhan
     {
         [DisplayName("ID")]
