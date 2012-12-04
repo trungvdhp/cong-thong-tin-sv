@@ -77,9 +77,16 @@ namespace CongThongTinSV.Controllers
             byte[] byteArray = Encoding.UTF8.GetBytes(postData);
             MyRequest.ContentType = "application/x-www-form-urlencoded";
             MyRequest.ContentLength = byteArray.Length;
-            MyDataStream = MyRequest.GetRequestStream();
-            MyDataStream.Write(byteArray, 0, byteArray.Length);
-            MyDataStream.Close();
+
+            try
+            {
+                MyDataStream = MyRequest.GetRequestStream();
+                MyDataStream.Write(byteArray, 0, byteArray.Length);
+                MyDataStream.Close();
+            }
+            catch (Exception)
+            {
+            }
         }
 
         public WebRequestController(string url, string method, string queryData)

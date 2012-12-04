@@ -190,7 +190,7 @@ namespace CongThongTinSV.Controllers
         public static int ConvertToTimestamp(string dateString)
         {
             //get a System.DateTime from DateTime String
-            DateTime value = ConvertToDate(dateString);
+            DateTime value = ConvertToDateTime(dateString);
             //create Timespan by subtracting the value provided from
             //the Unix Epoch
             TimeSpan span = (value - new DateTime(1970, 1, 1, 0, 0, 0, 0).ToLocalTime());
@@ -204,11 +204,10 @@ namespace CongThongTinSV.Controllers
         /// </summary>
         /// <param name="timestamp">value to be converted</param>
         /// <returns>System.DateTime</returns>
-        public static DateTime ConvertTimestamp(int timestamp)
+        public static DateTime ConvertToDateTime(int timestamp)
         {
             //create a new DateTime value based on the Unix Epoch
             DateTime converted = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-
             //add the timestamp to the value
             DateTime newDateTime = converted.AddSeconds(timestamp);
 
@@ -222,10 +221,10 @@ namespace CongThongTinSV.Controllers
         /// </summary>
         /// <param name="dateString">date string to be converted</param>
         /// <returns>System.DateTime</returns>
-        public static DateTime ConvertToDate(string dateString)
+        public static DateTime ConvertToDateTime(string dateString)
         {
             //get string array from date string in format "dd-MM-yyyy" 
-            string[] s = dateString.Split(new char[] { '-' });
+            string[] s = dateString.Split(new char[] { '-', '/' });
 
             //return the System.DateTime value
             return new DateTime(Convert.ToInt32(s[2]), Convert.ToInt32(s[1]), Convert.ToInt32(s[0])).ToLocalTime();
