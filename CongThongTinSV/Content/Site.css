@@ -757,6 +757,12 @@ tr.pager td {
             margin: 0;
         }
 }
- /* Block UI
+ /* Moodle User Profile
     ----------------------------------------------------------*/
-
+h2 {
+    font-size: 123.1%;
+}
+th, td {
+    padding: .5em;
+    color:black;
+}
