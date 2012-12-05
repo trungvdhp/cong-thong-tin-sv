@@ -191,6 +191,7 @@
     <Compile Include="Controllers\ThongBaoController.cs" />
     <Compile Include="Controllers\TraCuuController.cs" />
     <Compile Include="Controllers\TaiLieuController.cs" />
+    <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\UtilityController.cs" />
     <Compile Include="Controllers\WebRequestController.cs" />
     <Compile Include="DHHH.Context.cs">
@@ -392,9 +393,6 @@
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SP_Moodle_SinhVien_Result.cs">
-      <DependentUpon>DHHH.tt</DependentUpon>
-    </Compile>
     <Compile Include="SP_SinhVienLopTC_Result.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
@@ -837,6 +835,11 @@
     <Content Include="Views\MoodleEnrol\GhiDanhGiaoVien.cshtml" />
     <Content Include="Views\MoodleUser\DoiMatKhau.cshtml" />
     <Content Include="Views\TaiLieu\Index.cshtml" />
+    <Content Include="Views\MoodleUser\UserProfile.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\ThongBao\Gui.cshtml" />
+    <Content Include="Views\MoodleCourse\BaiKiemTra.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

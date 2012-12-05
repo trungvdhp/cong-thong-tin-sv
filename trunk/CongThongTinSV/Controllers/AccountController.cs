@@ -23,7 +23,14 @@ namespace CongThongTinSV.Controllers
         /// <returns>Current user data</returns>
         public static string[] GetCurrentUserData()
         {
-            return (((FormsIdentity)System.Web.HttpContext.Current.User.Identity).Ticket.UserData.Split('|'));
+            try
+            {
+                return (((FormsIdentity)System.Web.HttpContext.Current.User.Identity).Ticket.UserData.Split('|'));
+            }
+            catch
+            {
+                return new string[]{"","","","","","","",""};
+            }
         }
 
         //

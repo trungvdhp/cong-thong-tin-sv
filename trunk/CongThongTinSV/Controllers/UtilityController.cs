@@ -229,6 +229,30 @@ namespace CongThongTinSV.Controllers
             //return the System.DateTime value
             return new DateTime(Convert.ToInt32(s[2]), Convert.ToInt32(s[1]), Convert.ToInt32(s[0])).ToLocalTime();
         }
+        
+        public static string ConvertToString(TimeSpan span)
+        {
+            string formatted = string.Format("{0}{1}{2}{3}",
+            span.Duration().Days > 0 ? string.Format("{0:0} days ", span.Days) : string.Empty,
+            span.Duration().Hours > 0 ? string.Format("{0:0} hours ", span.Hours) : string.Empty,
+            span.Duration().Minutes > 0 ? string.Format("{0:0} minutes ", span.Minutes) : string.Empty,
+            span.Duration().Seconds > 0 ? string.Format("{0:0} secs", span.Seconds) : string.Empty);
+
+            if (formatted.EndsWith(" ")) formatted = formatted.Substring(0, formatted.Length - 2);
+
+            if (string.IsNullOrEmpty(formatted)) formatted = "0 secs";
+
+            return formatted;
+        }
+
+        public static string ConvertToDetailDateTimeString(int timestamp)
+        {
+            DateTime date = ConvertToDateTime(timestamp);
+            TimeSpan span = DateTime.Now.Subtract(date);
+
+            return date.ToLongDateString() + ", " + date.ToLongTimeString() + 
+                " (" + ConvertToString(span) + ")";
+        }
 
         /// <summary>
         /// Get firstname from name

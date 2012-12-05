@@ -219,5 +219,60 @@ namespace CongThongTinSV.Controllers
 
             return View();
         }
+
+        public ActionResult GetBaiKiemTra([DataSourceRequest] DataSourceRequest request, string courseid)
+        {
+            return Json(MoodleBaiKiemTras(courseid).ToDataSourceResult(request));
+        }
+
+        public IEnumerable<MoodleCourseContentResponse> MoodleBaiKiemTras(string courseid)
+        {
+            Entities db = new Entities();
+            string postData = "wsfunction=core_course_get_contents";
+            postData += "&courseid=" + courseid;
+            WebRequestController web = new WebRequestController(4, "POST", postData);
+            string response = web.GetResponse();
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            // MoodleException moodleError = new MoodleException();
+            List<MoodleCourseContentResponse> results = new List<MoodleCourseContentResponse>();
+
+            if (response.Contains("exception"))
+            {
+                // Error
+                // moodleError = serializer.Deserialize<MoodleException>(rs);
+            }
+            else
+            {
+                // Good
+                results = serializer.Deserialize<List<MoodleCourseContentResponse>>(response).ToList();
+            }
+
+            UtilityController.WriteTextToFile("D:\\MoodleGetCourseContent.txt", response);
+            return results;
+        }
+
+        public ActionResult BaiKiemTra(string courseid="0")
+        {
+            MoodleEntities mdb = new MoodleEntities();
+
+            try
+            {
+                ViewBag.CourseName = mdb.fit_course.AsEnumerable().SingleOrDefault(t => t.id.ToString() == courseid).fullname;
+                ViewBag.CourseContent = MoodleBaiKiemTras(courseid);
+            }
+            catch (Exception)
+            {
+                ViewBag.CourseName = "";
+                ViewBag.CourseContent = new List<MoodleCourseContentResponse>();
+            }
+
+            ViewBag.CourseID = courseid;
+            return View();
+        }
+
+        public ActionResult BangDiem(string quizid)
+        {
+            return View();
+        }
     }
 }

@@ -571,7 +571,7 @@ namespace CongThongTinSV.Controllers
             return View(model);
         }
         
-        public static List<MoodleGetUserResponse> GetUserByID(List<string> list)
+        public static List<MoodleUserProfileResponse> GetUserByID(List<string> list)
         {
             Entities db = new Entities();
             int i = 0;
@@ -587,7 +587,7 @@ namespace CongThongTinSV.Controllers
             string response = web.GetResponse();
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             // MoodleException moodleError = new MoodleException();
-            List<MoodleGetUserResponse> results = new List<MoodleGetUserResponse>();
+            List<MoodleUserProfileResponse> results = new List<MoodleUserProfileResponse>();
 
             if (response.Contains("exception"))
             {
@@ -597,7 +597,7 @@ namespace CongThongTinSV.Controllers
             else
             {
                 // Good
-                results = serializer.Deserialize<List<MoodleGetUserResponse>>(response);
+                results = serializer.Deserialize<List<MoodleUserProfileResponse>>(response);
             }
 
             UtilityController.WriteTextToFile("D:\\MoodleGetUserByID.txt", response);
@@ -612,7 +612,12 @@ namespace CongThongTinSV.Controllers
             if (q.Count() > 0)
                 ViewBag.UserProfile = q.ElementAt(0);
             else
-                ViewBag.UserProfile = new MoodleGetUserResponse();
+                ViewBag.UserProfile = new MoodleUserProfileResponse();
+            return View();
+        }
+
+        public ActionResult BaiLam(string quizid, string userid)
+        {
             return View();
         }
     }

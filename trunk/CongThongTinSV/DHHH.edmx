@@ -1224,9 +1224,6 @@
             <Parameter Name="Ngay_sinh" Mode="In" Type="String" />
             <Parameter Name="Gioi_tinh" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_Moodle_SinhVien" ReturnType="Collection(DHHHModel.SP_Moodle_SinhVien_Result)">
-          <Parameter Name="Id_chuyen_nganh" Mode="In" Type="Int32" />
-          </FunctionImport>
           <EntitySet Name="MARK_Diem_TC" EntityType="DHHHModel.MARK_Diem_TC" />
           <EntitySet Name="MARK_DiemThanhPhan_TC" EntityType="DHHHModel.MARK_DiemThanhPhan_TC" />
           <EntitySet Name="MARK_DiemThi_TC" EntityType="DHHHModel.MARK_DiemThi_TC" />
@@ -1389,16 +1386,6 @@
           <Property Type="String" Name="Ma_sv" Nullable="true" MaxLength="20" />
         </ComplexType>
         <ComplexType Name="SP_SinhVien_Result">
-          <Property Type="Int32" Name="ID_sv" Nullable="false" />
-          <Property Type="String" Name="Ma_sv" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="Ho_dem" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Ten" Nullable="true" MaxLength="50" />
-          <Property Type="DateTime" Name="Ngay_sinh" Nullable="true" Precision="23" />
-          <Property Type="String" Name="Gioi_tinh" Nullable="false" MaxLength="3" />
-          <Property Type="String" Name="Ten_lop" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="ID_moodle" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="SP_Moodle_SinhVien_Result">
           <Property Type="Int32" Name="ID_sv" Nullable="false" />
           <Property Type="String" Name="Ma_sv" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="Ho_dem" Nullable="true" MaxLength="50" />
