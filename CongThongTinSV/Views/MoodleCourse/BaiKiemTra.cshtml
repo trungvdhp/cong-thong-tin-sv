@@ -1,0 +1,34 @@
+﻿@using CongThongTinSV.Models;
+
+@{
+    ViewBag.Title = "Lớp học phần: " + ViewBag.CourseName;
+}
+<div>
+<h2>@ViewBag.CourseName</h2>
+@{
+    List<MoodleCourseContentResponse> list  = ViewBag.CourseContent;
+    int len = list.Count;
+    @(Html.Kendo().PanelBar()
+        .Name("panelbar-sprites")
+        .ExpandAll(true)
+        .Items(panelbar =>
+        {
+            for (int i = 0; i < len; i++)
+            {
+                panelbar.Add().Text(list[i].name)
+                    .Items(item =>
+                    {
+                        int n = list[i].modules.Count;
+                        
+                        for (int j = 0; j < n; j++)
+                        {
+                            item.Add().Text(list[i].modules[j].name)
+                                .Url(list[i].modules[j].url)
+                                .ImageUrl(list[i].modules[j].modicon);
+                        }
+                    });
+            }
+        })
+     )
+}
+</div>

@@ -19,6 +19,48 @@ namespace CongThongTinSV.Models
         public string shortname { get; set; }
     }
 
+    public class MoodleModuleContentResponse
+    {
+        public string type { get; set; } //a file or a folder or external link
+        public string filename { get; set; } //filename
+        public string filepath { get; set; } //filepath
+        public int filesize { get; set; } //filesize
+        public string fileurl { get; set; } //downloadable file url
+        public string content { get; set; } //Raw content, will be used when type is content
+        public int timecreated { get; set; } //Time created
+        public int timemodified { get; set; } //Time modified
+        public int sortorder { get; set; } //Content sort order
+        public int userid { get; set; } //User who added this content to moodle
+        public string author { get; set; } //Content owner
+        public string license { get; set; } //Content license
+    }
+
+    public class MoodleCourseModuleResponse
+    {
+        public int id { get; set; } //activity id
+        public string url { get; set; } //activity url
+        public string name { get; set; } //activity module name
+        public string description { get; set; } //activity description
+        public int visible { get; set; } //is the module visible
+        public string modicon { get; set; } //activity icon url
+        public string modname { get; set; } //activity module type
+        public string modplural { get; set; } //activity module plural name
+        public int availablefrom { get; set; } //module availability start date
+        public int availableuntil { get; set; } //module availability en date
+        public int indent { get; set; } //number of identation in the site
+        public List<MoodleModuleContentResponse> contents { get; set; }
+    }
+
+    public class MoodleCourseContentResponse
+    {
+        public int id { get; set; } //Section ID
+        public string name { get; set; } //Section name
+        public int visible { get; set; } //is the section visible
+        public string summary { get; set; } //Section description
+        public int summaryformat { get; set; } //summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN)
+        public List<MoodleCourseModuleResponse> modules { get; set; } //list of module+
+    }
+
     public class MoodleLopHocPhan
     {
         [DisplayName("ID")]

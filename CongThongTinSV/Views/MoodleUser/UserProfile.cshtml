@@ -3,10 +3,10 @@
     ViewBag.Title = "Thông tin tài khoản moodle Elearning";
 }
 @{
-    MoodleGetUserResponse userProfile = ViewBag.UserProfile;
+    MoodleUserProfileResponse userProfile = ViewBag.UserProfile;
 }
 <h2 style="text-align:center">@userProfile.fullname</h2>
-<table summary="">
+<table style="color:black" summary="">
     <tr>
         <td rowspan="8" style="vertical-align: top;">
                 <a href="UserProfile?userid=@userProfile.id">
@@ -45,18 +45,19 @@
         <td>Course profiles:</td>
         <td>
             @{
-                int len = userProfile.enrolledcourses.Count;
+                int len = userProfile.enrolledcourses.Count-1;
                 for(int i=0; i<len; i++)
                 {
-                    <a href="http://" >@userProfile.enrolledcourses[i].fullname</a>
+                    <a href="http://" >@userProfile.enrolledcourses[i].fullname</a><text>,&nbsp</text>
                 }
+                <a href="http://" >@userProfile.enrolledcourses[len].fullname</a>
             }</td>
     </tr>
     <tr>
         <td>First access:</td>
-        <td></td></tr>
+        <td>@CongThongTinSV.Controllers.UtilityController.ConvertToDetailDateTimeString(userProfile.firstaccess)</td></tr>
     <tr>
         <td>Last access:</td>
-        <td></td>
+        <td>@CongThongTinSV.Controllers.UtilityController.ConvertToDetailDateTimeString(userProfile.lastaccess)</td>
     </tr>
 </table>

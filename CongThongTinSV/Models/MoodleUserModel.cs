@@ -27,7 +27,7 @@ namespace CongThongTinSV.Models
         public string value { get; set; } //The value of the custom field
     }
 
-    public class MoodleGetUserResponse
+    public class MoodleUserProfileResponse
     {
         public double id { get; set; } //ID of the user
         public string username { get; set; } //Username policy is defined in Moodle security config
@@ -66,7 +66,7 @@ namespace CongThongTinSV.Models
         public List<MoodleUserPreference> preferences { get; set; } //User preferences
         public List<MoodleEnrolledCourseResponse> enrolledcourses { get; set; } //Courses where the user is enrolled - limited by which courses the user is able to see
         
-        public MoodleGetUserResponse()
+        public MoodleUserProfileResponse()
         {
             customfields = new List<MoodleUserCustomfield>();
             preferences = new List<MoodleUserPreference>();

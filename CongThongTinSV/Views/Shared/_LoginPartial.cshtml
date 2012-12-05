@@ -25,6 +25,10 @@
     }
 }
 else {
+    if (HttpContext.Current.Request.Url.AbsolutePath != "/Account/Login" && HttpContext.Current.Request.Url.AbsolutePath != "/Home" && HttpContext.Current.Request.Url.AbsolutePath != "/")
+    {
+        Response.Redirect(Url.Action("Login", "Account"));
+    }
     <ul>
         <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class="k-button" })</li>
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class="k-button" })</li>
