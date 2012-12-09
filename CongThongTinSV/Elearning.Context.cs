@@ -52,5 +52,16 @@ namespace CongThongTinSV
         public DbSet<fit_role_context_levels> fit_role_context_levels { get; set; }
         public DbSet<fit_role_names> fit_role_names { get; set; }
         public DbSet<fit_context> fit_context { get; set; }
+        public DbSet<fit_quiz> fit_quiz { get; set; }
+        public DbSet<fit_quiz_attempts> fit_quiz_attempts { get; set; }
+        public DbSet<fit_quiz_grades> fit_quiz_grades { get; set; }
+        public DbSet<fit_quiz_overrides> fit_quiz_overrides { get; set; }
+        public DbSet<fit_quiz_overview_regrades> fit_quiz_overview_regrades { get; set; }
+        public DbSet<fit_quiz_question_instances> fit_quiz_question_instances { get; set; }
+        public DbSet<fit_quiz_question_response_stats> fit_quiz_question_response_stats { get; set; }
+        public DbSet<fit_quiz_question_statistics> fit_quiz_question_statistics { get; set; }
+        public DbSet<fit_quiz_reports> fit_quiz_reports { get; set; }
+        public DbSet<fit_quiz_statistics> fit_quiz_statistics { get; set; }
+        public DbSet<fit_role_assignments> fit_role_assignments { get; set; }
     }
 }

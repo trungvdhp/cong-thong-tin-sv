@@ -251,7 +251,7 @@ namespace CongThongTinSV.Controllers
             return results;
         }
 
-        public ActionResult BaiKiemTra(string courseid="0")
+        public ActionResult DanhSachBaiKiemTra(string courseid="0")
         {
             MoodleEntities mdb = new MoodleEntities();
 
@@ -266,13 +266,159 @@ namespace CongThongTinSV.Controllers
                 ViewBag.CourseContent = new List<MoodleCourseContentResponse>();
             }
 
-            ViewBag.CourseID = courseid;
+            //ViewBag.CourseID = courseid;
             return View();
         }
 
-        public ActionResult BangDiem(string quizid)
+        public ActionResult BangDiemThanhPhan(string quizid="0")
         {
+            MoodleEntities mdb = new MoodleEntities();
+            
+            try
+            {
+                var quiz = mdb.fit_quiz.AsEnumerable().SingleOrDefault(t => (t.id + 10).ToString() == quizid);
+                ViewBag.QuizID = quiz == null ? 0 : quiz.id;
+                ViewBag.QuizName = quiz == null ? "" : quiz.name;
+                ViewBag.CourseID = quiz == null ? 0 : quiz.course;
+                ViewBag.CourseName = mdb.fit_course.AsEnumerable().SingleOrDefault(t => t.id == ViewBag.CourseID).fullname;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                ViewBag.CourseID = "0";
+                ViewBag.CourseName = "";
+                ViewBag.QuizID = "0";
+                ViewBag.QuizName = "";
+            }
+
             return View();
+        }
+
+        public ActionResult GetBangDiemThanhPhan([DataSourceRequest] DataSourceRequest request, string quizid = "0")
+        {
+            return Json(MoodleQuizGrades(quizid).ToDataSourceResult(request));
+        }
+
+        public IEnumerable<MoodleGradeBook> MoodleQuizGrades(string quizid = "0")
+        {
+            MoodleEntities mdb = new MoodleEntities();
+            var quiz = mdb.fit_quiz.AsEnumerable().SingleOrDefault(t => t.id.ToString() == quizid);
+            string courseid = quiz == null ? "0" : quiz.course.ToString();
+            long qid = quiz == null ? 0 : quiz.id;
+            var itemZ = mdb.fit_grade_items.AsEnumerable().SingleOrDefault(t => t.itemtype == "mod" && t.itemmodule == "quiz" && t.iteminstance == qid);
+            long iz = itemZ != null ? itemZ.id : 0;
+            var user = MoodleCourseHocViens(courseid);
+
+            if (iz != 0)
+            {
+                user = from u in user
+                       join z in mdb.fit_grade_grades
+                       on u.ID equals z.userid
+                       into grade
+                       from g in grade.DefaultIfEmpty()
+                       where (g == null) || (g != null && g.itemid == iz)
+                       select new MoodleGradeBook
+                       {
+                           ID = u.ID,
+                           Username = u.Username,
+                           Lastname = u.Lastname,
+                           Firstname = u.Firstname,
+                           Grade = (g == null ? null : (g.finalgrade.HasValue ? (g.finalgrade > 10 ? g.finalgrade / 10 : g.finalgrade) : g.finalgrade))
+                       };
+            }
+
+            return user;
+        }
+
+        public ActionResult BangDiemKhoaHoc(string courseid="0")
+        {
+            ViewBag.CourseID = courseid;
+            MoodleEntities mdb = new MoodleEntities();
+
+            try
+            {
+                ViewBag.CourseName = mdb.fit_course.AsEnumerable().SingleOrDefault(t => t.id.ToString() == courseid).fullname;
+            }
+            catch (Exception)
+            {
+                ViewBag.CourseName = "";
+            }
+
+            return View();
+        }
+
+        public ActionResult GetBangDiemKhoaHoc([DataSourceRequest] DataSourceRequest request, string courseid="0")
+        {
+            return Json(MoodleCourseGrades(courseid).ToDataSourceResult(request));
+        }
+
+        public IEnumerable<MoodleGradeBook> MoodleCourseHocViens(string courseid="0")
+        {
+            MoodleEntities mdb = new MoodleEntities();
+            long context = UtilityController.GetContextID("50", courseid);
+
+            var role = mdb.fit_role_assignments.Where(t => t.contextid == context && t.roleid == 5);
+
+            var user = from r in role.AsEnumerable()
+                       join u in mdb.fit_user.AsEnumerable()
+                       on r.userid equals u.id
+                       select new MoodleGradeBook
+                       {
+                           ID = (int)u.id,
+                           Username = u.username,
+                           Lastname = u.lastname,
+                           Firstname = u.firstname
+                       };
+            return user;
+        }
+
+        public IEnumerable<MoodleGradeBook> MoodleCourseGrades(string courseid="0")
+        {
+            MoodleEntities mdb = new MoodleEntities();
+            var itemZ = mdb.fit_grade_items.AsEnumerable().SingleOrDefault(t => t.courseid.ToString() == courseid && t.itemtype == "course");
+            long iz = itemZ != null ? itemZ.id : 0;
+            var itemX = mdb.fit_grade_items.AsEnumerable().SingleOrDefault(t => t.courseid.ToString() == courseid && t.itemtype == "category");
+            long ix = itemX != null ? itemX.id : 0;
+            var user = MoodleCourseHocViens(courseid);
+
+            if(iz != 0)
+            {
+                user = from u in user
+                        join z in mdb.fit_grade_grades
+                        on u.ID equals z.userid
+                        into grade
+                        from g in grade.DefaultIfEmpty()
+                        where (g == null) || (g != null && g.itemid == iz)
+                        select new MoodleGradeBook
+                        {
+                            ID = u.ID,
+                            Username = u.Username,
+                            Lastname = u.Lastname,
+                            Firstname = u.Firstname,
+                            GradeZ = (g == null ? null : (g.finalgrade.HasValue ? (g.finalgrade > 10 ? g.finalgrade / 10 : g.finalgrade) : g.finalgrade))
+                        };
+            }
+            
+            if(ix != 0)
+            {
+                user = from u in user
+                         join x in mdb.fit_grade_grades
+                         on u.ID equals x.userid
+                         into grade
+                         from g in grade.DefaultIfEmpty()
+                         where (g == null) || (g != null && g.itemid == ix)
+                         select new MoodleGradeBook
+                         {
+                             ID = u.ID,
+                             Username = u.Username,
+                             Lastname = u.Lastname,
+                             Firstname = u.Firstname,
+                             GradeZ = u.GradeZ,
+                             GradeX = (g == null ? null : (g.finalgrade.HasValue ? (g.finalgrade > 10 ? g.finalgrade / 10 : g.finalgrade) : g.finalgrade))
+                         };
+            }
+
+            return user;
         }
     }
 }

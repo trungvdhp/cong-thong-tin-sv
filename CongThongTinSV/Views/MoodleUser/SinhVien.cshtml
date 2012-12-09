@@ -42,7 +42,8 @@
         columns.Bound(c => c.Ten).Width(80);
         columns.Bound(c => c.Ngay_sinh).Width(120).Format("{0:dd-MM-yyyy}");
         columns.Bound(c => c.Gioi_tinh).Width(100);
-        columns.Bound(c => c.Lop);
+        columns.Bound(c => c.Lop).Width(90);
+        columns.Command(command => command.Custom("Hồ sơ").Click("showProfile"));
     })
     .Pageable(pager => pager.PageSizes(new int[]{5, 10, 20, 50, 100, 1000}).Refresh(true).Input(true).Numeric(false))
     .Sortable(s => s.SortMode(GridSortMode.MultipleColumn))
@@ -73,6 +74,18 @@
 
 <script type="text/javascript">
     var selectedVals = [];
+
+    function showProfile(e) {
+        e.preventDefault();
+
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        if (dataItem.ID_moodle == 0) {
+            alert("Chưa có tài khoản trên moodle");
+            return;
+        }
+        window.location.href = "@Url.Action("UserProfile","MoodleUser")"
+                       + "?userid=" + dataItem.ID_moodle;
+    }
 
     function filterGrid() {
         return {

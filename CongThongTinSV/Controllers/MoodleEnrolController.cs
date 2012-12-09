@@ -527,7 +527,7 @@ namespace CongThongTinSV.Controllers
             {
                 postData += "&unassignments[" + i + "][roleid]=" + id_vai_tro;
                 postData += "&unassignments[" + i + "][userid]=" + item.ID_moodle;
-                postData += "&unassignments[" + i + "][contextid]=" + UtilityController.GetContextID(50, Convert.ToInt64(item.ID_lop_tc));
+                postData += "&unassignments[" + i + "][contextid]=" + UtilityController.GetContextID("50", item.ID_lop_tc.ToString());
                 i++;
             }
 
@@ -593,7 +593,7 @@ namespace CongThongTinSV.Controllers
                 {
                     postData += "&unassignments[" + i + "][roleid]=" + id;
                     postData += "&unassignments[" + i + "][userid]=" + item.ID_moodle;
-                    postData += "&unassignments[" + i + "][contextid]=" + UtilityController.GetContextID(50, Convert.ToInt64(item.ID_lop_tc));
+                    postData += "&unassignments[" + i + "][contextid]=" + UtilityController.GetContextID("50", item.ID_lop_tc.ToString());
                     i++;
                 }
             }

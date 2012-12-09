@@ -291,7 +291,40 @@
     <Compile Include="fit_message_working.cs">
       <DependentUpon>Elearning.tt</DependentUpon>
     </Compile>
+    <Compile Include="fit_quiz.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_quiz_attempts.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_quiz_grades.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_quiz_overrides.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_quiz_overview_regrades.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_quiz_question_instances.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_quiz_question_response_stats.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_quiz_question_statistics.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_quiz_reports.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_quiz_statistics.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
     <Compile Include="fit_role.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_role_assignments.cs">
       <DependentUpon>Elearning.tt</DependentUpon>
     </Compile>
     <Compile Include="fit_role_context_levels.cs">
@@ -330,7 +363,9 @@
     <Compile Include="Models\MoodleCategoryModel.cs" />
     <Compile Include="Models\MoodleCourseModel.cs" />
     <Compile Include="Models\MoodleEnrolModel.cs" />
+    <Compile Include="Models\MoodleGradeModel.cs" />
     <Compile Include="Models\MoodleGroupModel.cs" />
+    <Compile Include="Models\MoodleRoleModel.cs" />
     <Compile Include="Models\MoodleUserModel.cs" />
     <Compile Include="MOD_DanhSachLopTinChi.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
@@ -677,6 +712,7 @@
       <LastGenOutput>Elearning.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Images\vimaru-logo.png" />
     <Content Include="Scripts\jqGrid\Changes.txt" />
     <Content Include="Scripts\jqGrid\i18n\grid.locale-en.js" />
     <Content Include="Scripts\jqGrid\install.txt" />
@@ -773,6 +809,7 @@
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\myscript.js" />
     <Content Include="Scripts\styleswitch.js" />
+    <Content Include="VIMARU_ICO.ico" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -839,7 +876,11 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\ThongBao\Gui.cshtml" />
-    <Content Include="Views\MoodleCourse\BaiKiemTra.cshtml" />
+    <Content Include="Views\MoodleCourse\DanhSachBaiKiemTra.cshtml" />
+    <Content Include="Views\MoodleUser\CourseUserProfile.cshtml" />
+    <Content Include="Views\MoodleUser\BaiLamCaNhan.cshtml" />
+    <Content Include="Views\MoodleCourse\BangDiemThanhPhan.cshtml" />
+    <Content Include="Views\MoodleCourse\BangDiemKhoaHoc.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -855,6 +896,9 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>VIMARU_ICO.ico</ApplicationIcon>
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
@@ -867,7 +911,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>23441</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:54459/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

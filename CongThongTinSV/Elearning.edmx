@@ -28,7 +28,18 @@
           <EntitySet Name="fit_message_contacts" EntityType="moodleModel.Store.fit_message_contacts" store:Type="Tables" Schema="moodle" />
           <EntitySet Name="fit_message_read" EntityType="moodleModel.Store.fit_message_read" store:Type="Tables" Schema="moodle" />
           <EntitySet Name="fit_message_working" EntityType="moodleModel.Store.fit_message_working" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_quiz" EntityType="moodleModel.Store.fit_quiz" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_quiz_attempts" EntityType="moodleModel.Store.fit_quiz_attempts" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_quiz_grades" EntityType="moodleModel.Store.fit_quiz_grades" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_quiz_overrides" EntityType="moodleModel.Store.fit_quiz_overrides" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_quiz_overview_regrades" EntityType="moodleModel.Store.fit_quiz_overview_regrades" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_quiz_question_instances" EntityType="moodleModel.Store.fit_quiz_question_instances" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_quiz_question_response_stats" EntityType="moodleModel.Store.fit_quiz_question_response_stats" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_quiz_question_statistics" EntityType="moodleModel.Store.fit_quiz_question_statistics" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_quiz_reports" EntityType="moodleModel.Store.fit_quiz_reports" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_quiz_statistics" EntityType="moodleModel.Store.fit_quiz_statistics" store:Type="Tables" Schema="moodle" />
           <EntitySet Name="fit_role" EntityType="moodleModel.Store.fit_role" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_role_assignments" EntityType="moodleModel.Store.fit_role_assignments" store:Type="Tables" Schema="moodle" />
           <EntitySet Name="fit_role_context_levels" EntityType="moodleModel.Store.fit_role_context_levels" store:Type="Tables" Schema="moodle" />
           <EntitySet Name="fit_role_names" EntityType="moodleModel.Store.fit_role_names" store:Type="Tables" Schema="moodle" />
           <EntitySet Name="fit_user" EntityType="moodleModel.Store.fit_user" store:Type="Tables" Schema="moodle" />
@@ -432,6 +443,178 @@
           <Property Name="unreadmessageid" Type="bigint" Nullable="false" />
           <Property Name="processorid" Type="bigint" Nullable="false" />
         </EntityType>
+        <EntityType Name="fit_quiz">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="course" Type="bigint" Nullable="false" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="intro" Type="longtext" Nullable="false" />
+          <Property Name="introformat" Type="smallint" Nullable="false" />
+          <Property Name="timeopen" Type="bigint" Nullable="false" />
+          <Property Name="timeclose" Type="bigint" Nullable="false" />
+          <Property Name="preferredbehaviour" Type="varchar" Nullable="false" MaxLength="32" />
+          <Property Name="attempts" Type="mediumint" Nullable="false" />
+          <Property Name="attemptonlast" Type="smallint" Nullable="false" />
+          <Property Name="grademethod" Type="smallint" Nullable="false" />
+          <Property Name="decimalpoints" Type="smallint" Nullable="false" />
+          <Property Name="questiondecimalpoints" Type="smallint" Nullable="false" />
+          <Property Name="reviewattempt" Type="mediumint" Nullable="false" />
+          <Property Name="reviewcorrectness" Type="mediumint" Nullable="false" />
+          <Property Name="reviewmarks" Type="mediumint" Nullable="false" />
+          <Property Name="reviewspecificfeedback" Type="mediumint" Nullable="false" />
+          <Property Name="reviewgeneralfeedback" Type="mediumint" Nullable="false" />
+          <Property Name="reviewrightanswer" Type="mediumint" Nullable="false" />
+          <Property Name="reviewoverallfeedback" Type="mediumint" Nullable="false" />
+          <Property Name="questionsperpage" Type="bigint" Nullable="false" />
+          <Property Name="shufflequestions" Type="smallint" Nullable="false" />
+          <Property Name="shuffleanswers" Type="smallint" Nullable="false" />
+          <Property Name="questions" Type="longtext" Nullable="false" />
+          <Property Name="sumgrades" Type="decimal" Nullable="false" Scale="5" />
+          <Property Name="grade" Type="decimal" Nullable="false" Scale="5" />
+          <Property Name="timecreated" Type="bigint" Nullable="false" />
+          <Property Name="timemodified" Type="bigint" Nullable="false" />
+          <Property Name="timelimit" Type="bigint" Nullable="false" />
+          <Property Name="overduehandling" Type="varchar" Nullable="false" MaxLength="16" />
+          <Property Name="graceperiod" Type="bigint" Nullable="false" />
+          <Property Name="password" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="subnet" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="browsersecurity" Type="varchar" Nullable="false" MaxLength="32" />
+          <Property Name="delay1" Type="bigint" Nullable="false" />
+          <Property Name="delay2" Type="bigint" Nullable="false" />
+          <Property Name="showuserpicture" Type="smallint" Nullable="false" />
+          <Property Name="showblocks" Type="smallint" Nullable="false" />
+          <Property Name="navmethod" Type="varchar" Nullable="false" MaxLength="16" />
+        </EntityType>
+        <EntityType Name="fit_quiz_attempts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="uniqueid" Type="bigint" Nullable="false" />
+          <Property Name="quiz" Type="bigint" Nullable="false" />
+          <Property Name="userid" Type="bigint" Nullable="false" />
+          <Property Name="attempt" Type="mediumint" Nullable="false" />
+          <Property Name="sumgrades" Type="decimal" Scale="5" />
+          <Property Name="timestart" Type="bigint" Nullable="false" />
+          <Property Name="timefinish" Type="bigint" Nullable="false" />
+          <Property Name="timemodified" Type="bigint" Nullable="false" />
+          <Property Name="layout" Type="longtext" Nullable="false" />
+          <Property Name="preview" Type="smallint" Nullable="false" />
+          <Property Name="state" Type="varchar" Nullable="false" MaxLength="16" />
+          <Property Name="needsupgradetonewqe" Type="smallint" Nullable="false" />
+          <Property Name="currentpage" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_quiz_grades">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="quiz" Type="bigint" Nullable="false" />
+          <Property Name="userid" Type="bigint" Nullable="false" />
+          <Property Name="grade" Type="decimal" Nullable="false" Scale="5" />
+          <Property Name="timemodified" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_quiz_overrides">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="quiz" Type="bigint" Nullable="false" />
+          <Property Name="groupid" Type="bigint" />
+          <Property Name="userid" Type="bigint" />
+          <Property Name="timeopen" Type="bigint" />
+          <Property Name="timeclose" Type="bigint" />
+          <Property Name="timelimit" Type="bigint" />
+          <Property Name="attempts" Type="mediumint" />
+          <Property Name="password" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="fit_quiz_overview_regrades">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="questionusageid" Type="bigint" Nullable="false" />
+          <Property Name="slot" Type="bigint" Nullable="false" />
+          <Property Name="newfraction" Type="decimal" Precision="12" Scale="7" />
+          <Property Name="oldfraction" Type="decimal" Precision="12" Scale="7" />
+          <Property Name="regraded" Type="smallint" Nullable="false" />
+          <Property Name="timemodified" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_quiz_question_instances">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="quiz" Type="bigint" Nullable="false" />
+          <Property Name="question" Type="bigint" Nullable="false" />
+          <Property Name="grade" Type="decimal" Nullable="false" Precision="12" Scale="7" />
+        </EntityType>
+        <EntityType Name="fit_quiz_question_response_stats">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="quizstatisticsid" Type="bigint" Nullable="false" />
+          <Property Name="questionid" Type="bigint" Nullable="false" />
+          <Property Name="subqid" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="aid" Type="varchar" MaxLength="100" />
+          <Property Name="response" Type="longtext" />
+          <Property Name="rcount" Type="bigint" />
+          <Property Name="credit" Type="decimal" Nullable="false" Precision="15" Scale="5" />
+        </EntityType>
+        <EntityType Name="fit_quiz_question_statistics">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="quizstatisticsid" Type="bigint" Nullable="false" />
+          <Property Name="questionid" Type="bigint" Nullable="false" />
+          <Property Name="slot" Type="bigint" />
+          <Property Name="subquestion" Type="smallint" Nullable="false" />
+          <Property Name="s" Type="bigint" Nullable="false" />
+          <Property Name="effectiveweight" Type="decimal" Precision="15" Scale="5" />
+          <Property Name="negcovar" Type="tinyint" Nullable="false" />
+          <Property Name="discriminationindex" Type="decimal" Precision="15" Scale="5" />
+          <Property Name="discriminativeefficiency" Type="decimal" Precision="15" Scale="5" />
+          <Property Name="sd" Type="decimal" Precision="15" Scale="10" />
+          <Property Name="facility" Type="decimal" Precision="15" Scale="10" />
+          <Property Name="subquestions" Type="longtext" />
+          <Property Name="maxmark" Type="decimal" Precision="12" Scale="7" />
+          <Property Name="positions" Type="longtext" />
+          <Property Name="randomguessscore" Type="decimal" Precision="12" Scale="7" />
+        </EntityType>
+        <EntityType Name="fit_quiz_reports">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="varchar" MaxLength="255" />
+          <Property Name="displayorder" Type="bigint" Nullable="false" />
+          <Property Name="capability" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="fit_quiz_statistics">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="quizid" Type="bigint" Nullable="false" />
+          <Property Name="groupid" Type="bigint" Nullable="false" />
+          <Property Name="allattempts" Type="smallint" Nullable="false" />
+          <Property Name="timemodified" Type="bigint" Nullable="false" />
+          <Property Name="firstattemptscount" Type="bigint" Nullable="false" />
+          <Property Name="allattemptscount" Type="bigint" Nullable="false" />
+          <Property Name="firstattemptsavg" Type="decimal" Precision="15" Scale="5" />
+          <Property Name="allattemptsavg" Type="decimal" Precision="15" Scale="5" />
+          <Property Name="median" Type="decimal" Precision="15" Scale="5" />
+          <Property Name="standarddeviation" Type="decimal" Precision="15" Scale="5" />
+          <Property Name="skewness" Type="decimal" Precision="15" Scale="10" />
+          <Property Name="kurtosis" Type="decimal" Precision="15" Scale="5" />
+          <Property Name="cic" Type="decimal" Precision="15" Scale="10" />
+          <Property Name="errorratio" Type="decimal" Precision="15" Scale="10" />
+          <Property Name="standarderror" Type="decimal" Precision="15" Scale="10" />
+        </EntityType>
         <EntityType Name="fit_role">
           <Key>
             <PropertyRef Name="id" />
@@ -442,6 +625,20 @@
           <Property Name="description" Type="longtext" Nullable="false" />
           <Property Name="sortorder" Type="bigint" Nullable="false" />
           <Property Name="archetype" Type="varchar" Nullable="false" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="fit_role_assignments">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="roleid" Type="bigint" Nullable="false" />
+          <Property Name="contextid" Type="bigint" Nullable="false" />
+          <Property Name="userid" Type="bigint" Nullable="false" />
+          <Property Name="timemodified" Type="bigint" Nullable="false" />
+          <Property Name="modifierid" Type="bigint" Nullable="false" />
+          <Property Name="component" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="itemid" Type="bigint" Nullable="false" />
+          <Property Name="sortorder" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="fit_role_context_levels">
           <Key>
@@ -561,6 +758,17 @@
           <EntitySet Name="fit_role_context_levels" EntityType="moodleModel.fit_role_context_levels" />
           <EntitySet Name="fit_role_names" EntityType="moodleModel.fit_role_names" />
           <EntitySet Name="fit_context" EntityType="moodleModel.fit_context" />
+          <EntitySet Name="fit_quiz" EntityType="moodleModel.fit_quiz" />
+          <EntitySet Name="fit_quiz_attempts" EntityType="moodleModel.fit_quiz_attempts" />
+          <EntitySet Name="fit_quiz_grades" EntityType="moodleModel.fit_quiz_grades" />
+          <EntitySet Name="fit_quiz_overrides" EntityType="moodleModel.fit_quiz_overrides" />
+          <EntitySet Name="fit_quiz_overview_regrades" EntityType="moodleModel.fit_quiz_overview_regrades" />
+          <EntitySet Name="fit_quiz_question_instances" EntityType="moodleModel.fit_quiz_question_instances" />
+          <EntitySet Name="fit_quiz_question_response_stats" EntityType="moodleModel.fit_quiz_question_response_stats" />
+          <EntitySet Name="fit_quiz_question_statistics" EntityType="moodleModel.fit_quiz_question_statistics" />
+          <EntitySet Name="fit_quiz_reports" EntityType="moodleModel.fit_quiz_reports" />
+          <EntitySet Name="fit_quiz_statistics" EntityType="moodleModel.fit_quiz_statistics" />
+          <EntitySet Name="fit_role_assignments" EntityType="moodleModel.fit_role_assignments" />
         </EntityContainer>
         <EntityType Name="fit_course">
           <Key>
@@ -1056,6 +1264,192 @@
           <Property Type="Int64" Name="instanceid" Nullable="false" />
           <Property Type="String" Name="path" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Type="SByte" Name="depth" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_quiz">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="course" Nullable="false" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="intro" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Int16" Name="introformat" Nullable="false" />
+          <Property Type="Int64" Name="timeopen" Nullable="false" />
+          <Property Type="Int64" Name="timeclose" Nullable="false" />
+          <Property Type="String" Name="preferredbehaviour" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="attempts" Nullable="false" />
+          <Property Type="Int16" Name="attemptonlast" Nullable="false" />
+          <Property Type="Int16" Name="grademethod" Nullable="false" />
+          <Property Type="Int16" Name="decimalpoints" Nullable="false" />
+          <Property Type="Int16" Name="questiondecimalpoints" Nullable="false" />
+          <Property Type="Int32" Name="reviewattempt" Nullable="false" />
+          <Property Type="Int32" Name="reviewcorrectness" Nullable="false" />
+          <Property Type="Int32" Name="reviewmarks" Nullable="false" />
+          <Property Type="Int32" Name="reviewspecificfeedback" Nullable="false" />
+          <Property Type="Int32" Name="reviewgeneralfeedback" Nullable="false" />
+          <Property Type="Int32" Name="reviewrightanswer" Nullable="false" />
+          <Property Type="Int32" Name="reviewoverallfeedback" Nullable="false" />
+          <Property Type="Int64" Name="questionsperpage" Nullable="false" />
+          <Property Type="Int16" Name="shufflequestions" Nullable="false" />
+          <Property Type="Int16" Name="shuffleanswers" Nullable="false" />
+          <Property Type="String" Name="questions" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="sumgrades" Nullable="false" Precision="10" Scale="5" />
+          <Property Type="Decimal" Name="grade" Nullable="false" Precision="10" Scale="5" />
+          <Property Type="Int64" Name="timecreated" Nullable="false" />
+          <Property Type="Int64" Name="timemodified" Nullable="false" />
+          <Property Type="Int64" Name="timelimit" Nullable="false" />
+          <Property Type="String" Name="overduehandling" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Type="Int64" Name="graceperiod" Nullable="false" />
+          <Property Type="String" Name="password" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="subnet" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="browsersecurity" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Type="Int64" Name="delay1" Nullable="false" />
+          <Property Type="Int64" Name="delay2" Nullable="false" />
+          <Property Type="Int16" Name="showuserpicture" Nullable="false" />
+          <Property Type="Int16" Name="showblocks" Nullable="false" />
+          <Property Type="String" Name="navmethod" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="fit_quiz_attempts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="uniqueid" Nullable="false" />
+          <Property Type="Int64" Name="quiz" Nullable="false" />
+          <Property Type="Int64" Name="userid" Nullable="false" />
+          <Property Type="Int32" Name="attempt" Nullable="false" />
+          <Property Type="Decimal" Name="sumgrades" Precision="10" Scale="5" />
+          <Property Type="Int64" Name="timestart" Nullable="false" />
+          <Property Type="Int64" Name="timefinish" Nullable="false" />
+          <Property Type="Int64" Name="timemodified" Nullable="false" />
+          <Property Type="String" Name="layout" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Int16" Name="preview" Nullable="false" />
+          <Property Type="String" Name="state" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Type="Int16" Name="needsupgradetonewqe" Nullable="false" />
+          <Property Type="Int64" Name="currentpage" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_quiz_grades">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="quiz" Nullable="false" />
+          <Property Type="Int64" Name="userid" Nullable="false" />
+          <Property Type="Decimal" Name="grade" Nullable="false" Precision="10" Scale="5" />
+          <Property Type="Int64" Name="timemodified" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_quiz_overrides">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="quiz" Nullable="false" />
+          <Property Type="Int64" Name="groupid" />
+          <Property Type="Int64" Name="userid" />
+          <Property Type="Int64" Name="timeopen" />
+          <Property Type="Int64" Name="timeclose" />
+          <Property Type="Int64" Name="timelimit" />
+          <Property Type="Int32" Name="attempts" />
+          <Property Type="String" Name="password" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="fit_quiz_overview_regrades">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="questionusageid" Nullable="false" />
+          <Property Type="Int64" Name="slot" Nullable="false" />
+          <Property Type="Decimal" Name="newfraction" Precision="12" Scale="7" />
+          <Property Type="Decimal" Name="oldfraction" Precision="12" Scale="7" />
+          <Property Type="Int16" Name="regraded" Nullable="false" />
+          <Property Type="Int64" Name="timemodified" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_quiz_question_instances">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="quiz" Nullable="false" />
+          <Property Type="Int64" Name="question" Nullable="false" />
+          <Property Type="Decimal" Name="grade" Nullable="false" Precision="12" Scale="7" />
+        </EntityType>
+        <EntityType Name="fit_quiz_question_response_stats">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="quizstatisticsid" Nullable="false" />
+          <Property Type="Int64" Name="questionid" Nullable="false" />
+          <Property Type="String" Name="subqid" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="aid" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="response" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Int64" Name="rcount" />
+          <Property Type="Decimal" Name="credit" Nullable="false" Precision="15" Scale="5" />
+        </EntityType>
+        <EntityType Name="fit_quiz_question_statistics">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="quizstatisticsid" Nullable="false" />
+          <Property Type="Int64" Name="questionid" Nullable="false" />
+          <Property Type="Int64" Name="slot" />
+          <Property Type="Int16" Name="subquestion" Nullable="false" />
+          <Property Type="Int64" Name="s" Nullable="false" />
+          <Property Type="Decimal" Name="effectiveweight" Precision="15" Scale="5" />
+          <Property Type="SByte" Name="negcovar" Nullable="false" />
+          <Property Type="Decimal" Name="discriminationindex" Precision="15" Scale="5" />
+          <Property Type="Decimal" Name="discriminativeefficiency" Precision="15" Scale="5" />
+          <Property Type="Decimal" Name="sd" Precision="15" Scale="10" />
+          <Property Type="Decimal" Name="facility" Precision="15" Scale="10" />
+          <Property Type="String" Name="subquestions" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="maxmark" Precision="12" Scale="7" />
+          <Property Type="String" Name="positions" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="randomguessscore" Precision="12" Scale="7" />
+        </EntityType>
+        <EntityType Name="fit_quiz_reports">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="name" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="Int64" Name="displayorder" Nullable="false" />
+          <Property Type="String" Name="capability" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="fit_quiz_statistics">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="quizid" Nullable="false" />
+          <Property Type="Int64" Name="groupid" Nullable="false" />
+          <Property Type="Int16" Name="allattempts" Nullable="false" />
+          <Property Type="Int64" Name="timemodified" Nullable="false" />
+          <Property Type="Int64" Name="firstattemptscount" Nullable="false" />
+          <Property Type="Int64" Name="allattemptscount" Nullable="false" />
+          <Property Type="Decimal" Name="firstattemptsavg" Precision="15" Scale="5" />
+          <Property Type="Decimal" Name="allattemptsavg" Precision="15" Scale="5" />
+          <Property Type="Decimal" Name="median" Precision="15" Scale="5" />
+          <Property Type="Decimal" Name="standarddeviation" Precision="15" Scale="5" />
+          <Property Type="Decimal" Name="skewness" Precision="15" Scale="10" />
+          <Property Type="Decimal" Name="kurtosis" Precision="15" Scale="5" />
+          <Property Type="Decimal" Name="cic" Precision="15" Scale="10" />
+          <Property Type="Decimal" Name="errorratio" Precision="15" Scale="10" />
+          <Property Type="Decimal" Name="standarderror" Precision="15" Scale="10" />
+        </EntityType>
+        <EntityType Name="fit_role_assignments">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="roleid" Nullable="false" />
+          <Property Type="Int64" Name="contextid" Nullable="false" />
+          <Property Type="Int64" Name="userid" Nullable="false" />
+          <Property Type="Int64" Name="timemodified" Nullable="false" />
+          <Property Type="Int64" Name="modifierid" Nullable="false" />
+          <Property Type="String" Name="component" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="Int64" Name="itemid" Nullable="false" />
+          <Property Type="Int64" Name="sortorder" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1581,6 +1975,203 @@
                 <ScalarProperty Name="path" ColumnName="path" />
                 <ScalarProperty Name="instanceid" ColumnName="instanceid" />
                 <ScalarProperty Name="contextlevel" ColumnName="contextlevel" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_quiz">
+            <EntityTypeMapping TypeName="moodleModel.fit_quiz">
+              <MappingFragment StoreEntitySet="fit_quiz">
+                <ScalarProperty Name="navmethod" ColumnName="navmethod" />
+                <ScalarProperty Name="showblocks" ColumnName="showblocks" />
+                <ScalarProperty Name="showuserpicture" ColumnName="showuserpicture" />
+                <ScalarProperty Name="delay2" ColumnName="delay2" />
+                <ScalarProperty Name="delay1" ColumnName="delay1" />
+                <ScalarProperty Name="browsersecurity" ColumnName="browsersecurity" />
+                <ScalarProperty Name="subnet" ColumnName="subnet" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="graceperiod" ColumnName="graceperiod" />
+                <ScalarProperty Name="overduehandling" ColumnName="overduehandling" />
+                <ScalarProperty Name="timelimit" ColumnName="timelimit" />
+                <ScalarProperty Name="timemodified" ColumnName="timemodified" />
+                <ScalarProperty Name="timecreated" ColumnName="timecreated" />
+                <ScalarProperty Name="grade" ColumnName="grade" />
+                <ScalarProperty Name="sumgrades" ColumnName="sumgrades" />
+                <ScalarProperty Name="questions" ColumnName="questions" />
+                <ScalarProperty Name="shuffleanswers" ColumnName="shuffleanswers" />
+                <ScalarProperty Name="shufflequestions" ColumnName="shufflequestions" />
+                <ScalarProperty Name="questionsperpage" ColumnName="questionsperpage" />
+                <ScalarProperty Name="reviewoverallfeedback" ColumnName="reviewoverallfeedback" />
+                <ScalarProperty Name="reviewrightanswer" ColumnName="reviewrightanswer" />
+                <ScalarProperty Name="reviewgeneralfeedback" ColumnName="reviewgeneralfeedback" />
+                <ScalarProperty Name="reviewspecificfeedback" ColumnName="reviewspecificfeedback" />
+                <ScalarProperty Name="reviewmarks" ColumnName="reviewmarks" />
+                <ScalarProperty Name="reviewcorrectness" ColumnName="reviewcorrectness" />
+                <ScalarProperty Name="reviewattempt" ColumnName="reviewattempt" />
+                <ScalarProperty Name="questiondecimalpoints" ColumnName="questiondecimalpoints" />
+                <ScalarProperty Name="decimalpoints" ColumnName="decimalpoints" />
+                <ScalarProperty Name="grademethod" ColumnName="grademethod" />
+                <ScalarProperty Name="attemptonlast" ColumnName="attemptonlast" />
+                <ScalarProperty Name="attempts" ColumnName="attempts" />
+                <ScalarProperty Name="preferredbehaviour" ColumnName="preferredbehaviour" />
+                <ScalarProperty Name="timeclose" ColumnName="timeclose" />
+                <ScalarProperty Name="timeopen" ColumnName="timeopen" />
+                <ScalarProperty Name="introformat" ColumnName="introformat" />
+                <ScalarProperty Name="intro" ColumnName="intro" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="course" ColumnName="course" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_quiz_attempts">
+            <EntityTypeMapping TypeName="moodleModel.fit_quiz_attempts">
+              <MappingFragment StoreEntitySet="fit_quiz_attempts">
+                <ScalarProperty Name="currentpage" ColumnName="currentpage" />
+                <ScalarProperty Name="needsupgradetonewqe" ColumnName="needsupgradetonewqe" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="preview" ColumnName="preview" />
+                <ScalarProperty Name="layout" ColumnName="layout" />
+                <ScalarProperty Name="timemodified" ColumnName="timemodified" />
+                <ScalarProperty Name="timefinish" ColumnName="timefinish" />
+                <ScalarProperty Name="timestart" ColumnName="timestart" />
+                <ScalarProperty Name="sumgrades" ColumnName="sumgrades" />
+                <ScalarProperty Name="attempt" ColumnName="attempt" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="quiz" ColumnName="quiz" />
+                <ScalarProperty Name="uniqueid" ColumnName="uniqueid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_quiz_grades">
+            <EntityTypeMapping TypeName="moodleModel.fit_quiz_grades">
+              <MappingFragment StoreEntitySet="fit_quiz_grades">
+                <ScalarProperty Name="timemodified" ColumnName="timemodified" />
+                <ScalarProperty Name="grade" ColumnName="grade" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="quiz" ColumnName="quiz" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_quiz_overrides">
+            <EntityTypeMapping TypeName="moodleModel.fit_quiz_overrides">
+              <MappingFragment StoreEntitySet="fit_quiz_overrides">
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="attempts" ColumnName="attempts" />
+                <ScalarProperty Name="timelimit" ColumnName="timelimit" />
+                <ScalarProperty Name="timeclose" ColumnName="timeclose" />
+                <ScalarProperty Name="timeopen" ColumnName="timeopen" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="groupid" ColumnName="groupid" />
+                <ScalarProperty Name="quiz" ColumnName="quiz" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_quiz_overview_regrades">
+            <EntityTypeMapping TypeName="moodleModel.fit_quiz_overview_regrades">
+              <MappingFragment StoreEntitySet="fit_quiz_overview_regrades">
+                <ScalarProperty Name="timemodified" ColumnName="timemodified" />
+                <ScalarProperty Name="regraded" ColumnName="regraded" />
+                <ScalarProperty Name="oldfraction" ColumnName="oldfraction" />
+                <ScalarProperty Name="newfraction" ColumnName="newfraction" />
+                <ScalarProperty Name="slot" ColumnName="slot" />
+                <ScalarProperty Name="questionusageid" ColumnName="questionusageid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_quiz_question_instances">
+            <EntityTypeMapping TypeName="moodleModel.fit_quiz_question_instances">
+              <MappingFragment StoreEntitySet="fit_quiz_question_instances">
+                <ScalarProperty Name="grade" ColumnName="grade" />
+                <ScalarProperty Name="question" ColumnName="question" />
+                <ScalarProperty Name="quiz" ColumnName="quiz" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_quiz_question_response_stats">
+            <EntityTypeMapping TypeName="moodleModel.fit_quiz_question_response_stats">
+              <MappingFragment StoreEntitySet="fit_quiz_question_response_stats">
+                <ScalarProperty Name="credit" ColumnName="credit" />
+                <ScalarProperty Name="rcount" ColumnName="rcount" />
+                <ScalarProperty Name="response" ColumnName="response" />
+                <ScalarProperty Name="aid" ColumnName="aid" />
+                <ScalarProperty Name="subqid" ColumnName="subqid" />
+                <ScalarProperty Name="questionid" ColumnName="questionid" />
+                <ScalarProperty Name="quizstatisticsid" ColumnName="quizstatisticsid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_quiz_question_statistics">
+            <EntityTypeMapping TypeName="moodleModel.fit_quiz_question_statistics">
+              <MappingFragment StoreEntitySet="fit_quiz_question_statistics">
+                <ScalarProperty Name="randomguessscore" ColumnName="randomguessscore" />
+                <ScalarProperty Name="positions" ColumnName="positions" />
+                <ScalarProperty Name="maxmark" ColumnName="maxmark" />
+                <ScalarProperty Name="subquestions" ColumnName="subquestions" />
+                <ScalarProperty Name="facility" ColumnName="facility" />
+                <ScalarProperty Name="sd" ColumnName="sd" />
+                <ScalarProperty Name="discriminativeefficiency" ColumnName="discriminativeefficiency" />
+                <ScalarProperty Name="discriminationindex" ColumnName="discriminationindex" />
+                <ScalarProperty Name="negcovar" ColumnName="negcovar" />
+                <ScalarProperty Name="effectiveweight" ColumnName="effectiveweight" />
+                <ScalarProperty Name="s" ColumnName="s" />
+                <ScalarProperty Name="subquestion" ColumnName="subquestion" />
+                <ScalarProperty Name="slot" ColumnName="slot" />
+                <ScalarProperty Name="questionid" ColumnName="questionid" />
+                <ScalarProperty Name="quizstatisticsid" ColumnName="quizstatisticsid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_quiz_reports">
+            <EntityTypeMapping TypeName="moodleModel.fit_quiz_reports">
+              <MappingFragment StoreEntitySet="fit_quiz_reports">
+                <ScalarProperty Name="capability" ColumnName="capability" />
+                <ScalarProperty Name="displayorder" ColumnName="displayorder" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_quiz_statistics">
+            <EntityTypeMapping TypeName="moodleModel.fit_quiz_statistics">
+              <MappingFragment StoreEntitySet="fit_quiz_statistics">
+                <ScalarProperty Name="standarderror" ColumnName="standarderror" />
+                <ScalarProperty Name="errorratio" ColumnName="errorratio" />
+                <ScalarProperty Name="cic" ColumnName="cic" />
+                <ScalarProperty Name="kurtosis" ColumnName="kurtosis" />
+                <ScalarProperty Name="skewness" ColumnName="skewness" />
+                <ScalarProperty Name="standarddeviation" ColumnName="standarddeviation" />
+                <ScalarProperty Name="median" ColumnName="median" />
+                <ScalarProperty Name="allattemptsavg" ColumnName="allattemptsavg" />
+                <ScalarProperty Name="firstattemptsavg" ColumnName="firstattemptsavg" />
+                <ScalarProperty Name="allattemptscount" ColumnName="allattemptscount" />
+                <ScalarProperty Name="firstattemptscount" ColumnName="firstattemptscount" />
+                <ScalarProperty Name="timemodified" ColumnName="timemodified" />
+                <ScalarProperty Name="allattempts" ColumnName="allattempts" />
+                <ScalarProperty Name="groupid" ColumnName="groupid" />
+                <ScalarProperty Name="quizid" ColumnName="quizid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_role_assignments">
+            <EntityTypeMapping TypeName="moodleModel.fit_role_assignments">
+              <MappingFragment StoreEntitySet="fit_role_assignments">
+                <ScalarProperty Name="sortorder" ColumnName="sortorder" />
+                <ScalarProperty Name="itemid" ColumnName="itemid" />
+                <ScalarProperty Name="component" ColumnName="component" />
+                <ScalarProperty Name="modifierid" ColumnName="modifierid" />
+                <ScalarProperty Name="timemodified" ColumnName="timemodified" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="contextid" ColumnName="contextid" />
+                <ScalarProperty Name="roleid" ColumnName="roleid" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <title>@ViewBag.Title - Vimaru Student Portal</title>
-        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <link href="~/VIMARU_ICO.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
         @Styles.Render("~/Content/css")
         <link href="@Url.Content("~/Content/jqGrid/redmond/jquery-ui-1.9.0.custom.css")" rel="stylesheet" type="text/css" />
@@ -47,21 +47,14 @@
         <header>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("CỔNG THÔNG TIN SINH VIÊN", "Index", "Home")</p>
+                    <a href="../Home/Index">
+                        <img src="@Url.Content("~/images/vimaru-logo.png")" alt="Student Portal" style="margin-left:-18px" width="342" height="90" />
+                    </a>
                 </div>
                 <div class="float-right">
                     <section id="login">
                         @Html.Partial("_LoginPartial")
                     </section>
-                   @* <nav>
-                        <ul id="menu">
-                            <li>@Html.ActionLink("Đăng nhập", "Login", "Account")</li>
-                            <li>@Html.ActionLink("Sinh viên", "SinhVien", "MoodleUser")</li>
-                            <li>@Html.ActionLink("Học kỳ", "HocKy", "MoodleCategory")</li>
-                            <li>@Html.ActionLink("Lớp học phần", "LopHocPhan", "MoodleCourse")</li>
-                            <li>@Html.ActionLink("Ghi danh", "GhiDanh", "MoodleEnrol")</li>
-                        </ul>
-                    </nav>*@
                     <nav>
                         <ul id="menu">
                              <li>
@@ -124,6 +117,7 @@
                 </div>
             </div>
         </header>
+        
         <div id="body">
             @RenderSection("featured", required: false)
             <section class="content-wrapper main-content clear-fix">
