@@ -305,10 +305,10 @@ namespace CongThongTinSV.Controllers
         /// <param name="contextLevel">context level</param>
         /// <param name="instanceID">instance id</param>
         /// <returns></returns>
-        public static long GetContextID(long contextLevel, long instanceID)
+        public static long GetContextID(string contextLevel, string instanceID)
         {
             MoodleEntities mdb = new MoodleEntities();
-            var q = mdb.fit_context.FirstOrDefault(t => t.contextlevel == contextLevel && t.instanceid == instanceID);
+            var q = mdb.fit_context.AsEnumerable().FirstOrDefault(t => t.contextlevel.ToString() == contextLevel && t.instanceid.ToString() == instanceID);
 
             if (q == null)
             {

@@ -41,7 +41,8 @@
         columns.Bound(c => c.So_tin_chi).Width(105).HtmlAttributes(new { style = "text-align:center" });
         columns.Bound(c => c.Tu_ngay).Width(105).Format("{0:dd-MM-yyyy}");
         columns.Bound(c => c.Den_ngay).Width(105).Format("{0:dd-MM-yyyy}");
-        columns.Command(command => command.Custom("Chi tiết").Click("showDetails")).Width(100);
+        columns.Command(command => command.Custom("Chi tiết").Click("showDetails")).Width(90);
+        columns.Command(command => command.Custom("Bảng điểm").Click("showUsers"));
     })
     .Pageable(pager => pager.PageSizes(new int[]{5, 10, 20, 50, 100, 1000}).Refresh(true).Input(true).Numeric(false))
         .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
@@ -75,7 +76,15 @@
         e.preventDefault();
 
         var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-        window.location.href = "@Url.Action("BaiKiemTra","MoodleCourse")"
+        window.location.href = "@Url.Action("DanhSachBaiKiemTra","MoodleCourse")"
+                       + "?courseid=" + dataItem.ID_moodle;
+    }
+
+    function showUsers(e) {
+        e.preventDefault();
+
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        window.location.href = "@Url.Action("BangDiemKhoaHoc","MoodleCourse")"
                        + "?courseid=" + dataItem.ID_moodle;
     }
 

@@ -28,10 +28,21 @@
         <EntityTypeShape EntityType="moodleModel.fit_message_working" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="moodleModel.fit_user" Width="1.5" PointX="14.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="moodleModel.fit_user_enrolments" Width="1.5" PointX="10.75" PointY="14.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="moodleModel.fit_role" Width="1.5" PointX="8.7458666678265971" PointY="15.758068166560525" />
-        <EntityTypeShape EntityType="moodleModel.fit_role_context_levels" Width="1.5" PointX="1.6045720715097021" PointY="30.924657344317371" />
-        <EntityTypeShape EntityType="moodleModel.fit_role_names" Width="1.5" PointX="1.6049963410967014" PointY="24.235265817602755" />
-        <EntityTypeShape EntityType="moodleModel.fit_context" Width="1.5" PointX="5.2909148043444922" PointY="5.7221775677624054" />
+        <EntityTypeShape EntityType="moodleModel.fit_role" Width="1.5" PointX="2.75" PointY="15.75" />
+        <EntityTypeShape EntityType="moodleModel.fit_role_context_levels" Width="1.5" PointX="12.75" PointY="15.75" />
+        <EntityTypeShape EntityType="moodleModel.fit_role_names" Width="1.5" PointX="14.75" PointY="15.75" />
+        <EntityTypeShape EntityType="moodleModel.fit_context" Width="1.5" PointX="16.75" PointY="0.75" />
+        <EntityTypeShape EntityType="moodleModel.fit_quiz" Width="1.5" PointX="9.1179385115941685" PointY="2.2595070909054518" />
+        <EntityTypeShape EntityType="moodleModel.fit_quiz_attempts" Width="1.5" PointX="9.5690930530284959" PointY="23.25914229045582" />
+        <EntityTypeShape EntityType="moodleModel.fit_quiz_grades" Width="1.5" PointX="9.7413339324953654" PointY="5.1373379552445089" />
+        <EntityTypeShape EntityType="moodleModel.fit_quiz_overrides" Width="1.5" PointX="7.2381059859125436" PointY="18.698409089212497" />
+        <EntityTypeShape EntityType="moodleModel.fit_quiz_overview_regrades" Width="1.5" PointX="8.18021523960876" PointY="25.474614274443415" />
+        <EntityTypeShape EntityType="moodleModel.fit_quiz_question_instances" Width="1.5" PointX="5.5629953656173292" PointY="16.396949567085574" />
+        <EntityTypeShape EntityType="moodleModel.fit_quiz_question_response_stats" Width="1.5" PointX="0.97676595345920236" PointY="8.75235525181161" />
+        <EntityTypeShape EntityType="moodleModel.fit_quiz_question_statistics" Width="1.5" PointX="11.632779881187146" PointY="5.1537237787403747" />
+        <EntityTypeShape EntityType="moodleModel.fit_quiz_reports" Width="1.5" PointX="0.1680103373564828" PointY="28.217126725342649" />
+        <EntityTypeShape EntityType="moodleModel.fit_quiz_statistics" Width="1.5" PointX="0.49462082818831354" PointY="16.705950133831216" />
+        <EntityTypeShape EntityType="moodleModel.fit_role_assignments" Width="1.5" PointX="7.4200379212480208" PointY="26.762508643214829" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -70,11 +70,13 @@ h4, h5, h6 {
 }
 
 h1 {
-    font-size: 2em;
+    /*font-size: 2em;*/
+    font-size: 1.75em;
 }
 
 h2 {
     font-size: 1.35em;
+    margin-bottom: 10px;
     /*font-size: 1.75em;*/
 }
 
@@ -114,7 +116,7 @@ h5, h6 {
 
     .main-content {
         background: url("../Images/accent.png") no-repeat;
-        padding-left: 10px;
+        padding-left: 0px;
         padding-top: 30px;
     }
 
@@ -123,7 +125,7 @@ h5, h6 {
     }
 
 header .content-wrapper {
-    padding-top: 20px; 
+    padding-top: 10px; 
 }
 
 footer {
@@ -774,4 +776,7 @@ td a:hover {
     color: #FF0000;
     text-decoration: underline;
 }
-
+hr
+{
+    color: #c8c8c8;
+}

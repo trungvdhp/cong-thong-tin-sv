@@ -25,6 +25,14 @@ namespace CongThongTinSV.Models
         public int descriptionformat { get; set; }
     }
 
+    public class MoodleGroup
+    {
+        public int id { get; set; } //group id
+        public string name { get; set; } //group name
+        public string description { get; set; } //group description
+        public int descriptionformat { get; set; } //description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN)
+    }
+
     public class MoodleNhom
     {
         [DisplayName("ID")]

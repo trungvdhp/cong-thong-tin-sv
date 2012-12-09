@@ -27,7 +27,7 @@ namespace CongThongTinSV.Models
         public string value { get; set; } //The value of the custom field
     }
 
-    public class MoodleUserProfileResponse
+    public class MoodleUserResponse
     {
         public double id { get; set; } //ID of the user
         public string username { get; set; } //Username policy is defined in Moodle security config
@@ -64,13 +64,58 @@ namespace CongThongTinSV.Models
         public string profileimageurl { get; set; } //User image profile URL - big version
         public List<MoodleUserCustomfield> customfields { get; set; } //User custom fields (also known as user profil fields)
         public List<MoodleUserPreference> preferences { get; set; } //User preferences
-        public List<MoodleEnrolledCourseResponse> enrolledcourses { get; set; } //Courses where the user is enrolled - limited by which courses the user is able to see
+        public List<MoodleEnrolledCourse> enrolledcourses { get; set; } //Courses where the user is enrolled - limited by which courses the user is able to see
         
-        public MoodleUserProfileResponse()
+        public MoodleUserResponse()
         {
             customfields = new List<MoodleUserCustomfield>();
             preferences = new List<MoodleUserPreference>();
-            enrolledcourses = new List<MoodleEnrolledCourseResponse>();
+            enrolledcourses = new List<MoodleEnrolledCourse>();
+        }
+    }
+
+    public class MoodleCourseUserResponse
+    {
+        public double id { get; set; } //ID of the user
+        public string username { get; set; } //Username policy is defined in Moodle security config
+        public string firstname { get; set; } //The first name(s) of the user
+        public string lastname { get; set; } //The family name of the user
+        public string fullname { get; set; } //The fullname of the user
+        public string email { get; set; } //An email address - allow email as root@localhost
+        public string address { get; set; } //Postal address
+        public string phone1 { get; set; } //Phone 1
+        public string phone2 { get; set; } //Phone 2
+        public string icq { get; set; } //icq number
+        public string skype { get; set; } //skype id
+        public string yahoo { get; set; } //yahoo id
+        public string aim { get; set; } //aim id
+        public string msn { get; set; } //msn number
+        public string department { get; set; } //department
+        public string institution { get; set; } //institution
+        public string idnumber { get; set; } //An arbitrary ID code number perhaps from the institution
+        public string interests { get; set; } //user interests (separated by commas)
+        public int firstaccess { get; set; } //first access to the site (0 if never)
+        public int lastaccess { get; set; } //last access to the site (0 if never)
+        public string description { get; set; } //User profile description
+        public int descriptionformat { get; set; } //description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN)
+        public string city { get; set; } //Home city of the user
+        public string url { get; set; } //URL of the user
+        public string country { get; set; } //Home country code of the user, such as AU or CZ
+        public string profileimageurlsmall { get; set; } //User image profile URL - small version
+        public string profileimageurl { get; set; } //User image profile URL - big version
+        public List<MoodleUserCustomfield> customfields { get; set; } //User custom fields (also known as user profil fields)
+        public List<MoodleGroup> groups { get; set; } //user groups
+        public List<MoodleRole> roles { get; set; } //user roles
+        public List<MoodleUserPreference> preferences { get; set; } //User preferences
+        public List<MoodleEnrolledCourse> enrolledcourses { get; set; } //Courses where the user is enrolled - limited by which courses the user is able to see
+
+        public MoodleCourseUserResponse()
+        {
+            customfields = new List<MoodleUserCustomfield>();
+            groups = new List<MoodleGroup>();
+            roles = new List<MoodleRole>();
+            preferences = new List<MoodleUserPreference>();
+            enrolledcourses = new List<MoodleEnrolledCourse>();
         }
     }
 

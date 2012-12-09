@@ -1,20 +1,14 @@
 ﻿@model CongThongTinSV.Models.LocalPasswordModel
 @{
-    ViewBag.Title = "Đổi mật khẩu trên Moodle";
+    ViewBag.Title = "Đổi mật khẩu moodle Elearning";
 }
-
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-</hgroup>
-
+<h1>@ViewBag.Title</h1>
+<hr />
 <p class="message-success">@ViewBag.StatusMessage</p>
-
-<p>Bạn đang đăng nhập với tên <strong>@User.Identity.Name</strong>.</p>
-
+<p>Bạn đang đăng nhập với tên <strong>@User.Identity.Name</strong></p>
 @using (Html.BeginForm("DoiMatKhau", "MoodleUser")) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary()
-
     <fieldset>
         <legend>Nhập thông tin đổi mật khẩu</legend>
         <ol>
@@ -31,7 +25,7 @@
                 @Html.PasswordFor(m => m.ConfirmPassword)
             </li>
         </ol>
-        <input type="submit" value="Đổi mật khẩu" />
+        <button class="k-button" >Đổi mật khẩu</button>
     </fieldset>
 }
 

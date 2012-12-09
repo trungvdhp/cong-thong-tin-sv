@@ -1,10 +1,9 @@
 ﻿@using CongThongTinSV.Models
 @{
-    ViewBag.Title = "Thông tin tài khoản moodle Elearning";
+    MoodleUserResponse userProfile = ViewBag.UserProfile;
+    ViewBag.Title = userProfile.fullname + ": Tài khoản moodle Elearning";
 }
-@{
-    MoodleUserProfileResponse userProfile = ViewBag.UserProfile;
-}
+
 <h2 style="text-align:center">@userProfile.fullname</h2>
 <table style="color:black" summary="">
     <tr>
@@ -15,49 +14,61 @@
         </td>
     </tr>
     <tr>
-        <td>Country:</td>
+        <td>Quốc gia:</td>
         <td>@userProfile.country</td>
     </tr>
     <tr>
-        <td>City/town:</td>
+        <td>Tỉnh/thành:</td>
         <td>@userProfile.city</td>
     </tr>
     <tr>
-        <td>Email address:</td>
+        <td>Thư điện tử:</td>
         <td>
             <a href="mailto:@userProfile.email"  title="">@userProfile.email</a>
         </td>
     </tr>
+    @{
+        int n = userProfile.customfields.Count;
+        
+        for(int i = 0; i < n; i++)
+        {
+            <tr>
+                <td>@userProfile.customfields[i].name:</td>
+                <td>
+                    @{
+                        if (userProfile.customfields[i].value == "0"){
+                            <text>Not set</text>
+                        }
+                        else{
+                            <text>userProfile.customfields[i].value</text>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    }
     <tr>
-        <td>@userProfile.customfields[0].name:</td>
+        <td>Các khóa học:</td>
         <td>
             @{
-                if (userProfile.customfields[0].value == "0"){
-                    <text>Not set</text>
-                }
-                else{
-                    <text>userProfile.customfields[0].value</text>
-                }
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>Course profiles:</td>
-        <td>
-            @{
-                int len = userProfile.enrolledcourses.Count-1;
-                for(int i=0; i<len; i++)
+                int len = userProfile.enrolledcourses.Count;
+                for(int i = 0; i < len; i++)
                 {
-                    <a href="http://" >@userProfile.enrolledcourses[i].fullname</a><text>,&nbsp</text>
+                    if(i > 0)
+                    {
+                        <text>,&nbsp</text>
+                    }
+                    <text>
+                    @Html.ActionLink(userProfile.enrolledcourses[i].fullname, "CourseUserProfile", "MoodleUser", routeValues: new { userid = userProfile.id, courseid = userProfile.enrolledcourses[i].id }, htmlAttributes: new { title = "Course user profile" })
+                    </text>
                 }
-                <a href="http://" >@userProfile.enrolledcourses[len].fullname</a>
             }</td>
     </tr>
     <tr>
-        <td>First access:</td>
+        <td>Lần truy cập đầu tiên:</td>
         <td>@CongThongTinSV.Controllers.UtilityController.ConvertToDetailDateTimeString(userProfile.firstaccess)</td></tr>
     <tr>
-        <td>Last access:</td>
+        <td>Lần truy cập gần nhất:</td>
         <td>@CongThongTinSV.Controllers.UtilityController.ConvertToDetailDateTimeString(userProfile.lastaccess)</td>
     </tr>
 </table>

@@ -571,11 +571,11 @@ namespace CongThongTinSV.Controllers
             return View(model);
         }
         
-        public static List<MoodleUserProfileResponse> GetUserByID(List<string> list)
+        public static List<MoodleUserResponse> GetUserByID(List<string> list)
         {
             Entities db = new Entities();
             int i = 0;
-            string postData = "wsfunction=core_user_get_users_by_id ";
+            string postData = "wsfunction=core_user_get_users_by_id";
 
             foreach (string item in list)
             {
@@ -587,7 +587,7 @@ namespace CongThongTinSV.Controllers
             string response = web.GetResponse();
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             // MoodleException moodleError = new MoodleException();
-            List<MoodleUserProfileResponse> results = new List<MoodleUserProfileResponse>();
+            List<MoodleUserResponse> results = new List<MoodleUserResponse>();
 
             if (response.Contains("exception"))
             {
@@ -597,11 +597,11 @@ namespace CongThongTinSV.Controllers
             else
             {
                 // Good
-                results = serializer.Deserialize<List<MoodleUserProfileResponse>>(response);
+                results = serializer.Deserialize<List<MoodleUserResponse>>(response);
             }
 
             UtilityController.WriteTextToFile("D:\\MoodleGetUserByID.txt", response);
-            return results; ;
+            return results;
         }
 
         public ActionResult UserProfile(string userid)
@@ -609,14 +609,76 @@ namespace CongThongTinSV.Controllers
             List<string> list = new List<string>();
             list.Add(userid);
             var q = GetUserByID(list);
+
             if (q.Count() > 0)
                 ViewBag.UserProfile = q.ElementAt(0);
             else
-                ViewBag.UserProfile = new MoodleUserProfileResponse();
+                ViewBag.UserProfile = new MoodleUserResponse();
+
             return View();
         }
 
-        public ActionResult BaiLam(string quizid, string userid)
+        public static List<MoodleCourseUserResponse> GetCourseUserProfile(List<KeyValuePair<string, string>> list)
+        {
+            Entities db = new Entities();
+            int i = 0;
+            string postData = "wsfunction=core_user_get_course_user_profiles";
+
+            foreach (KeyValuePair<string, string> item in list)
+            {
+                postData += "&userlist[" + i + "][userid]=" + item.Key;
+                postData += "&userlist[" + i + "][courseid]=" + item.Value;
+                i++;
+            }
+
+            WebRequestController web = new WebRequestController(4, "POST", postData);
+            string response = web.GetResponse();
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            // MoodleException moodleError = new MoodleException();
+            List<MoodleCourseUserResponse> results = new List<MoodleCourseUserResponse>();
+
+            if (response.Contains("exception"))
+            {
+                // Error
+                // moodleError = serializer.Deserialize<MoodleException>(rs);
+            }
+            else
+            {
+                // Good
+                results = serializer.Deserialize<List<MoodleCourseUserResponse>>(response);
+            }
+
+            UtilityController.WriteTextToFile("D:\\MoodleGetCourseUserProfile.txt", response);
+            return results;
+        }
+
+        public ActionResult CourseUserProfile(string userid, string courseid)
+        {
+            List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
+            list.Add(new KeyValuePair<string,string>(userid, courseid));
+            var q = GetCourseUserProfile(list);
+
+            if (q.Count() > 0)
+            {
+                var user= q.ElementAt(0);
+                ViewBag.CourseUser = user;
+                ViewBag.CourseName = user.enrolledcourses.AsEnumerable().Single(t => t.id.ToString() == courseid).fullname;
+            }
+            else
+            {
+                ViewBag.CourseUser = new MoodleCourseUserResponse();
+                ViewBag.CourseName = "";
+            }
+
+            return View();
+        }
+
+        public ActionResult BaiLamCaNhan(string quizid)
+        {
+            return View();
+        }
+
+        public ActionResult BaiLamHocVien(string quizid, string userid)
         {
             return View();
         }

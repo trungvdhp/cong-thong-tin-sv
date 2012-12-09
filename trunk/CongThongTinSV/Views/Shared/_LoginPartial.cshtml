@@ -25,7 +25,8 @@
     }
 }
 else {
-    if (HttpContext.Current.Request.Url.AbsolutePath != "/Account/Login" && HttpContext.Current.Request.Url.AbsolutePath != "/Home" && HttpContext.Current.Request.Url.AbsolutePath != "/")
+    if (HttpContext.Current.Request.Url.AbsolutePath != "/Account/Login" && HttpContext.Current.Request.Url.AbsolutePath != "/Home" && HttpContext.Current.Request.Url.AbsolutePath != "/" &&
+HttpContext.Current.Request.Url.AbsolutePath != "/Home/Index")
     {
         Response.Redirect(Url.Action("Login", "Account"));
     }

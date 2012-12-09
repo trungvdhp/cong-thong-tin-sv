@@ -9,17 +9,15 @@
 
     })
 </script>
-<hgroup class="title">
-    <h1>@ViewBag.Title</h1>
-</hgroup>
-<section id="loginForm">
+<h1>@ViewBag.Title</h1>
+<hr />
+@*<section id="loginForm">*@
 @*<h2>Use a local account to log in.</h2>*@
 @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
-
     <fieldset>
-        <legend>Log in Form</legend>
+        <legend>Nhập thông tin đăng nhập</legend>
         <ol>
             <li>
                 @Html.LabelFor(m => m.UserName)
@@ -32,8 +30,6 @@
                 @Html.ValidationMessageFor(m => m.Password)
             </li>
             <li>
-                @* @Html.Label("Dịch vụ")*@
-                @*@Html.DropDownList("Service", (SelectList)ViewBag.Service)*@
                 @(Html.Kendo().DropDownList()
                 .Name("Service")
                 .OptionLabel("Chọn dịch vụ Moodle")
@@ -45,17 +41,17 @@
                 @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
             </li>
         </ol>
-        <input type="submit" class="k-button" value="Log in" />
+        <button class="k-button" >Đăng nhập</button>
     </fieldset>
-    <p>
+    @*<p>
         @Html.ActionLink("Register", "Register") if you don't have an account.
-    </p>
+    </p>*@
 }
-</section>
-<section class="social" id="socialLoginForm">
+@*</section>*@
+@*<section class="social" id="socialLoginForm">
     <h2>Use another service to log in.</h2>
     @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
-</section>
+</section>*@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

@@ -12,14 +12,14 @@ namespace CongThongTinSV.Models
         public string shortname { get; set; }
     }
 
-    public class MoodleEnrolledCourseResponse
+    public class MoodleEnrolledCourse
     {
-        public string id { get; set; }
+        public int id { get; set; }
         public string fullname { get; set; }
         public string shortname { get; set; }
     }
 
-    public class MoodleModuleContentResponse
+    public class MoodleModuleContent
     {
         public string type { get; set; } //a file or a folder or external link
         public string filename { get; set; } //filename
@@ -35,7 +35,7 @@ namespace CongThongTinSV.Models
         public string license { get; set; } //Content license
     }
 
-    public class MoodleCourseModuleResponse
+    public class MoodleCourseModule
     {
         public int id { get; set; } //activity id
         public string url { get; set; } //activity url
@@ -48,7 +48,7 @@ namespace CongThongTinSV.Models
         public int availablefrom { get; set; } //module availability start date
         public int availableuntil { get; set; } //module availability en date
         public int indent { get; set; } //number of identation in the site
-        public List<MoodleModuleContentResponse> contents { get; set; }
+        public List<MoodleModuleContent> contents { get; set; }
     }
 
     public class MoodleCourseContentResponse
@@ -58,7 +58,7 @@ namespace CongThongTinSV.Models
         public int visible { get; set; } //is the section visible
         public string summary { get; set; } //Section description
         public int summaryformat { get; set; } //summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN)
-        public List<MoodleCourseModuleResponse> modules { get; set; } //list of module+
+        public List<MoodleCourseModule> modules { get; set; } //list of module+
     }
 
     public class MoodleLopHocPhan
