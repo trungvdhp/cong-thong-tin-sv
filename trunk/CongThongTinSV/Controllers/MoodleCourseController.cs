@@ -95,9 +95,6 @@ namespace CongThongTinSV.Controllers
             int cID = Convert.ToInt32(id_hocky);
             var list = MoodleLopHocPhans(Convert.ToInt32(cID)).Where(t => t.ID_moodle == 0 && s.Contains(t.ID.ToString())).ToList();
 
-            //ViewBag.SelectedIds = new SelectList(list, "", "ID_moodle");
-            //ViewBag.Result = new SelectList(list, "ID_moodle", "");
-
             if (list.Count() == 0) return View();
 
             int i = 0;
@@ -108,7 +105,7 @@ namespace CongThongTinSV.Controllers
                 postData += "&courses[" + i + "][fullname]=" + HttpUtility.UrlEncode(item.Lop_hoc_phan);
                 postData += "&courses[" + i + "][shortname]=" + HttpUtility.UrlEncode(item.Lop_hoc_phan);
                 postData += "&courses[" + i + "][categoryid]=" + id_hocky;
-                postData += "&courses[" + i + "][idnumber]=" + HttpUtility.UrlEncode(UtilityController.GetIdnumber(item.Lop_hoc_phan));
+                postData += "&courses[" + i + "][idnumber]=" + item.ID;//HttpUtility.UrlEncode(UtilityController.GetIdnumber(item.Lop_hoc_phan));
                 postData += "&courses[" + i + "][summary]=" + HttpUtility.UrlEncode(item.Lop_hoc_phan + "-" + item.Ky_hieu + "-" + item.So_tin_chi + " tín chỉ");
                 //postData += "&courses[" + i + "][summaryformat]=1";
                 //postData += "&courses[" + i + "][format]=weeks";
@@ -174,9 +171,6 @@ namespace CongThongTinSV.Controllers
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
             int cID = Convert.ToInt32(id_hocky);
             var list = MoodleLopHocPhans(Convert.ToInt32(cID)).Where(t => t.ID_moodle > 0 && s.Contains(t.ID.ToString())).ToList();
-
-            //ViewBag.SelectedIds = new SelectList(list, "", "ID_moodle");
-            //ViewBag.Result = new SelectList(list, "ID_moodle", "");
 
             if (list.Count() == 0) return View();
 

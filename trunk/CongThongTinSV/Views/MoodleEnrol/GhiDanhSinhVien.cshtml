@@ -61,18 +61,17 @@
             .HtmlAttributes(new { style = "text-align:center" })
             .Filterable(false).Groupable(false).Sortable(false);
         columns.Bound(c => c.Ma_sv).Width(80);
-        columns.Bound(c => c.ID_moodle).Width(105);
-        columns.Bound(c => c.Ho_dem).Width(150);
+        columns.Bound(c => c.Ho_dem).Width(145);
         columns.Bound(c => c.Ten).Width(80);
         columns.Bound(c => c.Ngay_sinh).Width(100).Format("{0:dd-MM-yyyy}");
-        //columns.Bound(c => c.Gioi_tinh).Width(90);
+        columns.Bound(c => c.Gioi_tinh).Width(90);
         columns.Bound(c => c.Lop).Width(90);
-        columns.Bound(c => c.DiemX).Width(80);
-        columns.Bound(c => c.Ghi_danh).Width(90);
+        columns.Bound(c => c.DiemX).Width(85);
+        columns.Bound(c => c.Tinh_trang).Width(130);
         columns.Bound(c => c.Ten_nhom);
     })
     .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50, 80 }).Refresh(true).Input(true).Numeric(false))
-    .Sortable(s => s.SortMode(GridSortMode.MultipleColumn))
+    .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
     .Filterable()
     .Scrollable()
     .Groupable()
@@ -96,8 +95,6 @@
 <div style="margin-top:5px">
     <button id="createEnrol" class="k-button">Ghi danh</button>
     <button id="deleteEnrol" class="k-button">Đình chỉ ghi danh</button>
-    <button id="createUser" class="k-button">Đăng ký tài khoản</button>
-    <button id="deleteUser" class="k-button">Hủy đăng ký</button>
 </div>
 <div>
      @(Html.Kendo().ComboBox()
@@ -140,10 +137,6 @@
         }
     }
 
-    //function selectLopHocPhan() {
-    //    $("#LopHocPhan").data("kendoDropDownList").select(0);
-    //}
-
     function loadGrid() {
         selectedVals.splice(0, selectedVals.length);
         gridRefresh();
@@ -183,26 +176,6 @@
         $("#Nhom").data("kendoDropDownList").dataSource.read();
         $("#Nhom").data("kendoDropDownList").select(0);
     }
-
-    $("#createUser").click(function () {
-        if (selectedVals.length == 0) {
-            alert('Vui lòng chọn một sinh viên!');
-            return;
-        }
-
-        processing('/MoodleEnrol/CreateSinhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals, "Đang tạo tài khoản moodle cho các sinh viên...", gridRefresh);
-    })
-
-    $("#deleteUser").click(function () {
-        if (selectedVals.length == 0) {
-            alert('Vui lòng chọn một sinh viên!');
-            return;
-        }
-
-        if (confirm('Bạn muốn xóa tài khoản moodle của các sinh viên đã chọn?')) {
-            processing('/MoodleEnrol/DeleteSinhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals, "Đang xóa tài khoản moodle của các sinh viên...", gridRefresh);
-        }
-    })
 
     $("#createEnrol").click(function () {
         if (selectedVals.length == 0) {
