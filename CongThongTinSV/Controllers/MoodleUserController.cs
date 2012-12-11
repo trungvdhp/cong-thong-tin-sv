@@ -159,9 +159,8 @@ namespace CongThongTinSV.Controllers
 
             var list = MoodleSinhViens(Convert.ToInt32(id_chuyen_nganh)).Where(t => t.ID_moodle == 0 && s.Contains(t.ID_sv.ToString())).ToList();
 
-            if (list.Count() == 0) return View();
-
-            CreateSinhVien(list);
+            if (list.Count() > 0)
+                CreateSinhVien(list);
             
             return View();
         }
@@ -208,9 +207,8 @@ namespace CongThongTinSV.Controllers
 
             var list = MoodleSinhViens(Convert.ToInt32(id_chuyen_nganh)).Where(t => t.ID_moodle > 0 && s.Contains(t.ID_sv.ToString())).ToList();
 
-            if (list.Count() == 0) return View();
-
-            DeleteSinhVien(list);
+            if (list.Count() > 0)
+                DeleteSinhVien(list);
 
             return View();
         }
@@ -250,7 +248,7 @@ namespace CongThongTinSV.Controllers
             WebRequestController web = new WebRequestController(4, "POST", postData);
             string response = web.GetResponse();
             //JavaScriptSerializer serializer = new JavaScriptSerializer();
-            // MoodleException moodleError = new MoodleException();
+            //MoodleException moodleError = new MoodleException();
             //List<MoodleCreateUserResponse> results = new List<MoodleCreateUserResponse>();
             UtilityController.WriteTextToFile("D:\\SinhVienUpdate.txt", response);
 
@@ -270,9 +268,8 @@ namespace CongThongTinSV.Controllers
 
             var list = MoodleSinhViens(Convert.ToInt32(id_chuyen_nganh)).Where(t => t.ID_moodle > 0 && s.Contains(t.ID_sv.ToString())).ToList();
 
-            if (list.Count() == 0) return View();
-
-            UpdateSinhVien(list);
+            if (list.Count() > 0)
+                UpdateSinhVien(list);
 
             return View();
         }
@@ -392,12 +389,8 @@ namespace CongThongTinSV.Controllers
 
             var list = MoodleGiaoViens(Convert.ToInt32(id_khoa)).Where(t => t.ID_moodle == 0 && s.Contains(t.ID_cb.ToString())).ToList();
 
-            //ViewBag.SelectedIds = new SelectList(list, "Ma_sv", "ID_moodle");
-            //ViewBag.Result = new SelectList(list, "ID_moodle", "Ma_sv");
-
-            if (list.Count() == 0) return View();
-
-            CreateGiaoVien(list);
+            if (list.Count() > 0)
+                CreateGiaoVien(list);
 
             return View();
         }
@@ -444,9 +437,8 @@ namespace CongThongTinSV.Controllers
 
             var list = MoodleGiaoViens(Convert.ToInt32(id_khoa)).Where(t => t.ID_moodle > 0 && s.Contains(t.ID_cb.ToString())).ToList();
 
-            if (list.Count() == 0) return View();
-
-            DeleteGiaoVien(list);
+            if (list.Count() > 0)
+                DeleteGiaoVien(list);
 
             return View();
         }

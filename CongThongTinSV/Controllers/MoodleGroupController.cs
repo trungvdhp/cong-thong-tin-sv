@@ -388,9 +388,8 @@ namespace CongThongTinSV.Controllers
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
             var list = MoodleNhoms(Convert.ToInt32(id_lop_tc)).Where(t => t.ID_to == 0 && s.Contains(t.ID_nhom.ToString())).ToList();
 
-            if (list.Count() == 0) return View();
-
-            AssignToNhom(list, id_to);
+            if (list.Count() > 0)
+                AssignToNhom(list, id_to);
 
             return View();
         }
@@ -444,9 +443,8 @@ namespace CongThongTinSV.Controllers
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
             var list = MoodleNhoms(Convert.ToInt32(id_lop_tc)).Where(t => t.ID_to.ToString() == id_to && s.Contains(t.ID_nhom.ToString())).ToList();
 
-            if (list.Count() == 0) return View();
-
-            UnassignToNhom(list, id_to);
+            if (list.Count() > 0)
+                UnassignToNhom(list, id_to);
 
             return View();
         }

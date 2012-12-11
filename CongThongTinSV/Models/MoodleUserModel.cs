@@ -161,8 +161,8 @@ namespace CongThongTinSV.Models
         [DisplayName("Lớp")]
         public string Lop { get; set; }
 
-        [DisplayName("Ghi danh")]
-        public bool Ghi_danh { get; set; }
+        [DisplayName("Tình trạng")]
+        public string Tinh_trang { get; set; }
 
         [DisplayName("Điểm X")]
         public float DiemX { get; set; }
@@ -191,7 +191,7 @@ namespace CongThongTinSV.Models
         [DisplayName("ID moodle")]
         public int ID_moodle { get; set; }
 
-        [DisplayName("Mã giáo viên")]
+        [DisplayName("Mã GV")]
         public string Ma_cb { get; set; }
 
         [DisplayName("Họ và đệm")]
