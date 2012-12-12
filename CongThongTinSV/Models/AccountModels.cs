@@ -8,6 +8,30 @@ using System.Web.Security;
 
 namespace CongThongTinSV.Models
 {
+    public class UserData
+    {
+        public string UserName { get; set; }
+        public int PortalUserGroup { get; set; }
+        public int PortalUserID { get; set; }
+        public string PortalFullName { get; set; }
+        public string MoodleToken { get; set; }
+        public string MoodleService { get; set; }
+        public long MoodleUserID { get; set; }
+        public string MoodleFullName { get; set; }
+
+        public UserData()
+        {
+            UserName = "";
+            PortalUserGroup = 0;
+            PortalUserID = 0;
+            PortalFullName = "";
+            MoodleToken = "exception";
+            MoodleService = "";
+            MoodleUserID = 0;
+            MoodleFullName = "";
+        }
+    }
+
     public class UsersContext : DbContext
     {
         public UsersContext()
