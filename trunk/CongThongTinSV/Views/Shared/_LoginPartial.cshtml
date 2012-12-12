@@ -1,22 +1,25 @@
-﻿@if (Request.IsAuthenticated) {
-    string[] userData = CongThongTinSV.Controllers.AccountController.GetCurrentUserData();
+﻿@using CongThongTinSV.Models;
+@using CongThongTinSV.Controllers;
 
-    if (userData[2] != ""){
-        if(userData[0] == "3"){
+@if (Request.IsAuthenticated) {
+    UserData userData = AccountController.GetCurrentUserData();
+
+    if (userData.PortalUserID != 0){
+        if(userData.PortalUserGroup == 3){
             <text>
-            Chào bạn, @Html.ActionLink(userData[2], "ThongTinCaNhan", "SinhVien", routeValues: null, htmlAttributes: new { @class = "username", title = "Thông tin sinh viên" })!
+            Chào bạn, @Html.ActionLink(userData.PortalFullName, "ThongTinCaNhan", "SinhVien", routeValues: null, htmlAttributes: new { @class = "username", title = "Thông tin sinh viên" })!
             </text>
         }
-        else if(userData[0] == "2"){
+        else if(userData.PortalUserGroup == 2){
              <text>
-            Chào bạn, @Html.ActionLink(userData[2], "ThongTinCaNhan", "GiangVien", routeValues: null, htmlAttributes: new { @class = "username", title = "Thông tin giảng viên" })!
+            Chào bạn, @Html.ActionLink(userData.PortalFullName, "ThongTinCaNhan", "GiangVien", routeValues: null, htmlAttributes: new { @class = "username", title = "Thông tin giảng viên" })!
             </text>
         }
     }
     
-    if(userData[3] != "exception"){
+    if(userData.MoodleToken != "exception"){
         <text>
-        (@Html.ActionLink(userData[6], "UserProfile", "MoodleUser", routeValues: new {userid = userData[5] }, htmlAttributes: new { @class = "username", title = "Thông tin tài khoản moodle Elearning" }))
+        (@Html.ActionLink(userData.MoodleFullName, "UserProfile", "MoodleUser", routeValues: new {userid = userData.MoodleUserID }, htmlAttributes: new { @class = "username", title = "Thông tin tài khoản moodle Elearning" }))
         </text>
     }
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })){

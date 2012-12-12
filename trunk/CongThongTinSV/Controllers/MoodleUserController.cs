@@ -115,6 +115,7 @@ namespace CongThongTinSV.Controllers
                 postData += "&users[" + i + "][timezone]=7.0";
                 postData += "&users[" + i + "][city]=Hai Phong";
                 postData += "&users[" + i + "][country]=VN";
+                postData += "&users[" + i + "][idnumber]=st" + item.ID_sv;
                 i++;
             }
 
@@ -345,6 +346,7 @@ namespace CongThongTinSV.Controllers
                 postData += "&users[" + i + "][timezone]=7.0";
                 postData += "&users[" + i + "][city]=Hai Phong";
                 postData += "&users[" + i + "][country]=VN";
+                postData += "&users[" + i + "][idnumber]=te" + item.ID_cb;
                 i++;
             }
 
@@ -526,14 +528,14 @@ namespace CongThongTinSV.Controllers
                 bool changePasswordSucceeded;
                 try
                 {
-                    string[] userData = AccountController.GetCurrentUserData();
+                    UserData userData = AccountController.GetCurrentUserData();
 
-                    if(GetToken(User.Identity.Name, model.OldPassword, userData[4]) == userData[3])
+                    if(GetToken(userData.UserName, model.OldPassword, userData.MoodleService) == userData.MoodleToken)
                     {
                         List<MoodleUser> list = new List<MoodleUser>();
                         list.Add(new MoodleUser
                         {
-                            ID = userData[5],
+                            ID = userData.MoodleUserID.ToString(),
                             Password = model.NewPassword
                         });
 
@@ -654,7 +656,16 @@ namespace CongThongTinSV.Controllers
             {
                 var user= q.ElementAt(0);
                 ViewBag.CourseUser = user;
-                ViewBag.CourseName = user.enrolledcourses.AsEnumerable().Single(t => t.id.ToString() == courseid).fullname;
+                var course = user.enrolledcourses.AsEnumerable().SingleOrDefault(t => t.id.ToString() == courseid);
+
+                if (course == null)
+                {
+                    ViewBag.CourseName = "";
+                }
+                else
+                {
+                    ViewBag.CourseName = course.fullname;
+                }
             }
             else
             {
