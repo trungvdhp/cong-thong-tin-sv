@@ -782,6 +782,38 @@ namespace CongThongTinSV.Controllers
 
             return View();
         }
+        //
+        //Đồng bộ tài khoản moodle và DHHH của quản trị viên
+        public ActionResult SyncQuanTriVien(string selectedVals)
+        {
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+            Entities db = new Entities();
+            MoodleEntities mdb = new MoodleEntities();
+            var list = MoodleQuanTriViens().Where(t => t.ID_moodle == 0 && s.Contains(t.ID.ToString()));
+            var quantriviens = from qt in list
+                            join user in mdb.fit_user.AsEnumerable()
+                            on qt.UserName equals user.username
+                            select new
+                            {
+                                ID = qt.ID,
+                                ID_moodle = user.id
+                            };
+
+            foreach (var item in quantriviens)
+            {
+                MOD_NguoiDung entity = new MOD_NguoiDung();
+
+                entity.ID_moodle = Convert.ToInt32(item.ID_moodle);
+                entity.ID_nd = item.ID;
+                entity.ID_nhom_nd = 1;
+
+                db.MOD_NguoiDung.Add(entity);
+            }
+
+            db.SaveChanges();
+
+            return View();
+        }
 
         public static string GetToken(string username, string password, string service)
         {

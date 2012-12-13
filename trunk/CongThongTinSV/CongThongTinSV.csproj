@@ -884,6 +884,7 @@
     <Content Include="Views\MoodleUser\BaiLamCaNhan.cshtml" />
     <Content Include="Views\MoodleCourse\BangDiemThanhPhan.cshtml" />
     <Content Include="Views\MoodleCourse\BangDiemKhoaHoc.cshtml" />
+    <Content Include="Views\MoodleUser\QuanTriVien.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
