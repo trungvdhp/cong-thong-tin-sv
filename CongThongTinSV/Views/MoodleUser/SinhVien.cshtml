@@ -46,7 +46,7 @@
         columns.Command(command => command.Custom("Hồ sơ").Click("showProfile"));
     })
     .Pageable(pager => pager.PageSizes(new int[]{5, 10, 20, 50, 100, 1000}).Refresh(true).Input(true).Numeric(false))
-    .Sortable(s => s.SortMode(GridSortMode.MultipleColumn))
+    .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
     .Filterable()
     .Scrollable()
     .Groupable()
