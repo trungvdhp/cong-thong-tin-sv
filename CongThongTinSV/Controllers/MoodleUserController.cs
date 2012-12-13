@@ -17,34 +17,37 @@ namespace CongThongTinSV.Controllers
 {
     public class MoodleUserController : Controller
     {
-        //
-        // GET: /MoodleUser/
-
         public ActionResult SinhVien()
         {
             return View();
         }
 
-        public ActionResult GetSinhVien([DataSourceRequest] DataSourceRequest request, int id_chuyen_nganh)
+        public ActionResult GetSinhVien([DataSourceRequest] DataSourceRequest request, string id_chuyen_nganh)
         {
 
             return Json(MoodleSinhViens(id_chuyen_nganh).ToDataSourceResult(request));
         }
 
-        public IEnumerable<MoodleSinhVien> MoodleSinhViens(int id_chuyen_nganh)
+        public IEnumerable<MoodleSinhVien> MoodleSinhViens(string id_chuyen_nganh)
         {
             Entities db = new Entities();
+            int idcn = 0;
+            try
+            {
+                idcn = Convert.ToInt32(id_chuyen_nganh);
+            }
+            catch (Exception) { }
 
-            var sv1 = from ds in db.STU_DanhSach
+            var sv1 = (from ds in db.STU_DanhSach
                       join hs in db.STU_HoSoSinhVien
                       on ds.ID_sv equals hs.ID_sv
                       where ds.Active == true
-                      select new { ds, hs };
+                      select new { ds, hs });
 
             var sv2 = from ds1 in sv1
                       join lop in db.STU_Lop
                       on ds1.ds.ID_lop equals lop.ID_lop
-                      where lop.ID_chuyen_nganh == id_chuyen_nganh
+                      where lop.ID_chuyen_nganh == idcn
                       select new { ds1, lop };
 
             var sv3 = from ds2 in sv2
@@ -158,7 +161,7 @@ namespace CongThongTinSV.Controllers
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
 
-            var list = MoodleSinhViens(Convert.ToInt32(id_chuyen_nganh)).Where(t => t.ID_moodle == 0 && s.Contains(t.ID_sv.ToString())).ToList();
+            var list = MoodleSinhViens(id_chuyen_nganh).Where(t => t.ID_moodle == 0 && s.Contains(t.ID_sv.ToString())).ToList();
 
             if (list.Count() > 0)
                 CreateSinhVien(list);
@@ -166,7 +169,7 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        public static void DeleteSinhVien(List<MoodleSinhVien> list)
+        public static bool DeleteSinhVien(List<MoodleSinhVien> list)
         {
             Entities db = new Entities();
             int i = 0;
@@ -182,11 +185,13 @@ namespace CongThongTinSV.Controllers
             string response = web.GetResponse();
             //JavaScriptSerializer serializer = new JavaScriptSerializer();
             //MoodleException moodleError = new MoodleException();
+            UtilityController.WriteTextToFile("D:\\SinhVienDelete.txt", response);
 
             if (response.Contains("exception"))
             {
                 // Error
                 //moodleError = serializer.Deserialize<MoodleException>(rs);
+                return false;
             }
             else
             {
@@ -199,14 +204,14 @@ namespace CongThongTinSV.Controllers
                 db.SaveChanges();
             }
 
-            UtilityController.WriteTextToFile("D:\\SinhVienDelete.txt", response);
+            return true;
         }
 
         public ActionResult DeleteSinhVien(string selectedVals, string id_chuyen_nganh)
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
 
-            var list = MoodleSinhViens(Convert.ToInt32(id_chuyen_nganh)).Where(t => t.ID_moodle > 0 && s.Contains(t.ID_sv.ToString())).ToList();
+            var list = MoodleSinhViens(id_chuyen_nganh).Where(t => t.ID_moodle > 0 && s.Contains(t.ID_sv.ToString())).ToList();
 
             if (list.Count() > 0)
                 DeleteSinhVien(list);
@@ -267,10 +272,42 @@ namespace CongThongTinSV.Controllers
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
 
-            var list = MoodleSinhViens(Convert.ToInt32(id_chuyen_nganh)).Where(t => t.ID_moodle > 0 && s.Contains(t.ID_sv.ToString())).ToList();
+            var list = MoodleSinhViens(id_chuyen_nganh).Where(t => t.ID_moodle > 0 && s.Contains(t.ID_sv.ToString())).ToList();
 
             if (list.Count() > 0)
                 UpdateSinhVien(list);
+
+            return View();
+        }
+        //
+        //Đồng bộ tài khoản moodle và DHHH của sinh viên
+        public ActionResult SyncSinhVien(string selectedVals, string id_chuyen_nganh)
+        {
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+            Entities db = new Entities();
+            MoodleEntities mdb = new MoodleEntities();
+            var list = MoodleSinhViens(id_chuyen_nganh).Where(t => t.ID_moodle == 0 && s.Contains(t.ID_sv.ToString()));
+            var sinhviens = from sv in list
+                            join user in mdb.fit_user.AsEnumerable()
+                            on sv.Ma_sv equals user.username
+                            select new
+                            {
+                                ID_sv = sv.ID_sv,
+                                ID_moodle = user.id
+                            };
+
+            foreach (var item in sinhviens)
+            {
+                MOD_NguoiDung entity = new MOD_NguoiDung();
+
+                entity.ID_moodle = Convert.ToInt32(item.ID_moodle);
+                entity.ID_nd = item.ID_sv;
+                entity.ID_nhom_nd = 3;
+
+                db.MOD_NguoiDung.Add(entity);
+            }
+
+            db.SaveChanges();
 
             return View();
         }
@@ -280,20 +317,27 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        public ActionResult GetGiaoVien([DataSourceRequest] DataSourceRequest request, int id_khoa)
+        public ActionResult GetGiaoVien([DataSourceRequest] DataSourceRequest request, string id_khoa)
         {
 
             return Json(MoodleGiaoViens(id_khoa).ToDataSourceResult(request));
         }
 
-        public IEnumerable<MoodleGiaoVien> MoodleGiaoViens(int id_khoa)
+        public IEnumerable<MoodleGiaoVien> MoodleGiaoViens(string id_khoa)
         {
             Entities db = new Entities();
+            int idKhoa = 0;
 
-            var gv1 = from  gv in db.PLAN_GiaoVien
+            try
+            {
+                idKhoa = Convert.ToInt32(id_khoa);
+            }
+            catch (Exception) { }
+
+            var gv1 = from  gv in db.PLAN_GiaoVien.AsEnumerable()
                       join gt in db.STU_GioiTinh
                       on gv.ID_gioi_tinh equals gt.ID_gioi_tinh
-                      where gv.ID_khoa == id_khoa
+                      where gv.ID_khoa == idKhoa
                       select new
                       {
                           gv.Ho_ten,
@@ -389,7 +433,7 @@ namespace CongThongTinSV.Controllers
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
 
-            var list = MoodleGiaoViens(Convert.ToInt32(id_khoa)).Where(t => t.ID_moodle == 0 && s.Contains(t.ID_cb.ToString())).ToList();
+            var list = MoodleGiaoViens(id_khoa).Where(t => t.ID_moodle == 0 && s.Contains(t.ID_cb.ToString())).ToList();
 
             if (list.Count() > 0)
                 CreateGiaoVien(list);
@@ -397,13 +441,257 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        public static void DeleteGiaoVien(List<MoodleGiaoVien> list)
+        public static bool DeleteGiaoVien(List<MoodleGiaoVien> list)
         {
             Entities db = new Entities();
             int i = 0;
             string postData = "wsfunction=core_user_delete_users";
 
             foreach (MoodleGiaoVien item in list)
+            {
+                postData += "&userids[" + i + "]=" + item.ID_moodle;
+                i++;
+            }
+
+            WebRequestController web = new WebRequestController(4, "POST", postData);
+            string response = web.GetResponse();
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //MoodleException moodleError = new MoodleException();
+            UtilityController.WriteTextToFile("D:\\GiaoVienDelete.txt", response);
+
+            if (response.Contains("exception"))
+            {
+                // Error
+                //moodleError = serializer.Deserialize<MoodleException>(rs);
+                return false;
+            }
+            else
+            {
+                foreach (MoodleGiaoVien item in list)
+                {
+                    MOD_NguoiDung entity = db.MOD_NguoiDung.Find(item.ID_moodle);
+                    db.MOD_NguoiDung.Remove(entity);
+                }
+
+                db.SaveChanges();
+            }
+
+            return true;
+        }
+
+        public ActionResult DeleteGiaoVien(string selectedVals, string id_khoa)
+        {
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+
+            var list = MoodleGiaoViens(id_khoa).Where(t => t.ID_moodle > 0 && s.Contains(t.ID_cb.ToString())).ToList();
+
+            if (list.Count() > 0)
+                DeleteGiaoVien(list);
+
+            return View();
+        }
+
+        public static bool UpdateGiaoVien(List<MoodleGiaoVien> list)
+        {
+            int i = 0;
+            string postData = "wsfunction=core_user_update_users";
+
+            foreach (MoodleGiaoVien item in list)
+            {
+                postData += "&users[" + i + "][id]=" + item.ID_moodle;
+                postData += "&users[" + i + "][username]=" + item.Ma_cb;
+
+                try
+                {
+                    postData += "&users[" + i + "][password]=" + ((DateTime)item.Ngay_sinh).ToString("ddMMyyyy");
+                }
+                catch
+                {
+                    postData += "&users[" + i + "][password]=" + item.Ma_cb;
+                }
+
+                postData += "&users[" + i + "][firstname]=" + HttpUtility.UrlEncode(item.Ten);
+                postData += "&users[" + i + "][lastname]=" + HttpUtility.UrlEncode(item.Ho_dem);
+                postData += "&users[" + i + "][email]=" + "te" + item.Ma_cb + "@te.vimaru.edu.vn";
+                i++;
+            }
+
+            WebRequestController web = new WebRequestController(4, "POST", postData);
+            string response = web.GetResponse();
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //MoodleException moodleError = new MoodleException();
+            //List<MoodleCreateUserResponse> results = new List<MoodleCreateUserResponse>();
+            UtilityController.WriteTextToFile("D:\\GiaoVienUpdate.txt", response);
+
+            if (response.Contains("exception"))
+            {
+                // Error
+                // moodleError = serializer.Deserialize<MoodleException>(rs);
+                return false;
+            }
+
+            return true;
+        }
+
+        public ActionResult UpdateGiaoVien(string selectedVals, string id_khoa)
+        {
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+
+            var list = MoodleGiaoViens(id_khoa).Where(t => t.ID_moodle > 0 && s.Contains(t.ID_cb.ToString())).ToList();
+
+            if (list.Count() > 0)
+                UpdateGiaoVien(list);
+
+            return View();
+        }
+
+        //
+        //Đồng bộ tài khoản moodle và DHHH của giáo viên
+        public ActionResult SyncGiaoVien(string selectedVals, string id_khoa)
+        {
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+            Entities db = new Entities();
+            MoodleEntities mdb = new MoodleEntities();
+            var list = MoodleGiaoViens(id_khoa).Where(t => t.ID_moodle == 0 && s.Contains(t.ID_cb.ToString()));
+            var giaoviens = from gv in list
+                            join user in mdb.fit_user.AsEnumerable()
+                            on gv.Ma_cb equals user.username
+                            select new
+                            {
+                                ID_cb = gv.ID_cb,
+                                ID_moodle = user.id
+                            };
+
+            foreach (var item in giaoviens)
+            {
+                MOD_NguoiDung entity = new MOD_NguoiDung();
+
+                entity.ID_moodle = Convert.ToInt32(item.ID_moodle);
+                entity.ID_nd = item.ID_cb;
+                entity.ID_nhom_nd = 2;
+
+                db.MOD_NguoiDung.Add(entity);
+            }
+
+            db.SaveChanges();
+
+            return View();
+        }
+
+        public ActionResult QuanTriVien()
+        {
+            return View();
+        }
+
+        public ActionResult GetQuanTriVien([DataSourceRequest] DataSourceRequest request)
+        {
+
+            return Json(MoodleQuanTriViens().ToDataSourceResult(request));
+        }
+
+        public IEnumerable<MoodleUser> MoodleQuanTriViens()
+        {
+            Entities db = new Entities();
+            var user = db.SYS_NguoiDung.AsEnumerable().Where(t => t.Active == 1);
+
+            var quantris = from ds in user
+                      join nd in db.MOD_NguoiDung.AsEnumerable()
+                      on ds.UserID equals nd.ID_nd
+                      into nguoidung
+                      from nd1 in nguoidung.DefaultIfEmpty()
+                      where nd1 == null || (nd1 != null && nd1.ID_nhom_nd == 1)
+                      select new MoodleUser
+                      {
+                          ID = ds.UserID,
+                          ID_moodle = (nd1 == null ? 0 : nd1.ID_moodle),
+                          UserName = ds.UserName,
+                          LastName = UtilityController.GetLastName(ds.FullName),
+                          FirstName = UtilityController.GetFirstName(ds.FullName),
+                          Email = ds.Email
+                      };
+
+            return quantris.OrderByDescending(t => t.ID_moodle).ToList();
+        }
+
+        public static void CreateQuanTriVien(List<MoodleUser> list)
+        {
+            Entities db = new Entities();
+            int i = 0;
+            string postData = "wsfunction=core_user_create_users";
+
+            foreach (MoodleUser item in list)
+            {
+                postData += "&users[" + i + "][username]=" + item.UserName;
+                postData += "&users[" + i + "][password]=" + item.UserName;
+                postData += "&users[" + i + "][firstname]=" + HttpUtility.UrlEncode(item.FirstName);
+                postData += "&users[" + i + "][lastname]=" + HttpUtility.UrlEncode(item.LastName);
+
+                if (item.Email != "")
+                    postData += "&users[" + i + "][email]=" + item.Email;
+                else
+                    postData += "&users[" + i + "][email]=" + item.UserName + "@vimaru.edu.vn";
+
+                postData += "&users[" + i + "][timezone]=7.0";
+                postData += "&users[" + i + "][city]=Hai Phong";
+                postData += "&users[" + i + "][country]=VN";
+                postData += "&users[" + i + "][idnumber]=st" + item.ID;
+                i++;
+            }
+
+            WebRequestController web = new WebRequestController(4, "POST", postData);
+            string response = web.GetResponse();
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            // MoodleException moodleError = new MoodleException();
+            List<MoodleCreateUserResponse> results = new List<MoodleCreateUserResponse>();
+
+            if (response.Contains("exception"))
+            {
+                // Error
+                // moodleError = serializer.Deserialize<MoodleException>(rs);
+            }
+            else
+            {
+                // Good
+                results = serializer.Deserialize<List<MoodleCreateUserResponse>>(response);
+                i = 0;
+
+                foreach (MoodleUser item in list)
+                {
+                    MOD_NguoiDung entity = new MOD_NguoiDung();
+
+                    entity.ID_moodle = Convert.ToInt32(results[i].id);
+                    entity.ID_nd = item.ID;
+                    entity.ID_nhom_nd = 1;
+
+                    db.MOD_NguoiDung.Add(entity);
+                    i++;
+                }
+
+                db.SaveChanges();
+            }
+
+            UtilityController.WriteTextToFile("D:\\QuanTriVienCreate.txt", response);
+        }
+
+        public ActionResult CreateQuanTriVien(string selectedVals)
+        {
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+
+            var list = MoodleQuanTriViens().Where(t => t.ID_moodle == 0 && s.Contains(t.ID.ToString())).ToList();
+
+            if (list.Count() > 0)
+                CreateQuanTriVien(list);
+
+            return View();
+        }
+
+        public static void DeleteQuanTriVien(List<MoodleUser> list)
+        {
+            Entities db = new Entities();
+            int i = 0;
+            string postData = "wsfunction=core_user_delete_users";
+
+            foreach (MoodleUser item in list)
             {
                 postData += "&userids[" + i + "]=" + item.ID_moodle;
                 i++;
@@ -421,7 +709,7 @@ namespace CongThongTinSV.Controllers
             }
             else
             {
-                foreach (MoodleGiaoVien item in list)
+                foreach (MoodleUser item in list)
                 {
                     MOD_NguoiDung entity = db.MOD_NguoiDung.Find(item.ID_moodle);
                     db.MOD_NguoiDung.Remove(entity);
@@ -430,17 +718,67 @@ namespace CongThongTinSV.Controllers
                 db.SaveChanges();
             }
 
-            UtilityController.WriteTextToFile("D:\\GiaoVienDelete.txt", response);
+            UtilityController.WriteTextToFile("D:\\QuanTriVienDelete.txt", response);
         }
 
-        public ActionResult DeleteGiaoVien(string selectedVals, string id_khoa)
+        public ActionResult DeleteQuanTriVien(string selectedVals)
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
 
-            var list = MoodleGiaoViens(Convert.ToInt32(id_khoa)).Where(t => t.ID_moodle > 0 && s.Contains(t.ID_cb.ToString())).ToList();
+            var list = MoodleQuanTriViens().Where(t => t.ID_moodle > 0 && s.Contains(t.ID.ToString())).ToList();
 
             if (list.Count() > 0)
-                DeleteGiaoVien(list);
+                DeleteQuanTriVien(list);
+
+            return View();
+        }
+
+        public static bool UpdateQuanTriVien(List<MoodleUser> list)
+        {
+            int i = 0;
+            string postData = "wsfunction=core_user_update_users";
+
+            foreach (MoodleUser item in list)
+            {
+                postData += "&users[" + i + "][id]=" + item.ID_moodle;
+                postData += "&users[" + i + "][username]=" + item.UserName;
+                postData += "&users[" + i + "][password]=" + item.UserName;
+                postData += "&users[" + i + "][firstname]=" + HttpUtility.UrlEncode(item.FirstName);
+                postData += "&users[" + i + "][lastname]=" + HttpUtility.UrlEncode(item.LastName);
+
+                if (item.Email != "")
+                    postData += "&users[" + i + "][email]=" + item.Email;
+                else
+                    postData += "&users[" + i + "][email]=" + item.UserName + "@vimaru.edu.vn";
+
+                i++;
+            }
+
+            WebRequestController web = new WebRequestController(4, "POST", postData);
+            string response = web.GetResponse();
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //MoodleException moodleError = new MoodleException();
+            //List<MoodleCreateUserResponse> results = new List<MoodleCreateUserResponse>();
+            UtilityController.WriteTextToFile("D:\\QuanTriVienUpdate.txt", response);
+
+            if (response.Contains("exception"))
+            {
+                // Error
+                // moodleError = serializer.Deserialize<MoodleException>(rs);
+                return false;
+            }
+
+            return true;
+        }
+
+        public ActionResult UpdateQuanTriVien(string selectedVals)
+        {
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+
+            var list = MoodleQuanTriViens().Where(t => t.ID_moodle > 0 && s.Contains(t.ID.ToString())).ToList();
+
+            if (list.Count() > 0)
+                UpdateQuanTriVien(list);
 
             return View();
         }
@@ -472,18 +810,18 @@ namespace CongThongTinSV.Controllers
 
             foreach (MoodleUser item in list)
             {
-                if(item.ID == "0") continue;
-                    postData += "&users[" + i + "][id]=" + item.ID;
-                if(item.Username != null)
-                    postData += "&users[" + i + "][username]=" + item.Username;
+                if(item.ID == 0) continue;
+                postData += "&users[" + i + "][id]=" + item.ID;
+                if(item.UserName != null)
+                    postData += "&users[" + i + "][username]=" + item.UserName;
                 if(item.Password != null)
                     postData += "&users[" + i + "][password]=" + item.Password;
-                if(item.Firstname != null)
-                    postData += "&users[" + i + "][firstname]=" + HttpUtility.UrlEncode(item.Firstname);
-                if(item.Lastname != null)
-                    postData += "&users[" + i + "][lastname]=" + HttpUtility.UrlEncode(item.Lastname);
+                if(item.FirstName != null)
+                    postData += "&users[" + i + "][firstname]=" + HttpUtility.UrlEncode(item.FirstName);
+                if(item.LastName != null)
+                    postData += "&users[" + i + "][lastname]=" + HttpUtility.UrlEncode(item.LastName);
                 if(item.Email != null)
-                    postData += "&users[" + i + "][email]=" + "st" + item.Email;
+                    postData += "&users[" + i + "][email]=" + item.Email;
                 i++;
             }
 
@@ -535,7 +873,7 @@ namespace CongThongTinSV.Controllers
                         List<MoodleUser> list = new List<MoodleUser>();
                         list.Add(new MoodleUser
                         {
-                            ID = userData.MoodleUserID.ToString(),
+                            ID = Convert.ToInt32(userData.MoodleUserID),
                             Password = model.NewPassword
                         });
 

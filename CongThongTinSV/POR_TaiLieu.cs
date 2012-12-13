@@ -20,6 +20,8 @@ namespace CongThongTinSV
         public string Mo_ta { get; set; }
         public Nullable<int> ID_cb { get; set; }
         public Nullable<System.DateTime> Ngay_up { get; set; }
+        public string Ten_file { get; set; }
+        public string URL { get; set; }
     
         public virtual PLAN_GiaoVien PLAN_GiaoVien { get; set; }
     }

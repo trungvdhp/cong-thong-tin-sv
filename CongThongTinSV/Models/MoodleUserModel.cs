@@ -121,11 +121,25 @@ namespace CongThongTinSV.Models
 
     public class MoodleUser
     {
-        public string ID { get; set; }
-        public string Username { get; set; }
+        [DisplayName("ID")]
+        public int ID { get; set; }
+
+        [DisplayName("ID moodle")]
+        public int ID_moodle { get; set; }
+
+        [DisplayName("Tên đăng nhập")]
+        public string UserName { get; set; }
+
+        [DisplayName("Mật khẩu")]
         public string Password { get; set; }
-        public string Firstname { get; set; }
-        public string Lastname { get; set; }
+
+        [DisplayName("Họ và đệm")]
+        public string LastName{ get; set; }
+
+        [DisplayName("Tên")]
+        public string FirstName { get; set; }
+
+        [DisplayName("Email")]
         public string Email { get; set; }
     }
 

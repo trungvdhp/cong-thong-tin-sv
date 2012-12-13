@@ -464,6 +464,9 @@
     <Compile Include="STU_Nganh.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
+    <Compile Include="SYS_NguoiDung.cs">
+      <DependentUpon>DHHH.tt</DependentUpon>
+    </Compile>
     <Compile Include="tbl_inbox.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
