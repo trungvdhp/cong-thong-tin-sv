@@ -369,7 +369,6 @@ namespace CongThongTinSV.Controllers
         public IEnumerable<MoodleGiaoVien> MoodleGiaoViens(int id_lop_tc)
         {
             Entities db = new Entities();
-            MoodleEntities mdb = new MoodleEntities();
 
             var danhsach = from ds in db.MOD_NguoiDung_VaiTro_LopTinChi.AsEnumerable()
                            where ds.ID_lop_tc == id_lop_tc
@@ -381,24 +380,6 @@ namespace CongThongTinSV.Controllers
                                Vai_tro = string.Join(("\n"), MoodleRoleController.GetVaiTroKhoaHoc(ds.ID_vai_tro, new char[]{','})),
                                Dinh_chi = ds.Dinh_chi
                            };
-
-            //var giaovien = from gv1 in db.MOD_NguoiDung.AsEnumerable()
-            //               join gv2 in db.PLAN_GiaoVien.AsEnumerable()
-            //               on gv1.ID_nd equals gv2.ID_cb
-            //               join gt in db.STU_GioiTinh.AsEnumerable()
-            //               on gv2.ID_gioi_tinh equals gt.ID_gioi_tinh
-            //               where gv1.ID_nhom_nd == 2
-            //               select new
-            //               {
-            //                   ID_cb = gv2.ID_cb,
-            //                   ID_khoa = gv2.ID_khoa,
-            //                   ID_moodle = gv1.ID_moodle,
-            //                   Ma_cb = gv2.Ma_cb,
-            //                   Ho_dem = UtilityController.GetLastName(gv2.Ho_ten),
-            //                   Ten = UtilityController.GetFirstName(gv2.Ho_ten),
-            //                   Ngay_sinh = gv2.Ngay_sinh,
-            //                   Gioi_tinh = gt.Gioi_tinh
-            //               };
 
             var giaovien = from gv1 in db.PLAN_GiaoVien.AsEnumerable()
                            join gt in db.STU_GioiTinh.AsEnumerable()

@@ -68,7 +68,8 @@
 <div>
     <button id="create" class="k-button">Đăng ký tài khoản</button>
     <button id="delete" class="k-button">Hủy đăng ký</button> 
-    <button id="update" class="k-button">Đồng bộ tài khoản</button>
+    <button id="update" class="k-button">Khôi phục về mặc định</button>
+    <button id="sync" class="k-button">Đồng bộ tài khoản</button>
 
 </div>
 
@@ -145,8 +146,19 @@
             return;
         }
 
-        if (confirm('Bạn muốn đồng bộ tài khoản cổng thông tin và tài khoản moodle của các sinh viên đã chọn?')) {
-            processing('/MoodleUser/UpdateSinhVien/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals, "Đang đồng bộ tài khoản của các sinh viên đã chọn...", gridRefresh);
+        if (confirm('Bạn muốn khôi phục về mặc định tài khoản moodle của các sinh viên đã chọn?')) {
+            processing('/MoodleUser/UpdateSinhVien/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals, "Đang khôi phục tài khoản của các sinh viên đã chọn...", gridRefresh);
+        }
+    })
+
+    $("#sync").click(function () {
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một sinh viên!');
+            return;
+        }
+
+        if (confirm('Bạn muốn đồng bộ tài khoản moodle và tài khoản cổng thông tin của các sinh viên đã chọn?')) {
+            processing('/MoodleUser/SyncSinhVien/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals, "Đang đồng bộ tài khoản của các sinh viên đã chọn...", gridRefresh);
         }
     })
 

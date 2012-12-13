@@ -99,6 +99,25 @@
           <EntitySet Name="STU_Khoa" EntityType="DHHHModel.Store.STU_Khoa" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="STU_Lop" EntityType="DHHHModel.Store.STU_Lop" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="STU_Nganh" EntityType="DHHHModel.Store.STU_Nganh" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SYS_NguoiDung" EntityType="DHHHModel.Store.SYS_NguoiDung" store:Type="Tables" store:Schema="dbo" store:Name="SYS_NguoiDung">
+            <DefiningQuery>SELECT 
+      [SYS_NguoiDung].[UserID] AS [UserID], 
+      [SYS_NguoiDung].[UserName] AS [UserName], 
+      [SYS_NguoiDung].[PassWord] AS [PassWord], 
+      [SYS_NguoiDung].[FullName] AS [FullName], 
+      [SYS_NguoiDung].[UserGroup] AS [UserGroup], 
+      [SYS_NguoiDung].[Active] AS [Active], 
+      [SYS_NguoiDung].[ID_phong] AS [ID_phong], 
+      [SYS_NguoiDung].[ID_khoa] AS [ID_khoa], 
+      [SYS_NguoiDung].[ID_Bomon] AS [ID_Bomon], 
+      [SYS_NguoiDung].[May_tram] AS [May_tram], 
+      [SYS_NguoiDung].[UserNameLDAP] AS [UserNameLDAP], 
+      [SYS_NguoiDung].[adsPathLDAP] AS [adsPathLDAP], 
+      [SYS_NguoiDung].[Email] AS [Email], 
+      [SYS_NguoiDung].[Dien_thoai] AS [Dien_thoai], 
+      [SYS_NguoiDung].[MAC] AS [MAC]
+      FROM [dbo].[SYS_NguoiDung] AS [SYS_NguoiDung]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="tbl_inbox" EntityType="DHHHModel.Store.tbl_inbox" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ViewLopTC" EntityType="DHHHModel.Store.ViewLopTC" store:Type="Views" store:Schema="dbo" store:Name="ViewLopTC">
             <DefiningQuery>SELECT 
@@ -431,17 +450,17 @@
           <Key>
             <PropertyRef Name="ID_cb" />
           </Key>
-          <Property Name="ID_cb" Type="int" Nullable="false" />
-          <Property Name="Ma_cb" Type="nvarchar" Nullable="false" MaxLength="20" />
-          <Property Name="Ten" Type="nvarchar" Nullable="false" MaxLength="35" />
-          <Property Name="Ho_ten" Type="nvarchar" Nullable="false" MaxLength="35" />
+          <Property Name="ID_cb" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Ma_cb" Type="nvarchar" MaxLength="20" />
+          <Property Name="Ten" Type="nvarchar" MaxLength="35" />
+          <Property Name="Ho_ten" Type="nvarchar" MaxLength="35" />
           <Property Name="ID_gioi_tinh" Type="int" />
           <Property Name="Ngay_sinh" Type="datetime" />
-          <Property Name="ID_khoa" Type="int" Nullable="false" />
-          <Property Name="ID_hoc_ham" Type="int" Nullable="false" />
-          <Property Name="ID_hoc_vi" Type="int" Nullable="false" />
-          <Property Name="ID_chuc_danh" Type="int" Nullable="false" />
-          <Property Name="ID_chuc_vu" Type="int" Nullable="false" />
+          <Property Name="ID_khoa" Type="int" />
+          <Property Name="ID_hoc_ham" Type="int" />
+          <Property Name="ID_hoc_vi" Type="int" />
+          <Property Name="ID_chuc_danh" Type="int" />
+          <Property Name="ID_chuc_vu" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'DHHH.dbo.PLAN_HocKyDangKy_TC' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -548,12 +567,14 @@
           <Property Name="Mo_ta" Type="nvarchar" MaxLength="200" />
           <Property Name="ID_cb" Type="int" />
           <Property Name="Ngay_up" Type="datetime" />
+          <Property Name="Ten_file" Type="nvarchar" MaxLength="300" />
+          <Property Name="URL" Type="nvarchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="POR_YeuCauMoLop">
           <Key>
             <PropertyRef Name="ID_yeu_cau" />
           </Key>
-          <Property Name="ID_yeu_cau" Type="int" Nullable="false" />
+          <Property Name="ID_yeu_cau" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ID_sv" Type="int" />
           <Property Name="ID_mon" Type="int" />
           <Property Name="Ngay_yeu_cau" Type="datetime" />
@@ -794,6 +815,37 @@
           <Property Name="Ma_nganh" Type="nvarchar" MaxLength="50" />
           <Property Name="Ten_nganh" Type="nvarchar" MaxLength="300" />
           <Property Name="Ten_nganh_En" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'DHHH.dbo.SYS_NguoiDung' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="SYS_NguoiDung">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="PassWord" />
+            <PropertyRef Name="FullName" />
+            <PropertyRef Name="UserGroup" />
+            <PropertyRef Name="Active" />
+            <PropertyRef Name="ID_phong" />
+            <PropertyRef Name="ID_khoa" />
+            <PropertyRef Name="ID_Bomon" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="20" />
+          <Property Name="PassWord" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="FullName" Type="nvarchar" Nullable="false" MaxLength="30" />
+          <Property Name="UserGroup" Type="int" Nullable="false" />
+          <Property Name="Active" Type="int" Nullable="false" />
+          <Property Name="ID_phong" Type="int" Nullable="false" />
+          <Property Name="ID_khoa" Type="int" Nullable="false" />
+          <Property Name="ID_Bomon" Type="int" Nullable="false" />
+          <Property Name="May_tram" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserNameLDAP" Type="nvarchar" MaxLength="10" />
+          <Property Name="adsPathLDAP" Type="nvarchar" MaxLength="200" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="Dien_thoai" Type="nvarchar" MaxLength="100" />
+          <Property Name="MAC" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tbl_inbox">
           <Key>
@@ -1199,15 +1251,6 @@
         <Function Name="SP_SinhVienLopTC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id_lop_tc" Type="int" Mode="In" />
         </Function>
-        <!--Errors Found During Generation:
-      warning 6013: The table/view 'DHHH.dbo.POR_LopTC_TaiLieu' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-      
-      <EntityType Name="POR_LopTC_TaiLieu">
-        <Property Name="ID_lop_tc" Type="int" />
-        <Property Name="ID_tl" Type="int" />
-        <Property Name="Ngay_cap_nhat" Type="datetime" />
-        <Property Name="ID_cb" Type="int" />
-      </EntityType>-->
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -1363,21 +1406,22 @@
           </AssociationSet>
           <EntitySet Name="tbl_inbox" EntityType="DHHHModel.tbl_inbox" />
           <EntitySet Name="STU_Lop" EntityType="DHHHModel.STU_Lop" />
-          <EntitySet Name="ViewLopTC" EntityType="DHHHModel.ViewLopTC" />
+          <EntitySet Name="SYS_NguoiDung" EntityType="DHHHModel.SYS_NguoiDung" />
           <EntitySet Name="POR_TaiLieu" EntityType="DHHHModel.POR_TaiLieu" />
-          <AssociationSet Name="FK__POR_TaiLi__ID_cb__1758727B" Association="DHHHModel.FK__POR_TaiLi__ID_cb__1758727B">
-            <End Role="PLAN_GiaoVien" EntitySet="PLAN_GiaoVien" />
-            <End Role="POR_TaiLieu" EntitySet="POR_TaiLieu" />
-          </AssociationSet>
           <EntitySet Name="POR_YeuCauMoLop" EntityType="DHHHModel.POR_YeuCauMoLop" />
           <AssociationSet Name="FK__POR_YeuCa__ID_mo__20E1DCB5" Association="DHHHModel.FK__POR_YeuCa__ID_mo__20E1DCB5">
             <End Role="MARK_MonHoc" EntitySet="MARK_MonHoc" />
             <End Role="POR_YeuCauMoLop" EntitySet="POR_YeuCauMoLop" />
           </AssociationSet>
+          <AssociationSet Name="FK__POR_TaiLi__ID_cb__1758727B" Association="DHHHModel.FK__POR_TaiLi__ID_cb__1758727B">
+            <End Role="PLAN_GiaoVien" EntitySet="PLAN_GiaoVien" />
+            <End Role="POR_TaiLieu" EntitySet="POR_TaiLieu" />
+          </AssociationSet>
           <AssociationSet Name="FK__POR_YeuCa__ID_sv__1FEDB87C" Association="DHHHModel.FK__POR_YeuCa__ID_sv__1FEDB87C">
             <End Role="STU_HoSoSinhVien" EntitySet="STU_HoSoSinhVien" />
             <End Role="POR_YeuCauMoLop" EntitySet="POR_YeuCauMoLop" />
           </AssociationSet>
+          <EntitySet Name="ViewLopTC" EntityType="DHHHModel.ViewLopTC" />
           </EntityContainer>
         <ComplexType Name="SP_SinhVienLopTC_Result">
           <Property Type="Int32" Name="ID_sv" Nullable="false" />
@@ -1594,16 +1638,16 @@
             <PropertyRef Name="ID_cb" />
           </Key>
           <Property Type="Int32" Name="ID_cb" Nullable="false" />
-          <Property Type="String" Name="Ma_cb" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Ten" Nullable="false" MaxLength="35" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Ho_ten" Nullable="false" MaxLength="35" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Ma_cb" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Ten" MaxLength="35" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Ho_ten" MaxLength="35" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="ID_gioi_tinh" />
           <Property Type="DateTime" Name="Ngay_sinh" Precision="3" />
-          <Property Type="Int32" Name="ID_khoa" Nullable="false" />
-          <Property Type="Int32" Name="ID_hoc_ham" Nullable="false" />
-          <Property Type="Int32" Name="ID_hoc_vi" Nullable="false" />
-          <Property Type="Int32" Name="ID_chuc_danh" Nullable="false" />
-          <Property Type="Int32" Name="ID_chuc_vu" Nullable="false" />
+          <Property Type="Int32" Name="ID_khoa" />
+          <Property Type="Int32" Name="ID_hoc_ham" />
+          <Property Type="Int32" Name="ID_hoc_vi" />
+          <Property Type="Int32" Name="ID_chuc_danh" />
+          <Property Type="Int32" Name="ID_chuc_vu" />
           <NavigationProperty Name="POR_GiaoVien" Relationship="DHHHModel.FK_POR_GiaoVien_PLAN_GiaoVien" FromRole="PLAN_GiaoVien" ToRole="POR_GiaoVien" />
           <NavigationProperty Name="POR_TaiLieu" Relationship="DHHHModel.FK__POR_TaiLi__ID_cb__1758727B" FromRole="PLAN_GiaoVien" ToRole="POR_TaiLieu" />
         </EntityType>
@@ -2321,6 +2365,99 @@
           <Property Type="Int32" Name="Lop_chuyen_nganh" />
           <Property Type="Int32" Name="Lop_hanh_chinh" />
         </EntityType>
+        <EntityType Name="SYS_NguoiDung">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="PassWord" />
+            <PropertyRef Name="FullName" />
+            <PropertyRef Name="UserGroup" />
+            <PropertyRef Name="Active" />
+            <PropertyRef Name="ID_phong" />
+            <PropertyRef Name="ID_khoa" />
+            <PropertyRef Name="ID_Bomon" />
+          </Key>
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PassWord" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FullName" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="UserGroup" Nullable="false" />
+          <Property Type="Int32" Name="Active" Nullable="false" />
+          <Property Type="Int32" Name="ID_phong" Nullable="false" />
+          <Property Type="Int32" Name="ID_khoa" Nullable="false" />
+          <Property Type="Int32" Name="ID_Bomon" Nullable="false" />
+          <Property Type="String" Name="May_tram" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="UserNameLDAP" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="adsPathLDAP" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Email" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Dien_thoai" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="MAC" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="POR_TaiLieu">
+          <Key>
+            <PropertyRef Name="ID_tl" />
+          </Key>
+          <Property Type="Int32" Name="ID_tl" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Ten_tl" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Tac_gia" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Mo_ta" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ID_cb" />
+          <Property Type="DateTime" Name="Ngay_up" Precision="3" />
+          <Property Type="String" Name="Ten_file" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="URL" MaxLength="300" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PLAN_GiaoVien" Relationship="DHHHModel.FK__POR_TaiLi__ID_cb__1758727B" FromRole="POR_TaiLieu" ToRole="PLAN_GiaoVien" />
+        </EntityType>
+        <EntityType Name="POR_YeuCauMoLop">
+          <Key>
+            <PropertyRef Name="ID_yeu_cau" />
+          </Key>
+          <Property Type="Int32" Name="ID_yeu_cau" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ID_sv" />
+          <Property Type="Int32" Name="ID_mon" />
+          <Property Type="DateTime" Name="Ngay_yeu_cau" Precision="3" />
+          <Property Type="Boolean" Name="Duyet" />
+          <Property Type="DateTime" Name="Ngay_duyet" Precision="3" />
+          <Property Type="Boolean" Name="Trang_thai" />
+          <Property Type="Int32" Name="Nguoi_duyet" />
+          <NavigationProperty Name="MARK_MonHoc" Relationship="DHHHModel.FK__POR_YeuCa__ID_mo__20E1DCB5" FromRole="POR_YeuCauMoLop" ToRole="MARK_MonHoc" />
+          <NavigationProperty Name="STU_HoSoSinhVien" Relationship="DHHHModel.FK__POR_YeuCa__ID_sv__1FEDB87C" FromRole="POR_YeuCauMoLop" ToRole="STU_HoSoSinhVien" />
+        </EntityType>
+        <Association Name="FK__POR_YeuCa__ID_mo__20E1DCB5">
+          <End Type="DHHHModel.MARK_MonHoc" Role="MARK_MonHoc" Multiplicity="0..1" />
+          <End Type="DHHHModel.POR_YeuCauMoLop" Role="POR_YeuCauMoLop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MARK_MonHoc">
+              <PropertyRef Name="ID_mon" />
+            </Principal>
+            <Dependent Role="POR_YeuCauMoLop">
+              <PropertyRef Name="ID_mon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__POR_TaiLi__ID_cb__1758727B">
+          <End Type="DHHHModel.PLAN_GiaoVien" Role="PLAN_GiaoVien" Multiplicity="0..1" />
+          <End Type="DHHHModel.POR_TaiLieu" Role="POR_TaiLieu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PLAN_GiaoVien">
+              <PropertyRef Name="ID_cb" />
+            </Principal>
+            <Dependent Role="POR_TaiLieu">
+              <PropertyRef Name="ID_cb" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__POR_YeuCa__ID_sv__1FEDB87C">
+          <End Type="DHHHModel.STU_HoSoSinhVien" Role="STU_HoSoSinhVien" Multiplicity="0..1" />
+          <End Type="DHHHModel.POR_YeuCauMoLop" Role="POR_YeuCauMoLop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STU_HoSoSinhVien">
+              <PropertyRef Name="ID_sv" />
+            </Principal>
+            <Dependent Role="POR_YeuCauMoLop">
+              <PropertyRef Name="ID_sv" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="ViewLopTC">
           <Key>
             <PropertyRef Name="ID_lop_tc" />
@@ -2348,69 +2485,6 @@
           <Property Type="DateTime" Name="Tu_ngay" Nullable="false" Precision="3" />
           <Property Type="DateTime" Name="Den_ngay" Nullable="false" Precision="3" />
         </EntityType>
-        <EntityType Name="POR_TaiLieu">
-          <Key>
-            <PropertyRef Name="ID_tl" />
-          </Key>
-          <Property Type="Int32" Name="ID_tl" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Ten_tl" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Tac_gia" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Mo_ta" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="ID_cb" />
-          <Property Type="DateTime" Name="Ngay_up" Precision="3" />
-          <NavigationProperty Name="PLAN_GiaoVien" Relationship="DHHHModel.FK__POR_TaiLi__ID_cb__1758727B" FromRole="POR_TaiLieu" ToRole="PLAN_GiaoVien" />
-        </EntityType>
-        <Association Name="FK__POR_TaiLi__ID_cb__1758727B">
-          <End Type="DHHHModel.PLAN_GiaoVien" Role="PLAN_GiaoVien" Multiplicity="0..1" />
-          <End Type="DHHHModel.POR_TaiLieu" Role="POR_TaiLieu" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PLAN_GiaoVien">
-              <PropertyRef Name="ID_cb" />
-            </Principal>
-            <Dependent Role="POR_TaiLieu">
-              <PropertyRef Name="ID_cb" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="POR_YeuCauMoLop">
-          <Key>
-            <PropertyRef Name="ID_yeu_cau" />
-          </Key>
-          <Property Type="Int32" Name="ID_yeu_cau" Nullable="false" />
-          <Property Type="Int32" Name="ID_sv" />
-          <Property Type="Int32" Name="ID_mon" />
-          <Property Type="DateTime" Name="Ngay_yeu_cau" Precision="3" />
-          <Property Type="Boolean" Name="Duyet" />
-          <Property Type="DateTime" Name="Ngay_duyet" Precision="3" />
-          <Property Type="Boolean" Name="Trang_thai" />
-          <Property Type="Int32" Name="Nguoi_duyet" />
-          <NavigationProperty Name="MARK_MonHoc" Relationship="DHHHModel.FK__POR_YeuCa__ID_mo__20E1DCB5" FromRole="POR_YeuCauMoLop" ToRole="MARK_MonHoc" />
-          <NavigationProperty Name="STU_HoSoSinhVien" Relationship="DHHHModel.FK__POR_YeuCa__ID_sv__1FEDB87C" FromRole="POR_YeuCauMoLop" ToRole="STU_HoSoSinhVien" />
-        </EntityType>
-        <Association Name="FK__POR_YeuCa__ID_mo__20E1DCB5">
-          <End Type="DHHHModel.MARK_MonHoc" Role="MARK_MonHoc" Multiplicity="0..1" />
-          <End Type="DHHHModel.POR_YeuCauMoLop" Role="POR_YeuCauMoLop" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MARK_MonHoc">
-              <PropertyRef Name="ID_mon" />
-            </Principal>
-            <Dependent Role="POR_YeuCauMoLop">
-              <PropertyRef Name="ID_mon" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__POR_YeuCa__ID_sv__1FEDB87C">
-          <End Type="DHHHModel.STU_HoSoSinhVien" Role="STU_HoSoSinhVien" Multiplicity="0..1" />
-          <End Type="DHHHModel.POR_YeuCauMoLop" Role="POR_YeuCauMoLop" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="STU_HoSoSinhVien">
-              <PropertyRef Name="ID_sv" />
-            </Principal>
-            <Dependent Role="POR_YeuCauMoLop">
-              <PropertyRef Name="ID_sv" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2994,27 +3068,32 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ViewLopTC">
-            <EntityTypeMapping TypeName="DHHHModel.ViewLopTC">
-              <MappingFragment StoreEntitySet="ViewLopTC">
-                <ScalarProperty Name="Den_ngay" ColumnName="Den_ngay" />
-                <ScalarProperty Name="Tu_ngay" ColumnName="Tu_ngay" />
-                <ScalarProperty Name="Ten_lop_tc" ColumnName="Ten_lop_tc" />
-                <ScalarProperty Name="Nam_hoc" ColumnName="Nam_hoc" />
-                <ScalarProperty Name="Hoc_ky" ColumnName="Hoc_ky" />
-                <ScalarProperty Name="Dot" ColumnName="Dot" />
-                <ScalarProperty Name="Ky_dang_ky" ColumnName="Ky_dang_ky" />
-                <ScalarProperty Name="ID_cb" ColumnName="ID_cb" />
-                <ScalarProperty Name="Ky_hieu_lop_tc" ColumnName="Ky_hieu_lop_tc" />
-                <ScalarProperty Name="Ten_mon" ColumnName="Ten_mon" />
-                <ScalarProperty Name="ID_mon" ColumnName="ID_mon" />
-                <ScalarProperty Name="ID_lop_tc" ColumnName="ID_lop_tc" />
+          <EntitySetMapping Name="SYS_NguoiDung">
+            <EntityTypeMapping TypeName="DHHHModel.SYS_NguoiDung">
+              <MappingFragment StoreEntitySet="SYS_NguoiDung">
+                <ScalarProperty Name="MAC" ColumnName="MAC" />
+                <ScalarProperty Name="Dien_thoai" ColumnName="Dien_thoai" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="adsPathLDAP" ColumnName="adsPathLDAP" />
+                <ScalarProperty Name="UserNameLDAP" ColumnName="UserNameLDAP" />
+                <ScalarProperty Name="May_tram" ColumnName="May_tram" />
+                <ScalarProperty Name="ID_Bomon" ColumnName="ID_Bomon" />
+                <ScalarProperty Name="ID_khoa" ColumnName="ID_khoa" />
+                <ScalarProperty Name="ID_phong" ColumnName="ID_phong" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="UserGroup" ColumnName="UserGroup" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="PassWord" ColumnName="PassWord" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="POR_TaiLieu">
             <EntityTypeMapping TypeName="DHHHModel.POR_TaiLieu">
               <MappingFragment StoreEntitySet="POR_TaiLieu">
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="Ten_file" ColumnName="Ten_file" />
                 <ScalarProperty Name="Ngay_up" ColumnName="Ngay_up" />
                 <ScalarProperty Name="ID_cb" ColumnName="ID_cb" />
                 <ScalarProperty Name="Mo_ta" ColumnName="Mo_ta" />
@@ -3035,6 +3114,24 @@
                 <ScalarProperty Name="ID_mon" ColumnName="ID_mon" />
                 <ScalarProperty Name="ID_sv" ColumnName="ID_sv" />
                 <ScalarProperty Name="ID_yeu_cau" ColumnName="ID_yeu_cau" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewLopTC">
+            <EntityTypeMapping TypeName="DHHHModel.ViewLopTC">
+              <MappingFragment StoreEntitySet="ViewLopTC">
+                <ScalarProperty Name="Den_ngay" ColumnName="Den_ngay" />
+                <ScalarProperty Name="Tu_ngay" ColumnName="Tu_ngay" />
+                <ScalarProperty Name="Ten_lop_tc" ColumnName="Ten_lop_tc" />
+                <ScalarProperty Name="Nam_hoc" ColumnName="Nam_hoc" />
+                <ScalarProperty Name="Hoc_ky" ColumnName="Hoc_ky" />
+                <ScalarProperty Name="Dot" ColumnName="Dot" />
+                <ScalarProperty Name="Ky_dang_ky" ColumnName="Ky_dang_ky" />
+                <ScalarProperty Name="ID_cb" ColumnName="ID_cb" />
+                <ScalarProperty Name="Ky_hieu_lop_tc" ColumnName="Ky_hieu_lop_tc" />
+                <ScalarProperty Name="Ten_mon" ColumnName="Ten_mon" />
+                <ScalarProperty Name="ID_mon" ColumnName="ID_mon" />
+                <ScalarProperty Name="ID_lop_tc" ColumnName="ID_lop_tc" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
