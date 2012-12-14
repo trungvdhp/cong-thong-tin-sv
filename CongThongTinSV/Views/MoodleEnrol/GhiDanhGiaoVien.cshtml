@@ -152,8 +152,8 @@
             alert('Vui lòng chọn một vai trò!');
             return;
         }
-
-        processing('/MoodleEnrol/CreateGhiDanhGiaoVien/?suspended=0&id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + "&id_vai_tro=" + jQuery("#VaiTro").val(), "Đang ghi danh và kích hoạt cho các giáo viên đã chọn trong lớp học phần...", gridRefresh);
+        var action = '@Url.Action("CreateGhiDanhGiaoVien", "MoodleEnrol")' + '/?suspended=0&id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + "&id_vai_tro=" + jQuery("#VaiTro").val();
+        processing(action, "Đang ghi danh và kích hoạt cho các giáo viên đã chọn trong lớp học phần...", gridRefresh);
     })
 
     $("#suspendEnrol").click(function () {
@@ -166,8 +166,8 @@
             alert('Vui lòng chọn một vai trò!');
             return;
         }
-
-        processing('/MoodleEnrol/CreateGhiDanhGiaoVien/?suspended=1&id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + "&id_vai_tro=" + jQuery("#VaiTro").val(), "Đang ghi danh nhưng chưa kích hoạt cho các giáo viên đã chọn trong lớp học phần...", gridRefresh);
+        var action = '@Url.Action("CreateGhiDanhGiaoVien", "MoodleEnrol")' + '/?suspended=1&id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + "&id_vai_tro=" + jQuery("#VaiTro").val();
+        processing(action, "Đang ghi danh nhưng chưa kích hoạt cho các giáo viên đã chọn trong lớp học phần...", gridRefresh);
     })
 
     $("#unassignRole").click(function () {
@@ -183,7 +183,8 @@
 
         if (confirm('Bạn muốn hủy vai trò ' + jQuery("#VaiTro").data("kendoDropDownList").text() +
             ' của các giáo viên đã chọn trong lớp học phần?')) {
-            processing('/MoodleEnrol/UnassignVaiTroGiaoVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + "&id_vai_tro=" + jQuery("#VaiTro").val(), "Đang hủy vai trò " + jQuery("#VaiTro").data("kendoDropDownList").text() + " của các giáo viên đã chọn trong lớp học phần...", gridRefresh);
+            var action = '@Url.Action("UnassignVaiTroGiaoVien", "MoodleEnrol")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + "&id_vai_tro=" + jQuery("#VaiTro").val();
+            processing(action, "Đang hủy vai trò " + jQuery("#VaiTro").data("kendoDropDownList").text() + " của các giáo viên đã chọn trong lớp học phần...", gridRefresh);
         }
     })
 
@@ -194,7 +195,8 @@
         }
 
         if (confirm('Bạn muốn hủy tất cả vai trò của các giáo viên đã chọn trong lớp học phần?')) {
-            processing('/MoodleEnrol/UnassignAllVaiTroGiaoVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals, "Đang hủy tất cả vai trò của các giáo viên đã chọn trong lớp học phần...", gridRefresh);
+            var action = '@Url.Action("UnassignAllVaiTroGiaoVien", "MoodleEnrol")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
+            processing(action, "Đang hủy tất cả vai trò của các giáo viên đã chọn trong lớp học phần...", gridRefresh);
         }
     })
 </script>

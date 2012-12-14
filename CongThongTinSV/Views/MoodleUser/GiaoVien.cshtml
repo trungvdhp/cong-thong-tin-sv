@@ -110,8 +110,8 @@
             alert('Vui lòng chọn một giáo viên!');
             return;
         }
-
-        processing('/MoodleUser/CreateGiaoVien/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVals, "Đang tạo tài khoản moodle cho các giáo viên đã chọn...", gridRefresh);
+        var action = '@Url.Action("CreateGiaoVien", "MoodleUser")' + '/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVals;
+        processing(action, "Đang tạo tài khoản moodle cho các giáo viên đã chọn...", gridRefresh);
     })
 
     $("#delete").click(function () {
@@ -121,7 +121,8 @@
         }
 
         if (confirm('Bạn muốn xóa tài khoản moodle của các giáo viên đã chọn?')) {
-            processing('/MoodleUser/DeleteGiaoVien/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVals, "Đang xóa tài khoản moodle của các giáo viên đã chọn...", gridRefresh);
+            var action = '@Url.Action("DeleteGiaoVien", "MoodleUser")' + '/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVals;
+            processing(action, "Đang xóa tài khoản moodle của các giáo viên đã chọn...", gridRefresh);
         }
     })
 
@@ -132,7 +133,8 @@
         }
 
         if (confirm('Bạn muốn khôi phục về mặc định tài khoản moodle của các giáo viên đã chọn?')) {
-            processing('/MoodleUser/UpdateGiaoVien/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVals, "Đang khôi phục tài khoản của các giáo viên đã chọn...", gridRefresh);
+            var action = '@Url.Action("UpdateGiaoVien", "MoodleUser")' + '/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVals;
+            processing(action, "Đang khôi phục tài khoản của các giáo viên đã chọn...", gridRefresh);
         }
     })
 
@@ -143,7 +145,8 @@
         }
 
         if (confirm('Bạn muốn đồng bộ tài khoản moodle và tài khoản cổng thông tin của các giáo viên đã chọn?')) {
-            processing('/MoodleUser/SyncGiaoVien/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVals, "Đang đồng bộ tài khoản của các giáo viên đã chọn...", gridRefresh);
+            var action = '@Url.Action("SyncGiaoVien", "MoodleUser")' + '/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVals;
+            processing(action, "Đang đồng bộ tài khoản của các giáo viên đã chọn...", gridRefresh);
         }
     })
 

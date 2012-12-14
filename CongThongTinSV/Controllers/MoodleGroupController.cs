@@ -250,6 +250,29 @@ namespace CongThongTinSV.Controllers
             UtilityController.WriteTextToFile("D:\\NhomHocVienDeleteThanhVien.txt", response);
         }
 
+        public ActionResult AddThanhVien(string selectedVals, string id_lop_tc, string id_nhom)
+        {
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+            var list = MoodleEnrolController.MoodleHocVienDiems(Convert.ToInt32(id_lop_tc)).Where(t => t.Tinh_trang == "Đã ghi danh" && s.Contains(t.ID.ToString()) && t.Ten_nhom == "").ToList();
+
+            if (list.Count() > 0)
+                AddThanhVien(list, id_nhom);
+
+            return View();
+        }
+
+        public ActionResult DeleteThanhVien(string selectedVals, string id_lop_tc, string id_nhom)
+        {
+            Entities db = new Entities();
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+            var list = MoodleEnrolController.MoodleHocVienDiems(Convert.ToInt32(id_lop_tc)).Where(t => s.Contains(t.ID.ToString()) && t.ID_nhom.ToString() == id_nhom).ToList();
+
+            if (list.Count() > 0)
+                DeleteThanhVien(list, id_nhom);
+
+            return View();
+        }
+
         public ActionResult CreateTo(string ten_to, string mo_ta, int id_lop_tc)
         {
             Entities db = new Entities();

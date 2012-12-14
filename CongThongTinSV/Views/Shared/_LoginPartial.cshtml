@@ -28,8 +28,11 @@
     }
 }
 else {
-    if (HttpContext.Current.Request.Url.AbsolutePath != "/Account/Login" && HttpContext.Current.Request.Url.AbsolutePath != "/Home" && HttpContext.Current.Request.Url.AbsolutePath != "/" &&
-HttpContext.Current.Request.Url.AbsolutePath != "/Home/Index")
+    string action = HttpContext.Current.Request.Url.AbsolutePath.Substring(1);
+    int len = action.Length - 1;
+    if (len < 0) { len = 3; action = "Home"; }
+    if (action[len] == '/') { action = action.Substring(0, len); }
+    if (!(action.Contains("Account/Login") || action.Contains("Home") || !action.Contains("/") || action.Contains("Home/Index")))
     {
         Response.Redirect(Url.Action("Login", "Account"));
     }

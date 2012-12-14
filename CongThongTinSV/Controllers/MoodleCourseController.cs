@@ -25,17 +25,25 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        public ActionResult GetLopHocPhan([DataSourceRequest] DataSourceRequest request, int id_hocky)
+        public ActionResult GetLopHocPhan([DataSourceRequest] DataSourceRequest request, string id_hocky)
         {
 
             return Json(MoodleLopHocPhans(id_hocky).ToDataSourceResult(request));
         }
 
-        public IEnumerable<MoodleLopHocPhan> MoodleLopHocPhans(int id_hocky)
+        public IEnumerable<MoodleLopHocPhan> MoodleLopHocPhans(string id_hocky)
         {
             Entities db = new Entities();
-            
-            var q = db.MOD_HocKy.FirstOrDefault(t => t.ID_moodle == id_hocky);
+            int hk = 0;
+
+            try
+            {
+                hk = Convert.ToInt32(id_hocky);
+            }
+            catch (Exception) { }
+
+            var q = db.MOD_HocKy.FirstOrDefault(t => t.ID_moodle == hk);
+            var hocky = db.PLAN_HocKyDangKy_TC.FirstOrDefault(t => t.Ky_dang_ky == q.Ky_dang_ky);
 
             var q2 = (from ltc in db.PLAN_LopTinChi_TC
                      join mtc in db.PLAN_MonTinChi_TC
@@ -66,6 +74,7 @@ namespace CongThongTinSV.Controllers
                          ID = a.ID_lop_tc,
                          ID_moodle = (c == null ? 0 : c.ID_moodle),
                          Ky_hieu = a.Ky_hieu,
+                         Ky_dang_ky = hocky.Hoc_ky + "." + hocky.Nam_hoc,
                          So_tin_chi = a.So_tin_chi,
                          Tu_ngay = a.Tu_ngay,
                          Den_ngay = a.Den_ngay,
@@ -78,7 +87,7 @@ namespace CongThongTinSV.Controllers
             return q3.OrderByDescending(t => t.ID_moodle).ToList();
         }
 
-        public JsonResult GetMoodleLopHocPhan(int id_hocky)
+        public JsonResult GetMoodleLopHocPhan(string id_hocky)
         {
             Entities db = new Entities();
             JsonResult result = new JsonResult();
@@ -93,7 +102,7 @@ namespace CongThongTinSV.Controllers
             Entities db = new Entities();
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
             int cID = Convert.ToInt32(id_hocky);
-            var list = MoodleLopHocPhans(Convert.ToInt32(cID)).Where(t => t.ID_moodle == 0 && s.Contains(t.ID.ToString())).ToList();
+            var list = MoodleLopHocPhans(id_hocky).Where(t => t.ID_moodle == 0 && s.Contains(t.ID.ToString())).ToList();
 
             if (list.Count() == 0) return View();
 
@@ -105,8 +114,8 @@ namespace CongThongTinSV.Controllers
                 postData += "&courses[" + i + "][fullname]=" + HttpUtility.UrlEncode(item.Lop_hoc_phan);
                 postData += "&courses[" + i + "][shortname]=" + HttpUtility.UrlEncode(item.Lop_hoc_phan);
                 postData += "&courses[" + i + "][categoryid]=" + id_hocky;
-                postData += "&courses[" + i + "][idnumber]=" + item.ID;//HttpUtility.UrlEncode(UtilityController.GetIdnumber(item.Lop_hoc_phan));
-                postData += "&courses[" + i + "][summary]=" + HttpUtility.UrlEncode(item.Lop_hoc_phan + "-" + item.Ky_hieu + "-" + item.So_tin_chi + " tín chỉ");
+                postData += "&courses[" + i + "][idnumber]=" + item.Ky_hieu + "." + item.Ky_dang_ky + "." + item.ID;
+                postData += "&courses[" + i + "][summary]=" + HttpUtility.UrlEncode(item.Lop_hoc_phan + "." + item.Ky_hieu + "." + item.Ky_dang_ky +  "." + item.So_tin_chi + " tín chỉ");
                 //postData += "&courses[" + i + "][summaryformat]=1";
                 //postData += "&courses[" + i + "][format]=weeks";
                 //postData += "&courses[" + i + "][showgrades]=1";
@@ -169,8 +178,7 @@ namespace CongThongTinSV.Controllers
         {
             Entities db = new Entities();
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-            int cID = Convert.ToInt32(id_hocky);
-            var list = MoodleLopHocPhans(Convert.ToInt32(cID)).Where(t => t.ID_moodle > 0 && s.Contains(t.ID.ToString())).ToList();
+            var list = MoodleLopHocPhans(id_hocky).Where(t => t.ID_moodle > 0 && s.Contains(t.ID.ToString())).ToList();
 
             if (list.Count() == 0) return View();
 
