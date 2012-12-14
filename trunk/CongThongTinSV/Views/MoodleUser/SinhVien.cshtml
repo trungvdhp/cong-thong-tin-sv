@@ -125,8 +125,8 @@
             alert('Vui lòng chọn một sinh viên!');
             return;
         }
-
-        processing('/MoodleUser/CreateSinhVien/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals, "Đang tạo tài khoản moodle cho các sinh viên đã chọn...", gridRefresh);
+        var action = '@Url.Action("CreateSinhVien", "MoodleUser")' + '/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals;
+        processing(action, "Đang tạo tài khoản moodle cho các sinh viên đã chọn...", gridRefresh);
     })
 
     $("#delete").click(function () {
@@ -136,7 +136,8 @@
         }
 
         if (confirm('Bạn muốn xóa tài khoản moodle của các sinh viên đã chọn?')) {
-            processing('/MoodleUser/DeleteSinhVien/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals, "Đang xóa tài khoản moodle của các sinh viên đã chọn...", gridRefresh);
+            var action = '@Url.Action("DeleteSinhVien", "MoodleUser")' + '/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals;
+            processing(action, "Đang xóa tài khoản moodle của các sinh viên đã chọn...", gridRefresh);
         }
     })
 
@@ -147,7 +148,8 @@
         }
 
         if (confirm('Bạn muốn khôi phục về mặc định tài khoản moodle của các sinh viên đã chọn?')) {
-            processing('/MoodleUser/UpdateSinhVien/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals, "Đang khôi phục tài khoản của các sinh viên đã chọn...", gridRefresh);
+            var action = '@Url.Action("UpdateSinhVien", "MoodleUser")' + '/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals;
+            processing(action, "Đang khôi phục tài khoản của các sinh viên đã chọn...", gridRefresh);
         }
     })
 
@@ -158,7 +160,8 @@
         }
 
         if (confirm('Bạn muốn đồng bộ tài khoản moodle và tài khoản cổng thông tin của các sinh viên đã chọn?')) {
-            processing('/MoodleUser/SyncSinhVien/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals, "Đang đồng bộ tài khoản của các sinh viên đã chọn...", gridRefresh);
+            var action = '@Url.Action("SyncSinhVien", "MoodleUser")' + '/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals;
+            processing(action, "Đang đồng bộ tài khoản của các sinh viên đã chọn...", gridRefresh);
         }
     })
 

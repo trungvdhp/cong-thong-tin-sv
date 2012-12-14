@@ -7,7 +7,6 @@
 @(Html.Kendo().ComboBox()
     .Name("HocKy")
     .Placeholder("Chọn học kỳ...")
-    //.OptionLabel("Chọn học kỳ")
     .HtmlAttributes(new { style = "width:180px" })
     .DataTextField("Text")
     .DataValueField("Value")
@@ -18,16 +17,11 @@
             read.Action("GetMoodleHocKy", "MoodleCategory");
         }).ServerFiltering(true);
     })
-    //.Events(e =>
-    //{
-    //    e.Change("selectLopHocPhan");
-    //})
 )
 
 @(Html.Kendo().ComboBox()
     .Name("LopHocPhan")
     .Placeholder("Chọn lớp học phần...")
-    //.OptionLabel("Chọn lớp học phần")
     .HtmlAttributes(new { style = "width:320px" })
     .DataTextField("Text")
     .DataValueField("Value")
@@ -132,10 +126,6 @@
         }
     }
 
-    //function selectLopHocPhan() {
-    //    $("#LopHocPhan").data("kendoDropDownList").select(0);
-    //}
-
     function loadGrid() {
         selectedVals.splice(0, selectedVals.length);
         gridRefresh();
@@ -183,8 +173,8 @@
             alert('Tên nhóm không được để trống!');
             return;
         }
-
-        processing('/MoodleGroup/CreateNhom/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&ten_nhom=' + jQuery("#TenNhom").val() + '&mo_ta=' + jQuery("#MoTaNhom").val(), "Đang tạo nhóm học viên trong lớp học phần...", gridRefresh);
+        var action = '@Url.Action("CreateNhom","MoodleGroup")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&ten_nhom=' + jQuery("#TenNhom").val() + '&mo_ta=' + jQuery("#MoTaNhom").val();
+        processing(action, "Đang tạo nhóm học viên trong lớp học phần...", gridRefresh);
     })
 
     $("#deleteGroup").click(function () {
@@ -194,7 +184,8 @@
         }
 
         if (confirm('Bạn muốn xóa các nhóm học viên đã chọn?')) {
-            processing('/MoodleGroup/DeleteNhom/?selectedVals=' + selectedVals, "Đang xóa các nhóm học viên...", gridRefresh);
+            var action = '@Url.Action("DeleteNhom","MoodleGroup")' + '/?selectedVals=' + selectedVals;
+            processing(action, "Đang xóa các nhóm học viên...", gridRefresh);
         }
     })
 
@@ -208,8 +199,8 @@
             alert('Tên tổ không được để trống!');
             return;
         }
-
-        processing('/MoodleGroup/CreateTo/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&ten_to=' + jQuery("#TenTo").val() + '&mo_ta=' + jQuery("#MoTaTo").val(), "Đang tạo tổ trong lớp học phần...", groupingRefresh);
+        var action = '@Url.Action("CreateTo", "MoodleGroup")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&ten_to=' + jQuery("#TenTo").val() + '&mo_ta=' + jQuery("#MoTaTo").val();
+        processing(action, "Đang tạo tổ trong lớp học phần...", groupingRefresh);
     })
 
     $("#deleteGrouping").click(function () {
@@ -219,7 +210,8 @@
         }
 
         if (confirm('Bạn muốn xóa tổ ' + $("#To").data("kendoDropDownList").text() + '?')) {
-            processing('/MoodleGroup/DeleteTo/?selectedVals=' + jQuery("#To").val(), "Đang xóa tổ " + $("#To").data("kendoDropDownList").text() + "...", gridgroupingRefresh);
+            var action = '@Url.Action("DeleteTo", "MoodleGroup")' + '/?selectedVals=' + jQuery("#To").val();
+            processing(action, "Đang xóa tổ " + $("#To").data("kendoDropDownList").text() + "...", gridgroupingRefresh);
         }
     })
 
@@ -228,8 +220,8 @@
             alert('Tên tổ không được để trống!');
             return;
         }
-
-        processing('/MoodleGroup/UpdateTo/?&ten_to=' + jQuery("#TenTo").val() + '&mo_ta=' + jQuery("#MoTaTo").val() + '&id_to=' + jQuery("#To").val(), "Đang cập nhật tổ trong lớp học phần...", gridgroupingRefresh);
+        var action = '@Url.Action("UpdateTo", "MoodleGroup")' + '/?&ten_to=' + jQuery("#TenTo").val() + '&mo_ta=' + jQuery("#MoTaTo").val() + '&id_to=' + jQuery("#To").val();
+        processing(action, "Đang cập nhật tổ trong lớp học phần...", gridgroupingRefresh);
     })
 
     $("#assignGrouping").click(function () {
@@ -242,8 +234,8 @@
             alert('Vui lòng chọn 1 tổ!');
             return;
         }
-
-        processing('/MoodleGroup/AssignToNhom/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + '&id_to=' + jQuery("#To").val(), "Đang thêm các nhóm vào tổ " + $("#To").data("kendoDropDownList").text() + "...", gridRefresh);
+        var action = '@Url.Action("AssignToNhom", "MoodleGroup")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + '&id_to=' + jQuery("#To").val();
+        processing(action, "Đang thêm các nhóm vào tổ " + $("#To").data("kendoDropDownList").text() + "...", gridRefresh);
     })
 
     $("#unassignGrouping").click(function () {
@@ -258,7 +250,8 @@
         }
 
         if (confirm('Bạn muốn xóa các nhóm đã chọn khỏi tổ ' + $("#To").data("kendoDropDownList").text() + '?')) {
-            processing('/MoodleGroup/UnassignToNhom/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + '&id_to=' + jQuery("#To").val(), "Đang xóa các nhóm khỏi tổ " + $("#To").data("kendoDropDownList").text() + "...", gridRefresh);
+            var action = '@Url.Action("UnassignToNhom", "MoodleGroup")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + '&id_to=' + jQuery("#To").val();
+            processing(action, "Đang xóa các nhóm khỏi tổ " + $("#To").data("kendoDropDownList").text() + "...", gridRefresh);
         }
     })
 </script>

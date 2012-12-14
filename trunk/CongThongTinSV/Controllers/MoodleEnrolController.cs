@@ -30,7 +30,7 @@ namespace CongThongTinSV.Controllers
             return Json(MoodleHocVienDiems(id_lop_tc).ToDataSourceResult(request));
         }
 
-        public IEnumerable<MoodleSinhVien> MoodleHocVienDiems(int id_lop_tc)
+        public static IEnumerable<MoodleSinhVien> MoodleHocVienDiems(int id_lop_tc)
         {
             Entities db = new Entities();
 
@@ -87,7 +87,7 @@ namespace CongThongTinSV.Controllers
             return hocviendiem.OrderByDescending(t => t.Tinh_trang).ToList();
         }
 
-        public IEnumerable<MoodleSinhVien> MoodleHocViens(int id_lop_tc)
+        public static IEnumerable<MoodleSinhVien> MoodleHocViens(int id_lop_tc)
         {
             Entities db = new Entities();
             var sinhvien = MoodleSinhViens(id_lop_tc);
@@ -117,7 +117,7 @@ namespace CongThongTinSV.Controllers
             return hocvien.ToList();
         }
 
-        public IEnumerable<MoodleSinhVien> MoodleSinhViens(int id_lop_tc)
+        public static IEnumerable<MoodleSinhVien> MoodleSinhViens(int id_lop_tc)
         {
             Entities db = new Entities();
 
@@ -191,30 +191,6 @@ namespace CongThongTinSV.Controllers
 
             return sv3.ToList();
         }
-
-        //public ActionResult CreateSinhVien(string selectedVals, string id_lop_tc)
-        //{
-        //    Entities db = new Entities();
-        //    IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-        //    var list = MoodleSinhViens(Convert.ToInt32(id_lop_tc)).Where(t => t.ID_moodle == 0 && s.Contains(t.ID.ToString())).ToList();
-
-        //    if (list.Count() > 0)
-        //        MoodleUserController.CreateSinhVien(list);
-
-        //    return View();
-        //}
-
-        //public ActionResult DeleteSinhVien(string selectedVals, string id_lop_tc)
-        //{
-        //    Entities db = new Entities();
-        //    IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-        //    var list = MoodleSinhViens(Convert.ToInt32(id_lop_tc)).Where(t => t.ID_moodle > 0 && s.Contains(t.ID.ToString())).ToList();
-
-        //    if (list.Count() > 0)
-        //         MoodleUserController.DeleteSinhVien(list);
-
-        //    return View();
-        //}
 
         public static void CreateGhiDanhSinhVien(List<MoodleSinhVien> list)
         {
@@ -333,29 +309,6 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        public ActionResult AddThanhVien(string selectedVals, string id_lop_tc, string id_nhom)
-        {
-            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-            var list = MoodleHocVienDiems(Convert.ToInt32(id_lop_tc)).Where(t => t.Tinh_trang == "Đã ghi danh" && s.Contains(t.ID.ToString()) && t.Ten_nhom == "").ToList();
-
-            if (list.Count() > 0)
-                MoodleGroupController.AddThanhVien(list, id_nhom);
-
-            return View();
-        }
-
-        public ActionResult DeleteThanhVien(string selectedVals, string id_lop_tc, string id_nhom)
-        {
-            Entities db = new Entities();
-            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-            var list = MoodleHocVienDiems(Convert.ToInt32(id_lop_tc)).Where(t => s.Contains(t.ID.ToString()) && t.ID_nhom.ToString() == id_nhom).ToList();
-
-            if (list.Count() > 0)
-                MoodleGroupController.DeleteThanhVien(list, id_nhom);
-
-            return View();
-        }
-
         public ActionResult GhiDanhGiaoVien()
         {
             return View();
@@ -366,7 +319,7 @@ namespace CongThongTinSV.Controllers
             return Json(MoodleGiaoViens(id_lop_tc).ToDataSourceResult(request));
         }
 
-        public IEnumerable<MoodleGiaoVien> MoodleGiaoViens(int id_lop_tc)
+        public static IEnumerable<MoodleGiaoVien> MoodleGiaoViens(int id_lop_tc)
         {
             Entities db = new Entities();
 

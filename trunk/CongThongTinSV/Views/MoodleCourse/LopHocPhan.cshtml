@@ -37,12 +37,12 @@
             .Filterable(false).Groupable(false).Sortable(false);
         columns.Bound(c => c.ID_moodle).Width(105);
         columns.Bound(c => c.Lop_hoc_phan);
-        columns.Bound(c => c.Ky_hieu).Width(100);
-        columns.Bound(c => c.So_tin_chi).Width(105).HtmlAttributes(new { style = "text-align:center" });
-        columns.Bound(c => c.Tu_ngay).Width(105).Format("{0:dd-MM-yyyy}");
-        columns.Bound(c => c.Den_ngay).Width(105).Format("{0:dd-MM-yyyy}");
-        columns.Command(command => command.Custom("Chi tiết").Click("showDetails")).Width(90);
-        columns.Command(command => command.Custom("Bảng điểm").Click("showUsers"));
+        columns.Bound(c => c.Ky_hieu).Width(95).HtmlAttributes(new { style = "text-align:center" });
+        columns.Bound(c => c.So_tin_chi).Width(95).HtmlAttributes(new { style = "text-align:center" });
+        columns.Bound(c => c.Tu_ngay).Width(100).Format("{0:dd-MM-yyyy}").HtmlAttributes(new { style = "text-align:center" });
+        columns.Bound(c => c.Den_ngay).Width(100).Format("{0:dd-MM-yyyy}").HtmlAttributes(new { style = "text-align:center" });
+        columns.Command(command => command.Custom("Chi tiết").Click("showDetails")).Width(85).HtmlAttributes(new { style = "text-align:center" });
+        columns.Command(command => command.Custom("Bảng điểm").Click("showUsers")).Width(105).HtmlAttributes(new { style = "text-align:center" });
     })
     .Pageable(pager => pager.PageSizes(new int[]{5, 10, 20, 50, 100, 1000}).Refresh(true).Input(true).Numeric(false))
         .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
@@ -124,8 +124,8 @@
             alert('Vui lòng chọn một lớp học phần!');
             return;
         }
-
-        processing('/MoodleCourse/CreateLopHocPhan/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals, "Đang tạo các lớp học phần đã chọn trên moodle...", gridRefresh);
+        var action = '@Url.Action("CreateLopHocPhan", "MoodleCourse")' + '/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals;
+        processing(action, "Đang tạo các lớp học phần đã chọn trên moodle...", gridRefresh);
     })
 
     $("#delete").click(function () {
@@ -135,7 +135,8 @@
         }
 
         if (confirm('Bạn muốn xóa toàn bộ các lớp học phần thuộc chuyên ngành đã chọn?')) {
-            processing('/MoodleCourse/DeleteLopHocPhan/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals, "Đang xóa các lớp học phần đã chọn trên moodle...", gridRefresh);
+            var action = '@Url.Action("DeleteLopHocPhan","MoodleCourse")' + '/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals
+            processing(action, "Đang xóa các lớp học phần đã chọn trên moodle...", gridRefresh);
         }
     })
 </script>

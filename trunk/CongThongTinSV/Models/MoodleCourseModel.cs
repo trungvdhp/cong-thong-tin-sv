@@ -75,6 +75,9 @@ namespace CongThongTinSV.Models
         [DisplayName("Học phần")]
         public string Ky_hieu { get; set; }
 
+        [DisplayName("Kỳ đăng ký")]
+        public string Ky_dang_ky { get; set; }
+
         [DisplayName("Số tín chỉ")]
         public int So_tin_chi { get; set; }
 

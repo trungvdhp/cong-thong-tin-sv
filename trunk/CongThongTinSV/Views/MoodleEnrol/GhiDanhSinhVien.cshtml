@@ -182,8 +182,8 @@
             alert('Vui lòng chọn một sinh viên!');
             return;
         }
-
-        processing('/MoodleEnrol/CreateGhiDanhSinhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals, "Đang ghi danh cho các sinh viên...", gridRefresh);
+        var action = '@Url.Action("CreateGhiDanhSinhVien", "MoodleEnrol")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
+        processing(action, "Đang ghi danh cho các sinh viên...", gridRefresh);
     })
 
     $("#deleteEnrol").click(function () {
@@ -193,7 +193,8 @@
         }
 
         if (confirm('Bạn muốn hủy ghi danh của các sinh viên đã chọn?')) {
-            processing('/MoodleEnrol/DeleteGhiDanhSinhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals, "Đang hủy ghi danh của các sinh viên...", gridRefresh);
+            var action = '@Url.Action("DeleteGhiDanhSinhVien", "MoodleEnrol")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
+            processing(action, "Đang hủy ghi danh của các sinh viên...", gridRefresh);
         }
     })
 
@@ -202,8 +203,8 @@
             alert('Tên nhóm không được để trống!');
             return;
         }
-
-        processing('/MoodleGroup/CreateNhom/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&ten_nhom=' + jQuery("#TenNhom").val() + '&mo_ta=' + jQuery("#MoTa").val(), "Đang tạo nhóm học viên trong lớp học phần...", groupRefresh);
+        var action = '@Url.Action("CreateNhom", "MoodleGroup")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&ten_nhom=' + jQuery("#TenNhom").val() + '&mo_ta=' + jQuery("#MoTa").val();
+        processing(action, "Đang tạo nhóm học viên trong lớp học phần...", groupRefresh);
     })
 
     $("#deleteGroup").click(function () {
@@ -213,7 +214,8 @@
         }
 
         if (confirm('Bạn muốn xóa nhóm học viên ' + $("#Nhom").data("kendoDropDownList").text() + '?')) {
-            processing('/MoodleGroup/DeleteNhom/?selectedVals=' + jQuery("#Nhom").val(), "Đang xóa nhóm học viên " + $("#Nhom").data("kendoDropDownList").text() + "...", gridgroupRefresh);
+            var action = '@Url.Action("DeleteNhom", "MoodleGroup")' + '/?selectedVals=' + jQuery("#Nhom").val();
+            processing(action, "Đang xóa nhóm học viên " + $("#Nhom").data("kendoDropDownList").text() + "...", gridgroupRefresh);
         }
     })
 
@@ -227,8 +229,8 @@
             alert('Vui lòng chọn 1 nhóm');
             return;
         }
-
-        processing('/MoodleEnrol/AddThanhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + '&id_nhom=' + jQuery("#Nhom").val(), "Đang thêm các học viên vào nhóm " + $("#Nhom").data("kendoDropDownList").text() + "...", gridRefresh);
+        var action = '@Url.Action("AddThanhVien", "MoodleGroup")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + '&id_nhom=' + jQuery("#Nhom").val();
+        processing(action, "Đang thêm các học viên vào nhóm " + $("#Nhom").data("kendoDropDownList").text() + "...", gridRefresh);
     })
 
     $("#deleteMember").click(function () {
@@ -242,7 +244,8 @@
             return;
         }
         if (confirm('Bạn muốn xóa các học viên đã chọn khỏi nhóm ' + $("#Nhom").data("kendoDropDownList").text() + '?')) {
-            processing('/MoodleEnrol/DeleteThanhVien/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + '&id_nhom=' + jQuery("#Nhom").val(), "Đang xóa các học viên khỏi nhóm " + $("#Nhom").data("kendoDropDownList").text() + "...", gridRefresh);
+            var action = '@Url.Action("DeleteThanhVien", "MoodleGroup")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + '&id_nhom=' + jQuery("#Nhom").val();
+            processing(action, "Đang xóa các học viên khỏi nhóm " + $("#Nhom").data("kendoDropDownList").text() + "...", gridRefresh);
         }
     })
 </script>
