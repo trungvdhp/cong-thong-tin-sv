@@ -75,8 +75,8 @@ namespace CongThongTinSV.Models
         [DisplayName("Học phần")]
         public string Ky_hieu { get; set; }
 
-        [DisplayName("Kỳ đăng ký")]
-        public string Ky_dang_ky { get; set; }
+        [DisplayName("ID number")]
+        public string ID_number { get; set; }
 
         [DisplayName("Số tín chỉ")]
         public int So_tin_chi { get; set; }
@@ -86,5 +86,12 @@ namespace CongThongTinSV.Models
 
         [DisplayName("Đến ngày")]
         public DateTime Den_ngay { get; set; }
+    }
+
+    public class CourseIDNumber
+    {
+        public int ID_mon { get; set; }
+        public int Hoc_ky { get; set; }
+        public string Nam_hoc { get; set; }
     }
 }

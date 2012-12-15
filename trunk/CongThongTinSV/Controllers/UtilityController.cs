@@ -214,7 +214,19 @@ namespace CongThongTinSV.Controllers
             //return the System.DateTime value
             return newDateTime.ToLocalTime();
         }
+        /// <summary>
+        /// Method for converting a UNIX timestamp to a
+        /// datetime string in a specified format
+        /// </summary>
+        /// <param name="timestamp">value to be converted</param>
+        /// <param name="format">datetime format</param>
+        /// <returns>Vietnamese datetime string</returns>
+        public static string ConvertToDateTimeString(int timestamp, string format)
+        {
+            DateTime date = ConvertToDateTime(timestamp);
 
+            return date.ToString(format);
+        }
         /// <summary>
         /// Method for converting a Date Time String in cultureInfo("fr-FR")
         ///  to a regular System.DateTime value (and also to the current local time)

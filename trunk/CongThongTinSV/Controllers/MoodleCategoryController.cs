@@ -66,7 +66,6 @@ namespace CongThongTinSV.Controllers
                             Value = h2.ID_moodle.ToString(),
                             Text = h1.Nam_hoc + " Kỳ " + h1.Hoc_ky + "- Đợt" + h1.Dot
                         };
-            int c = Convert.ToInt32(list.Count());
             result.Data = new SelectList(list,"Value", "Text").OrderByDescending(t => t.Text);
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
 

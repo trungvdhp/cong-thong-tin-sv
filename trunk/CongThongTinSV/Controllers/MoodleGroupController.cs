@@ -25,20 +25,30 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        public ActionResult GetNhom([DataSourceRequest] DataSourceRequest request, int id_lop_tc)
+        public ActionResult GetNhom([DataSourceRequest] DataSourceRequest request, string id_lop_tc)
         {
             return Json(MoodleNhoms(id_lop_tc).ToDataSourceResult(request));
         }
 
-        public IEnumerable<MoodleNhom> MoodleNhoms(int id_lop_tc)
+        public IEnumerable<MoodleNhom> MoodleNhoms(string id_lop_tc)
         {
             Entities db = new Entities();
+            int idlop = 0;
+
+            try
+            {
+                idlop = Convert.ToInt32(id_lop_tc);
+            }
+            catch (Exception) { }
+
+            if (idlop <= 0) return new List<MoodleNhom>();
+
             var nhomhv = from nhom in db.MOD_NhomHocVien
-                         where nhom.ID_lop_tc == id_lop_tc
+                         where nhom.ID_lop_tc == idlop
                          select new MoodleNhom
                          {
                              ID_nhom = nhom.ID_nhom,
-                             ID_lop_tc = id_lop_tc,
+                             ID_lop_tc = idlop,
                              ID_to = (nhom.ID_to == null ? 0 : (int)nhom.ID_to),
                              Ten_to = (nhom.ID_to == null ? "": nhom.MOD_ToNhom.Ten_to),
                              Ten_nhom = nhom.Ten_nhom,
@@ -253,7 +263,7 @@ namespace CongThongTinSV.Controllers
         public ActionResult AddThanhVien(string selectedVals, string id_lop_tc, string id_nhom)
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-            var list = MoodleEnrolController.MoodleHocVienDiems(Convert.ToInt32(id_lop_tc)).Where(t => t.Tinh_trang == "Đã ghi danh" && s.Contains(t.ID.ToString()) && t.Ten_nhom == "").ToList();
+            var list = MoodleEnrolController.MoodleHocVienDiems(id_lop_tc).Where(t => t.Tinh_trang == "Đã ghi danh" && s.Contains(t.ID.ToString()) && t.Ten_nhom == "").ToList();
 
             if (list.Count() > 0)
                 AddThanhVien(list, id_nhom);
@@ -265,7 +275,7 @@ namespace CongThongTinSV.Controllers
         {
             Entities db = new Entities();
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-            var list = MoodleEnrolController.MoodleHocVienDiems(Convert.ToInt32(id_lop_tc)).Where(t => s.Contains(t.ID.ToString()) && t.ID_nhom.ToString() == id_nhom).ToList();
+            var list = MoodleEnrolController.MoodleHocVienDiems(id_lop_tc).Where(t => s.Contains(t.ID.ToString()) && t.ID_nhom.ToString() == id_nhom).ToList();
 
             if (list.Count() > 0)
                 DeleteThanhVien(list, id_nhom);
@@ -409,7 +419,7 @@ namespace CongThongTinSV.Controllers
         public ActionResult AssignToNhom(string selectedVals, string id_lop_tc, string id_to)
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-            var list = MoodleNhoms(Convert.ToInt32(id_lop_tc)).Where(t => t.ID_to == 0 && s.Contains(t.ID_nhom.ToString())).ToList();
+            var list = MoodleNhoms(id_lop_tc).Where(t => t.ID_to == 0 && s.Contains(t.ID_nhom.ToString())).ToList();
 
             if (list.Count() > 0)
                 AssignToNhom(list, id_to);
@@ -464,7 +474,7 @@ namespace CongThongTinSV.Controllers
         public ActionResult UnassignToNhom(string selectedVals, string id_lop_tc, string id_to)
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-            var list = MoodleNhoms(Convert.ToInt32(id_lop_tc)).Where(t => t.ID_to.ToString() == id_to && s.Contains(t.ID_nhom.ToString())).ToList();
+            var list = MoodleNhoms(id_lop_tc).Where(t => t.ID_to.ToString() == id_to && s.Contains(t.ID_nhom.ToString())).ToList();
 
             if (list.Count() > 0)
                 UnassignToNhom(list, id_to);
