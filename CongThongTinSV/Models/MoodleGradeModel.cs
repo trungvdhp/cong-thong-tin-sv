@@ -11,22 +11,25 @@ namespace CongThongTinSV.Models
         [DisplayName("ID")]
         public int ID { get; set; }
 
+        [DisplayName("ID SV")]
+        public int ID_sv { get; set; }
+
         [DisplayName("Mã SV")]
-        public string Username { get; set; }
+        public string UserName { get; set; }
 
         [DisplayName("Họ và đệm")]
-        public string Lastname { get; set; }
+        public string LastName { get; set; }
 
         [DisplayName("Tên")]
-        public string Firstname { get; set; }
+        public string FirstName { get; set; }
 
-        [DisplayName("Điểm X")]
-        public decimal? GradeX { get; set; }
+        [DisplayName("Điểm thi cũ")]
+        public float? OldGrade { get; set; }
+
+        [DisplayName("Điểm thi mới")]
+        public decimal? NewGrade { get; set; }
 
         [DisplayName("Điểm Z")]
-        public decimal? GradeZ { get; set; }
-
-        [DisplayName("Điểm")]
-        public decimal? Grade { get; set; }
+        public decimal? ZGrade { get; set; }
     }
 }

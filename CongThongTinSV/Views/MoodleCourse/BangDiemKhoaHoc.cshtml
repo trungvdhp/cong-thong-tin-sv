@@ -17,11 +17,10 @@
             .HeaderHtmlAttributes(new { style = "text-align:center" })
             .HtmlAttributes(new { style = "text-align:center" })
             .Filterable(false).Groupable(false).Sortable(false);
-        columns.Bound(c => c.Username).Width(80);
-        columns.Bound(c => c.Lastname).Width(140);
-        columns.Bound(c => c.Firstname).Width(80);
-        columns.Bound(c => c.GradeX).Format("{0:0.0}").Width(85);
-        columns.Bound(c => c.GradeZ).Format("{0:0.0}");
+        columns.Bound(c => c.UserName).Width(80);
+        columns.Bound(c => c.LastName).Width(140);
+        columns.Bound(c => c.FirstName).Width(80);
+        columns.Bound(c => c.ZGrade).Format("{0:0.0}");
     })
     .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50, 100 }).Refresh(true).Input(true).Numeric(false))
     .Sortable(s => s.SortMode(GridSortMode.SingleColumn))

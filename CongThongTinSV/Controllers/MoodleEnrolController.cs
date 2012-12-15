@@ -24,18 +24,28 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        public ActionResult GetHocVien([DataSourceRequest] DataSourceRequest request, int id_lop_tc)
+        public ActionResult GetHocVien([DataSourceRequest] DataSourceRequest request, string id_lop_tc)
         {
 
             return Json(MoodleHocVienDiems(id_lop_tc).ToDataSourceResult(request));
         }
 
-        public static IEnumerable<MoodleSinhVien> MoodleHocVienDiems(int id_lop_tc)
+        public static IEnumerable<MoodleSinhVien> MoodleHocVienDiems(string id_lop_tc)
         {
             Entities db = new Entities();
+            int idlop = 0;
 
+            try
+            {
+                idlop = Convert.ToInt32(id_lop_tc);
+            }
+            catch (Exception) { }
+
+            if (idlop <= 0) return new List<MoodleSinhVien>();
+
+            var hocvien = MoodleHocViens(id_lop_tc);
             var loptc = (from hocky in db.PLAN_HocKyDangKy_TC
-                         join lop1 in db.MOD_LopTinChi_TC.Where(t => t.ID_moodle == id_lop_tc)
+                         join lop1 in db.MOD_LopTinChi_TC.Where(t => t.ID_moodle == idlop)
                          on hocky.Ky_dang_ky equals lop1.MOD_HocKy.Ky_dang_ky
                          join lop2 in db.PLAN_LopTinChi_TC
                          on lop1.ID_moodle equals lop2.ID_lop_tc
@@ -58,8 +68,6 @@ namespace CongThongTinSV.Controllers
                                    dtc.ID_sv,
                                    dtp.Diem
                                };
-
-            var hocvien = MoodleHocViens(id_lop_tc);
 
             var hocviendiem = from ds in hocvien
                          join d in danhsachdiem
@@ -87,7 +95,7 @@ namespace CongThongTinSV.Controllers
             return hocviendiem.OrderByDescending(t => t.Tinh_trang).ToList();
         }
 
-        public static IEnumerable<MoodleSinhVien> MoodleHocViens(int id_lop_tc)
+        public static IEnumerable<MoodleSinhVien> MoodleHocViens(string id_lop_tc)
         {
             Entities db = new Entities();
             var sinhvien = MoodleSinhViens(id_lop_tc);
@@ -117,11 +125,20 @@ namespace CongThongTinSV.Controllers
             return hocvien.ToList();
         }
 
-        public static IEnumerable<MoodleSinhVien> MoodleSinhViens(int id_lop_tc)
+        public static IEnumerable<MoodleSinhVien> MoodleSinhViens(string id_lop_tc)
         {
             Entities db = new Entities();
+            int idlop = 0;
 
-            var loptc = db.MOD_LopTinChi_TC.FirstOrDefault(t => t.ID_moodle == id_lop_tc);
+            try
+            {
+                idlop = Convert.ToInt32(id_lop_tc);
+            }
+            catch (Exception) { }
+
+            if (idlop <= 0) return new List<MoodleSinhVien>();
+
+            var loptc = db.MOD_LopTinChi_TC.FirstOrDefault(t => t.ID_moodle == idlop);
 
             var dangky = from dk in db.STU_DanhSachLopTinChi
                          where dk.ID_lop_tc == loptc.ID_lop_tc
@@ -129,7 +146,7 @@ namespace CongThongTinSV.Controllers
                          {
                              ID = dk.ID,
                              ID_sv = dk.ID_sv,
-                             ID_lop_tc = id_lop_tc
+                             ID_lop_tc = idlop
                          };
 
             var sv1 = from dk in dangky
@@ -167,13 +184,12 @@ namespace CongThongTinSV.Controllers
                           ds.Gioi_tinh,
                           lop.Ten_lop
                       };
-
+            var nguoidungs = db.MOD_NguoiDung.Where(t => t.ID_nhom_nd == 3);
             var sv3 = from ds in sv2.AsEnumerable()
-                      join nd1 in db.MOD_NguoiDung.AsEnumerable()
+                      join nd1 in nguoidungs
                       on ds.ID_sv equals nd1.ID_nd
                       into nguoidung
                       from nd in nguoidung.DefaultIfEmpty()
-                      where nd == null || (nd != null && nd.ID_nhom_nd == 3)
                       select new MoodleSinhVien
                       {
                           ID_sv = ds.ID_sv,
@@ -244,11 +260,11 @@ namespace CongThongTinSV.Controllers
         public ActionResult CreateGhiDanhSinhVien(string selectedVals, string id_lop_tc)
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-            var list1 = MoodleSinhViens(Convert.ToInt32(id_lop_tc)).Where(t => t.ID_moodle == 0 && s.Contains(t.ID.ToString())).ToList();  
+            var list1 = MoodleSinhViens(id_lop_tc).Where(t => t.ID_moodle == 0 && s.Contains(t.ID.ToString())).ToList();  
             if (list1.Count() > 0)
                 MoodleUserController.CreateSinhVien(list1);
 
-            var list2 = MoodleHocVienDiems(Convert.ToInt32(id_lop_tc)).Where(t => t.ID_moodle > 0 && t.Tinh_trang == "Chưa ghi danh" && s.Contains(t.ID.ToString())).ToList();
+            var list2 = MoodleHocVienDiems(id_lop_tc).Where(t => t.ID_moodle > 0 && t.Tinh_trang == "Chưa ghi danh" && s.Contains(t.ID.ToString())).ToList();
 
             if (list2.Count() > 0)
                 CreateGhiDanhSinhVien(list2);
@@ -301,7 +317,7 @@ namespace CongThongTinSV.Controllers
         public ActionResult DeleteGhiDanhSinhVien(string selectedVals, string id_lop_tc)
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-            var list = MoodleHocVienDiems(Convert.ToInt32(id_lop_tc)).Where(t => t.Tinh_trang == "Đã ghi danh" && s.Contains(t.ID.ToString())).ToList();
+            var list = MoodleHocVienDiems(id_lop_tc).Where(t => t.Tinh_trang == "Đã ghi danh" && s.Contains(t.ID.ToString())).ToList();
 
             if (list.Count() > 0)
                 DeleteGhiDanhSinhVien(list);
@@ -314,17 +330,26 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        public ActionResult GetGiaoVien([DataSourceRequest] DataSourceRequest request, int id_lop_tc)
+        public ActionResult GetGiaoVien([DataSourceRequest] DataSourceRequest request, string id_lop_tc)
         {
             return Json(MoodleGiaoViens(id_lop_tc).ToDataSourceResult(request));
         }
 
-        public static IEnumerable<MoodleGiaoVien> MoodleGiaoViens(int id_lop_tc)
+        public static IEnumerable<MoodleGiaoVien> MoodleGiaoViens(string id_lop_tc)
         {
             Entities db = new Entities();
+            int idlop = 0;
+
+            try
+            {
+                idlop = Convert.ToInt32(id_lop_tc);
+            }
+            catch (Exception) { }
+
+            if (idlop <= 0) return new List<MoodleGiaoVien>();
 
             var danhsach = from ds in db.MOD_NguoiDung_VaiTro_LopTinChi.AsEnumerable()
-                           where ds.ID_lop_tc == id_lop_tc
+                           where ds.ID_lop_tc == idlop
                            select new 
                            {
                                UserID = ds.UserID,
@@ -333,14 +358,13 @@ namespace CongThongTinSV.Controllers
                                Vai_tro = string.Join(("\n"), MoodleRoleController.GetVaiTroKhoaHoc(ds.ID_vai_tro, new char[]{','})),
                                Dinh_chi = ds.Dinh_chi
                            };
-
+            var nguoidungs = db.MOD_NguoiDung.Where(t => t.ID_nhom_nd == 2);
             var giaovien = from gv1 in db.PLAN_GiaoVien.AsEnumerable()
-                           join gt in db.STU_GioiTinh.AsEnumerable()
+                           join gt in db.STU_GioiTinh
                            on gv1.ID_gioi_tinh equals gt.ID_gioi_tinh
-                           join gv2 in db.MOD_NguoiDung
+                           join gv2 in nguoidungs
                            on gv1.ID_cb equals gv2.ID_nd
                            into dsgv from gv3 in dsgv.DefaultIfEmpty()
-                           where gv3 == null || (gv3 != null && gv3.ID_nhom_nd == 2)
                            select new
                            {
                                ID_moodle = (gv3 == null ? 0 : gv3.ID_moodle),
@@ -353,16 +377,16 @@ namespace CongThongTinSV.Controllers
                                Gioi_tinh = gt.Gioi_tinh
                            };
 
-            var q = from gv1 in giaovien.AsEnumerable()
-                    join khoa in db.STU_Khoa.AsEnumerable()
+            var q = from gv1 in giaovien
+                    join khoa in db.STU_Khoa
                     on gv1.ID_khoa equals khoa.ID_khoa
-                    join gv2 in danhsach.AsEnumerable()
+                    join gv2 in danhsach
                     on gv1.ID_moodle equals gv2.UserID
                     into danhsach1
                     from gv in danhsach1.DefaultIfEmpty()
                     select new MoodleGiaoVien
                     {
-                        ID_lop_tc = id_lop_tc,
+                        ID_lop_tc = idlop,
                         ID_cb = gv1.ID_cb,
                         ID_moodle = gv1.ID_moodle,
                         Ma_cb = gv1.Ma_cb,
@@ -456,11 +480,11 @@ namespace CongThongTinSV.Controllers
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
 
-            var list1 = MoodleGiaoViens(Convert.ToInt32(id_lop_tc)).Where(t => t.ID_moodle == 0 && s.Contains(t.ID_cb.ToString())).ToList();
+            var list1 = MoodleGiaoViens(id_lop_tc).Where(t => t.ID_moodle == 0 && s.Contains(t.ID_cb.ToString())).ToList();
             if (list1.Count() > 0)
                 MoodleUserController.CreateGiaoVien(list1);
 
-            var list2 = MoodleGiaoViens(Convert.ToInt32(id_lop_tc)).Where(t => t.ID_moodle > 0 && t.Tinh_trang == "Chưa ghi danh" && s.Contains(t.ID_cb.ToString())).ToList();
+            var list2 = MoodleGiaoViens(id_lop_tc).Where(t => t.ID_moodle > 0 && t.Tinh_trang == "Chưa ghi danh" && s.Contains(t.ID_cb.ToString())).ToList();
 
             if (list2.Count() > 0)
                 CreateGhiDanhGiaoVien(list2, id_vai_tro, suspended);
@@ -521,7 +545,7 @@ namespace CongThongTinSV.Controllers
         public ActionResult UnassignVaiTroGiaoVien(string selectedVals, string id_lop_tc, string id_vai_tro)
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-            var list = MoodleGiaoViens(Convert.ToInt32(id_lop_tc)).Where(t => s.Contains(t.ID_moodle.ToString()) && UtilityController.InArray(t.ID_vai_tro, new char[] { ',' }, id_vai_tro)).ToList();
+            var list = MoodleGiaoViens(id_lop_tc).Where(t => s.Contains(t.ID_moodle.ToString()) && UtilityController.InArray(t.ID_vai_tro, new char[] { ',' }, id_vai_tro)).ToList();
 
             if (list.Count() > 0)
                 UnassignVaiTroGiaoVien(list, id_vai_tro);
@@ -582,7 +606,7 @@ namespace CongThongTinSV.Controllers
         public ActionResult UnassignAllVaiTroGiaoVien(string selectedVals, string id_lop_tc)
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-            var list = MoodleGiaoViens(Convert.ToInt32(id_lop_tc)).Where(t => s.Contains(t.ID_moodle.ToString()) && t.ID_vai_tro != "").ToList();
+            var list = MoodleGiaoViens(id_lop_tc).Where(t => s.Contains(t.ID_moodle.ToString()) && t.ID_vai_tro != "").ToList();
 
             if (list.Count() > 0)
                 UnassignAllVaiTroGiaoVien(list);

@@ -32,11 +32,14 @@ namespace CongThongTinSV.Controllers
         {
             Entities db = new Entities();
             int idcn = 0;
+
             try
             {
                 idcn = Convert.ToInt32(id_chuyen_nganh);
             }
             catch (Exception) { }
+
+            if (idcn <= 0) return new List<MoodleSinhVien>();
 
             var sv1 = (from ds in db.STU_DanhSach
                       join hs in db.STU_HoSoSinhVien
@@ -63,13 +66,12 @@ namespace CongThongTinSV.Controllers
                           ds2.ds1.ds.Mat_khau,
                           gt.Gioi_tinh
                       };
-
+            var nguoidungs = db.MOD_NguoiDung.Where(t => t.ID_nhom_nd == 3);
             var sv4 = from ds in sv3.AsEnumerable()
-                      join nd in db.MOD_NguoiDung.AsEnumerable()
+                      join nd in nguoidungs
                       on ds.ID_sv equals nd.ID_nd
                       into nguoidung
                       from nd1 in nguoidung.DefaultIfEmpty()
-                      where nd1 == null || (nd1 != null && nd1.ID_nhom_nd == 3)
                       select new MoodleSinhVien
                       {
                           ID_sv = ds.ID_sv,
@@ -334,6 +336,8 @@ namespace CongThongTinSV.Controllers
             }
             catch (Exception) { }
 
+            if (idKhoa <= 0) return new List<MoodleGiaoVien>();
+
             var gv1 = from  gv in db.PLAN_GiaoVien.AsEnumerable()
                       join gt in db.STU_GioiTinh
                       on gv.ID_gioi_tinh equals gt.ID_gioi_tinh
@@ -346,13 +350,12 @@ namespace CongThongTinSV.Controllers
                           gv.Ngay_sinh,
                           gt.Gioi_tinh
                       };
-
+            var nguoidungs = db.MOD_NguoiDung.Where(t => t.ID_nhom_nd == 2);
             var gv2 = from gv in gv1.AsEnumerable()
-                      join nd in db.MOD_NguoiDung.AsEnumerable()
+                      join nd in nguoidungs
                       on gv.ID_cb equals nd.ID_nd
                       into nguoidung
                       from nd1 in nguoidung.DefaultIfEmpty()
-                      where nd1 == null || (nd1 != null && nd1.ID_nhom_nd == 2)
                       select new MoodleGiaoVien
                       {
                           ID_cb = gv.ID_cb,
@@ -593,13 +596,12 @@ namespace CongThongTinSV.Controllers
         {
             Entities db = new Entities();
             var user = db.SYS_NguoiDung.AsEnumerable().Where(t => t.Active == 1);
-
+            var nguoidungs = db.MOD_NguoiDung.Where(t => t.ID_nhom_nd == 1);
             var quantris = from ds in user
-                      join nd in db.MOD_NguoiDung.AsEnumerable()
+                      join nd in nguoidungs
                       on ds.UserID equals nd.ID_nd
                       into nguoidung
                       from nd1 in nguoidung.DefaultIfEmpty()
-                      where nd1 == null || (nd1 != null && nd1.ID_nhom_nd == 1)
                       select new MoodleUser
                       {
                           ID = ds.UserID,

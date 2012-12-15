@@ -194,7 +194,7 @@
 
         if (confirm('Bạn muốn hủy ghi danh của các sinh viên đã chọn?')) {
             var action = '@Url.Action("DeleteGhiDanhSinhVien", "MoodleEnrol")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
-            processing(action, "Đang hủy ghi danh của các sinh viên...", gridRefresh);
+            processing(action, "Đang đình chỉ ghi danh của các sinh viên...", gridRefresh);
         }
     })
 
