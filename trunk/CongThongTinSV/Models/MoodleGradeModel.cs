@@ -11,6 +11,9 @@ namespace CongThongTinSV.Models
         [DisplayName("ID")]
         public int ID { get; set; }
 
+        [DisplayName("ID điểm thi")]
+        public int ID_diem_thi { get; set; }
+
         [DisplayName("ID SV")]
         public int ID_sv { get; set; }
 
