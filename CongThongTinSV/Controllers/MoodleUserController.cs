@@ -250,6 +250,7 @@ namespace CongThongTinSV.Controllers
                 postData += "&users[" + i + "][firstname]=" + HttpUtility.UrlEncode(item.Ten);
                 postData += "&users[" + i + "][lastname]=" + HttpUtility.UrlEncode(item.Ho_dem);
                 postData += "&users[" + i + "][email]=" + "st" + item.Ma_sv + "@st.vimaru.edu.vn";
+                postData += "&users[" + i + "][idnumber]=st" + item.ID_sv;
                 i++;
             }
 
@@ -516,6 +517,7 @@ namespace CongThongTinSV.Controllers
                 postData += "&users[" + i + "][firstname]=" + HttpUtility.UrlEncode(item.Ten);
                 postData += "&users[" + i + "][lastname]=" + HttpUtility.UrlEncode(item.Ho_dem);
                 postData += "&users[" + i + "][email]=" + "te" + item.Ma_cb + "@te.vimaru.edu.vn";
+                postData += "&users[" + i + "][idnumber]=te" + item.ID_cb;
                 i++;
             }
 
@@ -636,7 +638,7 @@ namespace CongThongTinSV.Controllers
                 postData += "&users[" + i + "][timezone]=7.0";
                 postData += "&users[" + i + "][city]=Hai Phong";
                 postData += "&users[" + i + "][country]=VN";
-                postData += "&users[" + i + "][idnumber]=st" + item.ID;
+                postData += "&users[" + i + "][idnumber]=" + item.ID;
                 i++;
             }
 
@@ -753,6 +755,7 @@ namespace CongThongTinSV.Controllers
                 else
                     postData += "&users[" + i + "][email]=" + item.UserName + "@vimaru.edu.vn";
 
+                postData += "&users[" + i + "][idnumber]=" + item.ID;
                 i++;
             }
 

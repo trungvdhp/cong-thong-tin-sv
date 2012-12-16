@@ -43,6 +43,9 @@
             .PageSize(50)
     )
 )
+<div>
+    <button id="updateMark" class="k-button">Cập nhật điểm thi</button>
+</div>
 <br />
 <div style="text-align: center;">
 @Html.ActionLink("Quay về khóa học", "DanhSachBaiKiemTra", "MoodleCourse", routeValues: new { courseid = ViewBag.CourseID }, htmlAttributes: new { title = "Back to the course" })
@@ -75,5 +78,17 @@
     function gridRefresh() {
         $("#Grid").data("kendoGrid").dataSource.read();
     }
+
+    $("#updateMark").click(function () {
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một học viên!');
+            return;
+        }
+
+        if (confirm('Bạn muốn cập nhật điểm mới cho các học viên đã chọn?')) {
+            var action = '@Url.Action("UpdateDiemThi","MoodleCourse")' + '/?quizid=' + @ViewBag.QuizID + '&selectedVals=' + selectedVals
+            processing(action, "Đang cập nhật điểm mới cho các học viên...", gridRefresh);
+        }
+      })
 </script>
 

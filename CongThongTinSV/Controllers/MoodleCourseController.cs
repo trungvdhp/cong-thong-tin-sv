@@ -275,7 +275,27 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        public ActionResult BangDiemThanhPhan(string quizid="0")
+        public ActionResult UpdateDiemThi(string selectedVals, string quizid = "0")
+        {
+            Entities db = new Entities();
+            MoodleEntities mdb = new MoodleEntities();
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+            var quiz = mdb.fit_quiz.AsEnumerable().SingleOrDefault(t => t.id.ToString() == quizid);
+            string courseid = quiz == null ? "0" : quiz.course.ToString();
+            var diemthis = MoodleQuizGrades(quizid).Where(t => s.Contains(t.ID.ToString()) && t.ID_sv != 0 && t.NewGrade.HasValue).ToList();
+            foreach (MoodleGradeBook grade in diemthis)
+            {
+                MARK_DiemThi_TC entity = db.MARK_DiemThi_TC.Single(t => t.ID_diem_thi == grade.ID_diem_thi);
+                entity.Diem_thi = (float)grade.NewGrade;
+                db.Entry(entity).State = System.Data.EntityState.Modified;
+            }
+
+            db.SaveChanges();
+
+            return View();
+        }
+
+        public ActionResult BangDiemThanhPhan(string quizid = "0")
         {
             MoodleEntities mdb = new MoodleEntities();
             
@@ -355,9 +375,24 @@ namespace CongThongTinSV.Controllers
                                select new
                                {
                                    sv,
-                                   d2.Diem_thi
+                                   d2.Diem_thi,
+                                   d2.ID_diem_thi
                                };
-
+                //user = from u in user
+                //       join sv in students
+                //       on u.ID equals sv.ID
+                //       into d1
+                //       from sinhvien in d1.DefaultIfEmpty()
+                //       select new MoodleGradeBook
+                //       {
+                //           ID = u.ID,
+                //           ID_sv = sinhvien == null ? 0 : sinhvien.ID_sv,
+                //           UserName = u.UserName,
+                //           LastName = u.LastName,
+                //           FirstName = u.FirstName,
+                //           NewGrade = u.NewGrade
+                //       };
+               
                 user = from u in user
                        join d in diemthis
                        on u.ID equals d.sv.ID
@@ -366,6 +401,7 @@ namespace CongThongTinSV.Controllers
                        select new MoodleGradeBook
                        {
                            ID = u.ID,
+                           ID_diem_thi = diem == null ? 0 : diem.ID_diem_thi,
                            ID_sv = diem == null ? 0 : diem.sv.ID_sv,
                            OldGrade = diem == null ? null : (float?)diem.Diem_thi,
                            UserName = u.UserName,
