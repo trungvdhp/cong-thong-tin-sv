@@ -14,7 +14,7 @@
     {
         source.Read(read =>
         {
-            read.Action("GetMoodleHocKy", "MoodleCategory");
+            read.Action("GetSemesterList", "MoodleCategory");
         }).ServerFiltering(true);
     })
 )
@@ -29,7 +29,7 @@
     {
         source.Read(read =>
         {
-            read.Action("GetMoodleLopHocPhan", "MoodleCourse").Data("filterLopHocPhan");
+            read.Action("GetCourseList", "MoodleCourse").Data("filterLopHocPhan");
         }).ServerFiltering(true);
     })
     .Events(e =>
@@ -41,7 +41,7 @@
     .CascadeFrom("HocKy")
 )
 
-@(Html.Kendo().Grid<CongThongTinSV.Models.MoodleGiaoVien>()
+@(Html.Kendo().Grid<CongThongTinSV.Models.MoodleTeacher>()
     .Name("Grid")
     .Columns(columns => {
         columns.Bound(c => c.ID_cb)
@@ -77,7 +77,7 @@
     .DataSource(
         dataSource => dataSource
             .Ajax()
-            .Read(read => read.Action("GetGiaoVien", "MoodleEnrol").Data("filterGrid"))
+            .Read(read => read.Action("GetEnrolTeachers", "MoodleEnrol").Data("filterGrid"))
             .PageSize(50)
     )
 )
@@ -92,7 +92,7 @@
         {
             source.Read(read =>
             {
-                read.Action("GetVaiTroKhoaHoc", "MoodleRole");
+                read.Action("GetCourseRoles", "MoodleRole");
             }).ServerFiltering(true);
         })
     )
@@ -152,7 +152,7 @@
             alert('Vui lòng chọn một vai trò!');
             return;
         }
-        var action = '@Url.Action("CreateGhiDanhGiaoVien", "MoodleEnrol")' + '/?suspended=0&id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + "&id_vai_tro=" + jQuery("#VaiTro").val();
+        var action = '@Url.Action("ManualEnrolTeachers", "MoodleEnrol")' + '/?suspended=0&id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + "&id_vai_tro=" + jQuery("#VaiTro").val();
         processing(action, "Đang ghi danh và kích hoạt cho các giáo viên đã chọn trong lớp học phần...", gridRefresh);
     })
 
@@ -166,7 +166,7 @@
             alert('Vui lòng chọn một vai trò!');
             return;
         }
-        var action = '@Url.Action("CreateGhiDanhGiaoVien", "MoodleEnrol")' + '/?suspended=1&id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + "&id_vai_tro=" + jQuery("#VaiTro").val();
+        var action = '@Url.Action("ManualEnrolTeachers", "MoodleEnrol")' + '/?suspended=1&id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + "&id_vai_tro=" + jQuery("#VaiTro").val();
         processing(action, "Đang ghi danh nhưng chưa kích hoạt cho các giáo viên đã chọn trong lớp học phần...", gridRefresh);
     })
 
@@ -183,7 +183,7 @@
 
         if (confirm('Bạn muốn hủy vai trò ' + jQuery("#VaiTro").data("kendoDropDownList").text() +
             ' của các giáo viên đã chọn trong lớp học phần?')) {
-            var action = '@Url.Action("UnassignVaiTroGiaoVien", "MoodleEnrol")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + "&id_vai_tro=" + jQuery("#VaiTro").val();
+            var action = '@Url.Action("UnassignTeachersRole", "MoodleEnrol")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + "&id_vai_tro=" + jQuery("#VaiTro").val();
             processing(action, "Đang hủy vai trò " + jQuery("#VaiTro").data("kendoDropDownList").text() + " của các giáo viên đã chọn trong lớp học phần...", gridRefresh);
         }
     })
@@ -195,7 +195,7 @@
         }
 
         if (confirm('Bạn muốn hủy tất cả vai trò của các giáo viên đã chọn trong lớp học phần?')) {
-            var action = '@Url.Action("UnassignAllVaiTroGiaoVien", "MoodleEnrol")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
+            var action = '@Url.Action("UnassignTeachersAllRoles", "MoodleEnrol")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
             processing(action, "Đang hủy tất cả vai trò của các giáo viên đã chọn trong lớp học phần...", gridRefresh);
         }
     })

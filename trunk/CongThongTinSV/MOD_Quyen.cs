@@ -12,18 +12,17 @@ namespace CongThongTinSV
     using System;
     using System.Collections.Generic;
     
-    public partial class MOD_DichVu
+    public partial class MOD_Quyen
     {
-        public MOD_DichVu()
+        public MOD_Quyen()
         {
-            this.MOD_Quyen = new HashSet<MOD_Quyen>();
+            this.MOD_DichVu = new HashSet<MOD_DichVu>();
         }
     
-        public int ID_dv { get; set; }
-        public string Ten_dv { get; set; }
-        public string Ten_rut_gon { get; set; }
-        public Nullable<bool> Root { get; set; }
+        public int ID_quyen { get; set; }
+        public string Ten_quyen { get; set; }
+        public string Action_name { get; set; }
     
-        public virtual ICollection<MOD_Quyen> MOD_Quyen { get; set; }
+        public virtual ICollection<MOD_DichVu> MOD_DichVu { get; set; }
     }
 }

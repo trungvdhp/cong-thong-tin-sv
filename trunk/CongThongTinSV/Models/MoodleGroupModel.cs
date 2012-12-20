@@ -25,7 +25,7 @@ namespace CongThongTinSV.Models
         public int descriptionformat { get; set; }
     }
 
-    public class MoodleGroup
+    public class MoodleGroupRespond
     {
         public int id { get; set; } //group id
         public string name { get; set; } //group name
@@ -33,7 +33,7 @@ namespace CongThongTinSV.Models
         public int descriptionformat { get; set; } //description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN)
     }
 
-    public class MoodleNhom
+    public class MoodleGroup
     {
         [DisplayName("ID")]
         public int ID_nhom { get; set; }
@@ -41,16 +41,16 @@ namespace CongThongTinSV.Models
         [DisplayName("ID lớp học phần")]
         public int ID_lop_tc { get; set; }
 
-        [DisplayName("Tên nhóm")]
-        public string Ten_nhom { get; set; }
-
-        [DisplayName("Mô tả nhóm")]
-        public string Mo_ta { get; set; }
-
         [DisplayName("ID tổ")]
         public int ID_to { get; set; }
 
-        [DisplayName("Tổ")]
+        [DisplayName("Tên nhóm")]
+        public string Ten_nhom { get; set; }
+
+        [DisplayName("Tên tổ")]
         public string Ten_to { get; set; }
+
+        [DisplayName("Mô tả")]
+        public string Mo_ta { get; set; }
     }
 }

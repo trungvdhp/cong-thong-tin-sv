@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 
 namespace CongThongTinSV.Models
 {
-    public class MoodleHocVien
+    public class MoodleEnrolStudent
     {
         [DisplayName("ID")]
         public int ID { get; set; }

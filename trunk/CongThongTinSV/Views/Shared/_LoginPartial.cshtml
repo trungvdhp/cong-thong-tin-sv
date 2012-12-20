@@ -1,8 +1,8 @@
 ﻿@using CongThongTinSV.Models;
-@using CongThongTinSV.Controllers;
+@using CongThongTinSV.App_Lib;
 
 @if (Request.IsAuthenticated) {
-    UserData userData = AccountController.GetCurrentUserData();
+    UserData userData = GlobalLib.GetCurrentUserData();
 
     if (userData.PortalUserID != 0){
         if(userData.PortalUserGroup == 3){
@@ -34,7 +34,7 @@ else {
     if (action[len] == '/') { action = action.Substring(0, len); }
     if (!(action.Contains("Account/Login") || action.Contains("Home") || !action.Contains("/") || action.Contains("Home/Index")))
     {
-        Response.Redirect(Url.Action("Login", "Account"));
+        Response.Redirect(Url.Action("Login", "Account", new { returnUrl = HttpContext.Current.Request.Url.AbsolutePath }));
     }
     <ul>
         <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class="k-button" })</li>

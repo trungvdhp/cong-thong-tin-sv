@@ -37,7 +37,7 @@
     .DataSource(
         dataSource => dataSource
             .Ajax()
-            .Read(read => read.Action("GetQuanTriVien", "MoodleUser").Data("filterGrid"))
+            .Read(read => read.Action("GetAdminUsers", "MoodleUser").Data("filterGrid"))
             .PageSize(50)
     )
 )
@@ -88,7 +88,7 @@
             alert('Vui lòng chọn một quản trị viên!');
             return;
         }
-        var action = '@Url.Action("CreateQuanTriVien", "MoodleUser")' + '/?selectedVals=' + selectedVals;
+        var action = '@Url.Action("CreateAdminUsers", "MoodleUser")' + '/?selectedVals=' + selectedVals;
         processing(action, "Đang tạo tài khoản moodle cho các quản trị viên đã chọn...", gridRefresh);
     })
 
@@ -99,7 +99,7 @@
         }
 
         if (confirm('Bạn muốn xóa tài khoản moodle của các quản trị viên đã chọn?')) {
-            var action = '@Url.Action("DeleteQuanTriVien", "MoodleUser")' + '/?selectedVals=' + selectedVals;
+            var action = '@Url.Action("DeleteAdminUsers", "MoodleUser")' + '/?selectedVals=' + selectedVals;
             processing(action, "Đang xóa tài khoản moodle của các quản trị viên đã chọn...", gridRefresh);
         }
     })
@@ -111,7 +111,7 @@
         }
 
         if (confirm('Bạn muốn khôi phục về mặc định tài khoản moodle của các quản trị viên đã chọn?')) {
-            var action = '@Url.Action("UpdateQuanTriVien", "MoodleUser")' + '/?selectedVals=' + selectedVals;
+            var action = '@Url.Action("UpdateAdminUsers", "MoodleUser")' + '/?selectedVals=' + selectedVals;
             processing(action, "Đang khôi phục tài khoản của các quản trị viên đã chọn...", gridRefresh);
         }
     })
@@ -123,7 +123,7 @@
         }
 
         if (confirm('Bạn muốn đồng bộ tài khoản moodle và tài khoản cổng thông tin của các quản trị viên đã chọn?')) {
-            var action = '@Url.Action("SyncQuanTriVien", "MoodleUser")' + '/?selectedVals=' + selectedVals;
+            var action = '@Url.Action("SyncAdminUsers", "MoodleUser")' + '/?selectedVals=' + selectedVals;
             processing(action, "Đang đồng bộ tài khoản của các quản trị viên đã chọn...", gridRefresh);
         }
     })

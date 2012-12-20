@@ -13,7 +13,7 @@ namespace CongThongTinSV.Controllers
     public class LopHocPhanController : Controller
     {
         //
-        // GET: /LopHocPhan/
+        // GET: /Course/
 
         public ActionResult Index()
         {

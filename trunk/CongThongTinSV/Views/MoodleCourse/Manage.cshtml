@@ -14,7 +14,7 @@
     {
         source.Read(read =>
         {
-            read.Action("GetMoodleHocKy", "MoodleCategory");
+            read.Action("GetSemesterList", "MoodleCategory");
         }).ServerFiltering(true);
     })
     .Events(e =>
@@ -23,7 +23,7 @@
     })
 )
 
-@(Html.Kendo().Grid<CongThongTinSV.Models.MoodleLopHocPhan>()
+@(Html.Kendo().Grid<CongThongTinSV.Models.MoodleCourse>()
     .Name("Grid")
     .Columns(columns => {
         columns.Bound(c => c.ID)
@@ -61,7 +61,7 @@
     .DataSource(
         dataSource => dataSource
             .Ajax()
-            .Read(read => read.Action("GetLopHocPhan", "MoodleCourse").Data("filterGrid"))
+            .Read(read => read.Action("GetCourses", "MoodleCourse").Data("filterGrid"))
             .PageSize(50)
     )
 )
@@ -76,7 +76,7 @@
         e.preventDefault();
 
         var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-        window.location.href = "@Url.Action("DanhSachBaiKiemTra","MoodleCourse")"
+        window.location.href = "@Url.Action("TestList","MoodleCourse")"
                        + "?courseid=" + dataItem.ID_moodle;
     }
 
@@ -84,7 +84,7 @@
         e.preventDefault();
 
         var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-        window.location.href = "@Url.Action("BangDiemKhoaHoc","MoodleCourse")"
+        window.location.href = "@Url.Action("CourseGradeBook","MoodleCourse")"
                        + "?courseid=" + dataItem.ID_moodle;
     }
 
@@ -124,8 +124,8 @@
             alert('Vui lòng chọn một lớp học phần!');
             return;
         }
-        var action = '@Url.Action("CreateLopHocPhan", "MoodleCourse")' + '/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals;
-        processing(action, "Đang tạo các lớp học phần đã chọn trên moodle...", gridRefresh);
+        var action = '@Url.Action("CreateCourses", "MoodleCourse")' + '/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals;
+        processing(action, "Đang tạo các lớp học phần trên moodle...", gridRefresh);
     })
 
     $("#delete").click(function () {
@@ -134,9 +134,9 @@
             return;
         }
 
-        if (confirm('Bạn muốn xóa toàn bộ các lớp học phần thuộc chuyên ngành đã chọn?')) {
-            var action = '@Url.Action("DeleteLopHocPhan","MoodleCourse")' + '/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals
-            processing(action, "Đang xóa các lớp học phần đã chọn trên moodle...", gridRefresh);
+        if (confirm('Bạn muốn xóa toàn bộ các lớp học phần đã chọn?')) {
+            var action = '@Url.Action("DeleteCourses","MoodleCourse")' + '/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals;
+            processing(action, "Đang xóa các lớp học phần trên moodle...", gridRefresh);
         }
     })
 </script>

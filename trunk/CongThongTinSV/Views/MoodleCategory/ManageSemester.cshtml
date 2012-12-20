@@ -4,7 +4,7 @@
     ViewBag.Title = "Quản lý danh mục Học kỳ trên Moodle";
 }
 
-@(Html.Kendo().Grid<CongThongTinSV.Models.MoodleHocKy>()
+@(Html.Kendo().Grid<CongThongTinSV.Models.MoodleSemester>()
     .Name("Grid")
     .Columns(columns => {
         columns.Bound(c => c.ID).Groupable(false)
@@ -36,7 +36,7 @@
     .DataSource(
         dataSource => dataSource
             .Ajax()
-            .Read(read => read.Action("GetHocKy", "MoodleCategory"))
+            .Read(read => read.Action("GetSemesters", "MoodleCategory"))
             .PageSize(5)
     )
 )
@@ -79,7 +79,7 @@
             return;
         }
 
-        processing('/MoodleCategory/CreateHocKy/?selectedVals='+ selectedVals, "Đang tạo các danh mục học kỳ đã chọn trên Moodle...", gridRefresh);
+        processing('/MoodleCategory/CreateSemesters/?selectedVals='+ selectedVals, "Đang tạo các danh mục học kỳ đã chọn trên Moodle...", gridRefresh);
     })
 
     $("#delete").click(function () {
@@ -89,7 +89,7 @@
         }
 
         if (confirm('Bạn muốn xóa toàn bộ các danh mục học kỳ đã chọn trên Moodle?')) {
-            processing('/MoodleCategory/DeleteHocKy/?selectedVals='+ selectedVals, "Đang xóa các danh mục học kỳ đã chọn trên Moodle...", gridRefresh)
+            processing('/MoodleCategory/DeleteSemesters/?selectedVals='+ selectedVals, "Đang xóa các danh mục học kỳ đã chọn trên Moodle...", gridRefresh)
         }
     })
 

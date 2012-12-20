@@ -13,6 +13,7 @@
           <EntitySet Name="MARK_ThanhPhanMon_TC" EntityType="DHHHModel.Store.MARK_ThanhPhanMon_TC" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="MOD_DanhSachLopTinChi" EntityType="DHHHModel.Store.MOD_DanhSachLopTinChi" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="MOD_DichVu" EntityType="DHHHModel.Store.MOD_DichVu" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MOD_DichVu_Quyen" EntityType="DHHHModel.Store.MOD_DichVu_Quyen" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="MOD_HocKy" EntityType="DHHHModel.Store.MOD_HocKy" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="MOD_LopTinChi_TC" EntityType="DHHHModel.Store.MOD_LopTinChi_TC" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="MOD_NguoiDung" EntityType="DHHHModel.Store.MOD_NguoiDung" store:Type="Tables" Schema="dbo" />
@@ -20,6 +21,7 @@
           <EntitySet Name="MOD_NguoiDung_VaiTro_LopTinChi" EntityType="DHHHModel.Store.MOD_NguoiDung_VaiTro_LopTinChi" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="MOD_NhomHocVien" EntityType="DHHHModel.Store.MOD_NhomHocVien" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="MOD_NhomNguoiDung" EntityType="DHHHModel.Store.MOD_NhomNguoiDung" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MOD_Quyen" EntityType="DHHHModel.Store.MOD_Quyen" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="MOD_ToNhom" EntityType="DHHHModel.Store.MOD_ToNhom" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PLAN_ChuongTrinhDaoTao" EntityType="DHHHModel.Store.PLAN_ChuongTrinhDaoTao" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PLAN_ChuongTrinhDaoTaoChiTiet" EntityType="DHHHModel.Store.PLAN_ChuongTrinhDaoTaoChiTiet" store:Type="Tables" Schema="dbo" />
@@ -188,6 +190,14 @@
             <End Role="MOD_NhomHocVien" EntitySet="MOD_NhomHocVien" />
             <End Role="MOD_DanhSachLopTinChi" EntitySet="MOD_DanhSachLopTinChi" />
           </AssociationSet>
+          <AssociationSet Name="FK_MOD_DichVu_Quyen_MOD_DichVu" Association="DHHHModel.Store.FK_MOD_DichVu_Quyen_MOD_DichVu">
+            <End Role="MOD_DichVu" EntitySet="MOD_DichVu" />
+            <End Role="MOD_DichVu_Quyen" EntitySet="MOD_DichVu_Quyen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MOD_DichVu_Quyen_MOD_Quyen" Association="DHHHModel.Store.FK_MOD_DichVu_Quyen_MOD_Quyen">
+            <End Role="MOD_Quyen" EntitySet="MOD_Quyen" />
+            <End Role="MOD_DichVu_Quyen" EntitySet="MOD_DichVu_Quyen" />
+          </AssociationSet>
           <AssociationSet Name="FK_MOD_LopTinChi_TC_MOD_HocKy" Association="DHHHModel.Store.FK_MOD_LopTinChi_TC_MOD_HocKy">
             <End Role="MOD_HocKy" EntitySet="MOD_HocKy" />
             <End Role="MOD_LopTinChi_TC" EntitySet="MOD_LopTinChi_TC" />
@@ -335,9 +345,18 @@
           <Key>
             <PropertyRef Name="ID_dv" />
           </Key>
-          <Property Name="ID_dv" Type="int" Nullable="false" />
+          <Property Name="ID_dv" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Ten_dv" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="Ten_rut_gon" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Root" Type="bit" />
+        </EntityType>
+        <EntityType Name="MOD_DichVu_Quyen">
+          <Key>
+            <PropertyRef Name="ID_dv" />
+            <PropertyRef Name="ID_quyen" />
+          </Key>
+          <Property Name="ID_dv" Type="int" Nullable="false" />
+          <Property Name="ID_quyen" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="MOD_HocKy">
           <Key>
@@ -396,6 +415,14 @@
           <Property Name="ID_nhom_nd" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Ten_nhom" Type="nvarchar" MaxLength="50" />
           <Property Name="Mo_ta" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="MOD_Quyen">
+          <Key>
+            <PropertyRef Name="ID_quyen" />
+          </Key>
+          <Property Name="ID_quyen" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Ten_quyen" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Action_name" Type="varchar" Nullable="false" MaxLength="50" />
         </EntityType>
         <EntityType Name="MOD_ToNhom">
           <Key>
@@ -1050,6 +1077,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MOD_DichVu_Quyen_MOD_DichVu">
+          <End Role="MOD_DichVu" Type="DHHHModel.Store.MOD_DichVu" Multiplicity="1" />
+          <End Role="MOD_DichVu_Quyen" Type="DHHHModel.Store.MOD_DichVu_Quyen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MOD_DichVu">
+              <PropertyRef Name="ID_dv" />
+            </Principal>
+            <Dependent Role="MOD_DichVu_Quyen">
+              <PropertyRef Name="ID_dv" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MOD_DichVu_Quyen_MOD_Quyen">
+          <End Role="MOD_Quyen" Type="DHHHModel.Store.MOD_Quyen" Multiplicity="1" />
+          <End Role="MOD_DichVu_Quyen" Type="DHHHModel.Store.MOD_DichVu_Quyen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MOD_Quyen">
+              <PropertyRef Name="ID_quyen" />
+            </Principal>
+            <Dependent Role="MOD_DichVu_Quyen">
+              <PropertyRef Name="ID_quyen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_MOD_LopTinChi_TC_MOD_HocKy">
           <End Role="MOD_HocKy" Type="DHHHModel.Store.MOD_HocKy" Multiplicity="1" />
           <End Role="MOD_LopTinChi_TC" Type="DHHHModel.Store.MOD_LopTinChi_TC" Multiplicity="*" />
@@ -1272,7 +1323,6 @@
           <EntitySet Name="MARK_DiemThi_TC" EntityType="DHHHModel.MARK_DiemThi_TC" />
           <EntitySet Name="MARK_MonHoc" EntityType="DHHHModel.MARK_MonHoc" />
           <EntitySet Name="MARK_ThanhPhanMon_TC" EntityType="DHHHModel.MARK_ThanhPhanMon_TC" />
-          <EntitySet Name="MOD_DichVu" EntityType="DHHHModel.MOD_DichVu" />
           <EntitySet Name="MOD_HocKy" EntityType="DHHHModel.MOD_HocKy" />
           <EntitySet Name="MOD_LopTinChi_TC" EntityType="DHHHModel.MOD_LopTinChi_TC" />
           <EntitySet Name="MOD_NhomHocVien" EntityType="DHHHModel.MOD_NhomHocVien" />
@@ -1422,6 +1472,12 @@
             <End Role="POR_YeuCauMoLop" EntitySet="POR_YeuCauMoLop" />
           </AssociationSet>
           <EntitySet Name="ViewLopTC" EntityType="DHHHModel.ViewLopTC" />
+          <EntitySet Name="MOD_DichVu" EntityType="DHHHModel.MOD_DichVu" />
+          <EntitySet Name="MOD_Quyen" EntityType="DHHHModel.MOD_Quyen" />
+          <AssociationSet Name="MOD_DichVu_Quyen" Association="DHHHModel.MOD_DichVu_Quyen">
+            <End Role="MOD_DichVu" EntitySet="MOD_DichVu" />
+            <End Role="MOD_Quyen" EntitySet="MOD_Quyen" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="SP_SinhVienLopTC_Result">
           <Property Type="Int32" Name="ID_sv" Nullable="false" />
@@ -1524,14 +1580,6 @@
           <Property Type="Int32" Name="Chon_mac_dinh" />
           <Property Type="Int32" Name="Chuyen_can" />
           <NavigationProperty Name="MARK_DiemThanhPhan_TC" Relationship="DHHHModel.FK_MARK_DiemThanhPhan_TC_MARK_ThanhPhanMon_TC" FromRole="MARK_ThanhPhanMon_TC" ToRole="MARK_DiemThanhPhan_TC" />
-        </EntityType>
-        <EntityType Name="MOD_DichVu">
-          <Key>
-            <PropertyRef Name="ID_dv" />
-          </Key>
-          <Property Type="Int32" Name="ID_dv" Nullable="false" />
-          <Property Type="String" Name="Ten_dv" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Ten_rut_gon" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="MOD_HocKy">
           <Key>
@@ -2485,6 +2533,29 @@
           <Property Type="DateTime" Name="Tu_ngay" Nullable="false" Precision="3" />
           <Property Type="DateTime" Name="Den_ngay" Nullable="false" Precision="3" />
         </EntityType>
+        <EntityType Name="MOD_DichVu">
+          <Key>
+            <PropertyRef Name="ID_dv" />
+          </Key>
+          <Property Type="Int32" Name="ID_dv" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Ten_dv" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Ten_rut_gon" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="Root" />
+          <NavigationProperty Name="MOD_Quyen" Relationship="DHHHModel.MOD_DichVu_Quyen" FromRole="MOD_DichVu" ToRole="MOD_Quyen" />
+        </EntityType>
+        <EntityType Name="MOD_Quyen">
+          <Key>
+            <PropertyRef Name="ID_quyen" />
+          </Key>
+          <Property Type="Int32" Name="ID_quyen" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Ten_quyen" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Action_name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MOD_DichVu" Relationship="DHHHModel.MOD_DichVu_Quyen" FromRole="MOD_Quyen" ToRole="MOD_DichVu" />
+        </EntityType>
+        <Association Name="MOD_DichVu_Quyen">
+          <End Type="DHHHModel.MOD_DichVu" Role="MOD_DichVu" Multiplicity="*" />
+          <End Type="DHHHModel.MOD_Quyen" Role="MOD_Quyen" Multiplicity="*" />
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2590,15 +2661,6 @@
                 <ScalarProperty Name="Ky_hieu" ColumnName="Ky_hieu" />
                 <ScalarProperty Name="STT" ColumnName="STT" />
                 <ScalarProperty Name="ID_thanh_phan" ColumnName="ID_thanh_phan" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MOD_DichVu">
-            <EntityTypeMapping TypeName="DHHHModel.MOD_DichVu">
-              <MappingFragment StoreEntitySet="MOD_DichVu">
-                <ScalarProperty Name="Ten_rut_gon" ColumnName="Ten_rut_gon" />
-                <ScalarProperty Name="Ten_dv" ColumnName="Ten_dv" />
-                <ScalarProperty Name="ID_dv" ColumnName="ID_dv" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3135,6 +3197,33 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="MOD_DichVu">
+            <EntityTypeMapping TypeName="DHHHModel.MOD_DichVu">
+              <MappingFragment StoreEntitySet="MOD_DichVu">
+                <ScalarProperty Name="Root" ColumnName="Root" />
+                <ScalarProperty Name="Ten_rut_gon" ColumnName="Ten_rut_gon" />
+                <ScalarProperty Name="Ten_dv" ColumnName="Ten_dv" />
+                <ScalarProperty Name="ID_dv" ColumnName="ID_dv" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MOD_Quyen">
+            <EntityTypeMapping TypeName="DHHHModel.MOD_Quyen">
+              <MappingFragment StoreEntitySet="MOD_Quyen">
+                <ScalarProperty Name="Action_name" ColumnName="Action_name" />
+                <ScalarProperty Name="Ten_quyen" ColumnName="Ten_quyen" />
+                <ScalarProperty Name="ID_quyen" ColumnName="ID_quyen" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="MOD_DichVu_Quyen" TypeName="DHHHModel.MOD_DichVu_Quyen" StoreEntitySet="MOD_DichVu_Quyen">
+            <EndProperty Name="MOD_Quyen">
+              <ScalarProperty Name="ID_quyen" ColumnName="ID_quyen" />
+            </EndProperty>
+            <EndProperty Name="MOD_DichVu">
+              <ScalarProperty Name="ID_dv" ColumnName="ID_dv" />
+            </EndProperty>
+          </AssociationSetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

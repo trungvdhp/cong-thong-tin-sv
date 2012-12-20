@@ -14,7 +14,7 @@
     {
         source.Read(read =>
         {
-            read.Action("GetMoodleHocKy", "MoodleCategory");
+            read.Action("GetSemesterList", "MoodleCategory");
         }).ServerFiltering(true);
     })
 )
@@ -29,7 +29,7 @@
     {
         source.Read(read =>
         {
-            read.Action("GetMoodleLopHocPhan", "MoodleCourse").Data("filterLopHocPhan");
+            read.Action("GetCourseList", "MoodleCourse").Data("filterLopHocPhan");
         }).ServerFiltering(true);
     })
     .Events(e =>
@@ -40,7 +40,7 @@
     .AutoBind(false)
     .CascadeFrom("HocKy")
 )
-@(Html.Kendo().Grid<CongThongTinSV.Models.MoodleNhom>()
+@(Html.Kendo().Grid<CongThongTinSV.Models.MoodleGroup>()
     .Name("Grid")
     .Columns(columns =>
     {
@@ -75,7 +75,7 @@
     .DataSource(
         dataSource => dataSource
             .Ajax()
-            .Read(read => read.Action("GetNhom", "MoodleGroup").Data("filterGrid"))
+            .Read(read => read.Action("GetGroups", "MoodleGroup").Data("filterGrid"))
             .PageSize(50)
     )
 )
@@ -90,9 +90,9 @@
     <button id="deleteGroup" class="k-button">Xóa nhóm</button>
 </div>
 <div>
-    @(Html.Kendo().DropDownList()
+    @(Html.Kendo().ComboBox()
         .Name("To")
-        .OptionLabel("Chọn tổ")
+        .Placeholder("Chọn tổ")
         .HtmlAttributes(new { style = "width:150px" })
         .DataTextField("Text")
         .DataValueField("Value")
@@ -100,7 +100,7 @@
         {
             source.Read(read =>
             {
-                read.Action("GetMoodleTo", "MoodleGroup").Data("filterGrid");
+                read.Action("GetGroupingList", "MoodleGroup").Data("filterGrid");
             }).ServerFiltering(true);
         })
         .Enable(false)
@@ -159,8 +159,7 @@
     }
 
     function groupingRefresh() {
-        $("#To").data("kendoDropDownList").dataSource.read();
-        $("#To").data("kendoDropDownList").select(0);
+        $("#To").data("kendoComboBox").dataSource.read();
     }
 
     $("#createGroup").click(function () {
@@ -173,7 +172,7 @@
             alert('Tên nhóm không được để trống!');
             return;
         }
-        var action = '@Url.Action("CreateNhom","MoodleGroup")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&ten_nhom=' + jQuery("#TenNhom").val() + '&mo_ta=' + jQuery("#MoTaNhom").val();
+        var action = '@Url.Action("CreateGroup","MoodleGroup")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&ten_nhom=' + jQuery("#TenNhom").val() + '&mo_ta=' + jQuery("#MoTaNhom").val();
         processing(action, "Đang tạo nhóm học viên trong lớp học phần...", gridRefresh);
     })
 
@@ -184,7 +183,7 @@
         }
 
         if (confirm('Bạn muốn xóa các nhóm học viên đã chọn?')) {
-            var action = '@Url.Action("DeleteNhom","MoodleGroup")' + '/?selectedVals=' + selectedVals;
+            var action = '@Url.Action("DeleteGroups","MoodleGroup")' + '/?selectedVals=' + selectedVals;
             processing(action, "Đang xóa các nhóm học viên...", gridRefresh);
         }
     })
@@ -199,7 +198,7 @@
             alert('Tên tổ không được để trống!');
             return;
         }
-        var action = '@Url.Action("CreateTo", "MoodleGroup")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&ten_to=' + jQuery("#TenTo").val() + '&mo_ta=' + jQuery("#MoTaTo").val();
+        var action = '@Url.Action("CreateGrouping", "MoodleGroup")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&ten_to=' + jQuery("#TenTo").val() + '&mo_ta=' + jQuery("#MoTaTo").val();
         processing(action, "Đang tạo tổ trong lớp học phần...", groupingRefresh);
     })
 
@@ -209,9 +208,9 @@
             return;
         }
 
-        if (confirm('Bạn muốn xóa tổ ' + $("#To").data("kendoDropDownList").text() + '?')) {
-            var action = '@Url.Action("DeleteTo", "MoodleGroup")' + '/?selectedVals=' + jQuery("#To").val();
-            processing(action, "Đang xóa tổ " + $("#To").data("kendoDropDownList").text() + "...", gridgroupingRefresh);
+        if (confirm('Bạn muốn xóa tổ ' + $("#To").data("kendoComboBox").text() + '?')) {
+            var action = '@Url.Action("DeleteGroupings", "MoodleGroup")' + '/?selectedVals=' + jQuery("#To").val();
+            processing(action, "Đang xóa tổ " + $("#To").data("kendoComboBox").text() + "...", gridgroupingRefresh);
         }
     })
 
@@ -220,7 +219,7 @@
             alert('Tên tổ không được để trống!');
             return;
         }
-        var action = '@Url.Action("UpdateTo", "MoodleGroup")' + '/?&ten_to=' + jQuery("#TenTo").val() + '&mo_ta=' + jQuery("#MoTaTo").val() + '&id_to=' + jQuery("#To").val();
+        var action = '@Url.Action("UpdateGrouping", "MoodleGroup")' + '/?&ten_to=' + jQuery("#TenTo").val() + '&mo_ta=' + jQuery("#MoTaTo").val() + '&id_to=' + jQuery("#To").val();
         processing(action, "Đang cập nhật tổ trong lớp học phần...", gridgroupingRefresh);
     })
 
@@ -234,8 +233,8 @@
             alert('Vui lòng chọn 1 tổ!');
             return;
         }
-        var action = '@Url.Action("AssignToNhom", "MoodleGroup")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + '&id_to=' + jQuery("#To").val();
-        processing(action, "Đang thêm các nhóm vào tổ " + $("#To").data("kendoDropDownList").text() + "...", gridRefresh);
+        var action = '@Url.Action("AssignGrouping", "MoodleGroup")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + '&id_to=' + jQuery("#To").val();
+        processing(action, "Đang thêm các nhóm vào tổ " + $("#To").data("kendoComboBox").text() + "...", gridRefresh);
     })
 
     $("#unassignGrouping").click(function () {
@@ -249,9 +248,9 @@
             return;
         }
 
-        if (confirm('Bạn muốn xóa các nhóm đã chọn khỏi tổ ' + $("#To").data("kendoDropDownList").text() + '?')) {
-            var action = '@Url.Action("UnassignToNhom", "MoodleGroup")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + '&id_to=' + jQuery("#To").val();
-            processing(action, "Đang xóa các nhóm khỏi tổ " + $("#To").data("kendoDropDownList").text() + "...", gridRefresh);
+        if (confirm('Bạn muốn xóa các nhóm đã chọn khỏi tổ ' + $("#To").data("kendoComboBox").text() + '?')) {
+            var action = '@Url.Action("UnassignGrouping", "MoodleGroup")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + '&id_to=' + jQuery("#To").val();
+            processing(action, "Đang xóa các nhóm khỏi tổ " + $("#To").data("kendoComboBox").text() + "...", gridRefresh);
         }
     })
 </script>

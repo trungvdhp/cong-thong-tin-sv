@@ -1,0 +1,151 @@
+﻿@using Kendo.Mvc.UI;
+@using CongThongTinSV.Models;
+@{
+    ViewBag.Title = "Phân quyền dịch vụ web moodle";
+}
+
+@(Html.Kendo().ComboBox()
+    .Name("WebService")
+    .Placeholder("Chọn dịch vụ")
+    .HtmlAttributes(new {style="width:260px"})
+    .DataTextField("Text")
+    .DataValueField("Value")
+        //.SelectedIndex(0)
+    .DataSource(source =>
+    {
+        source.Read(read =>
+        {
+            read.Action("GetWebServiceList", "MoodleWebService");
+        }).ServerFiltering(true);
+    })
+    .Events(e =>
+    {
+        e.Change("loadGrid");
+    })
+    //.HtmlAttributes(new { style = "display: block;"})
+)
+
+@(Html.Kendo().Grid<CongThongTinSV.Models.Capability>()
+    .Name("Grid")
+    .Columns(columns => {
+        columns.Bound(c => c.ID_quyen)
+            .ClientTemplate("<input type='checkbox' class='chkbx' value='#= ID_quyen #'/>")
+            .HeaderTemplate("<input type='checkbox' id='masterCheckBox'/>")
+            .Width(40)
+            .Title("")
+            .HeaderHtmlAttributes(new { style = "text-align:center" })
+            .HtmlAttributes(new { style = "text-align:center" })
+            .Filterable(false).Groupable(false).Sortable(false);
+        columns.Bound(c => c.Ten_quyen);
+        columns.Bound(c => c.Action_name).Width(250);
+        columns.Bound(c => c.Tinh_trang).Width(110);
+        columns.Command(command => { 
+            command.Custom("Kích hoạt").Click("assignCapability");
+            command.Custom("Hủy kích hoạt").Click("unassignCapability");
+        }).Width(220);
+    })
+    .Pageable(pager => pager.PageSizes(new int[]{5, 10, 20, 50, 100, 1000}).Refresh(true).Input(true).Numeric(false))
+    .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
+    .Filterable()
+    .Scrollable()
+    .Groupable()
+    .Resizable(r => r.Columns(true))
+    .Reorderable(ro => ro.Columns(true))
+    .Navigatable()
+    //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
+    .Selectable(s => s.Mode(GridSelectionMode.Single))
+    .Events(e => {
+                e.DataBound("onDataBound");
+            })
+    .DataSource(
+        dataSource => dataSource
+            .Ajax()
+            .Read(read => read.Action("GetCapabilities", "MoodleCapability").Data("filterGrid"))
+            .PageSize(50)
+    )
+)
+<div>
+    <button id="assign" class="k-button">Kích hoạt</button>
+    <button id="unassign" class="k-button">Hủy kích hoạt</button> 
+
+</div>
+
+<script type="text/javascript">
+    var selectedVals = [];
+
+    function assignCapability(e) {
+        e.preventDefault();
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        if (dataItem.Tinh_trang == "Đã kích hoạt") {
+            alert("Quyền [ " + dataItem.Ten_quyen + " ] đã được kích hoạt!");
+            return;
+        }
+        var action = '@Url.Action("AssignCapabilities", "MoodleCapability")' + '/?id_dv=' + jQuery("#WebService").val() + '&selectedVals=' + dataItem.ID_quyen;
+        processing(action, "Đang kích hoạt quyền [ " + dataItem.Ten_quyen + " ]...", gridRefresh);
+    }
+
+    function unassignCapability(e) {
+        e.preventDefault();
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        if (dataItem.Tinh_trang != "Đã kích hoạt") {
+            alert("Không thể hủy vì quyền [ " + dataItem.Ten_quyen + " ] chưa được kích hoạt!");
+            return;
+        }
+        var action = '@Url.Action("UnassignCapabilities", "MoodleCapability")' + '/?id_dv=' + jQuery("#WebService").val() + '&selectedVals=' + dataItem.ID_quyen;
+        processing(action, "Đang hủy kích hoạt quyền [ " + dataItem.Ten_quyen + " ]...", gridRefresh);
+    }
+
+    function filterGrid() {
+        return {
+            id_dv: $("#WebService").val()
+        }
+    }
+    
+    function loadGrid() {
+        selectedVals.splice(0, selectedVals.length);
+        gridRefresh();
+    }
+    // on data bound, check checkboxes
+    function onDataBound(e) {
+        checkCells(selectedVals, '#masterCheckBox', '#Grid :checkbox');
+    }
+    // on click checkbox cell in a row
+    $(function () {
+        $('#Grid').on('click', '.chkbx', function () {
+            var state = $(this).is(':checked');
+            var grid = $('#Grid').data().kendoGrid;
+            var dataItem = grid.dataItem($(this).closest('tr'));
+
+            checkVal(dataItem.ID_quyen, state, selectedVals);
+            $('#masterCheckBox').attr('checked', isCheckedAll('#Grid :checkbox'));
+        })
+    })
+
+    $('#masterCheckBox').click(function () { checkAll(this, '#Grid :checkbox'); })
+
+    function gridRefresh() {
+        $("#Grid").data("kendoGrid").dataSource.read();
+    }
+
+    $("#assign").click(function () {
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một quyền!');
+            return;
+        }
+        var action = '@Url.Action("AssignCapabilities", "MoodleCapability")' + '/?id_dv=' + jQuery("#WebService").val() + '&selectedVals=' + selectedVals;
+        processing(action, "Đang kích hoạt các quyền đã chọn...", gridRefresh);
+    })
+
+    $("#unassign").click(function () {
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một quyền!');
+            return;
+        }
+
+        if (confirm('Bạn muốn hủy kích hoạt các quyền đã chọn?')) {
+            var action = '@Url.Action("UnassignCapabilities", "MoodleCapability")' + '/?id_dv=' + jQuery("#WebService").val() + '&selectedVals=' + selectedVals;
+            processing(action, "Đang hủy kích hoạt các quyền đã chọn...", gridRefresh);
+        }
+    })
+
+</script>

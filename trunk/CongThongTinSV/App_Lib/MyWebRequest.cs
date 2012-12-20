@@ -9,9 +9,9 @@ using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.Security;
 
-namespace CongThongTinSV.Controllers
+namespace CongThongTinSV.App_Lib
 {
-    public class WebRequestController : Controller
+    public class MyWebRequest
     {
         private string RestUrl = WebConfigurationManager.AppSettings["ServerUrl"] +
     "webservice/rest/server.php";
@@ -24,12 +24,12 @@ namespace CongThongTinSV.Controllers
         private Stream MyDataStream { get; set; }
         public String Status { get; set; }
 
-        public WebRequestController(string url)
+        public MyWebRequest(string url)
         {
             MyRequest = WebRequest.Create(url);
         }
 
-        public WebRequestController(int scriptType)
+        public MyWebRequest(int scriptType)
         {
             if (scriptType == 1)
                 MyRequest = WebRequest.Create(LoginUrl);
@@ -39,16 +39,16 @@ namespace CongThongTinSV.Controllers
                 MyRequest = WebRequest.Create(RestUrl);
         }
 
-        public WebRequestController(int scriptType, string queryData)
+        public MyWebRequest(int scriptType, string queryData)
         {
             if(scriptType == 1)
                 queryData = LoginUrl + "?" + queryData;
             else if(scriptType == 2)
                 queryData = SoapUrl + "?" + queryData;
             else if(scriptType == 3)
-                queryData = RestUrl + "?" + queryData + "&wstoken=" + AccountController.GetCurrentUserData().MoodleToken;
+                queryData = RestUrl + "?" + queryData + "&wstoken=" + GlobalLib.GetCurrentUserData().MoodleToken;
             else
-                queryData = RestUrl + "?" + queryData + "&moodlewsrestformat=json" + "&wstoken=" + AccountController.GetCurrentUserData().MoodleToken;
+                queryData = RestUrl + "?" + queryData + "&moodlewsrestformat=json" + "&wstoken=" + GlobalLib.GetCurrentUserData().MoodleToken;
 
             MyRequest = WebRequest.Create(queryData);
         }
@@ -65,7 +65,7 @@ namespace CongThongTinSV.Controllers
             }
         }
 
-        public WebRequestController(string url, string method)
+        public MyWebRequest(string url, string method)
             : this(url)
         {
             SetMethod(method);
@@ -89,7 +89,7 @@ namespace CongThongTinSV.Controllers
             }
         }
 
-        public WebRequestController(string url, string method, string queryData)
+        public MyWebRequest(string url, string method, string queryData)
             : this(url, method)
         {
             ProcessData(queryData);
@@ -101,14 +101,14 @@ namespace CongThongTinSV.Controllers
         /// <param name="scriptType">script type: 1 = login script, 2 = soap script, 3 = rest script with format xml, other = rest script with format json</param>
         /// <param name="method">method: POST or GET</param>
         /// <param name="queryData">query data</param>
-        public WebRequestController(int scriptType, string method, string queryData)
+        public MyWebRequest(int scriptType, string method, string queryData)
             : this(scriptType)
         {
             if (scriptType == 3)
-                queryData += "&wstoken=" + AccountController.GetCurrentUserData().MoodleToken;
+                queryData += "&wstoken=" + GlobalLib.GetCurrentUserData().MoodleToken;
             else if (scriptType > 3)
-                queryData += "&moodlewsrestformat=json" + "&wstoken=" + AccountController.GetCurrentUserData().MoodleToken;
-            //UtilityController.WriteTextToFile("D:\\Query.txt", queryData);
+                queryData += "&moodlewsrestformat=json" + "&wstoken=" + GlobalLib.GetCurrentUserData().MoodleToken;
+            //Utility.WriteTextToFile("D:\\Query.txt", queryData);
             SetMethod(method);
             ProcessData(queryData);
         }
@@ -143,6 +143,7 @@ namespace CongThongTinSV.Controllers
             reader.Close();
             MyDataStream.Close();
             response.Close();
+            Utility.WriteTextToFile(System.Web.HttpContext.Current.Server.MapPath("~") + "./App_Data/QueryResult.txt", responseFromServer);
 
             return responseFromServer;
         }

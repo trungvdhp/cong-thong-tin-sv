@@ -17,20 +17,20 @@ namespace CongThongTinSV.Controllers
         FormsAuthenticationTicket ticket = ((FormsIdentity)System.Web.HttpContext.Current.User.Identity).Ticket;
         public ActionResult Index()
         {
-            return RedirectToAction("DangKy","LopHocPhan");
+            return RedirectToAction("DangKy","Course");
         }
 
         public ActionResult InDanhSachLop()
         {
-            return RedirectToAction("InDanhSachLop", "LopHocPhan");
+            return RedirectToAction("InDanhSachLop", "Course");
         }
         public ActionResult DangKyHocPhan()
         {
-            return RedirectToAction("DangKyHocPhan", "LopHocPhan");
+            return RedirectToAction("DangKyHocPhan", "Course");
         }
         public ActionResult YeuCauMoLop()
         {
-            return RedirectToAction("YeuCauMoLop", "LopHocPhan");
+            return RedirectToAction("YeuCauMoLop", "Course");
         }
 
         public ActionResult ThongTinCaNhan()

@@ -166,12 +166,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Lib\GlobalLib.cs" />
+    <Compile Include="App_Lib\MoodleLib.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CapabilityController.cs" />
     <Compile Include="Controllers\ChuyenNganhController.cs" />
     <Compile Include="Controllers\GiangVienController.cs" />
     <Compile Include="Controllers\HocKyController.cs" />
@@ -180,6 +183,7 @@
     <Compile Include="Controllers\KhoaController.cs" />
     <Compile Include="Controllers\LopController.cs" />
     <Compile Include="Controllers\LopHocPhanController.cs" />
+    <Compile Include="Controllers\MoodleCapabilityController.cs" />
     <Compile Include="Controllers\MoodleCategoryController.cs" />
     <Compile Include="Controllers\MoodleCourseController.cs" />
     <Compile Include="Controllers\MoodleEnrolController.cs" />
@@ -187,13 +191,14 @@
     <Compile Include="Controllers\MoodleMessageController.cs" />
     <Compile Include="Controllers\MoodleRoleController.cs" />
     <Compile Include="Controllers\MoodleUserController.cs" />
+    <Compile Include="Controllers\MoodleWebServiceController.cs" />
     <Compile Include="Controllers\SinhVienController.cs" />
     <Compile Include="Controllers\ThongBaoController.cs" />
     <Compile Include="Controllers\TraCuuController.cs" />
     <Compile Include="Controllers\TaiLieuController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
-    <Compile Include="Controllers\UtilityController.cs" />
-    <Compile Include="Controllers\WebRequestController.cs" />
+    <Compile Include="App_Lib\Utility.cs" />
+    <Compile Include="App_Lib\MyWebRequest.cs" />
     <Compile Include="DHHH.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -358,8 +363,9 @@
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\CustomRoleProvider.cs" />
-    <Compile Include="Models\JSONModel.cs" />
+    <Compile Include="App_Lib\CustomRoleProvider.cs" />
+    <Compile Include="Models\ExceptionModel.cs" />
+    <Compile Include="Models\GlobalModel.cs" />
     <Compile Include="Models\MoodleCategoryModel.cs" />
     <Compile Include="Models\MoodleCourseModel.cs" />
     <Compile Include="Models\MoodleEnrolModel.cs" />
@@ -367,6 +373,7 @@
     <Compile Include="Models\MoodleGroupModel.cs" />
     <Compile Include="Models\MoodleRoleModel.cs" />
     <Compile Include="Models\MoodleUserModel.cs" />
+    <Compile Include="Models\MoodleWebServiceModel.cs" />
     <Compile Include="MOD_DanhSachLopTinChi.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
@@ -392,6 +399,9 @@
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
     <Compile Include="MOD_NhomNguoiDung.cs">
+      <DependentUpon>DHHH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MOD_Quyen.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
     <Compile Include="MOD_ToNhom.cs">
@@ -857,38 +867,40 @@
     <Content Include="Views\LopHocPhan\DangKyHocPhan.cshtml" />
     <Content Include="Views\LopHocPhan\YeucauMoLop.cshtml" />
     <Content Include="Views\LopHocPhan\InDanhSachLop.cshtml" />
-    <Content Include="Views\MoodleUser\SinhVien.cshtml" />
-    <Content Include="Views\MoodleCategory\HocKy.cshtml" />
-    <Content Include="Views\MoodleCategory\ChuyenNganh.cshtml" />
-    <Content Include="Views\MoodleCourse\LopHocPhan.cshtml" />
+    <Content Include="Views\MoodleUser\ManageStudent.cshtml" />
+    <Content Include="Views\MoodleCategory\ManageSemester.cshtml" />
+    <Content Include="Views\MoodleCourse\Manage.cshtml" />
     <Content Include="Views\TaiLieu\Upload.cshtml" />
     <Content Include="Views\TraCuu\SinhVien.cshtml" />
     <Content Include="Views\TraCuu\DiemHocTap.cshtml" />
-    <Content Include="Views\MoodleEnrol\GhiDanhSinhVien.cshtml" />
-    <Content Include="Views\MoodleGroup\NhomHocVien.cshtml" />
+    <Content Include="Views\MoodleEnrol\EnrolStudent.cshtml" />
+    <Content Include="Views\MoodleGroup\StudentGroup.cshtml" />
     <Content Include="Views\ThongBao\GuiThongBao.cshtml" />
-    <Content Include="Views\MoodleRole\Index.cshtml" />
-    <Content Include="Views\MoodleUser\GiaoVien.cshtml" />
+    <Content Include="Views\MoodleUser\ManageTeacher.cshtml" />
     <Content Include="Views\SinhVien\ThongTinCaNhan.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Views\MoodleEnrol\GhiDanhGiaoVien.cshtml" />
-    <Content Include="Views\MoodleUser\DoiMatKhau.cshtml" />
+    <Content Include="Views\MoodleEnrol\EnrolTeacher.cshtml" />
+    <Content Include="Views\MoodleUser\ChangePassword.cshtml" />
     <Content Include="Views\TaiLieu\Index.cshtml" />
     <Content Include="Views\MoodleUser\UserProfile.cshtml">
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\ThongBao\Gui.cshtml" />
-    <Content Include="Views\MoodleCourse\DanhSachBaiKiemTra.cshtml" />
+    <Content Include="Views\MoodleCourse\TestList.cshtml" />
     <Content Include="Views\MoodleUser\CourseUserProfile.cshtml" />
-    <Content Include="Views\MoodleUser\BaiLamCaNhan.cshtml" />
-    <Content Include="Views\MoodleCourse\BangDiemThanhPhan.cshtml" />
-    <Content Include="Views\MoodleCourse\BangDiemKhoaHoc.cshtml" />
-    <Content Include="Views\MoodleUser\QuanTriVien.cshtml" />
+    <Content Include="Views\MoodleUser\IndividualAssignment.cshtml" />
+    <Content Include="Views\MoodleCourse\ModuleGradeBook.cshtml" />
+    <Content Include="Views\MoodleCourse\CourseGradeBook.cshtml" />
+    <Content Include="Views\MoodleUser\ManageAdminUser.cshtml" />
+    <Content Include="Views\Capability\Manage.cshtml" />
+    <Content Include="Views\MoodleWebService\Manage.cshtml" />
+    <Content Include="Views\MoodleCapability\Manage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\GiangVien\" />
+    <Folder Include="Views\MoodleRole\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
