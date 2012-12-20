@@ -27,7 +27,7 @@
                                 if (list[i].modules[j].modname == "quiz")
                                 {
                                     item.Add().Text(list[i].modules[j].name)
-                                        .Action("BangDiemThanhPhan", "MoodleCourse", new { quizid = list[i].modules[j].id })
+                                        .Action("ModuleGradeBook", "MoodleCourse", new { quizid = list[i].modules[j].id })
                                         .ImageUrl(list[i].modules[j].modicon);
                                 }
                             }

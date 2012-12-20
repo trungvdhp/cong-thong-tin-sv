@@ -192,7 +192,7 @@ namespace CongThongTinSV.Controllers
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return result;
         }
-        public ActionResult GetLopHocPhanGiaoVien()
+        public ActionResult GetCoursesGiaoVien()
         {
             JsonResult result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;

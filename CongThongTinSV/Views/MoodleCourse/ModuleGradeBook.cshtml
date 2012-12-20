@@ -39,7 +39,7 @@
     .DataSource(
         dataSource => dataSource
             .Ajax()
-            .Read(read => read.Action("GetBangDiemThanhPhan", "MoodleCourse", new { quizid = ViewBag.QuizID }))
+            .Read(read => read.Action("GetModuleGradeBook", "MoodleCourse", new { quizid = ViewBag.QuizID }))
             .PageSize(50)
     )
 )
@@ -48,7 +48,7 @@
 </div>
 <br />
 <div style="text-align: center;">
-@Html.ActionLink("Quay về khóa học", "DanhSachBaiKiemTra", "MoodleCourse", routeValues: new { courseid = ViewBag.CourseID }, htmlAttributes: new { title = "Back to the course" })
+@Html.ActionLink("Quay về khóa học", "TestList", "MoodleCourse", routeValues: new { courseid = ViewBag.CourseID }, htmlAttributes: new { title = "Back to the course" })
 </div>
 <script type="text/javascript">
     var selectedVals = [];
@@ -86,7 +86,7 @@
         }
 
         if (confirm('Bạn muốn cập nhật điểm mới cho các học viên đã chọn?')) {
-            var action = '@Url.Action("UpdateDiemThi","MoodleCourse")' + '/?quizid=' + @ViewBag.QuizID + '&selectedVals=' + selectedVals
+            var action = '@Url.Action("UpdateYGrade","MoodleCourse")' + '/?quizid=' + @ViewBag.QuizID + '&selectedVals=' + selectedVals
             processing(action, "Đang cập nhật điểm mới cho các học viên...", gridRefresh);
         }
       })

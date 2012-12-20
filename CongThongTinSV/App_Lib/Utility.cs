@@ -9,9 +9,9 @@ using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using System.Xml;
 
-namespace CongThongTinSV.Controllers
+namespace CongThongTinSV.App_Lib
 {
-    public class UtilityController : Controller
+    public class Utility
     {
         /// <summary>
         /// Write text to a file
@@ -310,26 +310,6 @@ namespace CongThongTinSV.Controllers
         {
             string[] arr = array.Split(separator);
             return arr.Contains(value);
-        }
-        /// <summary>
-        /// Get context id in moodle elearning
-        /// </summary>
-        /// <param name="contextLevel">context level</param>
-        /// <param name="instanceID">instance id</param>
-        /// <returns></returns>
-        public static long GetContextID(string contextLevel, string instanceID)
-        {
-            MoodleEntities mdb = new MoodleEntities();
-            var q = mdb.fit_context.AsEnumerable().FirstOrDefault(t => t.contextlevel.ToString() == contextLevel && t.instanceid.ToString() == instanceID);
-
-            if (q == null)
-            {
-                return 0;
-            }
-            else
-            {
-                return q.id;
-            }
         }
     }
 }

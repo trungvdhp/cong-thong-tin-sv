@@ -10,6 +10,7 @@ using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using CongThongTinSV.Filters;
 using CongThongTinSV.Models;
+using CongThongTinSV.App_Lib;
 
 namespace CongThongTinSV.Controllers
 {
@@ -17,36 +18,6 @@ namespace CongThongTinSV.Controllers
     [InitializeSimpleMembership]
     public class AccountController : Controller
     {
-        /// <summary>
-        /// Get current user data
-        /// </summary>
-        /// <returns>Current user data</returns>
-        public static UserData GetCurrentUserData()
-        {
-            UserData user = new UserData();
-            try
-            {
-                string[] s = (((FormsIdentity)System.Web.HttpContext.Current.User.Identity).Ticket.UserData.Split('|'));
-                user = new UserData
-                {
-                    UserName = System.Web.HttpContext.Current.User.Identity.Name,
-                    PortalUserGroup = Convert.ToInt32(s[0]),
-                    PortalUserID = Convert.ToInt32(s[1]),
-                    PortalFullName = s[2],
-                    MoodleToken = s[3],
-                    MoodleService = s[4],
-                    MoodleUserID = Convert.ToInt64(s[5]),
-                    MoodleFullName = s[6]
-                };
-
-            }
-            catch (Exception)
-            {
-            }
-
-            return user;
-        }
-
         //
         // GET: /Account/Login
 
@@ -159,7 +130,7 @@ namespace CongThongTinSV.Controllers
                     }
                 }
 
-                string token = MoodleUserController.GetToken(model.UserName, model.Password, Service);
+                string token = MoodleLib.GetToken(model.UserName, model.Password, Service);
 
                 if (token == "exception" && !portalOK)
                 {

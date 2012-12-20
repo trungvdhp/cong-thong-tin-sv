@@ -104,7 +104,7 @@ namespace CongThongTinSV.Models
         public string profileimageurlsmall { get; set; } //User image profile URL - small version
         public string profileimageurl { get; set; } //User image profile URL - big version
         public List<MoodleUserCustomfield> customfields { get; set; } //User custom fields (also known as user profil fields)
-        public List<MoodleGroup> groups { get; set; } //user groups
+        public List<MoodleGroupRespond> groups { get; set; } //user groups
         public List<MoodleRole> roles { get; set; } //user roles
         public List<MoodleUserPreference> preferences { get; set; } //User preferences
         public List<MoodleEnrolledCourse> enrolledcourses { get; set; } //Courses where the user is enrolled - limited by which courses the user is able to see
@@ -112,7 +112,7 @@ namespace CongThongTinSV.Models
         public MoodleCourseUserResponse()
         {
             customfields = new List<MoodleUserCustomfield>();
-            groups = new List<MoodleGroup>();
+            groups = new List<MoodleGroupRespond>();
             roles = new List<MoodleRole>();
             preferences = new List<MoodleUserPreference>();
             enrolledcourses = new List<MoodleEnrolledCourse>();
@@ -143,7 +143,7 @@ namespace CongThongTinSV.Models
         public string Email { get; set; }
     }
 
-    public class MoodleSinhVien
+    public class MoodleStudent
     {
         [DisplayName("ID đăng ký")]
         public int ID { get; set; }
@@ -191,7 +191,7 @@ namespace CongThongTinSV.Models
         public string Mat_khau { get; set; }
     }
 
-    public class MoodleGiaoVien
+    public class MoodleTeacher
     {
         [DisplayName("ID đăng ký")]
         public int ID { get; set; }

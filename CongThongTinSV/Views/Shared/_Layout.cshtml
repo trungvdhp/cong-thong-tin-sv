@@ -88,27 +88,30 @@
                                 Elearning
                                 <ul>
                                     <li>
-                                        Tài khoản
+                                        Hệ thống
                                         <ul> <!-- moving the UL to the next line will cause an IE7 problem -->
-                                             <li>@Html.ActionLink("Đổi mật khẩu", "DoiMatKhau", "MoodleUser")</li>
-                                             <li>@Html.ActionLink("Quản trị viên", "QuanTriVien", "MoodleUser")</li>
-                                             <li>@Html.ActionLink("Giáo viên", "GiaoVien", "MoodleUser")</li>
-                                             <li>@Html.ActionLink("Sinh viên", "SinhVien", "MoodleUser")</li>
+                                            <li>@Html.ActionLink("Dịch vụ web", "Manage", "MoodleWebService")</li>
+                                            <li>@Html.ActionLink("Quyền hạn", "Manage", "Capability")</li>
+                                            <li>@Html.ActionLink("Phân quyền", "Manage", "MoodleCapability")</li>    
                                         </ul>
                                     </li>
                                     <li>
-                                        Danh mục
+                                        Quản trị người dùng
                                         <ul> <!-- moving the UL to the next line will cause an IE7 problem -->
-                                            <li>@Html.ActionLink("Học kỳ", "HocKy", "MoodleCategory")</li>
+                                             <li>@Html.ActionLink("Đổi mật khẩu", "ChangePassword", "MoodleUser")</li>
+                                             <li>@Html.ActionLink("Sinh viên", "ManageStudent", "MoodleUser")</li>
+                                             <li>@Html.ActionLink("Giáo viên", "ManageTeacher", "MoodleUser")</li>
+                                             <li>@Html.ActionLink("Quản trị viên", "ManageAdminUser", "MoodleUser")</li>
                                         </ul>
                                     </li>
                                     <li>
-                                        Khóa học
+                                        Quản trị khóa học
                                         <ul> <!-- moving the UL to the next line will cause an IE7 problem -->
-                                             <li>@Html.ActionLink("Lớp học phần", "LopHocPhan", "MoodleCourse")</li>
-                                             <li>@Html.ActionLink("Ghi danh sinh viên", "GhiDanhSinhVien", "MoodleEnrol")</li>
-                                             <li>@Html.ActionLink("Ghi danh giáo viên", "GhiDanhGiaoVien", "MoodleEnrol")</li>
-                                             <li>@Html.ActionLink("Nhóm học viên", "NhomHocVien", "MoodleGroup")</li>
+                                             <li>@Html.ActionLink("Học kỳ", "ManageSemester", "MoodleCategory")</li>
+                                             <li>@Html.ActionLink("Lớp học phần", "Manage", "MoodleCourse")</li>
+                                             <li>@Html.ActionLink("Ghi danh sinh viên", "EnrolStudent", "MoodleEnrol")</li>
+                                             <li>@Html.ActionLink("Ghi danh giáo viên", "EnrolTeacher", "MoodleEnrol")</li>
+                                             <li>@Html.ActionLink("Nhóm học viên", "StudentGroup", "MoodleGroup")</li>
                                         </ul>
                                     </li>
                                 </ul>

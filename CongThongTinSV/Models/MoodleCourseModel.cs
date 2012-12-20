@@ -61,13 +61,16 @@ namespace CongThongTinSV.Models
         public List<MoodleCourseModule> modules { get; set; } //list of module+
     }
 
-    public class MoodleLopHocPhan
+    public class MoodleCourse
     {
         [DisplayName("ID")]
         public int ID { get; set; }
 
         [DisplayName("ID moodle")]
         public int ID_moodle { get; set; }
+
+        [DisplayName("ID học kỳ")]
+        public int ID_hocky { get; set; }
 
         [DisplayName("Lớp học phần")]
         public string Lop_hoc_phan { get; set; }

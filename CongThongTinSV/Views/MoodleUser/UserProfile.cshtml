@@ -1,5 +1,5 @@
 ﻿@using CongThongTinSV.Models
-@using CongThongTinSV.Controllers
+@using CongThongTinSV.App_Lib
 @{
     MoodleUserResponse userProfile = ViewBag.UserProfile;
     ViewBag.Title = userProfile.fullname + ": Tài khoản moodle Elearning";
@@ -41,7 +41,7 @@
                             <text>Not set</text>
                         }
                         else{
-                            <text>@UtilityController.ConvertToDateTimeString(int.Parse(userProfile.customfields[i].value),"dd-MM-yyyy")</text>
+                            <text>@Utility.ConvertToDateTimeString(int.Parse(userProfile.customfields[i].value),"dd-MM-yyyy")</text>
                         }
                     }
                 </td>
@@ -67,9 +67,9 @@
     </tr>
     <tr>
         <td>Lần truy cập đầu tiên:</td>
-        <td>@UtilityController.ConvertToDetailDateTimeString(userProfile.firstaccess)</td></tr>
+        <td>@Utility.ConvertToDetailDateTimeString(userProfile.firstaccess)</td></tr>
     <tr>
         <td>Lần truy cập gần nhất:</td>
-        <td>@UtilityController.ConvertToDetailDateTimeString(userProfile.lastaccess)</td>
+        <td>@Utility.ConvertToDetailDateTimeString(userProfile.lastaccess)</td>
     </tr>
 </table>

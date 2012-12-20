@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel;
 using System.Runtime.Serialization;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CongThongTinSV.Models
 {
@@ -13,14 +15,6 @@ namespace CongThongTinSV.Models
         public int ID_mon { get; set; }
         public String Ten_lop { get; set; }
 
-    }
-
-    public class MoodleException
-    {
-        public string exception { get; set; }
-        public string errorcode { get; set; }
-        public string message { get; set; }
-        public string debuginfo { get; set; }
     }
 
     public class SinhVien
@@ -37,6 +31,7 @@ namespace CongThongTinSV.Models
         [DisplayName("Lớp")]
         public string Lop { get; set; }
     }
+
     public class DiemHocTap
     {
         public int Id_diem;
@@ -64,5 +59,37 @@ namespace CongThongTinSV.Models
 
         [DisplayName("Năm học")]
         public string Nam_hoc { get; set; }
+    }
+
+    public class ActionInfo
+    {
+        [DisplayName("Controller name")]
+        public string ControllerName { get; set; }
+
+        [DisplayName("Action name")]
+        public string ActionName { get; set; }
+    }
+
+    public class Capability
+    {
+        [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        [Required]
+        [DisplayName("ID quyền")]
+        public int ID_quyen { get; set; }
+
+        [Required]
+        [DisplayName("Tên quyền")]
+        public string Ten_quyen { get; set; }
+
+        [Required]
+        [DisplayName("Action name")]
+        public string Action_name { get; set; }
+
+        [DisplayName("ID nhóm")]
+        public int ID_nhom { get; set; }
+
+        [DisplayName("Tình trạng")]
+        public string Tinh_trang { get; set; }
     }
 }

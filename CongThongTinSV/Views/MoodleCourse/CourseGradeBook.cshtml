@@ -39,7 +39,7 @@
     .DataSource(
         dataSource => dataSource
             .Ajax()
-            .Read(read => read.Action("GetBangDiemKhoaHoc", "MoodleCourse", new { courseid = ViewBag.CourseID }))
+            .Read(read => read.Action("GetCourseGradeBook", "MoodleCourse", new { courseid = ViewBag.CourseID }))
             .PageSize(50)
     )
 )
