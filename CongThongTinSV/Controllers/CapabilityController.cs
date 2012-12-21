@@ -12,19 +12,19 @@ namespace CongThongTinSV.Controllers
 {
     public class CapabilityController : Controller
     {
-        [Authorize(Roles = "Capability.Manage")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Manage()
         {
             return View();
         }
 
-        [Authorize(Roles = "Capability.GetCapabilities")]
+        [Authorize(Roles = "Admin")]
         public ActionResult GetCapabilities([DataSourceRequest] DataSourceRequest request)
         {
             return Json(GlobalLib.GetCapabilities().ToDataSourceResult(request));
         }
 
-        [Authorize(Roles = "Capability.CreateCapability")]
+        [Authorize(Roles = "Admin")]
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult CreateCapability([DataSourceRequest] DataSourceRequest request, Capability quyen)
         {
@@ -36,7 +36,7 @@ namespace CongThongTinSV.Controllers
             return Json(ModelState.ToDataSourceResult());
         }
 
-        [Authorize(Roles = "Capability.DeleteCapability")]
+        [Authorize(Roles = "Admin")]
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult DeleteCapability([DataSourceRequest] DataSourceRequest request, Capability quyen)
         {
@@ -48,7 +48,7 @@ namespace CongThongTinSV.Controllers
             return Json(ModelState.ToDataSourceResult());
         }
 
-        [Authorize(Roles = "Capability.DeleteCapabilities")]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteCapabilities(string selectedVals)
         {
             IEnumerable<string> ids = selectedVals.Split(new char[] { ',' });
@@ -61,7 +61,7 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Capability.UpdateCapability")]
+        [Authorize(Roles = "Admin")]
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult UpdateCapability([DataSourceRequest] DataSourceRequest request, Capability quyen)
         {
@@ -73,7 +73,7 @@ namespace CongThongTinSV.Controllers
             return Json(ModelState.ToDataSourceResult());
         }
 
-        [Authorize(Roles = "Capability.SyncCapability")]
+        [Authorize(Roles = "Admin")]
         public ActionResult SyncCapability()
         {
             GlobalLib.SyncCapability();

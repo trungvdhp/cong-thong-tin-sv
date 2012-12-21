@@ -19,13 +19,13 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        [Authorize(Roles = "MoodleCourse.GetCourses")]
+        //[Authorize(Roles = "MoodleCourse.GetCourses")]
         public ActionResult GetCourses([DataSourceRequest] DataSourceRequest request, string id_hocky)
         {
             return Json(MoodleLib.GetCourses(id_hocky).ToDataSourceResult(request));
         }
 
-        [Authorize(Roles = "MoodleCourse.GetCourseList")]
+        //[Authorize(Roles = "MoodleCourse.GetCourseList")]
         public JsonResult GetCourseList(string id_hocky)
         {
             JsonResult result = new JsonResult();
@@ -63,6 +63,26 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
+        [Authorize(Roles = "MoodleCourse.MyTestList")]
+        public ActionResult MyTestList(string courseid = "0")
+        {
+            MoodleEntities mdb = new MoodleEntities();
+
+            try
+            {
+                ViewBag.CourseName = mdb.fit_course.AsEnumerable().SingleOrDefault(t => t.id.ToString() == courseid).fullname;
+                ViewBag.CourseContent = MoodleLib.GetCourseContents(courseid);
+            }
+            catch (Exception)
+            {
+                ViewBag.CourseName = "";
+                ViewBag.CourseContent = new List<MoodleCourseContentResponse>();
+            }
+
+            //ViewBag.CourseID = courseid;
+            return View();
+        }
+
         [Authorize(Roles = "MoodleCourse.TestList")]
         public ActionResult TestList(string courseid="0")
         {
@@ -71,7 +91,7 @@ namespace CongThongTinSV.Controllers
             try
             {
                 ViewBag.CourseName = mdb.fit_course.AsEnumerable().SingleOrDefault(t => t.id.ToString() == courseid).fullname;
-                ViewBag.CourseContent = MoodleLib.GetMoodleCourseContents(courseid);
+                ViewBag.CourseContent = MoodleLib.GetCourseContents(courseid);
             }
             catch (Exception)
             {
@@ -87,7 +107,7 @@ namespace CongThongTinSV.Controllers
         public ActionResult UpdateYGrades(string selectedVals, string quizid = "0")
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-            var list = MoodleLib.GetMoodleQuizGrades(quizid).Where(t => s.Contains(t.ID.ToString()) && t.ID_sv != 0 && t.NewGrade.HasValue);
+            var list = MoodleLib.GetQuizGrades(quizid).Where(t => s.Contains(t.ID.ToString()) && t.ID_sv != 0 && t.NewGrade.HasValue).ToList();
 
             if (list.Count() != 0)
             {
@@ -125,7 +145,7 @@ namespace CongThongTinSV.Controllers
         [Authorize(Roles = "MoodleCourse.GetModuleGradeBook")]
         public ActionResult GetModuleGradeBook([DataSourceRequest] DataSourceRequest request, string quizid = "0")
         {
-            return Json(MoodleLib.GetMoodleQuizGrades(quizid).ToDataSourceResult(request));
+            return Json(MoodleLib.GetQuizGrades(quizid).ToDataSourceResult(request));
         }
 
         [Authorize(Roles = "MoodleCourse.CourseGradeBook")]
@@ -149,7 +169,7 @@ namespace CongThongTinSV.Controllers
         [Authorize(Roles = "MoodleCourse.GetCourseGradeBook")]
         public ActionResult GetCourseGradeBook([DataSourceRequest] DataSourceRequest request, string courseid="0")
         {
-            return Json(MoodleLib.GetMoodleCourseGrades(courseid).ToDataSourceResult(request));
+            return Json(MoodleLib.GetCourseGrades(courseid).ToDataSourceResult(request));
         }
     }
 }

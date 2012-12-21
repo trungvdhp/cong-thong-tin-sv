@@ -12,19 +12,19 @@ namespace CongThongTinSV.Controllers
 {
     public class MoodleWebServiceController : Controller
     {
-        [Authorize(Roles = "MoodleWebService.Manage")]
+        [Authorize(Roles = "MoodleAdmin")]
         public ActionResult Manage()
         {
             return View();
         }
 
-        [Authorize(Roles = "MoodleWebService.GetWebServices")]
+        [Authorize(Roles = "MoodleAdmin")]
         public ActionResult GetWebServices([DataSourceRequest] DataSourceRequest request)
         {
             return Json(MoodleLib.GetWebServices().ToDataSourceResult(request));
         }
 
-        [Authorize(Roles = "MoodleWebService.GetWebServiceList")]
+        [Authorize(Roles = "MoodleAdmin")]
         public JsonResult GetWebServiceList()
         {
             JsonResult result = new JsonResult();
@@ -34,7 +34,7 @@ namespace CongThongTinSV.Controllers
             return result;
         }
 
-        [Authorize(Roles = "MoodleWebService.CreateWebService")]
+        [Authorize(Roles = "MoodleAdmin")]
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult CreateWebService([DataSourceRequest] DataSourceRequest request, MoodleWebService webservice)
         {
@@ -46,7 +46,7 @@ namespace CongThongTinSV.Controllers
             return Json(ModelState.ToDataSourceResult());
         }
 
-        [Authorize(Roles = "MoodleWebService.DeleteWebService")]
+        [Authorize(Roles = "MoodleAdmin")]
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult DeleteWebService([DataSourceRequest] DataSourceRequest request, MoodleWebService webservice)
         {
@@ -58,7 +58,7 @@ namespace CongThongTinSV.Controllers
             return Json(ModelState.ToDataSourceResult());
         }
 
-        [Authorize(Roles = "MoodleWebService.DeleteWebServices")]
+        [Authorize(Roles = "MoodleAdmin")]
         public ActionResult DeleteWebServices(string selectedVals)
         {
             IEnumerable<string> ids = selectedVals.Split(new char[] { ',' });
@@ -71,7 +71,7 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        [Authorize(Roles = "MoodleWebService.UpdateWebService")]
+        [Authorize(Roles = "MoodleAdmin")]
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult UpdateWebService([DataSourceRequest] DataSourceRequest request, MoodleWebService webservice)
         {
@@ -83,7 +83,7 @@ namespace CongThongTinSV.Controllers
             return Json(ModelState.ToDataSourceResult());
         }
 
-        [Authorize(Roles = "MoodleWebService.SyncWebService")]
+        [Authorize(Roles = "MoodleAdmin")]
         public ActionResult SyncWebService()
         {
             MoodleLib.SyncWebService();

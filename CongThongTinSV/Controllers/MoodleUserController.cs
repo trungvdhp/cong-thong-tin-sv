@@ -25,7 +25,7 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        [Authorize(Roles = "MoodleUser.GetStudents")]
+        //[Authorize(Roles = "MoodleUser.GetStudents")]
         public ActionResult GetStudents([DataSourceRequest] DataSourceRequest request, string id_chuyen_nganh)
         {
             return Json(MoodleLib.GetStudents(id_chuyen_nganh).ToDataSourceResult(request));
@@ -95,7 +95,7 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        [Authorize(Roles = "MoodleUser.GetTeachers")]
+        //[Authorize(Roles = "MoodleUser.GetTeachers")]
         public ActionResult GetTeachers([DataSourceRequest] DataSourceRequest request, string id_khoa)
         {
 
@@ -169,10 +169,9 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        [Authorize(Roles = "MoodleUser.GetAdminUsers")]
+        //[Authorize(Roles = "MoodleUser.GetAdminUsers")]
         public ActionResult GetAdminUsers([DataSourceRequest] DataSourceRequest request)
         {
-
             return Json(MoodleLib.GetAdminUsers().ToDataSourceResult(request));
         }
 
@@ -237,6 +236,7 @@ namespace CongThongTinSV.Controllers
         #endregion
 
         #region UserProfile
+        [Authorize(Roles = "MoodleUser.ChangePassword")]
         public ActionResult ChangePassword(string message)
         {
             ViewBag.StatusMessage = message;
@@ -244,6 +244,7 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
+        [Authorize(Roles = "MoodleUser.ChangePassword")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ChangePassword(LocalPasswordModel model)
@@ -292,7 +293,57 @@ namespace CongThongTinSV.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-        
+
+        [Authorize(Roles = "MoodleUser.MyProfile")]
+        public ActionResult MyProfile()
+        {
+            List<string> list = new List<string>();
+            string userid = GlobalLib.GetCurrentUserData().MoodleUserID.ToString();
+            list.Add(userid);
+
+            var q = MoodleLib.GetUserByID(list);
+
+            if (q.Count() > 0)
+                ViewBag.UserProfile = q.ElementAt(0);
+            else
+                ViewBag.UserProfile = new MoodleUserResponse();
+
+            return View();
+        }
+
+        [Authorize(Roles = "MoodleUser.CourseMyProfile")]
+        public ActionResult CourseMyProfile(string courseid)
+        {
+            List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
+            string userid = GlobalLib.GetCurrentUserData().MoodleUserID.ToString();
+            list.Add(new KeyValuePair<string, string>(userid, courseid));
+            var q = MoodleLib.GetCourseUserProfiles(list);
+
+            if (q.Count() > 0)
+            {
+                var user = q.ElementAt(0);
+                ViewBag.CourseUser = user;
+                var course = user.enrolledcourses.AsEnumerable().SingleOrDefault(t => t.id.ToString() == courseid);
+
+                if (course == null)
+                {
+                    ViewBag.CourseName = "";
+                }
+                else
+                {
+                    ViewBag.CourseName = course.fullname;
+                }
+            }
+            else
+            {
+                ViewBag.CourseUser = new MoodleCourseUserResponse();
+                ViewBag.CourseName = "";
+            }
+
+            return View();
+        }
+
+        [Authorize(Roles = "MoodleUser.UserProfile")]
         public ActionResult UserProfile(string userid)
         {
             List<string> list = new List<string>();
@@ -307,6 +358,7 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
+        [Authorize(Roles = "MoodleUser.CourseUserProfile")]
         public ActionResult CourseUserProfile(string userid, string courseid)
         {
             List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
@@ -337,7 +389,22 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        public ActionResult IndividualAssignment(string quizid)
+        [Authorize(Roles = "MoodleUser.MyEnrolledCourse")]
+        public ActionResult MyEnrolledCourse()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "MoodleUser.GetMyEnrolledCourses")]
+        public ActionResult GetMyEnrolledCourses([DataSourceRequest] DataSourceRequest request)
+        {
+            string userid = GlobalLib.GetCurrentUserData().MoodleUserID.ToString();
+
+            return Json(MoodleLib.GetEnrolledCourses(userid).ToDataSourceResult(request));
+        }
+
+        [Authorize(Roles = "MoodleUser.MyAssignment")]
+        public ActionResult MyAssignment(string quizid)
         {
             return View();
         }

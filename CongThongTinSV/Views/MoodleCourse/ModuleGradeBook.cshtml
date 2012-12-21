@@ -17,10 +17,16 @@
             .HtmlAttributes(new { style = "text-align:center" })
             .Filterable(false).Groupable(false).Sortable(false);
         columns.Bound(c => c.UserName).Width(80);
-        columns.Bound(c => c.LastName).Width(140);
+        columns.Bound(c => c.LastName).Width(150);
         columns.Bound(c => c.FirstName).Width(80);
-        columns.Bound(c => c.OldGrade).Format("{0:0.0}").Width(100);
-        columns.Bound(c => c.NewGrade).Format("{0:0.0}");
+        columns.Bound(c => c.OldGrade).Format("{0:0.0}").Width(90);
+        columns.Bound(c => c.NewGrade).Format("{0:0.0}").Width(95);
+        columns.Bound(c => c.IsDiffGrade).ClientTemplate("<img width='16' height='16' src=" +
+            "# if (IsDiffGrade) { #" +
+                Url.Content("~/Images/cross_red_big.gif") +
+            "# } else { #" +
+                Url.Content("~/Images/tick_green_big.gif") +
+            "# } # />");
     })
     .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50, 100 }).Refresh(true).Input(true).Numeric(false))
     .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
@@ -86,7 +92,7 @@
         }
 
         if (confirm('Bạn muốn cập nhật điểm mới cho các học viên đã chọn?')) {
-            var action = '@Url.Action("UpdateYGrade","MoodleCourse")' + '/?quizid=' + @ViewBag.QuizID + '&selectedVals=' + selectedVals
+            var action = '@Url.Action("UpdateYGrades","MoodleCourse")' + '/?quizid=' + @ViewBag.QuizID + '&selectedVals=' + selectedVals
             processing(action, "Đang cập nhật điểm mới cho các học viên...", gridRefresh);
         }
       })

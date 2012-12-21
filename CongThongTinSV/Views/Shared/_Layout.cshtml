@@ -87,8 +87,16 @@
                             <li>
                                 Elearning
                                 <ul>
+                                     <li>
+                                        Tài khoản
+                                        <ul> <!-- moving the UL to the next line will cause an IE7 problem -->
+                                            <li>@Html.ActionLink("Thông tin cá nhân", "MyProfile", "MoodleUser")</li>
+                                            <li>@Html.ActionLink("Khóa học của tôi", "MyEnrolledCourse", "MoodleUser")</li> 
+                                            <li>@Html.ActionLink("Đổi mật khẩu", "ChangePassword", "MoodleUser")</li>   
+                                        </ul>
+                                    </li>
                                     <li>
-                                        Hệ thống
+                                        Quản trị hệ thống
                                         <ul> <!-- moving the UL to the next line will cause an IE7 problem -->
                                             <li>@Html.ActionLink("Dịch vụ web", "Manage", "MoodleWebService")</li>
                                             <li>@Html.ActionLink("Quyền hạn", "Manage", "Capability")</li>
@@ -98,7 +106,6 @@
                                     <li>
                                         Quản trị người dùng
                                         <ul> <!-- moving the UL to the next line will cause an IE7 problem -->
-                                             <li>@Html.ActionLink("Đổi mật khẩu", "ChangePassword", "MoodleUser")</li>
                                              <li>@Html.ActionLink("Sinh viên", "ManageStudent", "MoodleUser")</li>
                                              <li>@Html.ActionLink("Giáo viên", "ManageTeacher", "MoodleUser")</li>
                                              <li>@Html.ActionLink("Quản trị viên", "ManageAdminUser", "MoodleUser")</li>

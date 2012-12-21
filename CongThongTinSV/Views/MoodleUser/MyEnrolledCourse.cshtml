@@ -1,0 +1,29 @@
+﻿@using Kendo.Mvc.UI;
+@using CongThongTinSV.Models;
+@{
+    ViewBag.Title = "Các khóa học đã tham gia của bạn";
+}
+
+@(Html.Kendo().Grid<CongThongTinSV.Models.MoodleEnrolledCourse>()
+    .Name("Grid")
+    .Columns(columns => {
+        columns.Bound(c => c.id).Title("Khóa học")
+            .ClientTemplate((@Html.ActionLink("#=fullname#", "MyTestList", "MoodleCourse", new { courseid = "CourseId" }, null).ToHtmlString().Replace("CourseId", "#=id#")));
+    })
+    .Pageable(pager => pager.PageSizes(new int[]{5, 10, 20, 50}).Refresh(true).Input(true).Numeric(false))
+    .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
+    .Filterable()
+    .Scrollable()
+    .Groupable()
+    .Resizable(r => r.Columns(true))
+    .Reorderable(ro => ro.Columns(true))
+    .Navigatable()
+    //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
+    //.Selectable(s => s.Mode(GridSelectionMode.Single))
+    .DataSource(
+        dataSource => dataSource
+            .Ajax()
+            .Read(read => read.Action("GetMyEnrolledCourses", "MoodleUser"))
+            .PageSize(50)
+    )
+)
