@@ -18,7 +18,7 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        [Authorize(Roles = "MoodleCapability.GetCapabilities")]
+        //[Authorize(Roles = "MoodleCapability.GetCapabilities")]
         public ActionResult GetCapabilities([DataSourceRequest] DataSourceRequest request, string id_dv)
         {
             return Json(MoodleLib.GetCapabilities(id_dv).ToDataSourceResult(request));

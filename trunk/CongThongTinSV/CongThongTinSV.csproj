@@ -166,6 +166,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Lib\CustomAuthorize.cs" />
     <Compile Include="App_Lib\GlobalLib.cs" />
     <Compile Include="App_Lib\MoodleLib.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
@@ -725,6 +726,8 @@
       <LastGenOutput>Elearning.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Images\cross_red_big.gif" />
+    <Content Include="Images\tick_green_big.gif" />
     <Content Include="Images\vimaru-logo.png" />
     <Content Include="Scripts\jqGrid\Changes.txt" />
     <Content Include="Scripts\jqGrid\i18n\grid.locale-en.js" />
@@ -889,13 +892,17 @@
     <Content Include="Views\ThongBao\Gui.cshtml" />
     <Content Include="Views\MoodleCourse\TestList.cshtml" />
     <Content Include="Views\MoodleUser\CourseUserProfile.cshtml" />
-    <Content Include="Views\MoodleUser\IndividualAssignment.cshtml" />
+    <Content Include="Views\MoodleUser\MyAssignment.cshtml" />
     <Content Include="Views\MoodleCourse\ModuleGradeBook.cshtml" />
     <Content Include="Views\MoodleCourse\CourseGradeBook.cshtml" />
     <Content Include="Views\MoodleUser\ManageAdminUser.cshtml" />
     <Content Include="Views\Capability\Manage.cshtml" />
     <Content Include="Views\MoodleWebService\Manage.cshtml" />
     <Content Include="Views\MoodleCapability\Manage.cshtml" />
+    <Content Include="Views\MoodleUser\MyEnrolledCourse.cshtml" />
+    <Content Include="Views\MoodleUser\MyProfile.cshtml" />
+    <Content Include="Views\MoodleUser\CourseMyProfile.cshtml" />
+    <Content Include="Views\MoodleCourse\MyTestList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

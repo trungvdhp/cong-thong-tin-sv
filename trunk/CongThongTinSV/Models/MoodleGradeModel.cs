@@ -26,13 +26,16 @@ namespace CongThongTinSV.Models
         [DisplayName("Tên")]
         public string FirstName { get; set; }
 
-        [DisplayName("Điểm thi cũ")]
+        [DisplayName("Điểm cũ")]
         public float? OldGrade { get; set; }
 
-        [DisplayName("Điểm thi mới")]
+        [DisplayName("Điểm mới")]
         public decimal? NewGrade { get; set; }
 
         [DisplayName("Điểm Z")]
         public decimal? ZGrade { get; set; }
+
+        [DisplayName("Khác điểm")]
+        public bool IsDiffGrade { get; set; }
     }
 }

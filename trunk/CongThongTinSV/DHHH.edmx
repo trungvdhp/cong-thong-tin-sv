@@ -1078,7 +1078,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_MOD_DichVu_Quyen_MOD_DichVu">
-          <End Role="MOD_DichVu" Type="DHHHModel.Store.MOD_DichVu" Multiplicity="1" />
+          <End Role="MOD_DichVu" Type="DHHHModel.Store.MOD_DichVu" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="MOD_DichVu_Quyen" Type="DHHHModel.Store.MOD_DichVu_Quyen" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MOD_DichVu">
@@ -1090,7 +1092,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_MOD_DichVu_Quyen_MOD_Quyen">
-          <End Role="MOD_Quyen" Type="DHHHModel.Store.MOD_Quyen" Multiplicity="1" />
+          <End Role="MOD_Quyen" Type="DHHHModel.Store.MOD_Quyen" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="MOD_DichVu_Quyen" Type="DHHHModel.Store.MOD_DichVu_Quyen" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MOD_Quyen">

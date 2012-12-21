@@ -20,13 +20,13 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        [Authorize(Roles = "MoodleGroup.GetGroups")]
+        //[Authorize(Roles = "MoodleGroup.GetGroups")]
         public ActionResult GetGroups([DataSourceRequest] DataSourceRequest request, string id_lop_tc)
         {
             return Json(MoodleLib.GetGroups(id_lop_tc).ToDataSourceResult(request));
         }
 
-        [Authorize(Roles = "MoodleGroup.GetGroupList")]
+        //[Authorize(Roles = "MoodleGroup.GetGroupList")]
         public JsonResult GetGroupList(int id_lop_tc)
         {
             JsonResult result = new JsonResult();
@@ -95,7 +95,7 @@ namespace CongThongTinSV.Controllers
         #endregion
 
         #region Grouping
-        [Authorize(Roles = "MoodleGroup.GetGroupingList")]
+        //[Authorize(Roles = "MoodleGroup.GetGroupingList")]
         public JsonResult GetGroupingList(int id_lop_tc)
         {
             JsonResult result = new JsonResult();

@@ -32,7 +32,7 @@ else {
     int len = action.Length - 1;
     if (len < 0) { len = 3; action = "Home"; }
     if (action[len] == '/') { action = action.Substring(0, len); }
-    if (!(action.Contains("Account/Login") || action.Contains("Home") || !action.Contains("/") || action.Contains("Home/Index")))
+    if (!(action.Contains("Account/Login") || action.Contains("Home") || !action.Contains("/") || action.Contains("Home/Index") || action.Contains("Account/LogOff")))
     {
         Response.Redirect(Url.Action("Login", "Account", new { returnUrl = HttpContext.Current.Request.Url.AbsolutePath }));
     }

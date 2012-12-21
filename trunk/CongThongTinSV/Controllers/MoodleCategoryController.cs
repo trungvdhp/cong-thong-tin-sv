@@ -19,13 +19,13 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        [Authorize(Roles = "MoodleCategory.GetSemesters")]
+        //[Authorize(Roles = "MoodleCategory.GetSemesters")]
         public ActionResult GetSemesters([DataSourceRequest] DataSourceRequest request)
         {
             return Json(MoodleLib.GetSemesters().ToDataSourceResult(request));
         }
 
-        [Authorize(Roles = "MoodleCategory.GetSemesterList")]
+        //[Authorize(Roles = "MoodleCategory.GetSemesterList")]
         public JsonResult GetSemesterList()
         {
             JsonResult result = new JsonResult();

@@ -20,7 +20,7 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        [Authorize(Roles = "MoodleEnrol.GetEnrolStudents")]
+        //[Authorize(Roles = "MoodleEnrol.GetEnrolStudents")]
         public ActionResult GetEnrolStudents([DataSourceRequest] DataSourceRequest request, string id_lop_tc)
         {
 
@@ -70,7 +70,7 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        [Authorize(Roles = "MoodleEnrol.GetEnrolTeachers")]
+        //[Authorize(Roles = "MoodleEnrol.GetEnrolTeachers")]
         public ActionResult GetEnrolTeachers([DataSourceRequest] DataSourceRequest request, string id_lop_tc)
         {
             return Json(MoodleLib.GetEnrolTeachers(id_lop_tc).ToDataSourceResult(request));

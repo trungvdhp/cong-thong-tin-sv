@@ -1152,6 +1152,25 @@ namespace CongThongTinSV.App_Lib
 
             return results;
         }
+
+        /// <summary>
+        /// Get enrolled courses
+        /// </summary>
+        /// <param name="userid">ID of user</param>
+        /// <returns></returns>
+        public static IEnumerable<MoodleEnrolledCourse> GetEnrolledCourses(string userid)
+        {
+            List<string> users = new List<string>();
+            users.Add(userid);
+            var rs = GetUserByID(users);
+
+            if (rs.Count == 0)
+            {
+                return new List<MoodleEnrolledCourse>();
+            }
+
+            return rs[0].enrolledcourses;
+        }
         #endregion
         #endregion
 
@@ -1366,7 +1385,7 @@ namespace CongThongTinSV.App_Lib
         /// </summary>
         /// <param name="courseid"></param>
         /// <returns></returns>
-        public static IEnumerable<MoodleCourseContentResponse> GetMoodleCourseContents(string courseid)
+        public static IEnumerable<MoodleCourseContentResponse> GetCourseContents(string courseid)
         {
             Entities db = new Entities();
             string postData = "wsfunction=core_course_get_contents";
@@ -1395,42 +1414,9 @@ namespace CongThongTinSV.App_Lib
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="courseid"></param>
-        /// <returns></returns>
-        public static IEnumerable<MoodleGradeBook> GetMoodleCourseUsers(string courseid = "0")
-        {
-            MoodleEntities mdb = new MoodleEntities();
-            long context = MoodleLib.GetContextID("50", courseid);
-            long cid;
-            long.TryParse(courseid, out cid);
-            var role = mdb.fit_role_assignments.Where(t => t.contextid == context && t.roleid == 5);
-            var enrol = mdb.fit_enrol.Where(t => t.courseid == cid);
-            List<int> user_enrolments = (from u in mdb.fit_user_enrolments
-                                         join e in enrol
-                                         on u.enrolid equals e.id
-                                         where u.status == 1
-                                         select (int)u.userid).ToList();
-
-            var user = from r in role
-                       join u in mdb.fit_user
-                       on r.userid equals u.id
-                       select new MoodleGradeBook
-                       {
-                           ID = (int)u.id,
-                           UserName = u.username,
-                           LastName = u.lastname,
-                           FirstName = u.firstname
-                       };
-
-            return user.Where(t => !user_enrolments.Contains(t.ID));
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="quizid"></param>
         /// <returns></returns>
-        public static IEnumerable<MoodleGradeBook> GetMoodleQuizGrades(string quizid = "0")
+        public static IEnumerable<MoodleGradeBook> GetQuizGrades(string quizid = "0")
         {
             Entities db = new Entities();
             MoodleEntities mdb = new MoodleEntities();
@@ -1439,7 +1425,7 @@ namespace CongThongTinSV.App_Lib
             long qid = quiz == null ? 0 : quiz.id;
             var itemZ = mdb.fit_grade_items.SingleOrDefault(t => t.itemtype == "mod" && t.itemmodule == "quiz" && t.iteminstance == qid);
             long iz = itemZ != null ? itemZ.id : 0;
-            var user = GetMoodleCourseUsers(courseid);
+            var user = GetEnrolledUsers(courseid);
 
             if (iz != 0)
             {
@@ -1499,11 +1485,14 @@ namespace CongThongTinSV.App_Lib
                            UserName = u.UserName,
                            LastName = u.LastName,
                            FirstName = u.FirstName,
-                           NewGrade = u.NewGrade
+                           NewGrade = u.NewGrade,
+                           IsDiffGrade = (diem == null && !u.NewGrade.HasValue) || 
+                                         (diem != null && u.NewGrade.HasValue && string.Format("{0:0.0}", diem.Diem_thi) == string.Format("{0:0.0}", u.NewGrade))
+                                         ? false : true
                        };
             }
 
-            return user;
+            return user.OrderByDescending(t => t.IsDiffGrade);
         }
 
         /// <summary>
@@ -1511,14 +1500,14 @@ namespace CongThongTinSV.App_Lib
         /// </summary>
         /// <param name="courseid"></param>
         /// <returns></returns>
-        public static IEnumerable<MoodleGradeBook> GetMoodleCourseGrades(string courseid = "0")
+        public static IEnumerable<MoodleGradeBook> GetCourseGrades(string courseid = "0")
         {
             MoodleEntities mdb = new MoodleEntities();
             var itemZ = mdb.fit_grade_items.AsEnumerable().SingleOrDefault(t => t.courseid.ToString() == courseid && t.itemtype == "course");
             long iz = itemZ != null ? itemZ.id : 0;
             //var itemX = mdb.fit_grade_items.AsEnumerable().SingleOrDefault(t => t.courseid.ToString() == courseid && t.itemtype == "category");
             //long ix = itemX != null ? itemX.id : 0;
-            var user = GetMoodleCourseUsers(courseid);
+            var user = GetEnrolledUsers(courseid);
 
             if (iz != 0)
             {
@@ -1589,6 +1578,39 @@ namespace CongThongTinSV.App_Lib
 
         #region MoodleEnrol
         #region Student
+        /// <summary>
+        /// Get enrolled users
+        /// </summary>
+        /// <param name="courseid">ID of course</param>
+        /// <returns></returns>
+        public static IEnumerable<MoodleGradeBook> GetEnrolledUsers(string courseid = "0")
+        {
+            MoodleEntities mdb = new MoodleEntities();
+            long context = MoodleLib.GetContextID("50", courseid);
+            long cid;
+            long.TryParse(courseid, out cid);
+            var role = mdb.fit_role_assignments.Where(t => t.contextid == context && t.roleid == 5);
+            var enrol = mdb.fit_enrol.Where(t => t.courseid == cid);
+            List<int> user_enrolments = (from u in mdb.fit_user_enrolments
+                                         join e in enrol
+                                         on u.enrolid equals e.id
+                                         where u.status == 1
+                                         select (int)u.userid).ToList();
+
+            var user = from r in role
+                       join u in mdb.fit_user
+                       on r.userid equals u.id
+                       select new MoodleGradeBook
+                       {
+                           ID = (int)u.id,
+                           UserName = u.username,
+                           LastName = u.lastname,
+                           FirstName = u.firstname
+                       };
+
+            return user.Where(t => !user_enrolments.Contains(t.ID)).OrderBy(t => t.FirstName);
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -2816,7 +2838,7 @@ namespace CongThongTinSV.App_Lib
             Entities db = new Entities();
 
             return from dv in db.MOD_DichVu
-                   where dv.Root != true
+                   where dv.Root == null
                    select new MoodleWebService
                    {
                        ID_dv= dv.ID_dv,
@@ -2833,7 +2855,7 @@ namespace CongThongTinSV.App_Lib
         {
             Entities db = new Entities();
 
-            return new SelectList(db.MOD_DichVu.Where(t => t.Root != true), "ID_dv", "Ten_dv");
+            return new SelectList(db.MOD_DichVu.Where(t => t.Root == null), "ID_dv", "Ten_dv");
         }
 
         /// <summary>
@@ -2998,7 +3020,9 @@ namespace CongThongTinSV.App_Lib
 
             if (dichvu == null) return new List<Capability>();
 
-            return (from q1 in db.MOD_Quyen.AsEnumerable()
+            var quyens = db.MOD_Quyen.AsEnumerable().OrderBy(t => t.Action_name.Split(new char[] { '.' })[0]);
+
+            return (from q1 in quyens
                    join q2 in dichvu.MOD_Quyen
                    on q1.ID_quyen equals q2.ID_quyen
                    into q
