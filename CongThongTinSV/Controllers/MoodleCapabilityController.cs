@@ -28,7 +28,7 @@ namespace CongThongTinSV.Controllers
         public ActionResult AssignCapabilities(string selectedVals, string id_dv)
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-            var list = MoodleLib.GetCapabilities(id_dv).Where(t => t.Tinh_trang == "" && s.Contains(t.ID_quyen.ToString()));
+            var list = MoodleLib.GetCapabilities(id_dv).Where(t => !t.Trang_thai && s.Contains(t.ID_quyen.ToString()));
             if (list.Count() != 0)
             {
                 MoodleLib.AssignCapabilities(list, id_dv);
@@ -41,7 +41,7 @@ namespace CongThongTinSV.Controllers
         public ActionResult UnassignCapabilities(string selectedVals, string id_dv)
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-            var list = MoodleLib.GetCapabilities(id_dv).Where(t => t.Tinh_trang != "" && s.Contains(t.ID_quyen.ToString()));
+            var list = MoodleLib.GetCapabilities(id_dv).Where(t => t.Trang_thai && s.Contains(t.ID_quyen.ToString()));
             if (list.Count() != 0)
             {
                 MoodleLib.UnassignCapabilities(list, id_dv);

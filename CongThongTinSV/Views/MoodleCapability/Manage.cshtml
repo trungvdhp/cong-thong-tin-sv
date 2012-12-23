@@ -38,7 +38,10 @@
             .Filterable(false).Groupable(false).Sortable(false);
         columns.Bound(c => c.Ten_quyen);
         columns.Bound(c => c.Action_name).Width(280);
-        columns.Bound(c => c.Tinh_trang).Width(110);
+        columns.Bound(c => c.Trang_thai).Width(40).Title("")
+            .ClientTemplate("<img width='16' height='16' src=" +
+            "# if (Trang_thai) { #" +
+                Url.Content("~/Images/tick_green_big.gif# } # />"));
         columns.Command(command => { 
             command.Custom("Kích hoạt").Click("assignCapability");
             command.Custom("Hủy kích hoạt").Click("unassignCapability");
@@ -76,23 +79,23 @@
     function assignCapability(e) {
         e.preventDefault();
         var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-        if (dataItem.Tinh_trang == "Đã kích hoạt") {
-            alert("Quyền [ " + dataItem.Ten_quyen + " ] đã được kích hoạt!");
+        if (dataItem.Trang_thai) {
+            alert("Quyền '" + dataItem.Ten_quyen + "' đã được kích hoạt!");
             return;
         }
         var action = '@Url.Action("AssignCapabilities", "MoodleCapability")' + '/?id_dv=' + jQuery("#WebService").val() + '&selectedVals=' + dataItem.ID_quyen;
-        processing(action, "Đang kích hoạt quyền [ " + dataItem.Ten_quyen + " ]...", gridRefresh);
+        processing(action, "Đang kích hoạt quyền '" + dataItem.Ten_quyen + "'...", gridRefresh);
     }
 
     function unassignCapability(e) {
         e.preventDefault();
         var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-        if (dataItem.Tinh_trang != "Đã kích hoạt") {
-            alert("Không thể hủy vì quyền [ " + dataItem.Ten_quyen + " ] chưa được kích hoạt!");
+        if (!dataItem.Trang_thai) {
+            alert("Không thể hủy vì quyền '" + dataItem.Ten_quyen + "' chưa được kích hoạt!");
             return;
         }
         var action = '@Url.Action("UnassignCapabilities", "MoodleCapability")' + '/?id_dv=' + jQuery("#WebService").val() + '&selectedVals=' + dataItem.ID_quyen;
-        processing(action, "Đang hủy kích hoạt quyền [ " + dataItem.Ten_quyen + " ]...", gridRefresh);
+        processing(action, "Đang hủy kích hoạt quyền '" + dataItem.Ten_quyen + "'...", gridRefresh);
     }
 
     function filterGrid() {

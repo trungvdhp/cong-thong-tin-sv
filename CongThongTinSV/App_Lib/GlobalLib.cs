@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -92,7 +93,7 @@ namespace CongThongTinSV.App_Lib
                             typeof(JsonResult).IsAssignableFrom(m.ReturnParameter.ParameterType))
                         {
                             AuthorizeAttribute authorize = (AuthorizeAttribute)m.GetCustomAttribute(typeof(AuthorizeAttribute), false);
-                            AssemblyDescriptionAttribute description = (AssemblyDescriptionAttribute)m.GetCustomAttribute(typeof(AssemblyDescriptionAttribute));
+                           DescriptionAttribute description = (DescriptionAttribute)m.GetCustomAttribute(typeof(DescriptionAttribute));
 
                             string action_name = controllername + "." + m.Name;
 
