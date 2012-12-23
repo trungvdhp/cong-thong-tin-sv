@@ -55,12 +55,12 @@
                         <text>,&nbsp</text>
                     }
                     <text>
-                    @Html.ActionLink(userProfile.enrolledcourses[i].fullname, "CourseUserProfile", "MoodleUser", routeValues: new { userid = userProfile.id, courseid = userProfile.enrolledcourses[i].id }, htmlAttributes: new { title = "Course user profile" })
+                    @Html.ActionLink(userProfile.enrolledcourses[i].fullname, "MyCourseProfile", "MoodleUser", routeValues: new { userid = userProfile.id, courseid = userProfile.enrolledcourses[i].id }, htmlAttributes: new { title = "My course profile" })
                     </text>
                 }
             }</td>
     </tr>
 </table>
 <div style="text-align: center">
-@Html.ActionLink("Hồ sơ đầy đủ", "UserProfile", "MoodleUser", routeValues: new {userid = userProfile.id}, htmlAttributes: new { title = "Full profile" })
+@Html.ActionLink("Hồ sơ đầy đủ", "MyProfile", "MoodleUser", routeValues: new {userid = userProfile.id}, htmlAttributes: new { title = "Full profile" })
 </div>

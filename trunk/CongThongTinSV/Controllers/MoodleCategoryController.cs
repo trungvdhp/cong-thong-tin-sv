@@ -8,11 +8,13 @@ using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
 using System.Web.Script.Serialization;
 using CongThongTinSV.App_Lib;
+using System.EnterpriseServices;
 
 namespace CongThongTinSV.Controllers
 {
     public class MoodleCategoryController : Controller
     {
+        [Description("Quản lý danh mục học kỳ")]
         [Authorize(Roles = "MoodleCategory.ManageSemester")]
         public ActionResult ManageSemester()
         {
@@ -35,6 +37,7 @@ namespace CongThongTinSV.Controllers
             return result;
         }
 
+        [Description("Tạo các học kỳ")]
         [Authorize(Roles = "MoodleCategory.CreateSemesters")]
         public ActionResult CreateSemesters(string selectedVals)
         {
@@ -49,6 +52,7 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
+        [Description("Xóa các học kỳ")]
         [Authorize(Roles = "MoodleCategory.DeleteSemesters")]
         public ActionResult DeleteSemesters(string selectedVals)
         {

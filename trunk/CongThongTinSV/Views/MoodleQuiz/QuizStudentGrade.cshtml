@@ -4,7 +4,7 @@
 }
 
 <h2>@title</h2>
-@(Html.Kendo().Grid<CongThongTinSV.Models.MoodleGradeBook>()
+@(Html.Kendo().Grid<CongThongTinSV.Models.MoodleQuizStudentGrade>()
     .Name("Grid")
     .Columns(columns =>
     {
@@ -21,7 +21,11 @@
         columns.Bound(c => c.FirstName).Width(80);
         columns.Bound(c => c.OldGrade).Format("{0:0.0}").Width(90);
         columns.Bound(c => c.NewGrade).Format("{0:0.0}").Width(95);
-        columns.Bound(c => c.IsDiffGrade).ClientTemplate("<img width='16' height='16' src=" +
+        columns.Bound(c => c.IsDiffGrade).Title("")
+            .Sortable(false)
+            .Filterable(false)
+            .Groupable(false)
+            .ClientTemplate("<img width='16' height='16' src=" +
             "# if (IsDiffGrade) { #" +
                 Url.Content("~/Images/cross_red_big.gif") +
             "# } else { #" +
@@ -36,8 +40,8 @@
     .Resizable(r => r.Columns(true))
     .Reorderable(ro => ro.Columns(true))
     .Navigatable()
-        //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
-    .Selectable(s => s.Mode(GridSelectionMode.Single))
+    //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
+    //.Selectable(s => s.Mode(GridSelectionMode.Single))
     .Events(e =>
     {
         e.DataBound("onDataBound");
@@ -45,7 +49,7 @@
     .DataSource(
         dataSource => dataSource
             .Ajax()
-            .Read(read => read.Action("GetModuleGradeBook", "MoodleCourse", new { quizid = ViewBag.QuizID }))
+            .Read(read => read.Action("GetQuizStudentGrades", "MoodleQuiz", new { quizid = ViewBag.QuizID }))
             .PageSize(50)
     )
 )
@@ -54,7 +58,7 @@
 </div>
 <br />
 <div style="text-align: center;">
-@Html.ActionLink("Quay về khóa học", "TestList", "MoodleCourse", routeValues: new { courseid = ViewBag.CourseID }, htmlAttributes: new { title = "Back to the course" })
+@Html.ActionLink("Quay về khóa học", "CourseQuizList", "MoodleCourse", routeValues: new { courseid = ViewBag.CourseID }, htmlAttributes: new { title = "Back to the course" })
 </div>
 <script type="text/javascript">
     var selectedVals = [];
@@ -92,7 +96,7 @@
         }
 
         if (confirm('Bạn muốn cập nhật điểm mới cho các học viên đã chọn?')) {
-            var action = '@Url.Action("UpdateYGrades","MoodleCourse")' + '/?quizid=' + @ViewBag.QuizID + '&selectedVals=' + selectedVals
+            var action = '@Url.Action("UpdateYGrades","MoodleGrade")' + '/?quizid=' + @ViewBag.QuizID + '&selectedVals=' + selectedVals
             processing(action, "Đang cập nhật điểm mới cho các học viên...", gridRefresh);
         }
       })

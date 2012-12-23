@@ -60,7 +60,7 @@
                         <text>,&nbsp</text>
                     }
                     <text>
-                    @Html.ActionLink(userProfile.enrolledcourses[i].fullname, "CourseMyProfile", "MoodleUser", routeValues: new { courseid = userProfile.enrolledcourses[i].id }, htmlAttributes: new { title = "Course my profile" })
+                    @Html.ActionLink(userProfile.enrolledcourses[i].fullname, "MyCourseProfile", "MoodleUser", routeValues: new { courseid = userProfile.enrolledcourses[i].id }, htmlAttributes: new { title = "My course profile" })
                     </text>
                 }
             }</td>

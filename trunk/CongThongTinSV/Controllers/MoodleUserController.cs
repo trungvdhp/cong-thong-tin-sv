@@ -311,8 +311,8 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        [Authorize(Roles = "MoodleUser.CourseMyProfile")]
-        public ActionResult CourseMyProfile(string courseid)
+        [Authorize(Roles = "MoodleUser.MyCourseProfile")]
+        public ActionResult MyCourseProfile(string courseid="0")
         {
             List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
             string userid = GlobalLib.GetCurrentUserData().MoodleUserID.ToString();
@@ -344,7 +344,7 @@ namespace CongThongTinSV.Controllers
         }
 
         [Authorize(Roles = "MoodleUser.UserProfile")]
-        public ActionResult UserProfile(string userid)
+        public ActionResult UserProfile(string userid="0")
         {
             List<string> list = new List<string>();
             list.Add(userid);
@@ -358,8 +358,8 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        [Authorize(Roles = "MoodleUser.CourseUserProfile")]
-        public ActionResult CourseUserProfile(string userid, string courseid)
+        [Authorize(Roles = "MoodleUser.UserCourseProfile")]
+        public ActionResult UserCourseProfile(string userid="0", string courseid="0")
         {
             List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
             list.Add(new KeyValuePair<string,string>(userid, courseid));
@@ -386,32 +386,6 @@ namespace CongThongTinSV.Controllers
                 ViewBag.CourseName = "";
             }
 
-            return View();
-        }
-
-        [Authorize(Roles = "MoodleUser.MyEnrolledCourse")]
-        public ActionResult MyEnrolledCourse()
-        {
-            return View();
-        }
-
-        [Authorize(Roles = "MoodleUser.GetMyEnrolledCourses")]
-        public ActionResult GetMyEnrolledCourses([DataSourceRequest] DataSourceRequest request)
-        {
-            string userid = GlobalLib.GetCurrentUserData().MoodleUserID.ToString();
-
-            return Json(MoodleLib.GetEnrolledCourses(userid).ToDataSourceResult(request));
-        }
-
-        [Authorize(Roles = "MoodleUser.MyAssignment")]
-        public ActionResult MyAssignment(string quizid)
-        {
-            return View();
-        }
-
-        [Authorize(Roles = "MoodleUser.StudentAssignment")]
-        public ActionResult StudentAssignment(string quizid, string userid)
-        {
             return View();
         }
         #endregion

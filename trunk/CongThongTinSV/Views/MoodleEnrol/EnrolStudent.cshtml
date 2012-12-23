@@ -60,15 +60,31 @@
             .HeaderHtmlAttributes(new { style = "text-align:center" })
             .HtmlAttributes(new { style = "text-align:center" })
             .Filterable(false).Groupable(false).Sortable(false);
-        columns.Bound(c => c.Ma_sv).Width(80);
+        columns.Bound(c => c.Ma_sv).Width(80).ClientTemplate((@Html.ActionLink("#=Ma_sv#", "UserProfile", "MoodleUser", new { userid = "ID" }, null).ToHtmlString().Replace("ID", "#=ID_moodle#")));
         columns.Bound(c => c.Ho_dem).Width(145);
         columns.Bound(c => c.Ten).Width(80);
         columns.Bound(c => c.Ngay_sinh).Width(100).Format("{0:dd-MM-yyyy}");
         columns.Bound(c => c.Gioi_tinh).Width(90);
         columns.Bound(c => c.Lop).Width(90);
         columns.Bound(c => c.DiemX).Width(85);
-        columns.Bound(c => c.Tinh_trang).Width(130);
         columns.Bound(c => c.Ten_nhom);
+        columns.Bound(c => c.Trang_thai).Title("")
+           .Sortable(false)
+           .Filterable(false)
+           .Groupable(false)
+           .Width(40)
+           .ClientTemplate("<img width='16' height='16' src=" +
+           "# if (Trang_thai) { #" +
+               Url.Content("~/Images/tick_green_big.gif") +
+           "# } else { #" +
+               Url.Content("~/Images/cross_red_big.gif") +
+           "# } # />");
+        columns.Bound(c => c.ID_moodle)
+            .Title("")
+            .Sortable(false)
+            .Filterable(false)
+            .Groupable(false)
+            .ClientTemplate((@Html.ActionLink("Bảng điểm", "StudentQuizGrade", "MoodleQuiz", new { userid = "UserID", courseid = "#= getIDLHP() #" }, null).ToHtmlString().Replace("UserID", "#=ID_moodle#")));
     })
     .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50, 80 }).Refresh(true).Input(true).Numeric(false))
     .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
@@ -78,9 +94,9 @@
     .Resizable(r => r.Columns(true))
     .Reorderable(ro => ro.Columns(true))
     .Navigatable()
-        //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
-    .Selectable(s => s.Mode(GridSelectionMode.Single))
-        //.HtmlAttributes(new {style = "height:400px"})
+    //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
+    //.Selectable(s => s.Mode(GridSelectionMode.Single))
+    //.HtmlAttributes(new {style = "height:400px"})
     .Events(e =>
     {
         e.DataBound("onDataBound");
@@ -124,6 +140,9 @@
 </div>
 <script type="text/javascript">
     var selectedVals = [];
+    function getIDLHP() {
+        return $("#LopHocPhan").val();
+    }
 
     function filterGrid() {
         return {

@@ -55,12 +55,16 @@
                         <text>,&nbsp</text>
                     }
                     <text>
-                    @Html.ActionLink(userProfile.enrolledcourses[i].fullname, "CourseUserProfile", "MoodleUser", routeValues: new { userid = userProfile.id, courseid = userProfile.enrolledcourses[i].id }, htmlAttributes: new { title = "Course user profile" })
+                    @Html.ActionLink(userProfile.enrolledcourses[i].fullname, "UserCourseProfile", "MoodleUser", routeValues: new { userid = userProfile.id, courseid = userProfile.enrolledcourses[i].id }, htmlAttributes: new { title = "Course user profile" })
                     </text>
                 }
             }</td>
     </tr>
 </table>
-<div style="text-align: center">
-@Html.ActionLink("Hồ sơ đầy đủ", "UserProfile", "MoodleUser", routeValues: new {userid = userProfile.id}, htmlAttributes: new { title = "Full profile" })
+<div style="text-align: center; margin-top: 5px">
+    @using (Html.BeginForm("UserProfile", "MoodleUser", new { userid = userProfile.id }, FormMethod.Post, null))
+    {
+        @Html.AntiForgeryToken()
+        <button class="k-button" type="submit">Hồ sơ đầy đủ</button>
+    }
 </div>

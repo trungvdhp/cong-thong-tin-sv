@@ -91,16 +91,17 @@
                                         Tài khoản
                                         <ul> <!-- moving the UL to the next line will cause an IE7 problem -->
                                             <li>@Html.ActionLink("Thông tin cá nhân", "MyProfile", "MoodleUser")</li>
-                                            <li>@Html.ActionLink("Khóa học của tôi", "MyEnrolledCourse", "MoodleUser")</li> 
+                                            <li>@Html.ActionLink("Khóa học của tôi", "MyCourseGrade", "MoodleCourse")</li> 
                                             <li>@Html.ActionLink("Đổi mật khẩu", "ChangePassword", "MoodleUser")</li>   
                                         </ul>
                                     </li>
                                     <li>
                                         Quản trị hệ thống
                                         <ul> <!-- moving the UL to the next line will cause an IE7 problem -->
+                                            <li>@Html.ActionLink("Danh mục học kỳ", "ManageSemester", "MoodleCategory")</li>
                                             <li>@Html.ActionLink("Dịch vụ web", "Manage", "MoodleWebService")</li>
                                             <li>@Html.ActionLink("Quyền hạn", "Manage", "Capability")</li>
-                                            <li>@Html.ActionLink("Phân quyền", "Manage", "MoodleCapability")</li>    
+                                            <li>@Html.ActionLink("Phân quyền", "Manage", "MoodleCapability")</li>  
                                         </ul>
                                     </li>
                                     <li>
@@ -114,7 +115,6 @@
                                     <li>
                                         Quản trị khóa học
                                         <ul> <!-- moving the UL to the next line will cause an IE7 problem -->
-                                             <li>@Html.ActionLink("Học kỳ", "ManageSemester", "MoodleCategory")</li>
                                              <li>@Html.ActionLink("Lớp học phần", "Manage", "MoodleCourse")</li>
                                              <li>@Html.ActionLink("Ghi danh sinh viên", "EnrolStudent", "MoodleEnrol")</li>
                                              <li>@Html.ActionLink("Ghi danh giáo viên", "EnrolTeacher", "MoodleEnrol")</li>

@@ -6,7 +6,8 @@ using System.Web;
 
 namespace CongThongTinSV.Models
 {
-    public class MoodleGradeBook
+   
+    public class MoodleQuizStudentGrade
     {
         [DisplayName("ID")]
         public int ID { get; set; }
@@ -32,10 +33,22 @@ namespace CongThongTinSV.Models
         [DisplayName("Điểm mới")]
         public decimal? NewGrade { get; set; }
 
-        [DisplayName("Điểm Z")]
-        public decimal? ZGrade { get; set; }
-
         [DisplayName("Khác điểm")]
         public bool IsDiffGrade { get; set; }
+    }
+
+    public class MoodleStudentQuizGrade
+    {
+        [DisplayName("ID")]
+        public int ID { get; set; }
+
+        [DisplayName("Bài kiểm tra")]
+        public string QuizName { get; set; }
+
+        [DisplayName("Điểm")]
+        public decimal? Grade { get; set; }
+
+        [DisplayName("Url")]
+        public string Url { get; set; }
     }
 }

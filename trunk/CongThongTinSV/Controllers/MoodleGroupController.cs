@@ -69,7 +69,7 @@ namespace CongThongTinSV.Controllers
         public ActionResult AddGroupMembers(string selectedVals, string id_lop_tc, string id_nhom)
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-            var list = MoodleLib.GetEnrolStudents(id_lop_tc).Where(t => t.Tinh_trang == "Đã ghi danh" && s.Contains(t.ID.ToString()) && t.Ten_nhom == "");
+            var list = MoodleLib.GetEnrolStudents(id_lop_tc).Where(t => t.Trang_thai == true && s.Contains(t.ID.ToString()) && t.Ten_nhom == "");
 
             if (list.Count() != 0)
             {

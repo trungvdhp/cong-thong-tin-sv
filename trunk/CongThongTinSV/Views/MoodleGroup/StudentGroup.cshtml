@@ -65,9 +65,9 @@
     .Resizable(r => r.Columns(true))
     .Reorderable(ro => ro.Columns(true))
     .Navigatable()
-        //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
-    .Selectable(s => s.Mode(GridSelectionMode.Single))
-        //.HtmlAttributes(new {style = "height:400px"})
+    //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
+    //.Selectable(s => s.Mode(GridSelectionMode.Single))
+    //.HtmlAttributes(new {style = "height:400px"})
     .Events(e =>
     {
         e.DataBound("onDataBound");

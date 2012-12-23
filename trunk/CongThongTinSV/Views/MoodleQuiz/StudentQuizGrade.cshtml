@@ -1,0 +1,47 @@
+﻿@using CongThongTinSV.Models;
+
+@{
+    ViewBag.Title = ViewBag.FullName + " - " + ViewBag.CourseName;
+    string heading = ViewBag.FullName + " (" + ViewBag.CourseName + ") - Điểm thi: " + string.Format("{0:0.0}", ViewBag.Grade);
+}
+<div>
+<h2>@heading</h2>
+@(Html.Kendo().Grid<CongThongTinSV.Models.MoodleStudentQuizGrade>()
+    .Name("Grid")
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.ID).Title("Bài kiểm tra")
+            .ClientTemplate("<a href=#=Url#>#=QuizName#</a>")
+            .Width(500);
+        columns.Bound(c => c.Grade).Format("{0:0.0}");
+        columns.Command(command => command.Custom("Cập nhật điểm").Click("UpdateYGrade"));
+    })
+    .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50 }).Refresh(true).Input(true).Numeric(false))
+    .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
+    .Filterable()
+    .Scrollable()
+    //.Groupable()
+    .Resizable(r => r.Columns(true))
+    .Reorderable(ro => ro.Columns(true))
+    .Navigatable()
+    //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
+    //.Selectable(s => s.Mode(GridSelectionMode.Single))
+    .DataSource(
+        dataSource => dataSource
+            .Ajax()
+            .Read(read => read.Action("GetStudentQuizGrades", "MoodleQuiz", new { courseid = ViewBag.CourseID , userid = ViewBag.UserID }))
+            .PageSize(50)
+    )
+)
+</div>
+<script type ="text/javascript">
+    function UpdateYGrade(e) {
+        e.preventDefault();
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        if (confirm('Bạn muốn cập nhật điểm mới cho học viên này?')) {
+            var action = '@Url.Action("UpdateYGrades","MoodleGrade")' + '/?newgrade=' + dataItem.Grade + '&userid=' +
+'@ViewBag.UserID' + '&courseid=' + '@ViewBag.CourseID';
+             processing(action, "Đang cập nhật điểm mới cho các học viên...", gridRefresh);
+         }
+    }
+</script>

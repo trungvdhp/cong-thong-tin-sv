@@ -24,21 +24,21 @@ namespace CongThongTinSV.Controllers
         public ActionResult GetEnrolStudents([DataSourceRequest] DataSourceRequest request, string id_lop_tc)
         {
 
-            return Json(MoodleLib.GetEnrolStudentsXGrade(id_lop_tc).ToDataSourceResult(request));
+            return Json(MoodleLib.GetEnrolStudentXGrades(id_lop_tc).ToDataSourceResult(request));
         }
 
         [Authorize(Roles = "MoodleEnrol.ManualEnrolStudents")]
         public ActionResult ManualEnrolStudents(string selectedVals, string id_lop_tc)
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-            var list = MoodleLib.GetEnrolStudentsXGrade(id_lop_tc);
+            var list = MoodleLib.GetEnrolStudentXGrades(id_lop_tc);
             var list1 = list.Where(t => t.ID_moodle == 0 && s.Contains(t.ID.ToString()));
             if (list1.Count() != 0)
             {
                 MoodleLib.CreateStudents(list1);
             }
 
-            var list2 = list.Where(t => t.ID_moodle > 0 && t.Tinh_trang == "Chưa ghi danh" && s.Contains(t.ID.ToString()));
+            var list2 = list.Where(t => t.ID_moodle > 0 && t.Trang_thai == false && s.Contains(t.ID.ToString()));
 
             if (list2.Count() != 0)
             {
@@ -52,7 +52,7 @@ namespace CongThongTinSV.Controllers
         public ActionResult SuspendEnrolStudents(string selectedVals, string id_lop_tc)
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-            var list = MoodleLib.GetEnrolStudents(id_lop_tc).Where(t => t.Tinh_trang == "Đã ghi danh" && s.Contains(t.ID.ToString()));
+            var list = MoodleLib.GetEnrolStudents(id_lop_tc).Where(t => t.Trang_thai == true && s.Contains(t.ID.ToString()));
 
             if (list.Count() != 0)
             {
@@ -88,7 +88,7 @@ namespace CongThongTinSV.Controllers
                 MoodleLib.CreateTeachers(list1);
             }
 
-            var list2 = list.Where(t => t.ID_moodle > 0 && t.Tinh_trang == "Chưa ghi danh" && s.Contains(t.ID_cb.ToString()));
+            var list2 = list.Where(t => t.ID_moodle > 0 && t.Trang_thai == "Chưa ghi danh" && s.Contains(t.ID_cb.ToString()));
 
             if (list2.Count() > 0)
             {
