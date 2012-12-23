@@ -19,7 +19,7 @@
     
     if(userData.MoodleToken != "exception"){
         <text>
-        (@Html.ActionLink(userData.MoodleFullName, "UserProfile", "MoodleUser", routeValues: new {userid = userData.MoodleUserID }, htmlAttributes: new { @class = "username", title = "Thông tin tài khoản moodle Elearning" }))
+        (@Html.ActionLink(userData.MoodleFullName, "MyProfile", "MoodleUser", routeValues: new {userid = userData.MoodleUserID }, htmlAttributes: new { @class = "username", title = "Thông tin tài khoản moodle Elearning" }))
         </text>
     }
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })){
@@ -32,12 +32,12 @@ else {
     int len = action.Length - 1;
     if (len < 0) { len = 3; action = "Home"; }
     if (action[len] == '/') { action = action.Substring(0, len); }
-    if (!(action.Contains("Account/Login") || action.Contains("Home") || !action.Contains("/") || action.Contains("Home/Index") || action.Contains("Account/LogOff")))
+    if (!(action.Contains("Account/Login") || action.Contains("Home") || !action.Contains("/") || action.Contains("Home/Index")))
     {
         Response.Redirect(Url.Action("Login", "Account", new { returnUrl = HttpContext.Current.Request.Url.AbsolutePath }));
     }
     <ul>
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class="k-button" })</li>
+@*        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class="k-button" })</li>*@
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class="k-button" })</li>
     </ul>
 }

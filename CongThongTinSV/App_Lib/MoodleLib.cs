@@ -64,11 +64,11 @@ namespace CongThongTinSV.App_Lib
         /// </summary>
         /// <param name="courseid">ID of course</param>
         /// <returns>CourseIDNumber(ID_mon, Hoc_ky, Nam_hoc)</returns>
-        public static CourseIDNumber GetCourseIDNumber(string courseid)
+        public static CourseInfo GetCourseIDNumber(string courseid)
         {
             Entities db = new Entities();
             MoodleEntities mdb = new MoodleEntities();
-            var rs = new CourseIDNumber();
+            var rs = new CourseInfo();
             var course = mdb.fit_course.AsEnumerable().SingleOrDefault(t => t.id.ToString() == courseid);
 
             if (course != null)
@@ -89,6 +89,124 @@ namespace CongThongTinSV.App_Lib
                 return null;
 
             return rs;
+        }
+
+        /// <summary>
+        /// Get fit user by id
+        /// </summary>
+        /// <param name="userid">id of user</param>
+        /// <returns>Fit User</returns>
+        public static fit_user GetUserByID(string userid)
+        {
+            MoodleEntities mdb = new MoodleEntities();
+            int id;
+            int.TryParse(userid, out id);
+
+            return mdb.fit_user.SingleOrDefault(t => t.id == id);
+        }
+
+        /// <summary>
+        /// Get student by username
+        /// </summary>
+        /// <param name="username">username of student</param>
+        /// <returns>Student</returns>
+        public static STU_HoSoSinhVien GetStudentByUserID(string userid)
+        {
+            Entities db = new Entities();
+            MoodleEntities mdb = new MoodleEntities();
+            long id;
+            long.TryParse(userid, out id);
+            var user = mdb.fit_user.SingleOrDefault(t => t.id == id);
+            if (user == null) return null;
+
+            return db.STU_HoSoSinhVien.SingleOrDefault(t => t.Ma_sv == user.username);
+        }
+
+        /// <summary>
+        /// Get fullname by userid
+        /// </summary>
+        /// <param name="userid">ID of user</param>
+        /// <returns></returns>
+        public static string GetUserFullNameByID(string userid)
+        {
+            var user = GetUserByID(userid);
+
+            if (user == null)
+            {
+                return "";
+            }
+
+            return user.lastname + " " + user.firstname;
+        }
+
+        /// <summary>
+        /// Get course by course id
+        /// </summary>
+        /// <param name="quiz">Id of course</param>
+        /// <returns>Course</returns>
+        public static fit_course GetCourseByID(string courseid)
+        {
+            MoodleEntities mdb = new MoodleEntities();
+            long id;
+            long.TryParse(courseid, out id);
+
+            return mdb.fit_course.SingleOrDefault(t => t.id == id);
+        }
+
+        /// <summary>
+        /// Get quiz by quizid
+        /// </summary>
+        /// <param name="quizid">Id of quiz</param>
+        /// <returns>Quiz</returns>
+        /// 
+        /// <summary>
+        /// Get course by quiz
+        /// </summary>
+        /// <param name="quiz">Quiz</param>
+        /// <returns>Course</returns>
+        public static fit_course GetCourseByQuiz(fit_quiz quiz)
+        {
+            MoodleEntities mdb = new MoodleEntities();
+
+            if (quiz == null) return null;
+
+            return mdb.fit_course.SingleOrDefault(t => t.id == quiz.course);
+        }
+
+        /// <summary>
+        /// Get quiz by quizid
+        /// </summary>
+        /// <param name="quizid">Id of quiz</param>
+        /// <returns>Quiz</returns>
+        /// 
+        public static fit_quiz GetQuizByID(string quizid)
+        {
+            MoodleEntities mdb = new MoodleEntities();
+            long id;
+            long.TryParse(quizid, out id);
+
+            return mdb.fit_quiz.AsEnumerable().SingleOrDefault(t => t.id + 10 == id);
+        }
+
+        /// <summary>
+        /// Get grade by userid and courseid
+        /// </summary>
+        /// <param name="quizid">Id of quiz</param>
+        /// <returns>Quiz</returns>
+        /// 
+        public static MARK_DiemThi_TC GetGrade(string userid, string courseid)
+        {
+            Entities db = new Entities();
+            CourseInfo course = GetCourseIDNumber(courseid);
+            STU_HoSoSinhVien student = GetStudentByUserID(userid);
+            var diemtc = db.MARK_Diem_TC.Where(t => t.ID_mon == course.ID_mon && t.ID_sv == student.ID_sv);
+            var diemthitc = db.MARK_DiemThi_TC.Where(t => t.Hoc_ky_thi == course.Hoc_ky && t.Nam_hoc_thi == course.Nam_hoc);
+            var diemthis = from d1 in diemtc
+                           join d2 in diemthitc
+                           on d1.ID_diem equals d2.ID_diem
+                           select d2;
+
+            return diemthis.AsEnumerable().FirstOrDefault();
         }
         #endregion
 
@@ -1152,25 +1270,6 @@ namespace CongThongTinSV.App_Lib
 
             return results;
         }
-
-        /// <summary>
-        /// Get enrolled courses
-        /// </summary>
-        /// <param name="userid">ID of user</param>
-        /// <returns></returns>
-        public static IEnumerable<MoodleEnrolledCourse> GetEnrolledCourses(string userid)
-        {
-            List<string> users = new List<string>();
-            users.Add(userid);
-            var rs = GetUserByID(users);
-
-            if (rs.Count == 0)
-            {
-                return new List<MoodleEnrolledCourse>();
-            }
-
-            return rs[0].enrolledcourses;
-        }
         #endregion
         #endregion
 
@@ -1412,30 +1511,212 @@ namespace CongThongTinSV.App_Lib
         }
 
         /// <summary>
+        /// Get enrolled courses
+        /// </summary>
+        /// <param name="userid">ID of user</param>
+        /// <returns></returns>
+        public static IEnumerable<MoodleEnrolledCourse> GetEnrolledCourses(string userid)
+        {
+            List<string> users = new List<string>();
+            users.Add(userid);
+            var rs = GetUserByID(users);
+
+            if (rs.Count == 0)
+            {
+                return new List<MoodleEnrolledCourse>();
+            }
+
+            return rs[0].enrolledcourses;
+        }
+
+        /// <summary>
+        /// Get quizzes of course
+        /// </summary>
+        /// <param name="courseid">Id of course</param>
+        /// <returns>List of quizzes</returns>
+        public static IEnumerable<MoodleCourseModule> GetCourseQuizzes(string courseid)
+        {
+            var contents = GetCourseContents(courseid);
+            List<MoodleCourseModule> list = new List<MoodleCourseModule>();
+
+            foreach (MoodleCourseContentResponse content in contents)
+            {
+                foreach (MoodleCourseModule module in content.modules)
+                {
+                    if (module.modname == "quiz")
+                    {
+                        list.Add(module);
+                    }
+                }
+            }
+
+            return list;
+        }
+
+        /// <summary>
         /// 
         /// </summary>
-        /// <param name="quizid"></param>
+        /// <param name="courseid"></param>
         /// <returns></returns>
-        public static IEnumerable<MoodleGradeBook> GetQuizGrades(string quizid = "0")
+        public static IEnumerable<MoodleCourseStudentGrade> GetCourseStudentGrades(string courseid = "0")
         {
-            Entities db = new Entities();
             MoodleEntities mdb = new MoodleEntities();
-            var quiz = mdb.fit_quiz.AsEnumerable().SingleOrDefault(t => t.id.ToString() == quizid);
-            string courseid = quiz == null ? "0" : quiz.course.ToString();
-            long qid = quiz == null ? 0 : quiz.id;
-            var itemZ = mdb.fit_grade_items.SingleOrDefault(t => t.itemtype == "mod" && t.itemmodule == "quiz" && t.iteminstance == qid);
+            var itemZ = mdb.fit_grade_items.AsEnumerable().SingleOrDefault(t => t.courseid.ToString() == courseid && t.itemtype == "course");
             long iz = itemZ != null ? itemZ.id : 0;
-            var user = GetEnrolledUsers(courseid);
+            var user = GetEnrolledStudents(courseid);
+            IEnumerable<MoodleCourseStudentGrade> list = new List<MoodleCourseStudentGrade>();
 
             if (iz != 0)
             {
                 var grades = mdb.fit_grade_grades.Where(t => t.itemid == iz);
-                user = from u in user
+                list = from u in user
                        join z in grades
                        on u.ID equals z.userid
                        into grade
                        from g in grade.DefaultIfEmpty()
-                       select new MoodleGradeBook
+                       select new MoodleCourseStudentGrade
+                       {
+                           ID = u.ID,
+                           UserName = u.UserName,
+                           LastName = u.LastName,
+                           FirstName = u.FirstName,
+                           ZGrade = (g == null ? null : (g.finalgrade.HasValue ? (g.finalgrade > 10 ? g.finalgrade / 10 : g.finalgrade) : g.finalgrade))
+                       };
+            }
+
+            return list;
+        }
+
+        /// <summary>
+        /// Get grade of user courses
+        /// </summary>
+        /// <param name="courseid"></param>
+        /// <returns></returns>
+        public static IEnumerable<MoodleStudentCourseGrade> GetStudentCourseGrades(string userid = "0")
+        {
+            MoodleEntities mdb = new MoodleEntities();
+            var courses = GetEnrolledCourses(userid);
+            long id;
+            long.TryParse(userid, out id);
+            var fitgrades = mdb.fit_grade_grades.Where(t => t.userid == id).ToList();
+            var items = mdb.fit_grade_items.Where(t => t.itemtype == "course").ToList();
+            var grades = from grade in fitgrades
+                         join item in items
+                         on grade.itemid equals item.id
+                         select new
+                         {
+                             grade.finalgrade,
+                             item.courseid
+                         };
+
+            var rs = from course in courses
+                     join z in grades
+                     on course.id equals z.courseid
+                     into grade
+                     from g in grade.DefaultIfEmpty()
+                     select new MoodleStudentCourseGrade
+                     {
+                         ID = course.id,
+                         CourseName = course.fullname,
+                         Grade = (g == null ? null : (g.finalgrade.HasValue ? (g.finalgrade > 10 ? g.finalgrade / 10 : g.finalgrade) : g.finalgrade))
+                     };
+
+            return rs;
+        }
+
+        /// <summary>
+        /// Get Y grade of student in course
+        /// </summary>
+        /// <param name="course">Course</param>
+        /// <param name="id_sv">ID_sv</param>
+        /// <returns></returns>
+        public static MARK_DiemThi_TC GetYGrade(CourseInfo course, int id_sv)
+        {
+            Entities db = new Entities();
+            var diemtc = db.MARK_Diem_TC.Where(t => t.ID_mon == course.ID_mon && t.ID_sv == id_sv).Select(t => t.ID_diem).ToList();
+            var diemthitc = db.MARK_DiemThi_TC.SingleOrDefault(t => diemtc.Contains(t.ID_diem) && t.Hoc_ky_thi == course.Hoc_ky && t.Nam_hoc_thi == course.Nam_hoc);
+
+            return diemthitc;
+        }
+        #endregion
+
+        #region MoodleQuiz
+        /// <summary>
+        /// Update Y grades of users in course
+        /// </summary>
+        /// <param name="list">List of users in course</param>
+        /// <returns></returns>
+        public static int UpdateYGrades(IEnumerable<MoodleQuizStudentGrade> list)
+        {
+            Entities db = new Entities();
+
+            foreach (MoodleQuizStudentGrade grade in list)
+            {
+                MARK_DiemThi_TC entity = db.MARK_DiemThi_TC.Single(t => t.ID_diem_thi == grade.ID_diem_thi);
+                entity.Diem_thi = (float)grade.NewGrade;
+                db.Entry(entity).State = System.Data.EntityState.Modified;
+            }
+
+            try
+            {
+                return db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+        }
+
+        /// <summary>
+        /// Update Y grades of users in course
+        /// </summary>
+        /// <param name="list">List of users in course</param>
+        /// <returns></returns>
+        public static int UpdateYGrades(decimal? newgrade, string userid = "0", string courseid = "0")
+        {
+            if (newgrade == null) { return -1; }
+
+            Entities db = new Entities();
+            MARK_DiemThi_TC entity = GetGrade(userid, courseid);
+            entity.Diem_thi = (float)newgrade;
+            db.Entry(entity).State = System.Data.EntityState.Modified;
+
+            try
+            {
+                return db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="quizid"></param>
+        /// <returns></returns>
+        public static IEnumerable<MoodleQuizStudentGrade> GetQuizStudentGrades(string quizid = "0")
+        {
+            Entities db = new Entities();
+            MoodleEntities mdb = new MoodleEntities();
+            var quiz = GetQuizByID(quizid);
+            string courseid = quiz == null ? "0" : quiz.course.ToString();
+            long qid = quiz == null ? 0 : quiz.id;
+            var itemZ = mdb.fit_grade_items.SingleOrDefault(t => t.itemtype == "mod" && t.itemmodule == "quiz" && t.iteminstance == qid);
+            long iz = itemZ != null ? itemZ.id : 0;
+            var user = GetEnrolledStudents(courseid);
+            IEnumerable<MoodleQuizStudentGrade> list = new List<MoodleQuizStudentGrade>();
+
+            if (iz != 0)
+            {
+                var grades = mdb.fit_grade_grades.Where(t => t.itemid == iz);
+                list = from u in user
+                       join z in grades
+                       on u.ID equals z.userid
+                       into grade
+                       from g in grade.DefaultIfEmpty()
+                       select new MoodleQuizStudentGrade
                        {
                            ID = u.ID,
                            UserName = u.UserName,
@@ -1445,7 +1726,7 @@ namespace CongThongTinSV.App_Lib
                        };
             }
 
-            CourseIDNumber idnumber = GetCourseIDNumber(courseid);
+            CourseInfo idnumber = GetCourseIDNumber(courseid);
             if (idnumber != null)
             {
                 var students = from u in user
@@ -1471,12 +1752,12 @@ namespace CongThongTinSV.App_Lib
                                    d2.ID_diem_thi
                                };
 
-                user = from u in user
+                list = from u in list
                        join d in diemthis
                        on u.ID equals d.sv.ID
                        into d1
                        from diem in d1.DefaultIfEmpty()
-                       select new MoodleGradeBook
+                       select new MoodleQuizStudentGrade
                        {
                            ID = u.ID,
                            ID_diem_thi = diem == null ? 0 : diem.ID_diem_thi,
@@ -1486,104 +1767,65 @@ namespace CongThongTinSV.App_Lib
                            LastName = u.LastName,
                            FirstName = u.FirstName,
                            NewGrade = u.NewGrade,
-                           IsDiffGrade = (diem == null && !u.NewGrade.HasValue) || 
+                           IsDiffGrade = (diem == null && !u.NewGrade.HasValue) ||
                                          (diem != null && u.NewGrade.HasValue && string.Format("{0:0.0}", diem.Diem_thi) == string.Format("{0:0.0}", u.NewGrade))
                                          ? false : true
                        };
             }
 
-            return user.OrderByDescending(t => t.IsDiffGrade);
+            return list.OrderByDescending(t => t.IsDiffGrade);
         }
 
         /// <summary>
-        /// 
+        /// Get grades of quizzes of user
         /// </summary>
+        /// <param name="userid"></param>
         /// <param name="courseid"></param>
-        /// <returns></returns>
-        public static IEnumerable<MoodleGradeBook> GetCourseGrades(string courseid = "0")
-        {
-            MoodleEntities mdb = new MoodleEntities();
-            var itemZ = mdb.fit_grade_items.AsEnumerable().SingleOrDefault(t => t.courseid.ToString() == courseid && t.itemtype == "course");
-            long iz = itemZ != null ? itemZ.id : 0;
-            //var itemX = mdb.fit_grade_items.AsEnumerable().SingleOrDefault(t => t.courseid.ToString() == courseid && t.itemtype == "category");
-            //long ix = itemX != null ? itemX.id : 0;
-            var user = GetEnrolledUsers(courseid);
-
-            if (iz != 0)
-            {
-                var grades = mdb.fit_grade_grades.Where(t => t.itemid == iz);
-                user = from u in user
-                       join z in grades
-                       on u.ID equals z.userid
-                       into grade
-                       from g in grade.DefaultIfEmpty()
-                       select new MoodleGradeBook
-                       {
-                           ID = u.ID,
-                           UserName = u.UserName,
-                           LastName = u.LastName,
-                           FirstName = u.FirstName,
-                           ZGrade = (g == null ? null : (g.finalgrade.HasValue ? (g.finalgrade > 10 ? g.finalgrade / 10 : g.finalgrade) : g.finalgrade))
-                       };
-            }
-
-            //if(ix != 0)
-            //{
-            //    user = from u in user
-            //           join x in mdb.fit_grade_grades
-            //           on u.ID equals x.userid
-            //           into grade
-            //           from g in grade.DefaultIfEmpty()
-            //           where (g == null) || (g != null && g.itemid == ix)
-            //           select new MoodleGradeBook
-            //           {
-            //               ID = u.ID,
-            //               Username = u.Username,
-            //               Lastname = u.Lastname,
-            //               Firstname = u.Firstname,
-            //               GradeZ = u.GradeZ,
-            //               GradeX = (g == null ? null : (g.finalgrade.HasValue ? (g.finalgrade > 10 ? g.finalgrade / 10 : g.finalgrade) : g.finalgrade))
-            //           };
-            //}
-
-            return user;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="list"></param>
-        /// <returns></returns>
-        public static int UpdateYGrades(IEnumerable<MoodleGradeBook> list)
+        /// <returns>List of quizzes grades</returns>
+        public static IEnumerable<MoodleStudentQuizGrade> GetStudentQuizGrades(string userid = "0", string courseid = "0")
         {
             Entities db = new Entities();
+            MoodleEntities mdb = new MoodleEntities();
+            var quizzes = GetCourseQuizzes(courseid);
+            long uid, cid;
+            long.TryParse(userid, out uid);
+            long.TryParse(courseid, out cid);
+            var fitgrades = mdb.fit_grade_grades.Where(t => t.userid == uid);
+            var items = mdb.fit_grade_items.Where(t => t.itemtype == "mod" && t.itemmodule == "quiz" && t.courseid == cid);
+            var grades = from item in items
+                         join grade in fitgrades
+                         on item.id equals grade.itemid
+                         select new
+                         {
+                             grade.finalgrade,
+                             item.iteminstance
+                         };
 
-            foreach (MoodleGradeBook grade in list)
-            {
-                MARK_DiemThi_TC entity = db.MARK_DiemThi_TC.Single(t => t.ID_diem_thi == grade.ID_diem_thi);
-                entity.Diem_thi = (float)grade.NewGrade;
-                db.Entry(entity).State = System.Data.EntityState.Modified;
-            }
+            var rs = from quiz in quizzes
+                     join z in grades
+                     on (quiz.id - 10) equals z.iteminstance
+                     into grade
+                     from g in grade.DefaultIfEmpty()
+                     select new MoodleStudentQuizGrade
+                     {
+                         ID = quiz.id,
+                         QuizName = quiz.name,
+                         Url = quiz.url,
+                         Grade = (g == null ? null : (g.finalgrade.HasValue ? (g.finalgrade > 10 ? g.finalgrade / 10 : g.finalgrade) : g.finalgrade))
+                     };
 
-            try
-            {
-                return db.SaveChanges();
-            }
-            catch (Exception)
-            {
-                return -1;
-            }
+            return rs;
         }
         #endregion
 
         #region MoodleEnrol
         #region Student
         /// <summary>
-        /// Get enrolled users
+        /// Get enrolled students
         /// </summary>
         /// <param name="courseid">ID of course</param>
         /// <returns></returns>
-        public static IEnumerable<MoodleGradeBook> GetEnrolledUsers(string courseid = "0")
+        public static IEnumerable<MoodleUser> GetEnrolledStudents(string courseid = "0")
         {
             MoodleEntities mdb = new MoodleEntities();
             long context = MoodleLib.GetContextID("50", courseid);
@@ -1600,7 +1842,7 @@ namespace CongThongTinSV.App_Lib
             var user = from r in role
                        join u in mdb.fit_user
                        on r.userid equals u.id
-                       select new MoodleGradeBook
+                       select new MoodleUser
                        {
                            ID = (int)u.id,
                            UserName = u.username,
@@ -1616,7 +1858,7 @@ namespace CongThongTinSV.App_Lib
         /// </summary>
         /// <param name="id_lop_tc"></param>
         /// <returns></returns>
-        public static IEnumerable<MoodleStudent> GetEnrolStudentsXGrade(string id_lop_tc)
+        public static IEnumerable<MoodleStudent> GetEnrolStudentXGrades(string id_lop_tc)
         {
             Entities db = new Entities();
             int idlop = 0;
@@ -1673,12 +1915,12 @@ namespace CongThongTinSV.App_Lib
                                   Lop = ds.Lop,
                                   ID = ds.ID,
                                   DiemX = (d1 == null ? 0 : d1.Diem),
-                                  Tinh_trang = ds.Tinh_trang,
+                                  Trang_thai = ds.Trang_thai,
                                   ID_nhom = ds.ID_nhom,
                                   Ten_nhom = ds.Ten_nhom
                               };
 
-            return hocviendiem.OrderByDescending(t => t.Tinh_trang).ToList();
+            return hocviendiem.OrderByDescending(t => t.Trang_thai).ToList();
         }
 
         /// <summary>
@@ -1708,7 +1950,7 @@ namespace CongThongTinSV.App_Lib
                               Gioi_tinh = ds.Gioi_tinh,
                               Lop = ds.Lop,
                               ID = ds.ID,
-                              Tinh_trang = ds.ID_moodle == 0 ? "Chưa có tài khoản" : (dk == null ? "Chưa ghi danh" : "Đã ghi danh"),
+                              Trang_thai = dk == null ? false : true,
                               ID_nhom = (dk == null || dk.MOD_NhomHocVien == null ? null : (int?)dk.MOD_NhomHocVien.ID_nhom),
                               Ten_nhom = (dk == null || dk.MOD_NhomHocVien == null ? "" : dk.MOD_NhomHocVien.Ten_nhom)
                           };
@@ -1989,7 +2231,7 @@ namespace CongThongTinSV.App_Lib
                         Gioi_tinh = gv1.Gioi_tinh,
                         ID_vai_tro = (gv == null ? "" : gv.ID_vai_tro),
                         Vai_tro = (gv == null ? "" : gv.Vai_tro),
-                        Tinh_trang = gv1.ID_moodle == 0 ? "Chưa có tài khoản" : (gv == null ? "Chưa ghi danh" : gv.Dinh_chi ? "Chưa kích hoạt" : "Đã kích hoạt")
+                        Trang_thai = gv1.ID_moodle == 0 ? "Chưa có tài khoản" : (gv == null ? "Chưa ghi danh" : gv.Dinh_chi ? "Chưa kích hoạt" : "Đã kích hoạt")
                     };
 
             return q.OrderByDescending(t => t.ID_vai_tro).ToList();
@@ -2040,7 +2282,7 @@ namespace CongThongTinSV.App_Lib
                 {
                     MOD_NguoiDung_VaiTro_LopTinChi entity;
 
-                    if (item.Tinh_trang == "Chưa ghi danh")
+                    if (item.Trang_thai == "Chưa ghi danh")
                     {
                         entity = new MOD_NguoiDung_VaiTro_LopTinChi();
                         entity.UserID = item.ID_moodle;

@@ -63,93 +63,8 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        [Authorize(Roles = "MoodleCourse.MyTestList")]
-        public ActionResult MyTestList(string courseid = "0")
-        {
-            MoodleEntities mdb = new MoodleEntities();
-
-            try
-            {
-                ViewBag.CourseName = mdb.fit_course.AsEnumerable().SingleOrDefault(t => t.id.ToString() == courseid).fullname;
-                ViewBag.CourseContent = MoodleLib.GetCourseContents(courseid);
-            }
-            catch (Exception)
-            {
-                ViewBag.CourseName = "";
-                ViewBag.CourseContent = new List<MoodleCourseContentResponse>();
-            }
-
-            //ViewBag.CourseID = courseid;
-            return View();
-        }
-
-        [Authorize(Roles = "MoodleCourse.TestList")]
-        public ActionResult TestList(string courseid="0")
-        {
-            MoodleEntities mdb = new MoodleEntities();
-
-            try
-            {
-                ViewBag.CourseName = mdb.fit_course.AsEnumerable().SingleOrDefault(t => t.id.ToString() == courseid).fullname;
-                ViewBag.CourseContent = MoodleLib.GetCourseContents(courseid);
-            }
-            catch (Exception)
-            {
-                ViewBag.CourseName = "";
-                ViewBag.CourseContent = new List<MoodleCourseContentResponse>();
-            }
-
-            //ViewBag.CourseID = courseid;
-            return View();
-        }
-
-        [Authorize(Roles = "MoodleCourse.UpdateYGrades")]
-        public ActionResult UpdateYGrades(string selectedVals, string quizid = "0")
-        {
-            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-            var list = MoodleLib.GetQuizGrades(quizid).Where(t => s.Contains(t.ID.ToString()) && t.ID_sv != 0 && t.NewGrade.HasValue).ToList();
-
-            if (list.Count() != 0)
-            {
-                MoodleLib.UpdateYGrades(list);
-            }
-
-            return View();
-        }
-
-        [Authorize(Roles = "MoodleCourse.ModuleGradeBook")]
-        public ActionResult ModuleGradeBook(string quizid = "0")
-        {
-            MoodleEntities mdb = new MoodleEntities();
-            
-            try
-            {
-                var quiz = mdb.fit_quiz.AsEnumerable().SingleOrDefault(t => (t.id + 10).ToString() == quizid);
-                ViewBag.QuizID = quiz == null ? 0 : quiz.id;
-                ViewBag.QuizName = quiz == null ? "" : quiz.name;
-                ViewBag.CourseID = quiz == null ? 0 : quiz.course;
-                ViewBag.CourseName = mdb.fit_course.AsEnumerable().SingleOrDefault(t => t.id == ViewBag.CourseID).fullname;
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Error = ex.Message;
-                ViewBag.CourseID = 0;
-                ViewBag.CourseName = "";
-                ViewBag.QuizID = 0;
-                ViewBag.QuizName = "";
-            }
-
-            return View();
-        }
-
-        [Authorize(Roles = "MoodleCourse.GetModuleGradeBook")]
-        public ActionResult GetModuleGradeBook([DataSourceRequest] DataSourceRequest request, string quizid = "0")
-        {
-            return Json(MoodleLib.GetQuizGrades(quizid).ToDataSourceResult(request));
-        }
-
-        [Authorize(Roles = "MoodleCourse.CourseGradeBook")]
-        public ActionResult CourseGradeBook(string courseid="0")
+        [Authorize(Roles = "MoodleCourse.CourseStudentGrade")]
+        public ActionResult CourseStudentGrade(string courseid = "0")
         {
             ViewBag.CourseID = courseid;
             MoodleEntities mdb = new MoodleEntities();
@@ -166,10 +81,41 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        [Authorize(Roles = "MoodleCourse.GetCourseGradeBook")]
-        public ActionResult GetCourseGradeBook([DataSourceRequest] DataSourceRequest request, string courseid="0")
+        [Authorize(Roles = "MoodleCourse.GetCourseStudentGrades")]
+        public ActionResult GetCourseStudentGrades([DataSourceRequest] DataSourceRequest request, string courseid = "0")
         {
-            return Json(MoodleLib.GetCourseGrades(courseid).ToDataSourceResult(request));
+            return Json(MoodleLib.GetCourseStudentGrades(courseid).ToDataSourceResult(request));
+        }
+
+        [Authorize(Roles = "MoodleCourse.MyCourseGrade")]
+        public ActionResult MyCourseGrade()
+        {
+            ViewBag.FullName = GlobalLib.GetCurrentUserData().MoodleFullName;
+            return View();
+        }
+
+        [Authorize(Roles = "MoodleCourse.GetMyCourseGrades")]
+        public ActionResult GetMyCourseGrades([DataSourceRequest] DataSourceRequest request)
+        {
+            string userid = GlobalLib.GetCurrentUserData().MoodleUserID.ToString();
+
+            return Json(MoodleLib.GetStudentCourseGrades(userid).ToDataSourceResult(request));
+        }
+
+        [Authorize(Roles = "MoodleCourse.StudentCourseGrade")]
+        public ActionResult StudentCourseGrade(string userid = "0")
+        {
+            var user = MoodleLib.GetUserByID(userid);
+            ViewBag.UserID = user == null ? "0" : userid;
+            ViewBag.FullName = MoodleLib.GetUserFullNameByID(userid);
+
+            return View();
+        }
+
+        [Authorize(Roles = "MoodleCourse.GetStudentCourseGrades")]
+        public ActionResult GetStudentCourseGrades([DataSourceRequest] DataSourceRequest request, string userid)
+        {
+            return Json(MoodleLib.GetStudentCourseGrades(userid).ToDataSourceResult(request));
         }
     }
 }

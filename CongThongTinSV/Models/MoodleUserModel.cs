@@ -175,8 +175,8 @@ namespace CongThongTinSV.Models
         [DisplayName("Lớp")]
         public string Lop { get; set; }
 
-        [DisplayName("Tình trạng")]
-        public string Tinh_trang { get; set; }
+        [DisplayName("Trạng thái")]
+        public bool Trang_thai { get; set; }
 
         [DisplayName("Điểm X")]
         public float DiemX { get; set; }
@@ -229,7 +229,7 @@ namespace CongThongTinSV.Models
         [DisplayName("Vai trò")]
         public string Vai_tro { get; set; }
 
-        [DisplayName("Tình trạng")]
-        public string Tinh_trang { get; set; }
+        [DisplayName("Trạng thái")]
+        public string Trang_thai { get; set; }
     }
 }

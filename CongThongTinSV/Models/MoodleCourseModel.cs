@@ -91,10 +91,47 @@ namespace CongThongTinSV.Models
         public DateTime Den_ngay { get; set; }
     }
 
-    public class CourseIDNumber
+    public class CourseInfo
     {
         public int ID_mon { get; set; }
         public int Hoc_ky { get; set; }
         public string Nam_hoc { get; set; }
     }
+
+    public class MoodleCourseStudentGrade
+    {
+        [DisplayName("ID")]
+        public int ID { get; set; }
+
+        [DisplayName("ID điểm thi")]
+        public int ID_diem_thi { get; set; }
+
+        [DisplayName("ID SV")]
+        public int ID_sv { get; set; }
+
+        [DisplayName("Mã SV")]
+        public string UserName { get; set; }
+
+        [DisplayName("Họ và đệm")]
+        public string LastName { get; set; }
+
+        [DisplayName("Tên")]
+        public string FirstName { get; set; }
+
+        [DisplayName("Điểm Z")]
+        public decimal? ZGrade { get; set; }
+    }
+
+    public class MoodleStudentCourseGrade
+    {
+        [DisplayName("ID")]
+        public int ID { get; set; }
+
+        [DisplayName("Lớp học phần")]
+        public string CourseName { get; set; }
+
+        [DisplayName("Điểm tổng kết")]
+        public decimal? Grade { get; set; }
+    }
+
 }

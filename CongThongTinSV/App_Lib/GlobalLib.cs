@@ -74,14 +74,10 @@ namespace CongThongTinSV.App_Lib
         /// Get list method
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<string> GetControllerActionMethods()
+        public static IEnumerable<MOD_Quyen> GetControllerActionMethods()
         {
             List<Type> controllers = GetSubClasses<Controller>();
-            List<string> methods = new List<string>();;
-            //AuthorizeAttribute attribute;
-            //string controllername;
-            //string action_name;
-            //MethodInfo[] list;
+            List<MOD_Quyen> methods = new List<MOD_Quyen>();
 
             foreach(Type item in controllers)
             {
@@ -95,12 +91,17 @@ namespace CongThongTinSV.App_Lib
                         if (typeof(ActionResult).IsAssignableFrom(m.ReturnParameter.ParameterType) ||
                             typeof(JsonResult).IsAssignableFrom(m.ReturnParameter.ParameterType))
                         {
-                            AuthorizeAttribute attribute = (AuthorizeAttribute)m.GetCustomAttribute(typeof(AuthorizeAttribute), false);
+                            AuthorizeAttribute authorize = (AuthorizeAttribute)m.GetCustomAttribute(typeof(AuthorizeAttribute), false);
+                            AssemblyDescriptionAttribute description = (AssemblyDescriptionAttribute)m.GetCustomAttribute(typeof(AssemblyDescriptionAttribute));
+
                             string action_name = controllername + "." + m.Name;
 
-                            if (attribute != null && attribute.Roles == action_name && !methods.Contains(action_name))
+                            if (authorize != null && authorize.Roles == action_name && !methods.Any(a => a.Action_name == action_name))
                             {
-                                methods.Add(controllername + "." + m.Name);
+                                methods.Add(new MOD_Quyen{
+                                    Ten_quyen = description == null ? action_name : description.Description,
+                                    Action_name = action_name
+                                });
                             }
                         }
                     }
@@ -274,23 +275,24 @@ namespace CongThongTinSV.App_Lib
         public static int SyncCapability()
         {
             Entities db = new Entities();
-            IEnumerable<string> actionnames = GlobalLib.GetControllerActionMethods();
-            IEnumerable<MOD_Quyen> quyens = db.MOD_Quyen.Where(t => !actionnames.Contains(t.Action_name));
-            IEnumerable<string> list = db.MOD_Quyen.Select(t => t.Action_name);
+            var methods = GetControllerActionMethods();
+            var methodnames = methods.Select(t => t.Action_name);
+            var quyens = db.MOD_Quyen.AsQueryable().Where(t => !methodnames.Contains(t.Action_name));
 
             foreach (MOD_Quyen quyen in quyens)
             {
                 db.MOD_Quyen.Remove(quyen);
             }
 
-            IEnumerable<string> actions = actionnames.Where(t => !list.Contains(t));
+            var actionnames = db.MOD_Quyen.Select(t => t.Action_name);
+            var actions = methods.Where(t => !actionnames.Contains(t.Action_name));
 
-            foreach (string action in actions)
+            foreach (MOD_Quyen action in actions)
             {
                 db.MOD_Quyen.Add(new MOD_Quyen
                 {
-                    Ten_quyen = action,
-                    Action_name = action
+                    Ten_quyen = action.Ten_quyen,
+                    Action_name = action.Action_name
                 });
             }
 

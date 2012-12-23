@@ -36,13 +36,17 @@
             .HtmlAttributes(new { style = "text-align:center" })
             .Filterable(false).Groupable(false).Sortable(false);
         columns.Bound(c => c.ID_moodle).Width(105);
-        columns.Bound(c => c.Lop_hoc_phan);
+        columns.Bound(c => c.Lop_hoc_phan)
+              .ClientTemplate((@Html.ActionLink("#=Lop_hoc_phan#", "CourseQuizList", "MoodleQuiz", new { courseid = "ID" }, null).ToHtmlString().Replace("ID", "#=ID_moodle#")));
         columns.Bound(c => c.Ky_hieu).Width(95).HtmlAttributes(new { style = "text-align:center" });
         columns.Bound(c => c.So_tin_chi).Width(95).HtmlAttributes(new { style = "text-align:center" });
         columns.Bound(c => c.Tu_ngay).Width(100).Format("{0:dd-MM-yyyy}").HtmlAttributes(new { style = "text-align:center" });
         columns.Bound(c => c.Den_ngay).Width(100).Format("{0:dd-MM-yyyy}").HtmlAttributes(new { style = "text-align:center" });
-        columns.Command(command => command.Custom("Chi tiết").Click("showDetails")).Width(85).HtmlAttributes(new { style = "text-align:center" });
-        columns.Command(command => command.Custom("Bảng điểm").Click("showUsers")).Width(105).HtmlAttributes(new { style = "text-align:center" });
+        columns.Bound(c => c.ID_moodle).Title("")
+          .Filterable(false)
+          .Groupable(false)
+          .Sortable(false)
+          .ClientTemplate((@Html.ActionLink("Bảng điểm", "CourseStudentGrade", "MoodleCourse", new { courseid = "ID" }, null).ToHtmlString().Replace("ID", "#=ID_moodle#")));
     })
     .Pageable(pager => pager.PageSizes(new int[]{5, 10, 20, 50, 100, 1000}).Refresh(true).Input(true).Numeric(false))
         .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
@@ -53,7 +57,7 @@
     .Reorderable(ro => ro.Columns(true))
     .Navigatable()
     //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
-    .Selectable(s => s.Mode(GridSelectionMode.Single))
+    //.Selectable(s => s.Mode(GridSelectionMode.Single))
     //.HtmlAttributes(new {style = "height:400px"})
     .Events(e => {
                 e.DataBound("onDataBound");
@@ -71,22 +75,6 @@
 </div>
 <script type="text/javascript">
     var selectedVals = [];
-
-    function showDetails(e) {
-        e.preventDefault();
-
-        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-        window.location.href = "@Url.Action("TestList","MoodleCourse")"
-                       + "?courseid=" + dataItem.ID_moodle;
-    }
-
-    function showUsers(e) {
-        e.preventDefault();
-
-        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-        window.location.href = "@Url.Action("CourseGradeBook","MoodleCourse")"
-                       + "?courseid=" + dataItem.ID_moodle;
-    }
 
     function filterGrid() {
         return {

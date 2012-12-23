@@ -1,7 +1,7 @@
 ﻿@using CongThongTinSV.Models;
 
 @{
-    ViewBag.Title = "Lớp học phần: " + ViewBag.CourseName;
+    ViewBag.Title = ViewBag.CourseName;
 }
 <div>
 <h2>@ViewBag.CourseName</h2>
@@ -27,7 +27,7 @@
                                 if (list[i].modules[j].modname == "quiz")
                                 {
                                     item.Add().Text(list[i].modules[j].name)
-                                        .Action("ModuleGradeBook", "MoodleCourse", new { quizid = list[i].modules[j].id })
+                                        .Action("QuizStudentGrade", "MoodleQuiz", new { quizid = list[i].modules[j].id })
                                         .ImageUrl(list[i].modules[j].modicon);
                                 }
                             }
@@ -35,13 +35,6 @@
                 }
             }
         })
-        //.Events(even => even.Select("onSelect"))
      )
 }
 </div>
-@*<script type="text/javascript">
-    function onSelect(e) {
-        alert("Select: " + $(e.item).find("> .k-link").text());
-    }
-
-</script>*@

@@ -63,8 +63,11 @@ namespace CongThongTinSV.Models
 
     public class ActionInfo
     {
-        [DisplayName("Controller name")]
-        public string ControllerName { get; set; }
+        [DisplayName("Controller")]
+        public Type Controller { get; set; }
+
+        [DisplayName("Description")]
+        public string Description { get; set; }
 
         [DisplayName("Action name")]
         public string ActionName { get; set; }

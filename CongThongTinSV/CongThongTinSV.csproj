@@ -188,6 +188,7 @@
     <Compile Include="Controllers\MoodleCategoryController.cs" />
     <Compile Include="Controllers\MoodleCourseController.cs" />
     <Compile Include="Controllers\MoodleEnrolController.cs" />
+    <Compile Include="Controllers\MoodleQuizController.cs" />
     <Compile Include="Controllers\MoodleGroupController.cs" />
     <Compile Include="Controllers\MoodleMessageController.cs" />
     <Compile Include="Controllers\MoodleRoleController.cs" />
@@ -370,7 +371,7 @@
     <Compile Include="Models\MoodleCategoryModel.cs" />
     <Compile Include="Models\MoodleCourseModel.cs" />
     <Compile Include="Models\MoodleEnrolModel.cs" />
-    <Compile Include="Models\MoodleGradeModel.cs" />
+    <Compile Include="Models\MoodleQuizModel.cs" />
     <Compile Include="Models\MoodleGroupModel.cs" />
     <Compile Include="Models\MoodleRoleModel.cs" />
     <Compile Include="Models\MoodleUserModel.cs" />
@@ -890,19 +891,21 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\ThongBao\Gui.cshtml" />
-    <Content Include="Views\MoodleCourse\TestList.cshtml" />
-    <Content Include="Views\MoodleUser\CourseUserProfile.cshtml" />
-    <Content Include="Views\MoodleUser\MyAssignment.cshtml" />
-    <Content Include="Views\MoodleCourse\ModuleGradeBook.cshtml" />
-    <Content Include="Views\MoodleCourse\CourseGradeBook.cshtml" />
+    <Content Include="Views\MoodleQuiz\StudentQuizGrade.cshtml" />
+    <Content Include="Views\MoodleUser\UserCourseProfile.cshtml" />
+    <Content Include="Views\MoodleQuiz\MyQuizDetailResult.cshtml" />
+    <Content Include="Views\MoodleQuiz\QuizStudentGrade.cshtml" />
+    <Content Include="Views\MoodleCourse\CourseStudentGrade.cshtml" />
     <Content Include="Views\MoodleUser\ManageAdminUser.cshtml" />
     <Content Include="Views\Capability\Manage.cshtml" />
     <Content Include="Views\MoodleWebService\Manage.cshtml" />
     <Content Include="Views\MoodleCapability\Manage.cshtml" />
-    <Content Include="Views\MoodleUser\MyEnrolledCourse.cshtml" />
+    <Content Include="Views\MoodleCourse\MyCourseGrade.cshtml" />
     <Content Include="Views\MoodleUser\MyProfile.cshtml" />
-    <Content Include="Views\MoodleUser\CourseMyProfile.cshtml" />
-    <Content Include="Views\MoodleCourse\MyTestList.cshtml" />
+    <Content Include="Views\MoodleUser\MyCourseProfile.cshtml" />
+    <Content Include="Views\MoodleQuiz\MyQuizGrade.cshtml" />
+    <Content Include="Views\MoodleCourse\StudentCourseGrade.cshtml" />
+    <Content Include="Views\MoodleQuiz\CourseQuizList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,31 @@
+﻿@using Kendo.Mvc.UI;
+@using CongThongTinSV.Models;
+@{
+    ViewBag.Title = ViewBag.FullName + ": Các khóa học đã tham gia";
+}
+
+@(Html.Kendo().Grid<CongThongTinSV.Models.MoodleStudentCourseGrade>()
+    .Name("Grid")
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.ID).Title("Khóa học")
+            .ClientTemplate((@Html.ActionLink("#=CourseName#", "StudentQuizGrade", "MoodleQuiz", new { userid = ViewBag.UserID, courseid = "CourseId" }, null).ToHtmlString().Replace("CourseId", "#=ID#")));
+        columns.Bound(c => c.Grade).Format("{0:0.0}");
+    })
+    .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50 }).Refresh(true).Input(true).Numeric(false))
+    .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
+    .Filterable()
+    .Scrollable()
+    .Groupable()
+    .Resizable(r => r.Columns(true))
+    .Reorderable(ro => ro.Columns(true))
+    .Navigatable()
+        //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
+        //.Selectable(s => s.Mode(GridSelectionMode.Single))
+    .DataSource(
+        dataSource => dataSource
+            .Ajax()
+            .Read(read => read.Action("GetStudentCourseGrades", "MoodleCourse", new { userid = ViewBag.UserID }))
+            .PageSize(50)
+    )
+)
