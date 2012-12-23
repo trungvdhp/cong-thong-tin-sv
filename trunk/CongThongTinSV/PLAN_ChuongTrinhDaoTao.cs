@@ -17,7 +17,6 @@ namespace CongThongTinSV
         public PLAN_ChuongTrinhDaoTao()
         {
             this.MARK_Diem_TC = new HashSet<MARK_Diem_TC>();
-            this.PLAN_ChuongTrinhDaoTaoChiTiet = new HashSet<PLAN_ChuongTrinhDaoTaoChiTiet>();
         }
     
         public int ID_dt { get; set; }
@@ -32,6 +31,5 @@ namespace CongThongTinSV
         public virtual ICollection<MARK_Diem_TC> MARK_Diem_TC { get; set; }
         public virtual STU_He STU_He { get; set; }
         public virtual STU_Khoa STU_Khoa { get; set; }
-        public virtual ICollection<PLAN_ChuongTrinhDaoTaoChiTiet> PLAN_ChuongTrinhDaoTaoChiTiet { get; set; }
     }
 }

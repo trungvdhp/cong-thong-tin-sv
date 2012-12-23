@@ -12,13 +12,11 @@ namespace CongThongTinSV
     using System;
     using System.Collections.Generic;
     
-    public partial class STU_ChuyenNganh
+    public partial class MOD_VaiTro
     {
-        public int ID_chuyen_nganh { get; set; }
-        public string Ma_chuyen_nganh { get; set; }
-        public string Chuyen_nganh { get; set; }
-        public int ID_nganh { get; set; }
-        public string Chuyen_nganh_En { get; set; }
-        public bool Ky_thuat { get; set; }
+        public int ID_vai_tro { get; set; }
+        public string Ten_vai_tro { get; set; }
+        public string Mo_ta { get; set; }
+        public bool He_thong { get; set; }
     }
 }

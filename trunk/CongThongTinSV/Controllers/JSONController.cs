@@ -22,7 +22,7 @@ namespace CongThongTinSV.Controllers
         {
             Entities db = new Entities();
             JsonResult result = new JsonResult();
-            result.Data = new SelectList(db.ViewNamHocs, "Nam_hoc", "Nam_hoc");
+            result.Data = new SelectList(db.ViewNamHoc, "Nam_hoc", "Nam_hoc");
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
 
             return result;
@@ -142,7 +142,7 @@ namespace CongThongTinSV.Controllers
         public static IEnumerable<SinhVien> SinhVienLopTC(int ID_lop_tc)
         {
             Entities db=new Entities();
-
+            
             return db.SP_SinhVienLopTC(ID_lop_tc).Select(sv => new SinhVien
             {
                 ID_sv = sv.ID_sv,
@@ -154,18 +154,20 @@ namespace CongThongTinSV.Controllers
        
         public JsonResult DiemHocTap([DataSourceRequest] DataSourceRequest request, string TuKhoa, string NamHoc, string HocKy)
         {
+            int ID_sv = TraCuuController.GetIdSv(TuKhoa);
             Entities db = new Entities();
             int hk = HocKy == "" ? 0 : Convert.ToInt32(HocKy);
 
-            var diem = TraCuuController.GetDiemHocTap(TuKhoa);
+            var diem = TraCuuController.GetDiemHocTap(ID_sv);
             if (NamHoc != "") diem = diem.Where(t => t.Nam_hoc == NamHoc).ToList();
             if (hk != 0) diem = diem.Where(t => t.Hoc_ky == hk).ToList();
             return Json(diem.ToDataSourceResult(request));
         }
         public ActionResult GetNamHocTraCuu(string TuKhoa)
         {
+            int ID_sv = TraCuuController.GetIdSv(TuKhoa);
             Entities db = new Entities();
-            var sv = db.STU_HoSoSinhVien.First(s => s.Ma_sv == TuKhoa);
+            var sv = db.STU_HoSoSinhVien.First(s => s.ID_sv == ID_sv);
 
             var namhoc = sv.MARK_Diem_TC.Select(t => new
             {
@@ -179,8 +181,9 @@ namespace CongThongTinSV.Controllers
         }
         public ActionResult GetHocKyTraCuu(string TuKhoa, string NamHoc)
         {
+            int ID_sv = TraCuuController.GetIdSv(TuKhoa);
             Entities db = new Entities();
-            var sv = db.STU_HoSoSinhVien.First(s => s.Ma_sv == TuKhoa);
+            var sv = db.STU_HoSoSinhVien.First(s => s.ID_sv == ID_sv);
 
             var namhoc = sv.MARK_Diem_TC.Where(t => t.Nam_hoc == NamHoc).Select(t => new
             {
@@ -189,12 +192,6 @@ namespace CongThongTinSV.Controllers
 
             JsonResult result = new JsonResult();
             result.Data = new SelectList(namhoc, "Hoc_ky", "Hoc_ky");
-            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            return result;
-        }
-        public ActionResult GetCoursesGiaoVien()
-        {
-            JsonResult result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return result;
         }

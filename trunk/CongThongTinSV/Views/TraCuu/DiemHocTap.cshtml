@@ -11,7 +11,19 @@
 @(Html.Kendo().AutoComplete()
         .Name("TuKhoa")
         .Filter("startswith")
+        .DataTextField("Text")
         .Placeholder("Nhập từ khóa...")
+        .HtmlAttributes(new {style="width: 200px"})
+        //.Template("${data.Text}")
+        .DataSource(source =>
+        {
+            source.Read(read =>
+            {
+                read.Action("FilterSinhVien", "TraCuu")
+                    .Data("getTuKhoa");
+            })
+            .ServerFiltering(true);
+        })
 )
 
 @(Html.Kendo().DropDownList()
@@ -51,7 +63,8 @@
         .CascadeFrom("NamHoc")
 )
 
-<input type="submit" value="Tra cứu" id="TraCuuButton"/>
+<!--input type="submit" value="Tra cứu" id="TraCuuButton" class="k-button"/-->
+<button class="k-button" id="TraCuuButton">Tra cứu</button><br /><br />
 <div id="ThongTin">
 
 </div>
@@ -82,6 +95,7 @@
 )
 
 <script>
+    var ID_sv=null;
     function getTuKhoa() {
         return {
             TuKhoa: $("#TuKhoa").val(),
@@ -89,9 +103,16 @@
             HocKy: $("#HocKy").val()
         };
     }
-
+    function getTuKhoa() {
+        return {
+            TuKhoa: $("#TuKhoa").val(),
+            NamHoc: $("#NamHoc").val(),
+            HocKy: $("#HocKy").val()
+        };
+    }
     $("#TraCuuButton").click(function () {
         //$("#GridBangDiem").fadeIn(1000, function () { });
         $("#GridBangDiem").data("kendoGrid").dataSource.read();
     });
+
 </script>

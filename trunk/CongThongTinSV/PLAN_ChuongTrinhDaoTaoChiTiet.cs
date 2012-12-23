@@ -36,8 +36,5 @@ namespace CongThongTinSV
         public string Ma_khoa_phu_trach { get; set; }
         public int Mon_Main { get; set; }
         public int Nhom_mon_sub { get; set; }
-    
-        public virtual MARK_MonHoc MARK_MonHoc { get; set; }
-        public virtual PLAN_ChuongTrinhDaoTao PLAN_ChuongTrinhDaoTao { get; set; }
     }
 }

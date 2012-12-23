@@ -19,11 +19,11 @@ namespace CongThongTinSV.Controllers
         {
             return View();
         }
-        public static List<DiemHocTap> GetDiemHocTap(string MaSV)
+        public static List<DiemHocTap> GetDiemHocTap(int ID_sv)
         {
             Entities db = new Entities();
 
-            var diem = db.MARK_DiemThanhPhan_TC.Where(t => t.MARK_Diem_TC.STU_HoSoSinhVien.Ma_sv == MaSV && t.MARK_ThanhPhanMon_TC.Ky_hieu == "X").Select(t => new DiemHocTap
+            var diem = db.MARK_DiemThanhPhan_TC.Where(t => t.MARK_Diem_TC.ID_sv == ID_sv && t.MARK_ThanhPhanMon_TC.Ky_hieu == "X").Select(t => new DiemHocTap
             {
                 Id_diem = t.MARK_Diem_TC.ID_diem,
                 Ma_mon = t.MARK_Diem_TC.MARK_MonHoc.Ky_hieu,
@@ -34,10 +34,14 @@ namespace CongThongTinSV.Controllers
             }).ToList();
             foreach (var d in diem)
             {
-                MARK_DiemThi_TC dt = db.MARK_DiemThi_TC.Where(t => t.ID_diem == d.Id_diem && t.Nam_hoc_thi == d.Nam_hoc && t.Hoc_ky_thi == d.Hoc_ky).First();
-                d.Y = dt.Diem_thi;
-                d.Z = dt.TBCMH;
-                d.Diem_chu = dt.Diem_chu;
+                var q=db.MARK_DiemThi_TC.Where(t => t.ID_diem == d.Id_diem && t.Nam_hoc_thi == d.Nam_hoc && t.Hoc_ky_thi == d.Hoc_ky);
+                if (q.Count() > 0)
+                {
+                    var dt = q.First();
+                    d.Y = dt.Diem_thi;
+                    d.Z = dt.TBCMH;
+                    d.Diem_chu = dt.Diem_chu;
+                }
             }
             return diem;
         }
@@ -45,7 +49,42 @@ namespace CongThongTinSV.Controllers
         {
             return View();
         }
+        public static int GetIdSv(String TuKhoa)
+        {
+            Entities db=new Entities();
+            TuKhoa =TuKhoa.Replace("  ", " ").Trim();
+            string[] buf = TuKhoa.Split(new char[] { ' ' });
+            string Ma_sv = buf[0];
+            var sv = db.STU_HoSoSinhVien.Where(t => t.Ma_sv == Ma_sv);
+            if (sv.Count() == 0) sv = db.STU_HoSoSinhVien.Where(t => t.Ho_ten == TuKhoa);
+            if (sv.Count() > 0) return (int)sv.First().ID_sv;
+            return 0;
 
+        }
+        public ActionResult FilterSinhVien(string TuKhoa)
+        {
+            Entities db = new Entities();
+            TuKhoa = TuKhoa.Trim();
+            var list = new List<AutoCompleteData>();
+            try
+            {
+                int.Parse(TuKhoa);
+                list = db.STU_HoSoSinhVien.Where(t => t.Ma_sv.StartsWith(TuKhoa)).Take(10).Select(t => new AutoCompleteData
+                {
+                    Text = t.Ma_sv + " " + t.Ho_ten
+                }).ToList();
+            }
+            catch
+            {
+                list = db.STU_HoSoSinhVien.Where(t => t.Ho_ten.Contains(TuKhoa)).Take(10).Select(t => new AutoCompleteData
+                {
+                    Text = t.Ma_sv + " " + t.Ho_ten
+                }).ToList();
+            }
+            JsonResult json = Json(list);
+            json.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return json;
+        }
         public ActionResult SinhVien()
         {
             return View();
