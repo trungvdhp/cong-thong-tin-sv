@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "Sua";
+}
+
+<h2>Sua</h2>
+
+<form method="post" action="@Url.Action("CapNhat")">
+    <input type="hidden" name="ID_tl" id="ID_tl" value="@ViewBag.TaiLieu.ID_tl"/>
+    <div class="forms">
+        @ViewBag.serverPath
+        <label for="Ten_tl">Tên tài liệu: </label>
+        <input id="Ten_tl" class="k-textbox" name ="Ten_tl" value="@ViewBag.TaiLieu.Ten_tl"/>
+        <label for="Ten_tl">Tác giả: </label>
+        <input id="Tac_gia" class="k-textbox" name ="Tac_gia" value="@ViewBag.TaiLieu.Tac_gia"/>
+        <label for="Ten_tl">Mô tả: </label>
+        <input id="Mo_ta" class="k-textbox" name ="Mo_ta" value="@ViewBag.TaiLieu.Mo_ta"/>
+        <p>
+            <input type="submit" value="Cập nhật" class="k-button submit" /> 
+            <input type="button" value="Hủy bỏ" class="k-button back" onclick=""/>
+        </p>
+    </div>
+</form>
+<script>
+    $(".back").click(function (event) {
+        event.preventDefault();
+        history.back(1);
+    });
+    $(".submit").click(function (event) {
+        $.ajax({
+            url: '@Url.Action("CapNhat")',
+            data: {
+                ID_tl: $('#ID_tl').val(),
+                Ten_tl: $("#Ten_tl").val(),
+                Tac_gia: $("#Tac_gia").val(),
+                Mo_ta: $("#Mo_ta").val()
+            },
+            type: 'POST',
+            dataType: 'json',
+            success: function (data) {
+                alert(data.Message);
+                window.location = '@Url.Action("Index")';
+            }
+        });
+        return false;
+    });
+</script>

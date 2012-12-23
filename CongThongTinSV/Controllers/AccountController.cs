@@ -94,10 +94,10 @@ namespace CongThongTinSV.Controllers
                                             on gv1.ID_cb equals gv2.ID_cb
                                             select new
                                             {
-                                                ID_cb = gv2.ID_cb.ToString(),
+                                                ID_cb = gv2.ID_cb,
                                                 Mat_khau = gv2.Mat_khau,
                                                 Ngay_sinh = gv1.Ngay_sinh
-                                            });
+                                            }).ToList();
 
                             if (giaovien.Count() == 0)
                             {
@@ -280,7 +280,8 @@ namespace CongThongTinSV.Controllers
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
                 : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
                 : "";
-            ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
+            var userData = GlobalLib.GetCurrentUserData();
+            ViewBag.HasLocalPassword = userData!=null;//OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.ReturnUrl = Url.Action("Manage");
             return View();
         }
@@ -292,7 +293,7 @@ namespace CongThongTinSV.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Manage(LocalPasswordModel model)
         {
-            bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
+            /*bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.HasLocalPassword = hasLocalAccount;
             ViewBag.ReturnUrl = Url.Action("Manage");
             if (hasLocalAccount)
@@ -345,7 +346,33 @@ namespace CongThongTinSV.Controllers
                         ModelState.AddModelError("", e);
                     }
                 }
+            }*/
+
+            Entities db = new Entities();
+            var userData = GlobalLib.GetCurrentUserData();
+            if (userData !=null)
+            {
+                if (ModelState.IsValid)
+                {
+                    //var sv = db.STU_HoSoSinhVien.First(t => t.Ma_sv == userData.);
+                    var ds = db.STU_DanhSach.First(t => t.ID_sv == userData.PortalUserID);
+                    if (ds.Mat_khau == model.OldPassword)
+                    {
+                        ds.Mat_khau = model.NewPassword;
+                        db.SaveChanges();
+                        return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
+                    }
+                }
             }
+            else
+            {
+
+            }
+            
 
             // If we got this far, something failed, redisplay form
             return View(model);

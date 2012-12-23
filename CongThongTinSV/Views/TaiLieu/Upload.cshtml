@@ -5,13 +5,3 @@
 <h2>Upload</h2>
 
 
-<form method="post" action='@Url.Action("Submit")' style="width:45%">
-    <div>
-        @(Html.Kendo().Upload()
-            .Name("files")
-        )
-        <p>
-            <input type="submit" value="Submit" class="k-button" />
-        </p>
-    </div>
-</form>

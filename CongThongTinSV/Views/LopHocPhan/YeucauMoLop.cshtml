@@ -66,10 +66,7 @@
         e.preventDefault();
 
         var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-        var wnd = $("#Details").data("kendoWindow");
-
-        wnd.content(detailsTemplate(dataItem));
-        wnd.center().open();
+        alert(dataItem.Ma_mon);
     }
     function filterData() {
         return {

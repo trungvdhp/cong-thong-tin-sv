@@ -12,13 +12,16 @@ namespace CongThongTinSV
     using System;
     using System.Collections.Generic;
     
-    public partial class STU_ChuyenNganh
+    public partial class POR_LopTC_TaiLieu
     {
-        public int ID_chuyen_nganh { get; set; }
-        public string Ma_chuyen_nganh { get; set; }
-        public string Chuyen_nganh { get; set; }
-        public int ID_nganh { get; set; }
-        public string Chuyen_nganh_En { get; set; }
-        public bool Ky_thuat { get; set; }
+        public Nullable<int> ID_lop_tc { get; set; }
+        public Nullable<int> ID_tl { get; set; }
+        public Nullable<System.DateTime> Ngay_cap_nhat { get; set; }
+        public Nullable<int> ID_cb { get; set; }
+        public int ID { get; set; }
+    
+        public virtual PLAN_GiaoVien PLAN_GiaoVien { get; set; }
+        public virtual POR_TaiLieu POR_TaiLieu { get; set; }
+        public virtual PLAN_LopTinChi_TC PLAN_LopTinChi_TC { get; set; }
     }
 }

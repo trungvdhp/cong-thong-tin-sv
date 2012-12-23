@@ -17,9 +17,8 @@ namespace CongThongTinSV
         public MARK_MonHoc()
         {
             this.MARK_Diem_TC = new HashSet<MARK_Diem_TC>();
-            this.PLAN_ChuongTrinhDaoTaoChiTiet = new HashSet<PLAN_ChuongTrinhDaoTaoChiTiet>();
-            this.PLAN_MonTinChi_TC = new HashSet<PLAN_MonTinChi_TC>();
             this.POR_YeuCauMoLop = new HashSet<POR_YeuCauMoLop>();
+            this.PLAN_MonTinChi_TC = new HashSet<PLAN_MonTinChi_TC>();
         }
     
         public int ID_mon { get; set; }
@@ -31,8 +30,7 @@ namespace CongThongTinSV
         public Nullable<int> ID_nhom_hp { get; set; }
     
         public virtual ICollection<MARK_Diem_TC> MARK_Diem_TC { get; set; }
-        public virtual ICollection<PLAN_ChuongTrinhDaoTaoChiTiet> PLAN_ChuongTrinhDaoTaoChiTiet { get; set; }
-        public virtual ICollection<PLAN_MonTinChi_TC> PLAN_MonTinChi_TC { get; set; }
         public virtual ICollection<POR_YeuCauMoLop> POR_YeuCauMoLop { get; set; }
+        public virtual ICollection<PLAN_MonTinChi_TC> PLAN_MonTinChi_TC { get; set; }
     }
 }

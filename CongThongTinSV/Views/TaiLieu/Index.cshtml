@@ -1,9 +1,49 @@
-﻿@{
+﻿@using CongThongTinSV.Models;
+@{
     ViewBag.Title = "Tài liệu";
 }
 
 <h2>Index</h2>
-
-<div>
-
-</div>
+<form method="post" action="@Url.Action("Upload")">
+    <div class="forms">
+        @ViewBag.serverPath
+        <label for="Ten_tl">Tên tài liệu: </label>
+        <input id="Ten_tl" class="k-textbox" name ="Ten_tl" />
+        <label for="Ten_tl">Tác giả: </label>
+        <input id="Tac_gia" class="k-textbox" name ="Tac_gia" />
+        <label for="Ten_tl">Mô tả: </label>
+        <input id="Mo_ta" class="k-textbox" name ="Mo_ta" />
+        @(Html.Kendo().Upload()
+            .Name("file")
+            .Multiple(false)
+        )
+        <p>
+            <input type="submit" value="Submit" class="k-button" />
+        </p>
+    </div>
+</form>
+@(Html.Kendo().Grid<CongThongTinSV.Models.TaiLieuViewModel>()
+    .Columns(columns=>{
+        //columns.Bound(tl => tl.Id);
+        columns.Bound(tl => tl.Ten_tl);
+        columns.Bound(tl => tl.Tac_gia);
+        columns.Bound(tl => tl.Ngay_up).ClientTemplate("#=kendo.toString(Ngay_up,\"dd/MM/yyyy\") #");
+        columns.Bound(tl => tl.URL).ClientTemplate("<a href=\""+Url.Content("Content/Resource")+"/#=URL#\">#=Ten_file#</a>");
+        columns.Command(command => { command.Custom("Sửa").Click("suaTL").HtmlAttributes(new {@class = "k-edit"}); command.Destroy(); });
+    })
+    .DataSource(dataSource=>dataSource
+        .Ajax()
+        .Read("TaiLieuDaUp","TaiLieu")
+        .Destroy("Xoa","TaiLieu")
+        .Update("Sua","TaiLieu")
+        .Model(model=>model.Id(tl=>tl.ID_tl))
+    )
+    .Name("GridTaiLieu")
+)
+<script>
+    function suaTL(e) {
+        e.preventDefault();
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        window.location = "@(Url.Action("Sua"))?ID_tl="+dataItem.ID_tl;
+    }
+</script>

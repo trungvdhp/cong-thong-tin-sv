@@ -267,7 +267,6 @@ namespace CongThongTinSV.Controllers
                             ID = Convert.ToInt32(userData.MoodleUserID),
                             Password = model.NewPassword
                         });
-
                         changePasswordSucceeded = MoodleLib.UpdateUser(list);
                     }
                     else

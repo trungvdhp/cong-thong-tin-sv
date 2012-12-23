@@ -16,7 +16,7 @@ namespace CongThongTinSV
     {
         public PLAN_LopTinChi_TC()
         {
-            this.PLAN_SukiensTinChi_TC = new HashSet<PLAN_SukiensTinChi_TC>();
+            this.POR_LopTC_TaiLieu = new HashSet<POR_LopTC_TaiLieu>();
         }
     
         public int ID_lop_tc { get; set; }
@@ -37,7 +37,7 @@ namespace CongThongTinSV
         public Nullable<System.DateTime> Ngay_thi { get; set; }
         public Nullable<int> Cho_trong { get; set; }
     
+        public virtual ICollection<POR_LopTC_TaiLieu> POR_LopTC_TaiLieu { get; set; }
         public virtual PLAN_MonTinChi_TC PLAN_MonTinChi_TC { get; set; }
-        public virtual ICollection<PLAN_SukiensTinChi_TC> PLAN_SukiensTinChi_TC { get; set; }
     }
 }

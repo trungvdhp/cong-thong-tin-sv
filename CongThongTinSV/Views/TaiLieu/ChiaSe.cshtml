@@ -1,0 +1,80 @@
+﻿@using CongThongTinSV.Models
+@{
+    ViewBag.Title = "Chia sẻ tài liệu";
+}
+
+<h2>Chia sẻ tài liệu</h2>
+@(Html.Kendo().DropDownList()
+    .Name("LopDay")
+    .OptionLabel("Chọn lớp dạy")
+    .DataTextField("Ten_lop_tc")
+    .DataValueField("ID_lop_tc")
+    .DataSource(
+        source => source.Read(
+            read =>
+            {
+                read.Action("GetLopDay", "TaiLieu");
+            }
+        )
+    )
+    .AutoBind(false)
+    .HtmlAttributes(new { style="width:300px;" })
+    .Events(e=>e.Change("loadGrid"))
+)
+@(Html.Kendo().DropDownList()
+    .Name("TaiLieu")
+    .OptionLabel("Chọn tài liệu")
+    .DataValueField("ID_tl")
+    .DataTextField("Ten_tl")
+    .DataSource(
+        source  => source.Read(
+            read    =>
+            {
+                read.Action("GetTaiLieuChiaSe","TaiLieu").Data("getLopDay");
+            }
+        )
+    )
+    .AutoBind(false)
+    .CascadeFrom("LopDay")
+)
+<button class="themTL k-button">Thêm</button>
+@(Html.Kendo().Grid<CongThongTinSV.Models.TaiLieuViewModel>()
+    .Name("Grid")
+    .Columns(columns => {
+        columns.Bound(t => t.Ten_tl);
+        columns.Bound(t => t.Tac_gia);
+        columns.Bound(t => t.Ngay_up);
+        columns.Bound(t => t.URL);
+        
+    })
+    .DataSource(dataSource  => dataSource.Ajax()
+        .Read("GetTaiLieuDaUp","TaiLieu")
+    )
+)
+<script>
+    function getLopDay() {
+        return {
+            ID_lop_tc: $("#LopDay").val()
+        };
+    }
+    function loadGrid(e) {
+        $("#TaiLieu").data("kendoDropDownList").dataSource.read();
+    }
+    $(document).ready(function () {
+        $.ajax({
+            url: "/TaiLieu/,
+            type: "POST",
+            catche: false,
+            data: ,
+            success: function(string){
+                var data=$.parseJSON(string);
+                $(".themTL").live("click", function () {
+                    $("#Grid").data("kendoGrid").dataSource.read();
+                });
+            },
+            error: function(){
+                alert("Không thể thực hiện yêu cầu!");
+            }
+        });
+    });
+</script>
