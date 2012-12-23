@@ -8,7 +8,7 @@ using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
 using System.Web.Script.Serialization;
 using CongThongTinSV.App_Lib;
-using System.EnterpriseServices;
+using System.ComponentModel;
 
 namespace CongThongTinSV.Controllers
 {

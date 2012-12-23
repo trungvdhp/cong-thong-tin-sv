@@ -92,7 +92,7 @@ namespace CongThongTinSV.Models
         [DisplayName("ID nhóm")]
         public int ID_nhom { get; set; }
 
-        [DisplayName("Tình trạng")]
-        public string Tinh_trang { get; set; }
+        [DisplayName("Trạng thái")]
+        public bool Trang_thai { get; set; }
     }
 }

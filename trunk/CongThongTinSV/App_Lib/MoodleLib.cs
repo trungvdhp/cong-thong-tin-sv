@@ -3275,8 +3275,8 @@ namespace CongThongTinSV.App_Lib
                        ID_quyen = q1.ID_quyen,
                        Ten_quyen = q1.Ten_quyen,
                        Action_name = q1.Action_name,
-                       Tinh_trang = (quyen == null ? "" : "Đã kích hoạt")
-                   }).OrderByDescending(t => t.Tinh_trang);
+                       Trang_thai = (quyen == null ? false : true)
+                   }).OrderByDescending(t => t.Trang_thai);
         }
 
         /// <summary>

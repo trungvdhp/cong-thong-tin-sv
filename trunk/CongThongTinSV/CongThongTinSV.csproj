@@ -166,7 +166,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Lib\CustomAuthorize.cs" />
     <Compile Include="App_Lib\GlobalLib.cs" />
     <Compile Include="App_Lib\MoodleLib.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
