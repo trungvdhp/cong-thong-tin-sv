@@ -1,0 +1,15 @@
+http://localhost:8080/moodle/login/token.php?username=admin&password=123456&service=all_service
+
+http://localhost:8080/moodle/webservice/soap/server.php?wsdl=1&wstoken=ca974d80cc5200de58cefed98a479fe4
+
+http://localhost:8080/moodle/webservice/rest/server.php?wsfunction=moodle_user_get_users_by_id&wstoken=ca974d80cc5200de58cefed98a479fe4&userids%5B0%5D=2
+
+http://localhost:8080/moodle/webserivce/rest/server.php?moodlewsrestformat=xml&wstoken=d75f2169ec6320a689c67fb5869360e1&wsfunction=moodle_user_get_users_by_id&userids%5B0%5D=654
+
+http://localhost:8080/moodle/webservice/rest/server.php?wstoken=d75f2169ec6320a689c67fb5869360e1&wsfunction=core_user_create_users&users[0][username]=000&users[0][username]=&users[0][password]=123456&users[0][firsname]=Hoàng&users[0][lastname]=Hoàng&users[0][email]=000@vimaru.edu.vn
+
+http://localhost:8080/moodle/webservice/rest/server.php?wstoken=8d1210355be10d6b1393f35672346c83&wsfunction=enrol_manual_enrol_users&enrolments%5B0%5D%5Broleid%5D=5&enrolments%5B0%5D%5Buserid%5D=51&enrolments%5B0%5D%5Bcourseid%5D=6&enrolments%5B0%5D%5Btimestart%5D=0&enrolments%5B0%5D%5Btimeend%5D=0&enrolments%5B0%5D%5Bsuspend%5D=0
+
+http://localhost:8080/moodle/webservice/rest/server.php?wstoken=8d1210355be10d6b1393f35672346c83&wsfunction=enrol_manual_enrol_users&enrolments%5B0%5D%5Broleid%5D=5&enrolments%5B0%5D%5Buserid%5D=52&enrolments%5B0%5D%5Bcourseid%5D=6&enrolments%5B0%5D%5Btimestart%5D=0&enrolmentss%5B0%5D%5Btimeend%5D=0&enrolments%5B0%5D%5Bsuspend%5D=0
+
+http://localhost:8080/moodle/webservice/rest/server.php?wstoken=d75f2169ec6320a689c67fb5869360e1&wsfunction=core_course_get_course&
