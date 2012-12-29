@@ -56,6 +56,11 @@
                         @Html.Partial("_LoginPartial")
                     </section>
                     <nav>
+                        @using CongThongTinSV.Models;
+                        @using CongThongTinSV.App_Lib;
+                        @{
+                            UserData userData = GlobalLib.GetCurrentUserData();
+                        }
                         <ul id="menu">
                              <li>
                                 Tài khoản
@@ -84,45 +89,65 @@
                                     <li>@Html.ActionLink("Tra cứu sinh viên", "SinhVien", "TraCuu")</li>
                                 </ul>
                             </li>
-                            <li>
-                                Elearning
-                                <ul>
-                                     <li>
-                                        Tài khoản
-                                        <ul> <!-- moving the UL to the next line will cause an IE7 problem -->
-                                            <li>@Html.ActionLink("Thông tin cá nhân", "MyProfile", "MoodleUser")</li>
-                                            <li>@Html.ActionLink("Khóa học của tôi", "MyCourseGrade", "MoodleCourse")</li> 
-                                            <li>@Html.ActionLink("Đổi mật khẩu", "ChangePassword", "MoodleUser")</li>   
-                                        </ul>
-                                    </li>
+                            @{
+                                if (userData != null && userData.MoodleService != "")
+                                {
                                     <li>
-                                        Quản trị hệ thống
-                                        <ul> <!-- moving the UL to the next line will cause an IE7 problem -->
-                                            <li>@Html.ActionLink("Danh mục học kỳ", "ManageSemester", "MoodleCategory")</li>
-                                            <li>@Html.ActionLink("Dịch vụ web", "Manage", "MoodleWebService")</li>
-                                            <li>@Html.ActionLink("Quyền hạn", "Manage", "Capability")</li>
-                                            <li>@Html.ActionLink("Phân quyền", "Manage", "MoodleCapability")</li>  
+                                        Elearning
+                                        <ul>
+                                            <li>
+                                                Người dùng
+                                                <ul> <!-- moving the UL to the next line will cause an IE7 problem -->
+                                                    @if(userData.MoodleService != "user")
+                                                    {
+                                                        <li>@Html.ActionLink("Đổi mật khẩu", "ChangePassword", "MoodleUser")</li>
+                                                    }
+                                                    <li>@Html.ActionLink("Hồ sơ của tôi", "MyProfile", "MoodleUser")</li>
+                                                    <li>@Html.ActionLink("Các khóa học của tôi", "MyCourseGrade", "MoodleCourse")</li>
+                                                    <li>@Html.ActionLink("Tra cứu sinh viên", "SearchStudent", "MoodleUser")</li>
+                                                    <li>@Html.ActionLink("Tra cứu giáo viên", "SearchTeacher", "MoodleUser")</li> 
+                                                </ul>
+                                            </li>
+
+                                            @if(userData.MoodleService == "admin")
+                                            {
+                                                <li>
+                                                    Quản trị hệ thống
+                                                    <ul> <!-- moving the UL to the next line will cause an IE7 problem -->
+                                                        <li>@Html.ActionLink("Danh mục học kỳ", "ManageSemester", "MoodleCategory")</li>
+                                                        <li>@Html.ActionLink("Dịch vụ web", "Manage", "MoodleWebService")</li>
+                                                        <li>@Html.ActionLink("Quyền hạn", "Manage", "Capability")</li>
+                                                        <li>@Html.ActionLink("Phân quyền", "Manage", "MoodleCapability")</li>  
+                                                    </ul>
+                                                </li>
+                                            }
+                                        
+                                            @if(userData.MoodleService != "user")
+                                            {
+                                                <li>
+                                                    Quản trị người dùng
+                                                    <ul> <!-- moving the UL to the next line will cause an IE7 problem -->
+                                                            <li>@Html.ActionLink("Sinh viên", "ManageStudent", "MoodleUser")</li>
+                                                            <li>@Html.ActionLink("Giáo viên", "ManageTeacher", "MoodleUser")</li>
+                                                            <li>@Html.ActionLink("Quản trị viên", "ManageAdminUser", "MoodleUser")</li>
+                                                    </ul>
+                                                </li>
+
+                                                <li>
+                                                    Quản trị khóa học
+                                                    <ul> <!-- moving the UL to the next line will cause an IE7 problem -->
+                                                            <li>@Html.ActionLink("Lớp học phần", "Manage", "MoodleCourse")</li>
+                                                            <li>@Html.ActionLink("Ghi danh sinh viên", "EnrolStudent", "MoodleEnrol")</li>
+                                                            <li>@Html.ActionLink("Ghi danh giáo viên", "EnrolTeacher", "MoodleEnrol")</li>
+                                                        <li>@Html.ActionLink("Ghi danh quản trị viên", "EnrolAdminUser", "MoodleEnrol")</li>
+                                                            <li>@Html.ActionLink("Nhóm học viên", "StudentGroup", "MoodleGroup")</li>
+                                                    </ul>
+                                                </li>
+                                            }
                                         </ul>
                                     </li>
-                                    <li>
-                                        Quản trị người dùng
-                                        <ul> <!-- moving the UL to the next line will cause an IE7 problem -->
-                                             <li>@Html.ActionLink("Sinh viên", "ManageStudent", "MoodleUser")</li>
-                                             <li>@Html.ActionLink("Giáo viên", "ManageTeacher", "MoodleUser")</li>
-                                             <li>@Html.ActionLink("Quản trị viên", "ManageAdminUser", "MoodleUser")</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        Quản trị khóa học
-                                        <ul> <!-- moving the UL to the next line will cause an IE7 problem -->
-                                             <li>@Html.ActionLink("Lớp học phần", "Manage", "MoodleCourse")</li>
-                                             <li>@Html.ActionLink("Ghi danh sinh viên", "EnrolStudent", "MoodleEnrol")</li>
-                                             <li>@Html.ActionLink("Ghi danh giáo viên", "EnrolTeacher", "MoodleEnrol")</li>
-                                             <li>@Html.ActionLink("Nhóm học viên", "StudentGroup", "MoodleGroup")</li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
+                                }
+                            }
                         </ul>
                     </nav>
                 </div>
@@ -140,7 +165,7 @@
                 <div class="float-left">
                     <p>&copy; @DateTime.Now.Year - VIMARU</p>
                 </div>
-                <div class="float-right" style="padding-top:15px">
+                <div class="float-right" style="padding-top:12px; padding-left:10px;">
                  @(Html.Kendo().DropDownList()
                         .Name("switchcontrol")
                         .OptionLabel("Chọn giao diện")

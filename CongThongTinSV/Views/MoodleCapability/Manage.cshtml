@@ -24,7 +24,8 @@
     })
     //.HtmlAttributes(new { style = "display: block;"})
 )
-
+@*<button id="assign_top" class="k-button" onclick="AssignMany()">Kích hoạt</button>
+<button id="unassign_top" class="k-button" onclick="UnassignMany()">Hủy kích hoạt</button> *@
 @(Html.Kendo().Grid<CongThongTinSV.Models.Capability>()
     .Name("Grid")
     .Columns(columns => {
@@ -38,14 +39,15 @@
             .Filterable(false).Groupable(false).Sortable(false);
         columns.Bound(c => c.Ten_quyen);
         columns.Bound(c => c.Action_name).Width(280);
-        columns.Bound(c => c.Trang_thai).Width(40).Title("")
-            .ClientTemplate("<img width='16' height='16' src=" +
+        columns.Bound(c => c.Trang_thai).Width(150).Title("Thực hiện")
+            .HeaderHtmlAttributes(new { style = "align:center" })
+            .ClientTemplate(
             "# if (Trang_thai) { #" +
-                Url.Content("~/Images/tick_green_big.gif# } # />"));
-        columns.Command(command => { 
-            command.Custom("Kích hoạt").Click("assignCapability");
-            command.Custom("Hủy kích hoạt").Click("unassignCapability");
-        }).Width(210);
+                "<img class='image_check' src=" + Url.Content("~/Images/check.png") +  " alt='Ok' title='Đã kích hoạt' />" +
+                "<button class='button-delete' title='Hủy kích hoạt' onclick='unassign_one(#=ID_quyen#)'></button>" +
+                "# } else { #" +
+                "<button class='button-add' title='Kích hoạt' onclick='assign_one(#=ID_quyen#)'></button>" +
+            "# } #");
     })
     .Pageable(pager => pager.PageSizes(new int[]{5, 10, 20, 50, 100, 1000}).Refresh(true).Input(true).Numeric(false))
     .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
@@ -55,6 +57,7 @@
     .Resizable(r => r.Columns(true))
     .Reorderable(ro => ro.Columns(true))
     .Navigatable()
+    .HtmlAttributes(new { style = "height:400px" })
     //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
     //.Selectable(s => s.Mode(GridSelectionMode.Single))
     .Events(e => {
@@ -68,34 +71,42 @@
     )
 )
 <div>
-    <button id="assign" class="k-button">Kích hoạt</button>
-    <button id="unassign" class="k-button">Hủy kích hoạt</button> 
-
+    <button id="assign_bottom" class="k-button" onclick="assign()">Kích hoạt</button>
+    <button id="unassign_bottom" class="k-button" onclick="unassign()">Hủy kích hoạt</button> 
 </div>
 
 <script type="text/javascript">
     var selectedVals = [];
 
-    function assignCapability(e) {
-        e.preventDefault();
-        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-        if (dataItem.Trang_thai) {
-            alert("Quyền '" + dataItem.Ten_quyen + "' đã được kích hoạt!");
+    function assign() {
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một quyền!');
             return;
         }
-        var action = '@Url.Action("AssignCapabilities", "MoodleCapability")' + '/?id_dv=' + jQuery("#WebService").val() + '&selectedVals=' + dataItem.ID_quyen;
-        processing(action, "Đang kích hoạt quyền '" + dataItem.Ten_quyen + "'...", gridRefresh);
+        var action = '@Url.Action("AssignCapabilities", "MoodleCapability")' + '/?id_dv=' + jQuery("#WebService").val() + '&selectedVals=' + selectedVals;
+        processing(action, "Đang kích hoạt các quyền đã chọn...", gridRefresh);
     }
 
-    function unassignCapability(e) {
-        e.preventDefault();
-        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-        if (!dataItem.Trang_thai) {
-            alert("Không thể hủy vì quyền '" + dataItem.Ten_quyen + "' chưa được kích hoạt!");
+    function unassign () {
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một quyền!');
             return;
         }
-        var action = '@Url.Action("UnassignCapabilities", "MoodleCapability")' + '/?id_dv=' + jQuery("#WebService").val() + '&selectedVals=' + dataItem.ID_quyen;
-        processing(action, "Đang hủy kích hoạt quyền '" + dataItem.Ten_quyen + "'...", gridRefresh);
+
+        if (confirm('Bạn muốn hủy kích hoạt các quyền đã chọn?')) {
+            var action = '@Url.Action("UnassignCapabilities", "MoodleCapability")' + '/?id_dv=' + jQuery("#WebService").val() + '&selectedVals=' + selectedVals;
+            processing(action, "Đang hủy kích hoạt các quyền đã chọn...", gridRefresh);
+        }
+    }
+
+    function assign_one(selectedVal) {
+        var action = '@Url.Action("AssignCapabilities", "MoodleCapability")' + '/?id_dv=' + jQuery("#WebService").val() + '&selectedVals=' + selectedVal;
+        processing(action, "Đangkích hoạt quyền...", gridRefresh);
+    }
+
+    function unassign_one(selectedVal) {
+        var action = '@Url.Action("UnassignCapabilities", "MoodleCapability")' + '/?id_dv=' + jQuery("#WebService").val() + '&selectedVals=' + selectedVal;
+        processing(action, "Đang hủy kích hoạt quyền...", gridRefresh);
     }
 
     function filterGrid() {
@@ -129,26 +140,4 @@
     function gridRefresh() {
         $("#Grid").data("kendoGrid").dataSource.read();
     }
-
-    $("#assign").click(function () {
-        if (selectedVals.length == 0) {
-            alert('Vui lòng chọn một quyền!');
-            return;
-        }
-        var action = '@Url.Action("AssignCapabilities", "MoodleCapability")' + '/?id_dv=' + jQuery("#WebService").val() + '&selectedVals=' + selectedVals;
-        processing(action, "Đang kích hoạt các quyền đã chọn...", gridRefresh);
-    })
-
-    $("#unassign").click(function () {
-        if (selectedVals.length == 0) {
-            alert('Vui lòng chọn một quyền!');
-            return;
-        }
-
-        if (confirm('Bạn muốn hủy kích hoạt các quyền đã chọn?')) {
-            var action = '@Url.Action("UnassignCapabilities", "MoodleCapability")' + '/?id_dv=' + jQuery("#WebService").val() + '&selectedVals=' + selectedVals;
-            processing(action, "Đang hủy kích hoạt các quyền đã chọn...", gridRefresh);
-        }
-    })
-
 </script>

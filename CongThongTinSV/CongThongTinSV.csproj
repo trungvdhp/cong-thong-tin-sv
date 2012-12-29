@@ -393,9 +393,6 @@
     <Compile Include="MOD_NguoiDung.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
-    <Compile Include="MOD_NguoiDung_VaiTro_HeThong.cs">
-      <DependentUpon>DHHH.tt</DependentUpon>
-    </Compile>
     <Compile Include="MOD_NguoiDung_VaiTro_LopTinChi.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
@@ -409,9 +406,6 @@
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
     <Compile Include="MOD_ToNhom.cs">
-      <DependentUpon>DHHH.tt</DependentUpon>
-    </Compile>
-    <Compile Include="MOD_VaiTro.cs">
       <DependentUpon>DHHH.tt</DependentUpon>
     </Compile>
     <Compile Include="PLAN_ChuongTrinhDaoTao.cs">
@@ -723,9 +717,23 @@
       <LastGenOutput>DHHH.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
-    <Content Include="Images\cross_red_big.gif" />
-    <Content Include="Images\tick_green_big.gif" />
+    <Content Include="Images\accept.png" />
+    <Content Include="Images\add.png" />
+    <Content Include="Images\bg-max.jpg" />
+    <Content Include="Images\check.png" />
+    <Content Include="Images\database-add.png" />
+    <Content Include="Images\database-delete.png" />
+    <Content Include="Images\db-add.png" />
+    <Content Include="Images\db-delete.png" />
+    <Content Include="Images\delete-alt.png" />
+    <Content Include="Images\delete.png" />
+    <Content Include="Images\grid-dot.png" />
+    <Content Include="Images\stop-all.png" />
+    <Content Include="Images\stop.png" />
+    <Content Include="Images\sync.png" />
+    <Content Include="Images\update.png" />
     <Content Include="Images\vimaru-logo.png" />
+    <Content Include="Images\warning.png" />
     <Content Include="Scripts\jqGrid\Changes.txt" />
     <Content Include="Scripts\jqGrid\i18n\grid.locale-en.js" />
     <Content Include="Scripts\jqGrid\install.txt" />

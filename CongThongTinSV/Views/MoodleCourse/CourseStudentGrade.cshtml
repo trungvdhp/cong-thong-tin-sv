@@ -2,9 +2,9 @@
 @using CongThongTinSV.Models;
 
 @{
-    ViewBag.Title = ViewBag.CourseName + ": Bảng điểm";
+    ViewBag.Title = ViewBag.CourseName + ": Bảng điểm tổng kết";
 }
-<h2>@ViewBag.CourseName</h2>
+<h2>@ViewBag.Title</h2>
 @(Html.Kendo().Grid<CongThongTinSV.Models.MoodleCourseStudentGrade>()
     .Name("Grid")
     .Columns(columns =>

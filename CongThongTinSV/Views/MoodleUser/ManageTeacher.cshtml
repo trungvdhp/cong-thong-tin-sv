@@ -6,7 +6,7 @@
 
 @(Html.Kendo().ComboBox()
     .Name("Khoa")
-    .Placeholder("Chọn khoa")
+    .Placeholder("Chọn khoa...")
     .HtmlAttributes(new {style="width:260px"})
     .DataTextField("Text")
     .DataValueField("Value")
@@ -24,7 +24,24 @@
     })
     //.HtmlAttributes(new { style = "display: block;"})
 )
-
+@(Html.Kendo().DropDownList()
+    .Name("VaiTro")
+    .OptionLabel("Chọn vai trò hệ thống")
+    .HtmlAttributes(new {style="width:180px"})
+    .DataTextField("Text")
+    .DataValueField("Value")
+    .DataSource(source =>
+    {
+        source.Read(read =>
+        {
+            read.Action("GetSystemRoles", "MoodleRole");
+        }).ServerFiltering(true);
+    })
+)
+@*<button id="create_top" class="k-button" onclick="create_teacher()">Đăng ký tài khoản</button>
+<button id="delete_top" class="k-button" onclick="delete_teacher()">Hủy đăng ký</button>
+<button id="update_top" class="k-button" onclick="update_teacher()">Khôi phục về mặc định</button>
+<button id="sync_top" class="k-button" onclick="sync_teacher()">Đồng bộ tài khoản</button>*@
 @(Html.Kendo().Grid<CongThongTinSV.Models.MoodleTeacher>()
     .Name("Grid")
     .Columns(columns => {
@@ -36,12 +53,34 @@
             .HeaderHtmlAttributes(new { style = "text-align:center" })
             .HtmlAttributes(new { style = "text-align:center" })
             .Filterable(false).Groupable(false).Sortable(false);
-        columns.Bound(c => c.Ma_cb).Width(120).HtmlAttributes(new { style = "text-align:center" });
-        columns.Bound(c => c.ID_moodle).Width(105);
+        columns.Bound(c => c.Ma_cb).ClientTemplate(
+          "# if (ID_moodle != 0) { #" +
+          (@Html.ActionLink("#=ID_moodle#", "UserProfile", "MoodleUser", new { userid = "UserId" }, new { title = "Hồ sơ cá nhân" }).ToHtmlString().Replace("UserId", "#=ID_moodle#")) +
+          "# } else { ##=Ma_cb#" +
+          "# } #")
+          .HtmlAttributes(new { style = "text-align:center" })
+          .Width(105);
         columns.Bound(c => c.Ho_dem).Width(150);
         columns.Bound(c => c.Ten).Width(80);
-        columns.Bound(c => c.Ngay_sinh).Width(120).Format("{0:dd-MM-yyyy}");
-        columns.Bound(c => c.Gioi_tinh);
+        columns.Bound(c => c.Ngay_sinh).Width(100).Format("{0:dd-MM-yyyy}").HtmlAttributes(new { style = "text-align:center" });
+        columns.Bound(c => c.Gioi_tinh).Width(90);
+        columns.Bound(c => c.Vai_tro).HtmlAttributes(new { style = "color:blue" });
+        columns.Bound(c => c.Trang_thai).Title("Thực hiện")
+            .Width(150)
+            .ClientTemplate(
+                "# if (Trang_thai) { #" +
+                    "<button class='button-delete' title='Hủy đăng ký' onclick='delete_one(#=ID_cb#)'></button>" +
+                    "<button class='button-update' title='Khôi phục về mặc định' onclick='update_one(#=ID_cb#)'></button>" +
+                "# } else { #" +
+                    "<button class='button-add' title='Đăng ký' onclick='create_one(#=ID_cb#)'></button>" +
+                    "<button class='button-sync' title='Đồng bộ tài khoản' onclick='sync_one(#=ID_cb#)'></button>" +
+                "# } #" +
+                "<button class='button-add-sysrole' title='Gán vai trò hệ thống đã chọn' onclick='assign_sysrole_one(#=ID_cb#)'></button>" +
+                "# if (Vai_tro != '') { #" +
+                        "<button class='button-delete-sysrole' title='Hủy vai trò hệ thống đã chọn' onclick='unassign_sysrole_one(#=ID_cb#)'></button>" +
+                        "<button class='button-stop-all' title='Hủy tất cả vai trò hệ thống' onclick='unassign_all_sysrole_one(#=ID_cb#)'></button>" +
+                    "# } #" 
+            );  
     })
     .Pageable(pager => pager.PageSizes(new int[]{5, 10, 20, 50, 80}).Refresh(true).Input(true).Numeric(false))
     .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
@@ -63,13 +102,13 @@
             .PageSize(50)
     )
 )
-<div>
-    <button id="create" class="k-button">Đăng ký tài khoản</button>
-    <button id="delete" class="k-button">Hủy đăng ký</button>
-    <button id="update" class="k-button">Khôi phục về mặc định</button>
-    <button id="sync" class="k-button">Đồng bộ tài khoản</button>
-</div>
-
+<button id="create_bottom" class="k-button" onclick="create_teacher()">Đăng ký tài khoản</button>
+<button id="delete_bottom" class="k-button" onclick="delete_teacher()">Hủy đăng ký</button>
+<button id="update_bottom" class="k-button" onclick="update_teacher()">Khôi phục về mặc định</button>
+<button id="sync_bottom" class="k-button" onclick="sync_teacher()">Đồng bộ tài khoản</button>
+<button id="assign_sysrole_bottom" class="k-button" onclick="assign_sysrole()">Gán vai trò</button>
+<button id="unassign_sysrole_bottom" class="k-button" onclick="unassign_sysrole()">Hủy vai trò</button>
+<button id="unassign_all_sysrole_bottom" class="k-button" onclick="unassign_all_sysrole()">Hủy tất cả vai trò</button>
 <script type="text/javascript">
     var selectedVals = [];
 
@@ -105,49 +144,143 @@
         $("#Grid").data("kendoGrid").dataSource.read();
     }
 
-    $("#create").click(function () {
+    function create_one(selectedVal) {
+        var action = '@Url.Action("CreateTeachers", "MoodleUser")' + '/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVal;
+        processing(action, "Đang tạo tài khoản moodle elearning...", gridRefresh);
+    }
+
+    function delete_one(selectedVal) {
+        if (confirm('Bạn muốn hủy đăng ký tài khoản moodle elearning của giáo viên này?')) {
+            var action = '@Url.Action("DeleteTeachers", "MoodleUser")' + '/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVal;
+            processing(action, "Đang hủy đăng ký tài khoản moodle elearning...", gridRefresh);
+        }
+    }
+
+    function update_one(selectedVal) {
+        if (confirm('Bạn muốn khôi phục về mặc định tài khoản moodle elearning của giáo viên này?')) {
+            var action = '@Url.Action("UpdateTeachers", "MoodleUser")' + '/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVal;
+            processing(action, "Đang khôi phục tài khoản moodle elearning...", gridRefresh);
+        }
+    }
+
+    function sync_one(selectedVal) {
+        var action = '@Url.Action("SyncTeachers", "MoodleUser")' + '/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVal;
+        processing(action, "Đang đồng bộ tài khoản moodle elearning...", gridRefresh);
+    }
+
+    function create_teacher() {
         if (selectedVals.length == 0) {
             alert('Vui lòng chọn một giáo viên!');
             return;
         }
         var action = '@Url.Action("CreateTeachers", "MoodleUser")' + '/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVals;
-        processing(action, "Đang tạo tài khoản moodle cho các giáo viên đã chọn...", gridRefresh);
-    })
+        processing(action, "Đang tạo tài khoản moodle elearning...", gridRefresh);
+    }
 
-    $("#delete").click(function () {
+    function delete_teacher() {
         if (selectedVals.length == 0) {
             alert('Vui lòng chọn một giáo viên!');
             return;
         }
 
-        if (confirm('Bạn muốn xóa tài khoản moodle của các giáo viên đã chọn?')) {
+        if (confirm('Bạn muốn hủy đăng ký tài khoản moodle elearning của các giáo viên đã chọn?')) {
             var action = '@Url.Action("DeleteTeachers", "MoodleUser")' + '/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVals;
-            processing(action, "Đang xóa tài khoản moodle của các giáo viên đã chọn...", gridRefresh);
+            processing(action, "Đang hủy đăng ký tài khoản moodle elearning...", gridRefresh);
         }
-    })
+    }
 
-    $("#update").click(function () {
+    function update_teacher() {
         if (selectedVals.length == 0) {
             alert('Vui lòng chọn một giáo viên!');
             return;
         }
 
-        if (confirm('Bạn muốn khôi phục về mặc định tài khoản moodle của các giáo viên đã chọn?')) {
+        if (confirm('Bạn muốn khôi phục về mặc định tài khoản moodle elearning của các giáo viên đã chọn?')) {
             var action = '@Url.Action("UpdateTeachers", "MoodleUser")' + '/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVals;
-            processing(action, "Đang khôi phục tài khoản của các giáo viên đã chọn...", gridRefresh);
+            processing(action, "Đang khôi phục tài khoản moodle elearning...", gridRefresh);
         }
-    })
+    }
 
-    $("#sync").click(function () {
+    function sync_teacher() {
         if (selectedVals.length == 0) {
             alert('Vui lòng chọn một giáo viên!');
             return;
         }
 
-        if (confirm('Bạn muốn đồng bộ tài khoản moodle và tài khoản cổng thông tin của các giáo viên đã chọn?')) {
-            var action = '@Url.Action("SyncTeachers", "MoodleUser")' + '/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVals;
-            processing(action, "Đang đồng bộ tài khoản của các giáo viên đã chọn...", gridRefresh);
-        }
-    })
+        var action = '@Url.Action("SyncTeachers", "MoodleUser")' + '/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVals;
+        processing(action, "Đang đồng bộ tài khoản moodle elearning...", gridRefresh);
+    }
 
+    function assign_sysrole_one(selectedVal) {
+        if (jQuery("#VaiTro").val() == "") {
+            alert('Vui lòng chọn một vai trò!');
+            return;
+        }
+        var action = '@Url.Action("AssignTeacherSystemRole", "MoodleUser")' + '/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVal + "&id_vai_tro=" + jQuery("#VaiTro").val();
+        processing(action, "Đang gán vai trò hệ thống " + jQuery("#VaiTro").data("kendoDropDownList").text() + " cho giáo viên...", gridRefresh);
+    }
+
+    function unassign_sysrole_one(selectedVal) {
+        if (jQuery("#VaiTro").val() == "") {
+            alert('Vui lòng chọn một vai trò!');
+            return;
+        }
+
+        if (confirm('Bạn muốn hủy vai trò hệ thống ' + jQuery("#VaiTro").data("kendoDropDownList").text() +
+            ' của giáo viên này?')) {
+            var action = '@Url.Action("UnassignTeacherSystemRole", "MoodleUser")' + '/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVal + "&id_vai_tro=" + jQuery("#VaiTro").val();
+            processing(action, "Đang hủy vai trò hệ thống" + jQuery("#VaiTro").data("kendoDropDownList").text() + " của giáo viên...", gridRefresh);
+        }
+    }
+
+    function unassign_all_sysrole_one(selectedVal) {
+        if (confirm('Bạn muốn hủy tất cả vai trò hệ thống của giáo viên này?')) {
+            var action = '@Url.Action("UnassignTeacherAllSystemRoles", "MoodleUser")' + '/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVal;
+            processing(action, "Đang hủy tất cả vai trò hệ thống của giáo viên...", gridRefresh);
+        }
+    }
+    ///
+    function assign_sysrole() {
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một giáo viên!');
+            return;
+        }
+
+        if (jQuery("#VaiTro").val() == "") {
+            alert('Vui lòng chọn một vai trò!');
+            return;
+        }
+        var action = '@Url.Action("AssignTeacherSystemRole", "MoodleUser")' + '/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVals + "&id_vai_tro=" + jQuery("#VaiTro").val();
+        processing(action, "Đang gán vai trò hệ thống " + jQuery("#VaiTro").data("kendoDropDownList").text() + " cho các giáo viên đã chọn...", gridRefresh);
+    }
+
+    function unassign_sysrole() {
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một giáo viên!');
+            return;
+        }
+
+        if (jQuery("#VaiTro").val() == "") {
+            alert('Vui lòng chọn một vai trò!');
+            return;
+        }
+
+        if (confirm('Bạn muốn hủy vai trò hệ thống ' + jQuery("#VaiTro").data("kendoDropDownList").text() +
+            ' của các giáo viên đã chọn?')) {
+            var action = '@Url.Action("UnassignTeacherSystemRole", "MoodleUser")' + '/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVals + "&id_vai_tro=" + jQuery("#VaiTro").val();
+            processing(action, "Đang hủy vai trò hệ thống " + jQuery("#VaiTro").data("kendoDropDownList").text() + " của các giáo viên đã chọn...", gridRefresh);
+        }
+     }
+
+     function unassign_all_sysrole() {
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một giáo viên!');
+            return;
+        }
+
+        if (confirm('Bạn muốn hủy tất cả vai trò hệ thống của các giáo viên đã chọn?')) {
+            var action = '@Url.Action("UnassignTeacherAllSystemRoles", "MoodleUser")' + '/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVals;
+            processing(action, "Đang hủy tất cả vai trò hệ thống của các giáo viên đã chọn...", gridRefresh);
+        }
+    }
 </script>

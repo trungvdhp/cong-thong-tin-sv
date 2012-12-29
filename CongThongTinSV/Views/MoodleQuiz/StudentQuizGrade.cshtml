@@ -2,46 +2,68 @@
 
 @{
     ViewBag.Title = ViewBag.FullName + " - " + ViewBag.CourseName;
-    string heading = ViewBag.FullName + " (" + ViewBag.CourseName + ") - Điểm thi: " + string.Format("{0:0.0}", ViewBag.Grade);
 }
 <div>
-<h2>@heading</h2>
-@(Html.Kendo().Grid<CongThongTinSV.Models.MoodleStudentQuizGrade>()
-    .Name("Grid")
-    .Columns(columns =>
+@{
+    if(ViewBag.Error != "")
     {
-        columns.Bound(c => c.ID).Title("Bài kiểm tra")
-            .ClientTemplate("<a href=#=Url#>#=QuizName#</a>")
-            .Width(500);
-        columns.Bound(c => c.Grade).Format("{0:0.0}");
-        columns.Command(command => command.Custom("Cập nhật điểm").Click("UpdateYGrade"));
-    })
-    .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50 }).Refresh(true).Input(true).Numeric(false))
-    .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
-    .Filterable()
-    .Scrollable()
-    //.Groupable()
-    .Resizable(r => r.Columns(true))
-    .Reorderable(ro => ro.Columns(true))
-    .Navigatable()
-    //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
-    //.Selectable(s => s.Mode(GridSelectionMode.Single))
-    .DataSource(
-        dataSource => dataSource
-            .Ajax()
-            .Read(read => read.Action("GetStudentQuizGrades", "MoodleQuiz", new { courseid = ViewBag.CourseID , userid = ViewBag.UserID }))
-            .PageSize(50)
-    )
-)
+        <h2>@ViewBag.Title</h2>
+        <h2 class="error">Lỗi: @ViewBag.Error</h2>
+    }
+    else
+    {
+        string heading = ViewBag.FullName + " (" + ViewBag.CourseName + ") - Điểm thi cũ: " + ViewBag.Grade;
+        bool haveGrade = ViewBag.Grade == "không xác định" ? false : true;
+        <h2>@heading</h2>
+        @(Html.Kendo().Grid<CongThongTinSV.Models.MoodleStudentQuizGrade>()
+            .Name("Grid")
+            .Columns(columns =>
+            {
+                columns.Bound(c => c.ID).Title("Bài kiểm tra")
+                    .ClientTemplate("<a href=#=Url# title='Tới trang làm bài'>#=QuizName#</a>")
+                    .Width(500);
+                columns.Bound(c => c.Grade)
+                    .Width(70)
+                    .ClientTemplate(
+                        (@Html.ActionLink("#= kendo.toString(Grade, '0.0') #", "QuizStudentGrade", "MoodleQuiz", new { quizid = "QuizID" }, new { title = "Xem bảng điểm chi tiết" })).ToHtmlString().Replace("QuizID", "#=ID#"));
+                columns.Command(command => command.Custom("Cập nhật điểm").Click("UpdateYGrade"))
+                    .Visible(haveGrade);
+            })
+            .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50 }).Refresh(true).Input(true).Numeric(false))
+            .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
+            .Filterable()
+            .Scrollable()
+            //.Groupable()
+            .Resizable(r => r.Columns(true))
+            .Reorderable(ro => ro.Columns(true))
+            .Navigatable()
+            //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
+            //.Selectable(s => s.Mode(GridSelectionMode.Single))
+            .DataSource(
+                dataSource => dataSource
+                    .Ajax()
+                    .Read(read => read.Action("GetStudentQuizGrades", "MoodleQuiz", new { courseid = ViewBag.CourseID , userid = ViewBag.UserID }))
+                    .PageSize(50)
+            )
+        );
+    }
+}
+<div style="text-align: center;margin-top: 10px;">
+     @using (Html.BeginForm("StudentCourseGrade", "MoodleCourse", new { userid = ViewBag.UserID, courseid = ViewBag.CourseID }, FormMethod.Post, htmlAttributes: new { title = "Back to the student course grade" }))
+    {
+        @Html.AntiForgeryToken()
+        <button class="k-button" type="submit">Quay về bảng điểm các khóa học</button>
+    }
+</div>
 </div>
 <script type ="text/javascript">
     function UpdateYGrade(e) {
         e.preventDefault();
         var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
         if (confirm('Bạn muốn cập nhật điểm mới cho học viên này?')) {
-            var action = '@Url.Action("UpdateYGrades","MoodleGrade")' + '/?newgrade=' + dataItem.Grade + '&userid=' +
+            var action = '@Url.Action("UpdateYGrade","MoodleGrade")' + '/?newgrade=' + dataItem.Grade + '&userid=' +
 '@ViewBag.UserID' + '&courseid=' + '@ViewBag.CourseID';
-             processing(action, "Đang cập nhật điểm mới cho các học viên...", gridRefresh);
+             processing(action, "Đang cập nhật điểm mới cho học viên...", gridRefresh);
          }
     }
 </script>

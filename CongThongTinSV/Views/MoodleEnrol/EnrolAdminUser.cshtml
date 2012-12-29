@@ -1,0 +1,253 @@
+﻿@using Kendo.Mvc.UI;
+@using CongThongTinSV.Models;
+@{
+    ViewBag.Title = "Ghi danh quản trị viên vào khóa học trên Moodle";
+}
+
+@(Html.Kendo().ComboBox()
+    .Name("HocKy")
+    .Placeholder("Chọn học kỳ...")
+    .HtmlAttributes(new { style = "width:180px" })
+    .DataTextField("Text")
+    .DataValueField("Value")
+    .DataSource(source =>
+    {
+        source.Read(read =>
+        {
+            read.Action("GetSemesterList", "MoodleCategory");
+        }).ServerFiltering(true);
+    })
+)
+
+@(Html.Kendo().ComboBox()
+    .Name("LopHocPhan")
+    .Placeholder("Chọn lớp học phần...")
+    .HtmlAttributes(new { style = "width:320px" })
+    .DataTextField("Text")
+    .DataValueField("Value")
+    .DataSource(source =>
+    {
+        source.Read(read =>
+        {
+            read.Action("GetCourseList", "MoodleCourse").Data("filterLopHocPhan");
+        }).ServerFiltering(true);
+    })
+    .Events(e =>
+    {
+        e.Change("loadGrid");
+    })
+    .Enable(false)
+    .AutoBind(false)
+    .CascadeFrom("HocKy")
+)
+@(Html.Kendo().DropDownList()
+    .Name("VaiTro")
+    .OptionLabel("Chọn vai trò")
+    .HtmlAttributes(new {style="width:150x"})
+    .DataTextField("Text")
+    .DataValueField("Value")
+    .DataSource(source =>
+    {
+        source.Read(read =>
+        {
+            read.Action("GetCourseRoles", "MoodleRole");
+        }).ServerFiltering(true);
+    })
+)
+@(Html.Kendo().Grid<CongThongTinSV.Models.MoodleUser>()
+    .Name("Grid")
+    .Columns(columns => {
+        columns.Bound(c => c.ID)
+            .ClientTemplate("<input type='checkbox' class='chkbx' value='#= ID #'/>")
+            .HeaderTemplate("<input type='checkbox' id='masterCheckBox'/>")
+            .Width(40)
+            .Title("")
+            .HeaderHtmlAttributes(new { style = "text-align:center" })
+            .HtmlAttributes(new { style = "text-align:center" })
+            .Filterable(false).Groupable(false).Sortable(false);
+        columns.Bound(c => c.UserName).Width(130)
+            .ClientTemplate(
+            "# if (ID_moodle != 0) { #" +
+            (@Html.ActionLink("#=UserName#", "UserProfile", "MoodleUser", new { userid = "UserID" }, null).ToHtmlString().Replace("UserID", "#=ID_moodle#"))+
+             "# } else { ##=UserName#" +
+            "# } #")
+            .HtmlAttributes(new { title = "Xem hồ sơ các nhân" });
+        columns.Bound(c => c.LastName).Width(145);
+        columns.Bound(c => c.FirstName).Width(80);
+        columns.Bound(c => c.Email).Width(150);
+        columns.Bound(c => c.Vai_tro).HtmlAttributes(new {style = "color:blue"});
+        columns.Bound(c => c.Trang_thai).Title("Thực hiện")
+            .Width(130)
+            .ClientTemplate(
+               "# if (Trang_thai) { #" +
+                   "<img class='image_check' src=" + Url.Content("~/Images/check.png") + " alt='Ok' title='Đã kích hoạt' />" +
+               "# } #" +
+               "<button class='button-add' title='Ghi danh và kích hoạt' onclick='create_one(#=ID#)'></button>" +
+               "<button class='button-delete' title='Ghi danh và không kích hoạt' onclick='suspend_one(#=ID#)'></button>" +
+               "# if (Vai_tro != '') { #" +
+                   "<button class='button-stop' title='Hủy vai trò đã chọn' onclick='unassign_role_one(#=ID#)'></button>" +
+                   "<button class='button-stop-all' title='Hủy tất cả vai trò' onclick='unassign_allrole_one(#=ID#)'></button>" +
+               "# } #"
+           );
+    })
+    .Pageable(pager => pager.PageSizes(new int[]{5, 10, 20, 50, 80}).Refresh(true).Input(true).Numeric(false))
+    .Sortable(s => s.SortMode(GridSortMode.MultipleColumn))
+    .Filterable()
+    .Scrollable()
+    .Groupable()
+    .Resizable(r => r.Columns(true))
+    .Reorderable(ro => ro.Columns(true))
+    .Navigatable()
+    //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
+    //.Selectable(s => s.Mode(GridSelectionMode.Single))
+    .Events(e => {
+                e.DataBound("onDataBound");
+            })
+    .DataSource(
+        dataSource => dataSource
+            .Ajax()
+            .Read(read => read.Action("GetEnrolAdminUsers", "MoodleEnrol").Data("filterGrid"))
+            .PageSize(50)
+    )
+) 
+<button id="createEnrol" class="k-button">Ghi danh và kích hoạt</button>
+<button id="suspendEnrol" class="k-button">Ghi danh không kích hoạt</button>
+<button id="unassignRole" class="k-button">Hủy vai trò đã chọn</button>
+<button id="unassignAllRole" class="k-button">Hủy tất cả vai trò</button>
+<script type="text/javascript">
+    var selectedVals = [];
+
+    function filterGrid() {
+        return {
+            id_lop_tc: $("#LopHocPhan").val()
+        }
+    }
+
+    function filterLopHocPhan() {
+        return {
+            id_hocky: $("#HocKy").val()
+        }
+    }
+
+    function loadGrid() {
+        selectedVals.splice(0, selectedVals.length);
+        gridRefresh();
+    }
+
+    function onDataBound(e) {
+        checkCells(selectedVals, '#masterCheckBox', '#Grid :checkbox');
+    }
+
+    $(function () {
+        $('#Grid').on('click', '.chkbx', function () {
+            var state = $(this).is(':checked');
+            var grid = $('#Grid').data().kendoGrid;
+            var dataItem = grid.dataItem($(this).closest('tr'));
+
+            checkVal(dataItem.ID, state, selectedVals);
+            $('#masterCheckBox').attr('checked', isCheckedAll('#Grid :checkbox'));
+        })
+    })
+
+    $('#masterCheckBox').click(function () { checkAll(this, '#Grid :checkbox'); })
+
+    function gridRefresh() {
+        $("#Grid").data("kendoGrid").dataSource.read();
+    }
+
+    function create_one(selectedVal) {
+        if (jQuery("#VaiTro").val() == "") {
+            alert('Vui lòng chọn một vai trò!');
+            return;
+        }
+        var action = '@Url.Action("ManualEnrolAdminUsers", "MoodleEnrol")' + '/?suspended=0&id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVal + "&id_vai_tro=" + jQuery("#VaiTro").val();
+        processing(action, "Đang ghi danh và kích hoạt cho quản trị viên...", gridRefresh);
+    }
+
+    function suspend_one(selectedVal) {
+        if (jQuery("#VaiTro").val() == "") {
+            alert('Vui lòng chọn một vai trò!');
+            return;
+        }
+        var action = '@Url.Action("ManualEnrolAdminUsers", "MoodleEnrol")' + '/?suspended=1&id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVal + "&id_vai_tro=" + jQuery("#VaiTro").val();
+        processing(action, "Đang ghi danh nhưng chưa kích hoạt cho quản trị viên...", gridRefresh);
+    }
+
+    function unassign_role_one(selectedVal) {
+        if (jQuery("#VaiTro").val() == "") {
+            alert('Vui lòng chọn một vai trò!');
+            return;
+        }
+
+        if (confirm('Bạn muốn hủy vai trò ' + jQuery("#VaiTro").data("kendoDropDownList").text() +
+            ' của quản trị viên này?')) {
+            var action = '@Url.Action("UnassignAdminUserRole", "MoodleEnrol")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVal + "&id_vai_tro=" + jQuery("#VaiTro").val();
+            processing(action, "Đang hủy vai trò " + jQuery("#VaiTro").data("kendoDropDownList").text() + " của quản trị viên...", gridRefresh);
+        }
+    }
+
+    function unassign_allrole_one(selectedVal) {
+        if (confirm('Bạn muốn hủy tất cả vai trò của quản trị viên này trong lớp học phần?')) {
+            var action = '@Url.Action("UnassignAdminUserAllRoles", "MoodleEnrol")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVal;
+            processing(action, "Đang hủy tất cả vai trò của quản trị viên...", gridRefresh);
+        }
+    }
+
+    $("#createEnrol").click(function () {
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một quản trị viên!');
+            return;
+        }
+
+        if (jQuery("#VaiTro").val() == "") {
+            alert('Vui lòng chọn một vai trò!');
+            return;
+        }
+        var action = '@Url.Action("ManualEnrolAdminUsers", "MoodleEnrol")' + '/?suspended=0&id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + "&id_vai_tro=" + jQuery("#VaiTro").val();
+        processing(action, "Đang ghi danh và kích hoạt...", gridRefresh);
+    })
+
+    $("#suspendEnrol").click(function () {
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một quản trị viên!');
+            return;
+        }
+
+        if (jQuery("#VaiTro").val() == "") {
+            alert('Vui lòng chọn một vai trò!');
+            return;
+        }
+        var action = '@Url.Action("ManualEnrolAdminUsers", "MoodleEnrol")' + '/?suspended=1&id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + "&id_vai_tro=" + jQuery("#VaiTro").val();
+        processing(action, "Đang ghi danh nhưng không kích hoạt...", gridRefresh);
+    })
+
+    $("#unassignRole").click(function () {
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một quản trị viên!');
+            return;
+        }
+
+        if (jQuery("#VaiTro").val() == "") {
+            alert('Vui lòng chọn một vai trò!');
+            return;
+        }
+
+        if (confirm('Bạn muốn hủy vai trò ' + jQuery("#VaiTro").data("kendoDropDownList").text() +
+            ' của các quản trị viên đã chọn trong lớp học phần?')) {
+            var action = '@Url.Action("UnassignAdminUserRole", "MoodleEnrol")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + "&id_vai_tro=" + jQuery("#VaiTro").val();
+            processing(action, "Đang hủy vai trò " + jQuery("#VaiTro").data("kendoDropDownList").text() + " của các quản trị viên đã chọn trong lớp học phần...", gridRefresh);
+        }
+    })
+
+    $("#unassignAllRole").click(function () {
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một quản trị viên!');
+            return;
+        }
+
+        if (confirm('Bạn muốn hủy tất cả vai trò của các quản trị viên đã chọn?')) {
+            var action = '@Url.Action("UnassignAdminUserAllRoles", "MoodleEnrol")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
+            processing(action, "Đang hủy tất cả vai trò của các quản trị viên...", gridRefresh);
+        }
+    })
+</script>

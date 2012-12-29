@@ -121,7 +121,10 @@ namespace CongThongTinSV.Models
 
     public class MoodleUser
     {
-        [DisplayName("ID")]
+        [DisplayName("ID lớp học phần")]
+        public int ID_lop_tc { get; set; }
+
+        [DisplayName("ID người dùng")]
         public int ID { get; set; }
 
         [DisplayName("ID moodle")]
@@ -141,6 +144,51 @@ namespace CongThongTinSV.Models
 
         [DisplayName("Email")]
         public string Email { get; set; }
+
+        [DisplayName("ID vai trò")]
+        public string ID_vai_tro { get; set; }
+
+        [DisplayName("Vai trò")]
+        public string Vai_tro { get; set; }
+
+        [DisplayName("Trạng thái")]
+        public bool Trang_thai { get; set; }
+    }
+
+    public class MoodleCourseMember
+    {
+        [DisplayName("UserID")]
+        public int UserID { get; set; }
+
+        [DisplayName("Tên đăng nhập")]
+        public string UserName { get; set; }
+
+        [DisplayName("Họ và đệm")]
+        public string LastName { get; set; }
+
+        [DisplayName("Tên")]
+        public string FirstName { get; set; }
+
+        [DisplayName("Email")]
+        public string Email { get; set; }
+
+        [DisplayName("ID vai trò")]
+        public string RoleIDs { get; set; }
+
+        [DisplayName("Vai trò")]
+        public string Roles { get; set; }
+
+        [DisplayName("Ảnh đại diện")]
+        public string ImageUrl { get; set; }
+
+        [DisplayName("Truy cập gần nhất")]
+        public string LastAccess { get; set; }
+
+        [DisplayName("Tỉnh/Thành phố")]
+        public string City { get; set; }
+
+        [DisplayName("Quốc gia")]
+        public string Country { get; set; }
     }
 
     public class MoodleStudent
@@ -230,6 +278,6 @@ namespace CongThongTinSV.Models
         public string Vai_tro { get; set; }
 
         [DisplayName("Trạng thái")]
-        public string Trang_thai { get; set; }
+        public bool Trang_thai { get; set; }
     }
 }

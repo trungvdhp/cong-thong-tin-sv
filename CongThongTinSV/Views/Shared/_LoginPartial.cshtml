@@ -19,12 +19,12 @@
     
     if(userData.MoodleToken != "exception"){
         <text>
-        (@Html.ActionLink(userData.MoodleFullName, "MyProfile", "MoodleUser", routeValues: new {userid = userData.MoodleUserID }, htmlAttributes: new { @class = "username", title = "Thông tin tài khoản moodle Elearning" }))
+        (@Html.ActionLink(userData.MoodleFullName, "MyProfile", "MoodleUser", null, htmlAttributes: new { @class = "username", title = "Thông tin tài khoản moodle Elearning" }))
         </text>
     }
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })){
         @Html.AntiForgeryToken()
-        <button class="k-button" type="submit">Log off</button>
+        <button class="k-button" type="submit">Thoát</button>
     }
 }
 else {
@@ -38,6 +38,6 @@ else {
     }
     <ul>
 @*        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class="k-button" })</li>*@
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class="k-button" })</li>
+        <li>@Html.ActionLink("Đăng nhập", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class="k-button" })</li>
     </ul>
 }

@@ -19,6 +19,16 @@ namespace CongThongTinSV.Models
         public string shortname { get; set; }
     }
 
+    public class MoodleUserCourse
+    {
+        public int id { get; set; } //id of course
+        public string shortname { get; set; } //short name of course
+        public string fullname { get; set; } //long name of course
+        public int enrolledusercount { get; set; } //Number of enrolled users in this course
+        public string idnumber { get; set; } //id number of course
+        public int visible { get; set; } //1 means visible, 0 means hidden course
+    }
+
     public class MoodleModuleContent
     {
         public string type { get; set; } //a file or a folder or external link
@@ -89,6 +99,9 @@ namespace CongThongTinSV.Models
 
         [DisplayName("Đến ngày")]
         public DateTime Den_ngay { get; set; }
+
+        [DisplayName("Trạng thái")]
+        public bool Trang_thai { get; set; }
     }
 
     public class CourseInfo

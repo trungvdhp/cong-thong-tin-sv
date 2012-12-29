@@ -60,6 +60,18 @@ namespace CongThongTinSV.App_Lib
         }
 
         /// <summary>
+        /// Get Mon hoc by Ky hieu mon
+        /// </summary>
+        /// <param name="Ky_hieu_mon"></param>
+        /// <returns></returns>
+        public static MARK_MonHoc GetMonHocByKyHieu(string Ky_hieu_mon)
+        {
+            Entities db = new Entities();
+
+            return db.MARK_MonHoc.SingleOrDefault(t => t.Ky_hieu == Ky_hieu_mon);
+        }
+
+        /// <summary>
         /// Get course idnumber
         /// </summary>
         /// <param name="courseid">ID of course</param>
@@ -78,8 +90,8 @@ namespace CongThongTinSV.App_Lib
                 if (s.Length > 2)
                 {
                     int tmp;
-                    int.TryParse(s[0], out tmp);
-                    rs.ID_mon = tmp;
+                    MARK_MonHoc mon = GetMonHocByKyHieu(s[0]);
+                    rs.ID_mon = mon == null ? 0 : mon.ID_mon;
                     int.TryParse(s[1], out tmp);
                     rs.Hoc_ky = tmp;
                     rs.Nam_hoc = s[2];
@@ -194,11 +206,11 @@ namespace CongThongTinSV.App_Lib
         /// <param name="quizid">Id of quiz</param>
         /// <returns>Quiz</returns>
         /// 
-        public static MARK_DiemThi_TC GetGrade(string userid, string courseid)
+        public static MARK_DiemThi_TC GetYGrade(string studentid, string courseid)
         {
             Entities db = new Entities();
             CourseInfo course = GetCourseIDNumber(courseid);
-            STU_HoSoSinhVien student = GetStudentByUserID(userid);
+            STU_HoSoSinhVien student = GetStudentByUserID(studentid);
             var diemtc = db.MARK_Diem_TC.Where(t => t.ID_mon == course.ID_mon && t.ID_sv == student.ID_sv);
             var diemthitc = db.MARK_DiemThi_TC.Where(t => t.Hoc_ky_thi == course.Hoc_ky && t.Nam_hoc_thi == course.Nam_hoc);
             var diemthis = from d1 in diemtc
@@ -207,6 +219,31 @@ namespace CongThongTinSV.App_Lib
                            select d2;
 
             return diemthis.AsEnumerable().FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Check user in course
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <param name="courseid"></param>
+        /// <returns></returns>
+        public static bool IsUserInCourse(string userid, string courseid)
+        {
+            long uid, cid;
+            long.TryParse(userid, out uid);
+            long.TryParse(courseid, out cid);
+
+            if (uid <= 0 || cid <= 0) return false;
+
+            MoodleEntities mdb = new MoodleEntities();
+
+            var q = from u in mdb.fit_user_enrolments
+                    join e in mdb.fit_enrol
+                    on u.enrolid equals e.id
+                    where u.status == 0 && u.userid == uid && e.courseid == cid
+                    select u;
+
+            return q.Count() > 0;
         }
         #endregion
 
@@ -227,10 +264,11 @@ namespace CongThongTinSV.App_Lib
                     {
                         ID = h1.Ky_dang_ky,
                         ID_moodle = (h3 == null ? 0 : h3.ID_moodle),
+                        Trang_thai = (h3 == null ? false : true),
                         Dot = h1.Dot,
                         Hoc_ky = h1.Hoc_ky,
                         Nam_hoc = h1.Nam_hoc
-                    }).OrderByDescending(t => t.ID_moodle).ToList();
+                    });
         }
 
         /// <summary>
@@ -422,6 +460,7 @@ namespace CongThongTinSV.App_Lib
                       {
                           ID_sv = ds.ID_sv,
                           ID_moodle = (nd1 == null ? 0 : nd1.ID_moodle),
+                          Trang_thai = (nd1 == null ? false : true),
                           Ma_sv = ds.Ma_sv,
                           Ho_dem = Utility.GetLastName(ds.Ho_ten),
                           Ten = Utility.GetFirstName(ds.Ho_ten),
@@ -431,7 +470,7 @@ namespace CongThongTinSV.App_Lib
                           Mat_khau = ds.Mat_khau
                       };
 
-            return sv4.OrderByDescending(t => t.ID_moodle).ToList();
+            return sv4;//.OrderByDescending(t => t.ID_moodle).ToList();
         }
 
         /// <summary>
@@ -449,7 +488,7 @@ namespace CongThongTinSV.App_Lib
             {
                 postData += "&users[" + i + "][username]=" + item.Ma_sv;
 
-                if (item.Mat_khau != "")
+                if (item.Mat_khau != null && item.Mat_khau != "")
                 {
                     postData += "&users[" + i + "][password]=" + item.Mat_khau;
                 }
@@ -699,14 +738,17 @@ namespace CongThongTinSV.App_Lib
                       {
                           ID_cb = gv.ID_cb,
                           ID_moodle = (nd1 == null ? 0 : nd1.ID_moodle),
+                          Trang_thai = (nd1 == null ? false : true),
                           Ma_cb = gv.Ma_cb,
                           Ho_dem = Utility.GetLastName(gv.Ho_ten),
                           Ten = Utility.GetFirstName(gv.Ho_ten),
                           Ngay_sinh = gv.Ngay_sinh,
-                          Gioi_tinh = gv.Gioi_tinh
+                          Gioi_tinh = gv.Gioi_tinh,
+                          ID_vai_tro = (nd1 == null ? "" : nd1.ID_vai_tro),
+                          Vai_tro = nd1 == null ? "" : string.Join(", ", GetRoleNames(nd1.ID_vai_tro, new char[] { ',' }))
                       };
 
-            return gv2.OrderByDescending(t => t.ID_moodle).ToList();
+            return gv2;//.OrderByDescending(t => t.ID_moodle).ToList();
         }
 
         /// <summary>
@@ -917,6 +959,201 @@ namespace CongThongTinSV.App_Lib
                 return -1;
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="id_vai_tro"></param>
+        /// <returns></returns>
+        public static int AssignTeacherSystemRole(IEnumerable<MoodleTeacher> list, string id_vai_tro)
+        {
+            Entities db = new Entities();
+            int i = 0;
+
+            string postData = "wsfunction=core_role_assign_roles";
+
+            foreach (MoodleTeacher item in list)
+            {
+                postData += "&assignments[" + i + "][roleid]=" + id_vai_tro;
+                postData += "&assignments[" + i + "][userid]=" + item.ID_moodle;
+                postData += "&assignments[" + i + "][contextid]=1";
+                i++;
+            }
+
+            MyWebRequest web = new MyWebRequest(4, "POST", postData);
+            string response = web.GetResponse();
+            //Utility.WriteTextToFile("D:\\GhiDanhGiaoVien_Unassign_VaiTro.txt", response);
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //MoodleException moodleError = new MoodleException();
+
+            if (response.Contains("exception"))
+            {
+                // Error
+                //moodleError = serializer.Deserialize<MoodleException>(rs);
+            }
+            else
+            {
+                // Good
+                //results = serializer.Deserialize<List<MoodleCreateUserResponse>>(response);
+
+                foreach (MoodleTeacher item in list)
+                {
+                    MOD_NguoiDung entity;
+                    entity = db.MOD_NguoiDung.SingleOrDefault(t =>t.ID_moodle == item.ID_moodle);
+
+                    if (!Utility.InArray(item.ID_vai_tro, new char[] { ',' }, id_vai_tro))
+                    {
+                        if (entity.ID_vai_tro == null || entity.ID_vai_tro == "")
+                        {
+                            entity.ID_vai_tro = id_vai_tro;
+                        }
+                        else
+                        {
+                            entity.ID_vai_tro += "," + id_vai_tro;
+                        }
+                    }
+
+                    db.Entry(entity).State = System.Data.EntityState.Modified;
+                }
+
+                try
+                {
+                    return db.SaveChanges();
+                }
+                catch (Exception)
+                {
+                }
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="id_vai_tro"></param>
+        /// <returns></returns>
+        public static int UnassignTeacherSystemRole(IEnumerable<MoodleTeacher> list, string id_vai_tro)
+        {
+            Entities db = new Entities();
+            int i = 0;
+
+            string postData = "wsfunction=core_role_unassign_roles";
+
+            foreach (MoodleTeacher item in list)
+            {
+                postData += "&unassignments[" + i + "][roleid]=" + id_vai_tro;
+                postData += "&unassignments[" + i + "][userid]=" + item.ID_moodle;
+                postData += "&unassignments[" + i + "][contextid]=1";
+                i++;
+            }
+
+            MyWebRequest web = new MyWebRequest(4, "POST", postData);
+            string response = web.GetResponse();
+            //Utility.WriteTextToFile("D:\\GhiDanhGiaoVien_Unassign_VaiTro.txt", response);
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //MoodleException moodleError = new MoodleException();
+
+            if (response.Contains("exception"))
+            {
+                // Error
+                //moodleError = serializer.Deserialize<MoodleException>(rs);
+            }
+            else
+            {
+                // Good
+                //results = serializer.Deserialize<List<MoodleCreateUserResponse>>(response);
+
+                foreach (MoodleTeacher item in list)
+                {
+                    MOD_NguoiDung entity;
+                    entity = db.MOD_NguoiDung.SingleOrDefault(t =>t.ID_moodle == item.ID_moodle);
+                    List<string> vaitro = entity.ID_vai_tro.Split(new char[] { ',' }).ToList();
+
+                    if (vaitro.Remove(id_vai_tro))
+                    {
+                        entity.ID_vai_tro = string.Join(",", vaitro);
+                    }
+
+                    db.Entry(entity).State = System.Data.EntityState.Modified;
+                }
+
+                try
+                {
+                    return db.SaveChanges();
+                }
+                catch (Exception)
+                {
+                }
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public static int UnassignTeacherAllSystemRoles(IEnumerable<MoodleTeacher> list)
+        {
+            Entities db = new Entities();
+            int i = 0;
+
+            string postData = "wsfunction=core_role_unassign_roles";
+
+            foreach (MoodleTeacher item in list)
+            {
+                string[] ids = item.ID_vai_tro.Split(new char[] { ',' });
+
+                foreach (string id in ids)
+                {
+                    postData += "&unassignments[" + i + "][roleid]=" + id;
+                    postData += "&unassignments[" + i + "][userid]=" + item.ID_moodle;
+                    postData += "&unassignments[" + i + "][contextid]=1";
+                    i++;
+                }
+            }
+
+            MyWebRequest web = new MyWebRequest(4, "POST", postData);
+            string response = web.GetResponse();
+            //Utility.WriteTextToFile("D:\\GhiDanhGiaoVien_UnassignAll_VaiTro.txt", response);
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //MoodleException moodleError = new MoodleException();
+
+            if (response.Contains("exception"))
+            {
+                // Error
+                //moodleError = serializer.Deserialize<MoodleException>(rs);
+            }
+            else
+            {
+                // Good
+                //results = serializer.Deserialize<List<MoodleCreateUserResponse>>(response);
+
+                foreach (MoodleTeacher item in list)
+                {
+                    MOD_NguoiDung entity;
+                    entity = db.MOD_NguoiDung.SingleOrDefault(t => t.ID_moodle == item.ID_moodle);
+                    entity.ID_vai_tro = "";
+
+                    db.Entry(entity).State = System.Data.EntityState.Modified;
+                }
+
+                try
+                {
+                    return db.SaveChanges();
+                }
+                catch (Exception)
+                {
+                }
+            }
+
+            return -1;
+        }
+
         #endregion
 
         #region AdminUser
@@ -938,13 +1175,16 @@ namespace CongThongTinSV.App_Lib
                            {
                                ID = ds.UserID,
                                ID_moodle = (nd1 == null ? 0 : nd1.ID_moodle),
+                               Trang_thai = (nd1 == null ? false : true),
                                UserName = ds.UserName,
                                LastName = Utility.GetLastName(ds.FullName),
                                FirstName = Utility.GetFirstName(ds.FullName),
-                               Email = ds.Email
+                               Email = ds.Email,
+                               ID_vai_tro = (nd1 == null ? "" : nd1.ID_vai_tro),
+                               Vai_tro = nd1 == null ? "" : string.Join(", ", GetRoleNames(nd1.ID_vai_tro, new char[] { ',' }))
                            };
 
-            return quantris.OrderByDescending(t => t.ID_moodle).ToList();
+            return quantris;//.OrderByDescending(t => t.ID_moodle).ToList();
         }
 
         /// <summary>
@@ -1148,6 +1388,201 @@ namespace CongThongTinSV.App_Lib
                 return -1;
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="id_vai_tro"></param>
+        /// <returns></returns>
+        public static int AssignAdminUserSystemRole(IEnumerable<MoodleUser> list, string id_vai_tro)
+        {
+            Entities db = new Entities();
+            int i = 0;
+
+            string postData = "wsfunction=core_role_assign_roles";
+
+            foreach (MoodleUser item in list)
+            {
+                postData += "&assignments[" + i + "][roleid]=" + id_vai_tro;
+                postData += "&assignments[" + i + "][userid]=" + item.ID_moodle;
+                postData += "&assignments[" + i + "][contextid]=1";
+                i++;
+            }
+
+            MyWebRequest web = new MyWebRequest(4, "POST", postData);
+            string response = web.GetResponse();
+            //Utility.WriteTextToFile("D:\\GhiDanhGiaoVien_Unassign_VaiTro.txt", response);
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //MoodleException moodleError = new MoodleException();
+
+            if (response.Contains("exception"))
+            {
+                // Error
+                //moodleError = serializer.Deserialize<MoodleException>(rs);
+            }
+            else
+            {
+                // Good
+                //results = serializer.Deserialize<List<MoodleCreateUserResponse>>(response);
+
+                foreach (MoodleUser item in list)
+                {
+                    MOD_NguoiDung entity;
+                    entity = db.MOD_NguoiDung.SingleOrDefault(t => t.ID_moodle == item.ID_moodle);
+
+                    if (!Utility.InArray(item.ID_vai_tro, new char[] { ',' }, id_vai_tro))
+                    {
+                        if (entity.ID_vai_tro == null || entity.ID_vai_tro == "")
+                        {
+                            entity.ID_vai_tro = id_vai_tro;
+                        }
+                        else
+                        {
+                            entity.ID_vai_tro += "," + id_vai_tro;
+                        }
+                    }
+
+                    db.Entry(entity).State = System.Data.EntityState.Modified;
+                }
+
+                try
+                {
+                    return db.SaveChanges();
+                }
+                catch (Exception)
+                {
+                }
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="id_vai_tro"></param>
+        /// <returns></returns>
+        public static int UnassignAdminUserSystemRole(IEnumerable<MoodleUser> list, string id_vai_tro)
+        {
+            Entities db = new Entities();
+            int i = 0;
+
+            string postData = "wsfunction=core_role_unassign_roles";
+
+            foreach (MoodleUser item in list)
+            {
+                postData += "&unassignments[" + i + "][roleid]=" + id_vai_tro;
+                postData += "&unassignments[" + i + "][userid]=" + item.ID_moodle;
+                postData += "&unassignments[" + i + "][contextid]=1";
+                i++;
+            }
+
+            MyWebRequest web = new MyWebRequest(4, "POST", postData);
+            string response = web.GetResponse();
+            //Utility.WriteTextToFile("D:\\GhiDanhGiaoVien_Unassign_VaiTro.txt", response);
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //MoodleException moodleError = new MoodleException();
+
+            if (response.Contains("exception"))
+            {
+                // Error
+                //moodleError = serializer.Deserialize<MoodleException>(rs);
+            }
+            else
+            {
+                // Good
+                //results = serializer.Deserialize<List<MoodleCreateUserResponse>>(response);
+
+                foreach (MoodleUser item in list)
+                {
+                    MOD_NguoiDung entity;
+                    entity = db.MOD_NguoiDung.SingleOrDefault(t => t.ID_moodle == item.ID_moodle);
+                    List<string> vaitro = entity.ID_vai_tro.Split(new char[] { ',' }).ToList();
+
+                    if (vaitro.Remove(id_vai_tro))
+                    {
+                        entity.ID_vai_tro = string.Join(",", vaitro);
+                    }
+
+                    db.Entry(entity).State = System.Data.EntityState.Modified;
+                }
+
+                try
+                {
+                    return db.SaveChanges();
+                }
+                catch (Exception)
+                {
+                }
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public static int UnassignAdminUserAllSystemRoles(IEnumerable<MoodleUser> list)
+        {
+            Entities db = new Entities();
+            int i = 0;
+
+            string postData = "wsfunction=core_role_unassign_roles";
+
+            foreach (MoodleUser item in list)
+            {
+                string[] ids = item.ID_vai_tro.Split(new char[] { ',' });
+
+                foreach (string id in ids)
+                {
+                    postData += "&unassignments[" + i + "][roleid]=" + id;
+                    postData += "&unassignments[" + i + "][userid]=" + item.ID_moodle;
+                    postData += "&unassignments[" + i + "][contextid]=1";
+                    i++;
+                }
+            }
+
+            MyWebRequest web = new MyWebRequest(4, "POST", postData);
+            string response = web.GetResponse();
+            //Utility.WriteTextToFile("D:\\GhiDanhGiaoVien_UnassignAll_VaiTro.txt", response);
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //MoodleException moodleError = new MoodleException();
+
+            if (response.Contains("exception"))
+            {
+                // Error
+                //moodleError = serializer.Deserialize<MoodleException>(rs);
+            }
+            else
+            {
+                // Good
+                //results = serializer.Deserialize<List<MoodleCreateUserResponse>>(response);
+
+                foreach (MoodleUser item in list)
+                {
+                    MOD_NguoiDung entity;
+                    entity = db.MOD_NguoiDung.SingleOrDefault(t => t.ID_moodle == item.ID_moodle);
+                    entity.ID_vai_tro = "";
+
+                    db.Entry(entity).State = System.Data.EntityState.Modified;
+                }
+
+                try
+                {
+                    return db.SaveChanges();
+                }
+                catch (Exception)
+                {
+                }
+            }
+
+            return -1;
+        }
+
         #endregion
 
         #region UserProfile
@@ -1270,6 +1705,32 @@ namespace CongThongTinSV.App_Lib
 
             return results;
         }
+
+        /// <summary>
+        /// Get members in course
+        /// </summary>
+        /// <param name="courseid"></param>
+        /// <returns></returns>
+        public static IEnumerable<MoodleCourseMember> GetCourseMembers(string courseid)
+        {
+            var members = GetEnrolledUsers(courseid).ToList();
+
+            return (from user in members
+                    select new MoodleCourseMember
+                    {
+                        UserID = (int)user.id,
+                        UserName = user.username,
+                        LastName = user.lastname,
+                        FirstName = user.firstname,
+                        Email = user.email,
+                        RoleIDs = string.Join(",", user.roles.Select(t => t.roleid).ToArray()),
+                        Roles = string.Join(", ", user.roles.Select(t => t.name).ToArray()),
+                        City = user.city,
+                        Country = user.country,
+                        ImageUrl = user.profileimageurlsmall,
+                        LastAccess = Utility.ConvertToDateTimeString(user.lastaccess, "dd/MM/yyyy HH:mm")
+                    });
+        }
         #endregion
         #endregion
 
@@ -1324,9 +1785,10 @@ namespace CongThongTinSV.App_Lib
                      {
                          ID = a.ID_lop_tc,
                          ID_moodle = (c == null ? 0 : c.ID_moodle),
+                         Trang_thai = (c == null ? false : true),
                          ID_hocky = hk,
                          Ky_hieu = a.Ky_hieu,
-                         ID_number = a.ID_mon + "." + hocky.Hoc_ky + "." + hocky.Nam_hoc + "." + a.ID_lop_tc,
+                         ID_number = a.Ky_hieu + "." + hocky.Hoc_ky + "." + hocky.Nam_hoc + "." + a.ID_lop_tc,
                          So_tin_chi = a.So_tin_chi,
                          Tu_ngay = a.Tu_ngay,
                          Den_ngay = a.Den_ngay,
@@ -1336,7 +1798,7 @@ namespace CongThongTinSV.App_Lib
                             + ")"
                      };
 
-            return q3.OrderByDescending(t => t.ID_moodle).AsEnumerable();
+            return q3;
         }
 
         /// <summary>
@@ -1486,7 +1948,6 @@ namespace CongThongTinSV.App_Lib
         /// <returns></returns>
         public static IEnumerable<MoodleCourseContentResponse> GetCourseContents(string courseid)
         {
-            Entities db = new Entities();
             string postData = "wsfunction=core_course_get_contents";
             postData += "&courseid=" + courseid;
             MyWebRequest web = new MyWebRequest(4, "POST", postData);
@@ -1515,18 +1976,49 @@ namespace CongThongTinSV.App_Lib
         /// </summary>
         /// <param name="userid">ID of user</param>
         /// <returns></returns>
-        public static IEnumerable<MoodleEnrolledCourse> GetEnrolledCourses(string userid)
+        public static IEnumerable<fit_course> GetUserCourses(string userid)
         {
-            List<string> users = new List<string>();
-            users.Add(userid);
-            var rs = GetUserByID(users);
+            //version 1: slow
+            //List<string> users = new List<string>();
+            //users.Add(userid);
+            //var rs = GetUserByID(users);
 
-            if (rs.Count == 0)
-            {
-                return new List<MoodleEnrolledCourse>();
-            }
+            //if (rs.Count == 0)
+            //{
+            //    return new List<MoodleEnrolledCourse>();
+            //}
+            //version 2: slow
+            //string postData = "wsfunction=core_enrol_get_users_courses";
+            //postData += "&userid=" + userid;
+            //MyWebRequest web = new MyWebRequest(4, "POST", postData);
+            //string response = web.GetResponse();
+            ////Utility.WriteTextToFile("D:\\MoodleGetUserCourse.txt", response);
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //// MoodleException moodleError = new MoodleException();
+            //List<MoodleUserCourse> results = new List<MoodleUserCourse>();
 
-            return rs[0].enrolledcourses;
+            //if (response.Contains("exception"))
+            //{
+            //    // Error
+            //    // moodleError = serializer.Deserialize<MoodleException>(rs);
+            //}
+            //else
+            //{
+            //    // Good
+            //    results = serializer.Deserialize<List<MoodleUserCourse>>(response);
+            //}
+            //version 3: quick
+            long uid;
+            long.TryParse(userid, out uid);
+            MoodleEntities mdb = new MoodleEntities();
+
+            IEnumerable<long> courseids = from u in mdb.fit_user_enrolments
+                                          join e in mdb.fit_enrol
+                                          on u.enrolid equals e.id
+                                          where u.status == 0 && u.userid == uid
+                                          select e.courseid;
+
+            return mdb.fit_course.Where(t => courseids.Contains(t.id));
         }
 
         /// <summary>
@@ -1595,11 +2087,11 @@ namespace CongThongTinSV.App_Lib
         public static IEnumerable<MoodleStudentCourseGrade> GetStudentCourseGrades(string userid = "0")
         {
             MoodleEntities mdb = new MoodleEntities();
-            var courses = GetEnrolledCourses(userid);
+            var courses = GetUserCourses(userid);
             long id;
             long.TryParse(userid, out id);
-            var fitgrades = mdb.fit_grade_grades.Where(t => t.userid == id).ToList();
-            var items = mdb.fit_grade_items.Where(t => t.itemtype == "course").ToList();
+            var fitgrades = mdb.fit_grade_grades.Where(t => t.userid == id);
+            var items = mdb.fit_grade_items.Where(t => t.itemtype == "course");
             var grades = from grade in fitgrades
                          join item in items
                          on grade.itemid equals item.id
@@ -1616,27 +2108,12 @@ namespace CongThongTinSV.App_Lib
                      from g in grade.DefaultIfEmpty()
                      select new MoodleStudentCourseGrade
                      {
-                         ID = course.id,
+                         ID = (int)course.id,
                          CourseName = course.fullname,
                          Grade = (g == null ? null : (g.finalgrade.HasValue ? (g.finalgrade > 10 ? g.finalgrade / 10 : g.finalgrade) : g.finalgrade))
                      };
 
             return rs;
-        }
-
-        /// <summary>
-        /// Get Y grade of student in course
-        /// </summary>
-        /// <param name="course">Course</param>
-        /// <param name="id_sv">ID_sv</param>
-        /// <returns></returns>
-        public static MARK_DiemThi_TC GetYGrade(CourseInfo course, int id_sv)
-        {
-            Entities db = new Entities();
-            var diemtc = db.MARK_Diem_TC.Where(t => t.ID_mon == course.ID_mon && t.ID_sv == id_sv).Select(t => t.ID_diem).ToList();
-            var diemthitc = db.MARK_DiemThi_TC.SingleOrDefault(t => diemtc.Contains(t.ID_diem) && t.Hoc_ky_thi == course.Hoc_ky && t.Nam_hoc_thi == course.Nam_hoc);
-
-            return diemthitc;
         }
         #endregion
 
@@ -1672,12 +2149,12 @@ namespace CongThongTinSV.App_Lib
         /// </summary>
         /// <param name="list">List of users in course</param>
         /// <returns></returns>
-        public static int UpdateYGrades(decimal? newgrade, string userid = "0", string courseid = "0")
+        public static int UpdateYGrade(decimal? newgrade, string userid = "0", string courseid = "0")
         {
             if (newgrade == null) { return -1; }
 
             Entities db = new Entities();
-            MARK_DiemThi_TC entity = GetGrade(userid, courseid);
+            MARK_DiemThi_TC entity = GetYGrade(userid, courseid);
             entity.Diem_thi = (float)newgrade;
             db.Entry(entity).State = System.Data.EntityState.Modified;
 
@@ -1689,6 +2166,38 @@ namespace CongThongTinSV.App_Lib
             {
                 return -1;
             }
+        }
+
+        public static IEnumerable<MoodleQuizStudentGrade> GetQuizStudentNewGrades(string quizid = "0")
+        {
+            MoodleEntities mdb = new MoodleEntities();
+            var quiz = GetQuizByID(quizid);
+            string courseid = quiz == null ? "0" : quiz.course.ToString();
+            long qid = quiz == null ? 0 : quiz.id;
+            var itemZ = mdb.fit_grade_items.SingleOrDefault(t => t.itemtype == "mod" && t.itemmodule == "quiz" && t.iteminstance == qid);
+            long iz = itemZ != null ? itemZ.id : 0;
+            var user = GetEnrolledStudents(courseid);
+            IEnumerable<MoodleQuizStudentGrade> list = new List<MoodleQuizStudentGrade>();
+
+            if (iz != 0)
+            {
+                var grades = mdb.fit_grade_grades.Where(t => t.itemid == iz);
+                list = from u in user
+                       join z in grades
+                       on u.ID equals z.userid
+                       into grade
+                       from g in grade.DefaultIfEmpty()
+                       select new MoodleQuizStudentGrade
+                       {
+                           ID = u.ID,
+                           UserName = u.UserName,
+                           LastName = u.LastName,
+                           FirstName = u.FirstName,
+                           NewGrade = (g == null ? null : (g.finalgrade.HasValue ? (g.finalgrade > 10 ? g.finalgrade / 10 : g.finalgrade) : g.finalgrade))
+                       };
+            }
+
+            return list;
         }
 
         /// <summary>
@@ -1722,11 +2231,12 @@ namespace CongThongTinSV.App_Lib
                            UserName = u.UserName,
                            LastName = u.LastName,
                            FirstName = u.FirstName,
-                           NewGrade = (g == null ? null : (g.finalgrade.HasValue ? (g.finalgrade > 10 ? g.finalgrade / 10 : g.finalgrade) : g.finalgrade))
+                           NewGrade = (g == null ? null : (g.finalgrade.HasValue ? (g.finalgrade > 10 ? g.finalgrade / 10 : g.finalgrade) : null))
                        };
             }
 
             CourseInfo idnumber = GetCourseIDNumber(courseid);
+
             if (idnumber != null)
             {
                 var students = from u in user
@@ -1784,12 +2294,13 @@ namespace CongThongTinSV.App_Lib
         /// <returns>List of quizzes grades</returns>
         public static IEnumerable<MoodleStudentQuizGrade> GetStudentQuizGrades(string userid = "0", string courseid = "0")
         {
-            Entities db = new Entities();
+            //if (!IsUserInCourse(userid, courseid)) { return null; }
+
             MoodleEntities mdb = new MoodleEntities();
-            var quizzes = GetCourseQuizzes(courseid);
             long uid, cid;
             long.TryParse(userid, out uid);
             long.TryParse(courseid, out cid);
+            var quizzes = GetCourseQuizzes(courseid);
             var fitgrades = mdb.fit_grade_grades.Where(t => t.userid == uid);
             var items = mdb.fit_grade_items.Where(t => t.itemtype == "mod" && t.itemmodule == "quiz" && t.courseid == cid);
             var grades = from item in items
@@ -1819,6 +2330,36 @@ namespace CongThongTinSV.App_Lib
         #endregion
 
         #region MoodleEnrol
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="courseid"></param>
+        /// <returns></returns>
+        public static List<MoodleCourseUserResponse> GetEnrolledUsers(string courseid)
+        {
+            Entities db = new Entities();
+            string postData = "wsfunction=core_enrol_get_enrolled_users";
+            postData += "&courseid=" + courseid;
+            MyWebRequest web = new MyWebRequest(4, "POST", postData);
+            string response = web.GetResponse();
+            //Utility.WriteTextToFile("D:\\GetEnrolledUsers.txt", response);
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            // MoodleException moodleError = new MoodleException();
+            List<MoodleCourseUserResponse> results = new List<MoodleCourseUserResponse>();
+
+            if (response.Contains("exception"))
+            {
+                // Error
+                // moodleError = serializer.Deserialize<MoodleException>(rs);
+            }
+            else
+            {
+                // Good
+                results = serializer.Deserialize<List<MoodleCourseUserResponse>>(response);
+            }
+
+            return results;
+        }
         #region Student
         /// <summary>
         /// Get enrolled students
@@ -1849,7 +2390,16 @@ namespace CongThongTinSV.App_Lib
                            LastName = u.lastname,
                            FirstName = u.firstname
                        };
-
+            //var users = GetEnrolledUsers(courseid).Where(t => t.roles.Any(r => r.roleid == 5)).OrderBy(t => t.firstname);
+            //var students = from u in users
+            //               select new MoodleUser
+            //               {
+            //                   ID = (int)u.id,
+            //                   UserName = u.username,
+            //                   LastName = u.lastname,
+            //                   FirstName = u.firstname
+            //               };
+            
             return user.Where(t => !user_enrolments.Contains(t.ID)).OrderBy(t => t.FirstName);
         }
 
@@ -1861,13 +2411,8 @@ namespace CongThongTinSV.App_Lib
         public static IEnumerable<MoodleStudent> GetEnrolStudentXGrades(string id_lop_tc)
         {
             Entities db = new Entities();
-            int idlop = 0;
-
-            try
-            {
-                idlop = Convert.ToInt32(id_lop_tc);
-            }
-            catch (Exception) { }
+            int idlop;
+            int.TryParse(id_lop_tc, out idlop);
 
             if (idlop <= 0) return new List<MoodleStudent>();
 
@@ -1920,7 +2465,7 @@ namespace CongThongTinSV.App_Lib
                                   Ten_nhom = ds.Ten_nhom
                               };
 
-            return hocviendiem.OrderByDescending(t => t.Trang_thai).ToList();
+            return hocviendiem;//.OrderByDescending(t => t.Trang_thai).ToList();
         }
 
         /// <summary>
@@ -1966,13 +2511,8 @@ namespace CongThongTinSV.App_Lib
         public static IEnumerable<MoodleStudent> GetEnrolStudentsProfile(string id_lop_tc)
         {
             Entities db = new Entities();
-            int idlop = 0;
-
-            try
-            {
-                idlop = Convert.ToInt32(id_lop_tc);
-            }
-            catch (Exception) { }
+            int idlop;
+            int.TryParse(id_lop_tc, out idlop);
 
             if (idlop <= 0) return new List<MoodleStudent>();
 
@@ -2171,13 +2711,8 @@ namespace CongThongTinSV.App_Lib
         public static IEnumerable<MoodleTeacher> GetEnrolTeachers(string id_lop_tc)
         {
             Entities db = new Entities();
-            int idlop = 0;
-
-            try
-            {
-                idlop = Convert.ToInt32(id_lop_tc);
-            }
-            catch (Exception) { }
+            int idlop;
+            int.TryParse(id_lop_tc, out idlop);
 
             if (idlop <= 0) return new List<MoodleTeacher>();
 
@@ -2188,7 +2723,7 @@ namespace CongThongTinSV.App_Lib
                                UserID = ds.UserID,
                                ID_lop_tc = ds.ID_lop_tc,
                                ID_vai_tro = ds.ID_vai_tro,
-                               Vai_tro = string.Join(("\n"), GetCourseRoles(ds.ID_vai_tro, new char[] { ',' })),
+                               Vai_tro = string.Join(", ", GetRoleNames(ds.ID_vai_tro, new char[] { ',' })),
                                Dinh_chi = ds.Dinh_chi
                            };
             var nguoidungs = db.MOD_NguoiDung.Where(t => t.ID_nhom_nd == 2);
@@ -2231,10 +2766,10 @@ namespace CongThongTinSV.App_Lib
                         Gioi_tinh = gv1.Gioi_tinh,
                         ID_vai_tro = (gv == null ? "" : gv.ID_vai_tro),
                         Vai_tro = (gv == null ? "" : gv.Vai_tro),
-                        Trang_thai = gv1.ID_moodle == 0 ? "Chưa có tài khoản" : (gv == null ? "Chưa ghi danh" : gv.Dinh_chi ? "Chưa kích hoạt" : "Đã kích hoạt")
+                        Trang_thai = gv == null ? false : gv.Dinh_chi ? false : true
                     };
 
-            return q.OrderByDescending(t => t.ID_vai_tro).ToList();
+            return q;
         }
 
         /// <summary>
@@ -2280,9 +2815,10 @@ namespace CongThongTinSV.App_Lib
 
                 foreach (MoodleTeacher item in list)
                 {
-                    MOD_NguoiDung_VaiTro_LopTinChi entity;
+                    MOD_NguoiDung_VaiTro_LopTinChi entity;                   
+                    entity = db.MOD_NguoiDung_VaiTro_LopTinChi.SingleOrDefault(t => t.ID_lop_tc == item.ID_lop_tc && t.UserID == item.ID_moodle);
 
-                    if (item.Trang_thai == "Chưa ghi danh")
+                    if (entity == null)
                     {
                         entity = new MOD_NguoiDung_VaiTro_LopTinChi();
                         entity.UserID = item.ID_moodle;
@@ -2293,7 +2829,6 @@ namespace CongThongTinSV.App_Lib
                     }
                     else
                     {
-                        entity = db.MOD_NguoiDung_VaiTro_LopTinChi.SingleOrDefault(t => t.ID_lop_tc == item.ID_lop_tc && t.UserID == item.ID_moodle);
                         if (!Utility.InArray(item.ID_vai_tro, new char[] { ',' }, id_vai_tro))
                         {
                             if (entity.ID_vai_tro == "")
@@ -2304,10 +2839,9 @@ namespace CongThongTinSV.App_Lib
                             {
                                 entity.ID_vai_tro += "," + id_vai_tro;
                             }
-
                         }
-                        entity.Dinh_chi = suspended == "0" ? false : true;
 
+                        entity.Dinh_chi = suspended == "0" ? false : true;
                         db.Entry(entity).State = System.Data.EntityState.Modified;
                     }
                 }
@@ -2330,7 +2864,7 @@ namespace CongThongTinSV.App_Lib
         /// <param name="list"></param>
         /// <param name="id_vai_tro"></param>
         /// <returns></returns>
-        public static int UnassignTeachersRole(IEnumerable<MoodleTeacher> list, string id_vai_tro)
+        public static int UnassignTeacherRole(IEnumerable<MoodleTeacher> list, string id_vai_tro)
         {
             Entities db = new Entities();
             int i = 0;
@@ -2392,7 +2926,7 @@ namespace CongThongTinSV.App_Lib
         /// </summary>
         /// <param name="list"></param>
         /// <returns></returns>
-        public static int UnassignTeachersAllRoles(IEnumerable<MoodleTeacher> list)
+        public static int UnassignTeacherAllRoles(IEnumerable<MoodleTeacher> list)
         {
             Entities db = new Entities();
             int i = 0;
@@ -2429,6 +2963,281 @@ namespace CongThongTinSV.App_Lib
                 //results = serializer.Deserialize<List<MoodleCreateUserResponse>>(response);
 
                 foreach (MoodleTeacher item in list)
+                {
+                    MOD_NguoiDung_VaiTro_LopTinChi entity;
+                    entity = db.MOD_NguoiDung_VaiTro_LopTinChi.SingleOrDefault(t => t.ID_lop_tc == item.ID_lop_tc && t.UserID == item.ID_moodle);
+                    entity.ID_vai_tro = "";
+
+                    db.Entry(entity).State = System.Data.EntityState.Modified;
+                }
+
+                try
+                {
+                    return db.SaveChanges();
+                }
+                catch (Exception)
+                {
+                }
+            }
+
+            return -1;
+        }
+        #endregion
+
+        #region AdminUser
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id_lop_tc"></param>
+        /// <returns></returns>
+        public static IEnumerable<MoodleUser> GetEnrolAdminUsers(string id_lop_tc)
+        {
+            Entities db = new Entities();
+            int idlop;
+            int.TryParse(id_lop_tc, out idlop);
+
+            if (idlop <= 0) return new List<MoodleUser>();
+
+            var danhsach = from ds in db.MOD_NguoiDung_VaiTro_LopTinChi.AsEnumerable()
+                           where ds.ID_lop_tc == idlop
+                           select new
+                           {
+                               UserID = ds.UserID,
+                               ID_lop_tc = ds.ID_lop_tc,
+                               ID_vai_tro = ds.ID_vai_tro,
+                               Vai_tro = string.Join((", "), GetRoleNames(ds.ID_vai_tro, new char[] { ',' })),
+                               Dinh_chi = ds.Dinh_chi
+                           };
+            var nguoidungs = db.MOD_NguoiDung.Where(t => t.ID_nhom_nd == 1);
+            var adminuser = from ad1 in db.SYS_NguoiDung.AsEnumerable()
+                           join ad2 in nguoidungs
+                           on ad1.UserID equals ad2.ID_nd
+                           into ds
+                           from ad3 in ds.DefaultIfEmpty()
+                           select new
+                           {
+                               ID_moodle = (ad3 == null ? 0 : ad3.ID_moodle),
+                               UserID = ad1.UserID,
+                               UserName = ad1.UserName,
+                               LastName = Utility.GetLastName(ad1.FullName),
+                               FirstName = Utility.GetFirstName(ad1.FullName),
+                               Email = ad1.Email
+                           };
+
+            var q = from ad1 in adminuser
+                    join ad2 in danhsach
+                    on ad1.ID_moodle equals ad2.UserID
+                    into danhsach1
+                    from ad in danhsach1.DefaultIfEmpty()
+                    select new MoodleUser
+                    {
+                        ID_lop_tc = idlop,
+                        ID = ad1.UserID,
+                        ID_moodle = ad1.ID_moodle,
+                        UserName = ad1.UserName,
+                        LastName = ad1.LastName,
+                        FirstName = ad1.FirstName,
+                        Email = ad1.Email,
+                        ID_vai_tro = (ad == null ? "" : ad.ID_vai_tro),
+                        Vai_tro = (ad == null ? "" : ad.Vai_tro),
+                        Trang_thai = ad == null ? false : ad.Dinh_chi ? false : true
+                    };
+
+            return q;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="id_vai_tro"></param>
+        /// <param name="suspended"></param>
+        /// <returns></returns>
+        public static int ManualEnrolAdminUsers(IEnumerable<MoodleUser> list, string id_vai_tro, string suspended)
+        {
+            Entities db = new Entities();
+            int i = 0;
+
+            string postData = "wsfunction=enrol_manual_enrol_users";
+
+            foreach (MoodleUser item in list)
+            {
+                postData += "&enrolments[" + i + "][roleid]=" + id_vai_tro;
+                postData += "&enrolments[" + i + "][userid]=" + item.ID_moodle;
+                postData += "&enrolments[" + i + "][courseid]=" + item.ID_lop_tc;
+                postData += "&enrolments[" + i + "][timestart]=" + Utility.ConvertToTimestamp(DateTime.Now);
+                //postData += "&enrolments[" + i + "][timeend]=0";
+                postData += "&enrolments[" + i + "][suspend]=" + suspended;
+                i++;
+            }
+
+            MyWebRequest web = new MyWebRequest(4, "POST", postData);
+            string response = web.GetResponse();
+            //Utility.WriteTextToFile("D:\\GhiDanhGiaoVienCreate.txt", response);
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //MoodleException moodleError = new MoodleException();
+
+            if (response.Contains("exception"))
+            {
+                // Error
+                //moodleError = serializer.Deserialize<MoodleException>(rs);
+            }
+            else
+            {
+                // Good
+                //results = serializer.Deserialize<List<MoodleCreateUserResponse>>(response);
+
+                foreach (MoodleUser item in list)
+                {
+                    MOD_NguoiDung_VaiTro_LopTinChi entity;
+                    entity = db.MOD_NguoiDung_VaiTro_LopTinChi.SingleOrDefault(t => t.ID_lop_tc == item.ID_lop_tc && t.UserID == item.ID_moodle);
+
+                    if (entity == null)
+                    {
+                        entity = new MOD_NguoiDung_VaiTro_LopTinChi();
+                        entity.UserID = item.ID_moodle;
+                        entity.ID_vai_tro = "" + id_vai_tro;
+                        entity.ID_lop_tc = item.ID_lop_tc;
+                        entity.Dinh_chi = suspended == "0" ? false : true;
+                        db.MOD_NguoiDung_VaiTro_LopTinChi.Add(entity);
+                    }
+                    else
+                    {
+                        if (!Utility.InArray(item.ID_vai_tro, new char[] { ',' }, id_vai_tro))
+                        {
+                            if (entity.ID_vai_tro == "")
+                            {
+                                entity.ID_vai_tro = id_vai_tro;
+                            }
+                            else
+                            {
+                                entity.ID_vai_tro += "," + id_vai_tro;
+                            }
+
+                        }
+
+                        entity.Dinh_chi = suspended == "0" ? false : true;
+                        db.Entry(entity).State = System.Data.EntityState.Modified;
+                    }
+                }
+
+                try
+                {
+                    return db.SaveChanges();
+                }
+                catch (Exception)
+                {
+                }
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="id_vai_tro"></param>
+        /// <returns></returns>
+        public static int UnassignAdminUserRole(IEnumerable<MoodleUser> list, string id_vai_tro)
+        {
+            Entities db = new Entities();
+            int i = 0;
+
+            string postData = "wsfunction=core_role_unassign_roles";
+
+            foreach (MoodleUser item in list)
+            {
+                postData += "&unassignments[" + i + "][roleid]=" + id_vai_tro;
+                postData += "&unassignments[" + i + "][userid]=" + item.ID_moodle;
+                postData += "&unassignments[" + i + "][contextid]=" + MoodleLib.GetContextID("50", item.ID_lop_tc.ToString());
+                i++;
+            }
+
+            MyWebRequest web = new MyWebRequest(4, "POST", postData);
+            string response = web.GetResponse();
+            //Utility.WriteTextToFile("D:\\GhiDanhGiaoVien_Unassign_VaiTro.txt", response);
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //MoodleException moodleError = new MoodleException();
+
+            if (response.Contains("exception"))
+            {
+                // Error
+                //moodleError = serializer.Deserialize<MoodleException>(rs);
+            }
+            else
+            {
+                // Good
+                //results = serializer.Deserialize<List<MoodleCreateUserResponse>>(response);
+
+                foreach (MoodleUser item in list)
+                {
+                    MOD_NguoiDung_VaiTro_LopTinChi entity;
+                    entity = db.MOD_NguoiDung_VaiTro_LopTinChi.SingleOrDefault(t => t.ID_lop_tc == item.ID_lop_tc && t.UserID == item.ID_moodle);
+                    List<string> vaitro = entity.ID_vai_tro.Split(new char[] { ',' }).ToList();
+
+                    if (vaitro.Remove(id_vai_tro))
+                    {
+                        entity.ID_vai_tro = string.Join(",", vaitro);
+                    }
+
+                    db.Entry(entity).State = System.Data.EntityState.Modified;
+                }
+
+                try
+                {
+                    return db.SaveChanges();
+                }
+                catch (Exception)
+                {
+                }
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public static int UnassignAdminUserAllRoles(IEnumerable<MoodleUser> list)
+        {
+            Entities db = new Entities();
+            int i = 0;
+
+            string postData = "wsfunction=core_role_unassign_roles";
+
+            foreach (MoodleUser item in list)
+            {
+                string[] ids = item.ID_vai_tro.Split(new char[] { ',' });
+
+                foreach (string id in ids)
+                {
+                    postData += "&unassignments[" + i + "][roleid]=" + id;
+                    postData += "&unassignments[" + i + "][userid]=" + item.ID_moodle;
+                    postData += "&unassignments[" + i + "][contextid]=" + MoodleLib.GetContextID("50", item.ID_lop_tc.ToString());
+                    i++;
+                }
+            }
+
+            MyWebRequest web = new MyWebRequest(4, "POST", postData);
+            string response = web.GetResponse();
+            //Utility.WriteTextToFile("D:\\GhiDanhGiaoVien_UnassignAll_VaiTro.txt", response);
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //MoodleException moodleError = new MoodleException();
+
+            if (response.Contains("exception"))
+            {
+                // Error
+                //moodleError = serializer.Deserialize<MoodleException>(rs);
+            }
+            else
+            {
+                // Good
+                //results = serializer.Deserialize<List<MoodleCreateUserResponse>>(response);
+
+                foreach (MoodleUser item in list)
                 {
                     MOD_NguoiDung_VaiTro_LopTinChi entity;
                     entity = db.MOD_NguoiDung_VaiTro_LopTinChi.SingleOrDefault(t => t.ID_lop_tc == item.ID_lop_tc && t.UserID == item.ID_moodle);
@@ -3032,9 +3841,10 @@ namespace CongThongTinSV.App_Lib
         /// <param name="idArray"></param>
         /// <param name="separator"></param>
         /// <returns></returns>
-        public static string[] GetCourseRoles(string idArray, char[] separator)
+        public static string[] GetRoleNames(string idArray, char[] separator)
         {
             MoodleEntities mdb = new MoodleEntities();
+            if (idArray == null) return new string[] { "" };
             string[] ids = idArray.Split(separator);
             int len = ids.Length;
 
@@ -3068,6 +3878,8 @@ namespace CongThongTinSV.App_Lib
 
             return new SelectList(role.ToList(), "id", "name");
         }
+        #region AdminUser
+        #endregion
         #endregion
 
         #region MoodleWebService
@@ -3276,7 +4088,7 @@ namespace CongThongTinSV.App_Lib
                        Ten_quyen = q1.Ten_quyen,
                        Action_name = q1.Action_name,
                        Trang_thai = (quyen == null ? false : true)
-                   }).OrderByDescending(t => t.Trang_thai);
+                   });
         }
 
         /// <summary>

@@ -2,6 +2,7 @@
     background-color: #e2e2e2;
     margin: 0;
     padding: 0;
+    min-width: 960px;
 }
 
 body
@@ -34,8 +35,8 @@ a {
         /*text-decoration: underline;*/
     }
 
-header, footer, hgroup,
-nav, section {
+header, footer, hgroup, nav, section
+{
     display: block;
 }
 
@@ -47,10 +48,12 @@ mark {
 
 .float-left {
     float: left;
+    display: inline-block;
 }
 
 .float-right {
     float: right;
+    display: inline-block;
 }
 
 .clear-fix:after {
@@ -131,7 +134,7 @@ header .content-wrapper {
 footer {
     clear: both;
     background-color: #e2e2e2;
-    font-size: .8em;
+    font-size: .85em;
     height: 100px;
 }
 
@@ -757,7 +760,7 @@ tr.pager td {
     }
 
     footer {
-        text-align: center;
+        /*text-align: center;*/
         height: auto;
         padding: 10px 0;
     }
@@ -779,4 +782,77 @@ td a:hover {
 hr
 {
     color: #c8c8c8;
+}
+.nowrap
+{
+    white-space: nowrap;
+}
+/*Command button*/
+.image_check
+{
+    width: 16px;
+    height: 16px;
+    margin-left: 3px;
+}
+
+.button-add,
+.button-delete,
+.button-sync,
+.button-update,
+.button-stop,
+.button-stop-all,
+.button-add-sysrole,
+.button-delete-sysrole
+{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 16px 16px;
+    background-color: transparent;
+    border-style: none;
+    width: 16px;
+    height: 16px;
+    display: inline;
+    position: relative;
+    bottom: 6px;
+    left: 3px;
+}
+
+.button-add
+{
+    background-image: url('../Images/add.png');
+}
+
+.button-delete
+{
+    background-image: url('../Images/delete.png');
+}
+
+.button-sync
+{
+    background-image: url('../Images/sync.png');
+}
+
+.button-update
+{
+    background-image: url('../Images/update.png');
+}
+
+.button-stop
+{
+    background-image: url('../Images/stop.png');
+}
+
+.button-stop-all
+{
+    background-image: url('../Images/stop-all.png');
+}
+
+.button-add-sysrole
+{
+    background-image: url('../Images/db-add.png');
+}
+
+.button-delete-sysrole
+{
+    background-image: url('../Images/db-delete.png');
 }
