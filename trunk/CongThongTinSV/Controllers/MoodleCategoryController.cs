@@ -21,7 +21,7 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        //[Authorize(Roles = "MoodleCategory.GetSemesters")]
+        [Authorize(Roles = "MoodleCategory.ManageSemester")]
         public ActionResult GetSemesters([DataSourceRequest] DataSourceRequest request)
         {
             return Json(MoodleLib.GetSemesters().ToDataSourceResult(request));

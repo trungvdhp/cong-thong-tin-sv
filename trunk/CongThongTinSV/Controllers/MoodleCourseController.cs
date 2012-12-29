@@ -8,24 +8,26 @@ using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
 using System.Web.Script.Serialization;
 using CongThongTinSV.App_Lib;
+using System.ComponentModel;
 
 namespace CongThongTinSV.Controllers
 {
     public class MoodleCourseController : Controller
     {
+        [Description("Quản lý khóa học trên moodle")]
         [Authorize(Roles = "MoodleCourse.Manage")]
         public ActionResult Manage()
         {
             return View();
         }
 
-        //[Authorize(Roles = "MoodleCourse.GetCourses")]
+        [Authorize(Roles = "MoodleCourse.Manage")]
         public ActionResult GetCourses([DataSourceRequest] DataSourceRequest request, string id_hocky)
         {
             return Json(MoodleLib.GetCourses(id_hocky).ToDataSourceResult(request));
         }
 
-        //[Authorize(Roles = "MoodleCourse.GetCourseList")]
+        [Authorize(Roles = "MoodleCourse.Manage")]
         public JsonResult GetCourseList(string id_hocky)
         {
             JsonResult result = new JsonResult();
@@ -35,6 +37,7 @@ namespace CongThongTinSV.Controllers
             return result;
         }
 
+        [Description("Tạo các khóa học trên moodle")]
         [Authorize(Roles = "MoodleCourse.CreateCourses")]
         public ActionResult CreateCourses(string selectedVals, string id_hocky)
         {
@@ -49,6 +52,7 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
+        [Description("Xóa các khóa học trên moodle")]
         [Authorize(Roles = "MoodleCourse.DeleteCourses")]
         public ActionResult DeleteCourses(string selectedVals, string id_hocky)
         {
@@ -63,30 +67,52 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        [Authorize(Roles = "MoodleCourse.CourseStudentGrade")]
-        public ActionResult CourseStudentGrade(string courseid = "0")
+        [Description("Xem bảng điểm tổng kết khóa học tôi được ghi danh")]
+        [Authorize(Roles = "MoodleCourse.MyCourseStudentGrade")]
+        public ActionResult MyCourseStudentGrade(string courseid = "0")
         {
-            ViewBag.CourseID = courseid;
-            MoodleEntities mdb = new MoodleEntities();
+            string userid = GlobalLib.GetCurrentUserData().MoodleUserID.ToString();
 
-            try
+            if (!MoodleLib.IsUserInCourse(userid, courseid))
             {
-                ViewBag.CourseName = mdb.fit_course.AsEnumerable().SingleOrDefault(t => t.id.ToString() == courseid).fullname;
+                ViewBag.Error = "Bạn chưa được ghi danh vào khóa học này!";
             }
-            catch (Exception)
+            else
             {
-                ViewBag.CourseName = "";
+                ViewBag.Error = "";
             }
+
+            var course = MoodleLib.GetCourseByID(courseid);
+            ViewBag.CourseName = course == null ? "" : course.fullname;
+            ViewBag.CourseID = courseid;
 
             return View();
         }
 
-        [Authorize(Roles = "MoodleCourse.GetCourseStudentGrades")]
+        [Authorize(Roles = "MoodleCourse.MyCourseStudentGrade")]
+        public ActionResult GetMyCourseStudentGrades([DataSourceRequest] DataSourceRequest request, string courseid = "0")
+        {
+            return Json(MoodleLib.GetCourseStudentGrades(courseid).ToDataSourceResult(request));
+        }
+
+        [Description("Xem bảng điểm tổng kết của tất cả các khóa học")]
+        [Authorize(Roles = "MoodleCourse.CourseStudentGrade")]
+        public ActionResult CourseStudentGrade(string courseid = "0")
+        {
+            var course = MoodleLib.GetCourseByID(courseid);
+            ViewBag.CourseName = course == null ? "" : course.fullname;
+            ViewBag.CourseID = courseid;
+
+            return View();
+        }
+
+        [Authorize(Roles = "MoodleCourse.CourseStudentGrade")]
         public ActionResult GetCourseStudentGrades([DataSourceRequest] DataSourceRequest request, string courseid = "0")
         {
             return Json(MoodleLib.GetCourseStudentGrades(courseid).ToDataSourceResult(request));
         }
 
+        [Description("Xem bảng điểm các khóa học tôi được ghi danh")]
         [Authorize(Roles = "MoodleCourse.MyCourseGrade")]
         public ActionResult MyCourseGrade()
         {
@@ -94,7 +120,7 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        [Authorize(Roles = "MoodleCourse.GetMyCourseGrades")]
+        [Authorize(Roles = "MoodleCourse.MyCourseGrade")]
         public ActionResult GetMyCourseGrades([DataSourceRequest] DataSourceRequest request)
         {
             string userid = GlobalLib.GetCurrentUserData().MoodleUserID.ToString();
@@ -102,6 +128,7 @@ namespace CongThongTinSV.Controllers
             return Json(MoodleLib.GetStudentCourseGrades(userid).ToDataSourceResult(request));
         }
 
+        [Description("Xem bảng điểm các khóa học của một sinh viên")]
         [Authorize(Roles = "MoodleCourse.StudentCourseGrade")]
         public ActionResult StudentCourseGrade(string userid = "0")
         {
@@ -112,10 +139,15 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        [Authorize(Roles = "MoodleCourse.GetStudentCourseGrades")]
+        [Authorize(Roles = "MoodleCourse.StudentCourseGrade")]
         public ActionResult GetStudentCourseGrades([DataSourceRequest] DataSourceRequest request, string userid)
         {
             return Json(MoodleLib.GetStudentCourseGrades(userid).ToDataSourceResult(request));
+        }
+
+        public ActionResult GetCourseMembers([DataSourceRequest] DataSourceRequest request, string courseid = "0")
+        {
+            return Json(MoodleLib.GetCourseMembers(courseid).ToDataSourceResult(request));
         }
     }
 }

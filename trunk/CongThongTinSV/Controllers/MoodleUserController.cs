@@ -13,6 +13,7 @@ using System.Web.Script.Serialization;
 using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
 using CongThongTinSV.App_Lib;
+using System.ComponentModel;
 
 namespace CongThongTinSV.Controllers
 {
@@ -25,7 +26,19 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        //[Authorize(Roles = "MoodleUser.GetStudents")]
+        [Authorize(Roles = "MoodleUser.SearchStudent")]
+        public ActionResult SearchStudent()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "MoodleUser.SearchStudent")]
+        public ActionResult GetSearchStudents([DataSourceRequest] DataSourceRequest request, string id_chuyen_nganh)
+        {
+            return Json(MoodleLib.GetStudents(id_chuyen_nganh).Where(t => t.ID_moodle != 0).ToDataSourceResult(request));
+        }
+
+        [Authorize(Roles = "MoodleUser.ManageStudent")]
         public ActionResult GetStudents([DataSourceRequest] DataSourceRequest request, string id_chuyen_nganh)
         {
             return Json(MoodleLib.GetStudents(id_chuyen_nganh).ToDataSourceResult(request));
@@ -89,13 +102,27 @@ namespace CongThongTinSV.Controllers
         #endregion
 
         #region Teacher
+        [Description("Tìm kiếm tài khoản moodle giáo viên")]
+        [Authorize(Roles = "MoodleUser.SearchTeacher")]
+        public ActionResult SearchTeacher()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "MoodleUser.SearchTeacher")]
+        public ActionResult GetSearchTeachers([DataSourceRequest] DataSourceRequest request, string id_khoa)
+        {
+
+            return Json(MoodleLib.GetTeachers(id_khoa).Where(t => t.ID_moodle != 0).ToDataSourceResult(request));
+        }
+
         [Authorize(Roles = "MoodleUser.ManageTeacher")]
         public ActionResult ManageTeacher()
         {
             return View();
         }
 
-        //[Authorize(Roles = "MoodleUser.GetTeachers")]
+        [Authorize(Roles = "MoodleUser.ManageTeacher")]
         public ActionResult GetTeachers([DataSourceRequest] DataSourceRequest request, string id_khoa)
         {
 
@@ -160,6 +187,57 @@ namespace CongThongTinSV.Controllers
 
             return View();
         }
+
+        [Authorize(Roles = "MoodleUser.AssignTeacherSystemRole")]
+        public ActionResult AssignTeacherSystemRole(string selectedVals, string id_khoa, string id_vai_tro)
+        {
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+            var list = MoodleLib.GetTeachers(id_khoa);
+            list = list.Where(t => t.ID_moodle == 0 && s.Contains(t.ID_cb.ToString()));
+
+            if (list.Count() != 0)
+            {
+                MoodleLib.CreateTeachers(list);
+            }
+
+            list = MoodleLib.GetTeachers(id_khoa);
+            list = list.Where(t => t.ID_moodle > 0 && s.Contains(t.ID_cb.ToString()));
+
+            if (list.Count() > 0)
+            {
+                MoodleLib.AssignTeacherSystemRole(list, id_vai_tro);
+            }
+
+            return View();
+        }
+
+        [Authorize(Roles = "MoodleUser.UnassignTeacherSystemRole")]
+        public ActionResult UnassignTeacherSystemRole(string selectedVals, string id_khoa, string id_vai_tro)
+        {
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+            var list = MoodleLib.GetTeachers(id_khoa).Where(t => s.Contains(t.ID_cb.ToString()) && Utility.InArray(t.ID_vai_tro, new char[] { ',' }, id_vai_tro));
+
+            if (list.Count() != 0)
+            {
+                MoodleLib.UnassignTeacherSystemRole(list, id_vai_tro);
+            }
+
+            return View();
+        }
+
+        [Authorize(Roles = "MoodleUser.UnassignTeacherAllSystemRoles")]
+        public ActionResult UnassignTeacherAllSystemRoles(string selectedVals, string id_khoa)
+        {
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+            var list = MoodleLib.GetTeachers(id_khoa).Where(t => s.Contains(t.ID_cb.ToString()) && t.ID_vai_tro != "");
+
+            if (list.Count() != 0)
+            {
+                MoodleLib.UnassignTeacherAllSystemRoles(list);
+            }
+
+            return View();
+        }
         #endregion
 
         #region AdminUser
@@ -169,7 +247,7 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        //[Authorize(Roles = "MoodleUser.GetAdminUsers")]
+        [Authorize(Roles = "MoodleUser.ManageAdminUser")]
         public ActionResult GetAdminUsers([DataSourceRequest] DataSourceRequest request)
         {
             return Json(MoodleLib.GetAdminUsers().ToDataSourceResult(request));
@@ -229,6 +307,58 @@ namespace CongThongTinSV.Controllers
             if (list.Count() != 0)
             {
                 MoodleLib.SyncAdminUsers(list);
+            }
+
+            return View();
+        }
+
+
+        [Authorize(Roles = "MoodleUser.AssignAdminUserSystemRole")]
+        public ActionResult AssignAdminUserSystemRole(string selectedVals, string id_vai_tro)
+        {
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+            var list = MoodleLib.GetAdminUsers();
+            list = list.Where(t => t.ID_moodle == 0 && s.Contains(t.ID.ToString()));
+
+            if (list.Count() != 0)
+            {
+                MoodleLib.CreateAdminUsers(list);
+            }
+
+            list = MoodleLib.GetAdminUsers();
+            list = list.Where(t => t.ID_moodle > 0 && s.Contains(t.ID.ToString()));
+
+            if (list.Count() > 0)
+            {
+                MoodleLib.AssignAdminUserSystemRole(list, id_vai_tro);
+            }
+
+            return View();
+        }
+
+        [Authorize(Roles = "MoodleUser.UnassignAdminUserSystemRole")]
+        public ActionResult UnassignAdminUserSystemRole(string selectedVals, string id_vai_tro)
+        {
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+            var list = MoodleLib.GetAdminUsers().Where(t => s.Contains(t.ID.ToString()) && Utility.InArray(t.ID_vai_tro, new char[] { ',' }, id_vai_tro));
+
+            if (list.Count() != 0)
+            {
+                MoodleLib.UnassignAdminUserSystemRole(list, id_vai_tro);
+            }
+
+            return View();
+        }
+
+        [Authorize(Roles = "MoodleUser.UnassignAdminUserAllSystemRoles")]
+        public ActionResult UnassignAdminUserAllSystemRoles(string selectedVals)
+        {
+            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
+            var list = MoodleLib.GetAdminUsers().Where(t => s.Contains(t.ID.ToString()) && t.ID_vai_tro != "");
+
+            if (list.Count() != 0)
+            {
+                MoodleLib.UnassignAdminUserAllSystemRoles(list);
             }
 
             return View();
@@ -313,31 +443,33 @@ namespace CongThongTinSV.Controllers
         [Authorize(Roles = "MoodleUser.MyCourseProfile")]
         public ActionResult MyCourseProfile(string courseid="0")
         {
-            List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
-            string userid = GlobalLib.GetCurrentUserData().MoodleUserID.ToString();
-            list.Add(new KeyValuePair<string, string>(userid, courseid));
-            var q = MoodleLib.GetCourseUserProfiles(list);
+            UserData userData = GlobalLib.GetCurrentUserData();
+            string userid = userData.MoodleUserID.ToString();
 
-            if (q.Count() > 0)
+            if (!MoodleLib.IsUserInCourse(userid, courseid))
             {
-                var user = q.ElementAt(0);
-                ViewBag.CourseUser = user;
-                var course = user.enrolledcourses.AsEnumerable().SingleOrDefault(t => t.id.ToString() == courseid);
-
-                if (course == null)
-                {
-                    ViewBag.CourseName = "";
-                }
-                else
-                {
-                    ViewBag.CourseName = course.fullname;
-                }
+                ViewBag.Error = "Bạn chưa được ghi danh vào khóa học này!";
             }
             else
             {
-                ViewBag.CourseUser = new MoodleCourseUserResponse();
-                ViewBag.CourseName = "";
+                ViewBag.Error = "";
+                List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
+                list.Add(new KeyValuePair<string, string>(userid, courseid));
+                var q = MoodleLib.GetCourseUserProfiles(list);
+
+                if (q.Count() > 0)
+                {
+                    ViewBag.CourseUser = q.ElementAt(0);
+                }
+                else
+                {
+                    ViewBag.CourseUser = new MoodleCourseUserResponse();
+                }
             }
+
+            var course = MoodleLib.GetCourseByID(courseid);
+            ViewBag.CourseName = course == null ? "" : course.fullname;
+            ViewBag.FullName = userData.MoodleFullName;
 
             return View();
         }
@@ -360,30 +492,31 @@ namespace CongThongTinSV.Controllers
         [Authorize(Roles = "MoodleUser.UserCourseProfile")]
         public ActionResult UserCourseProfile(string userid="0", string courseid="0")
         {
-            List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
-            list.Add(new KeyValuePair<string,string>(userid, courseid));
-            var q = MoodleLib.GetCourseUserProfiles(list);
-
-            if (q.Count() > 0)
+            if (!MoodleLib.IsUserInCourse(userid, courseid))
             {
-                var user= q.ElementAt(0);
-                ViewBag.CourseUser = user;
-                var course = user.enrolledcourses.AsEnumerable().SingleOrDefault(t => t.id.ToString() == courseid);
-
-                if (course == null)
-                {
-                    ViewBag.CourseName = "";
-                }
-                else
-                {
-                    ViewBag.CourseName = course.fullname;
-                }
+                ViewBag.Error = "Người dùng chưa được ghi danh vào khóa học này!";
             }
             else
             {
-                ViewBag.CourseUser = new MoodleCourseUserResponse();
-                ViewBag.CourseName = "";
+                ViewBag.Error = "";
+                List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
+                list.Add(new KeyValuePair<string, string>(userid, courseid));
+                var q = MoodleLib.GetCourseUserProfiles(list);
+
+                if (q.Count() > 0)
+                {
+                    ViewBag.CourseUser = q.ElementAt(0);
+                }
+                else
+                {
+                    ViewBag.CourseUser = new MoodleCourseUserResponse();
+                }
             }
+
+            var course = MoodleLib.GetCourseByID(courseid);
+            ViewBag.CourseName = course == null ? "" : course.fullname;
+            ViewBag.FullName = MoodleLib.GetUserFullNameByID(userid);
+            ViewBag.UserID = userid;
 
             return View();
         }

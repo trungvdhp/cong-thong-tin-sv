@@ -12,19 +12,19 @@ namespace CongThongTinSV.Controllers
 {
     public class MoodleCapabilityController : Controller
     {
-        [Authorize(Roles = "MoodleCapability.Manage")]
+        [Authorize(Roles = "MoodleAdmin")]
         public ActionResult Manage()
         {
             return View();
         }
 
-        //[Authorize(Roles = "MoodleCapability.GetCapabilities")]
+        [Authorize(Roles = "MoodleAdmin")]
         public ActionResult GetCapabilities([DataSourceRequest] DataSourceRequest request, string id_dv)
         {
             return Json(MoodleLib.GetCapabilities(id_dv).ToDataSourceResult(request));
         }
 
-        [Authorize(Roles = "MoodleCapability.AssignCapabilities")]
+        [Authorize(Roles = "MoodleAdmin")]
         public ActionResult AssignCapabilities(string selectedVals, string id_dv)
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
@@ -37,7 +37,7 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        [Authorize(Roles = "MoodleCapability.UnassignCapabilities")]
+        [Authorize(Roles = "MoodleAdmin")]
         public ActionResult UnassignCapabilities(string selectedVals, string id_dv)
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
