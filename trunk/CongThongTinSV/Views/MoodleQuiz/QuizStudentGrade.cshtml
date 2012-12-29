@@ -9,28 +9,33 @@
     .Columns(columns =>
     {
         columns.Bound(c => c.ID)
-            .ClientTemplate("<input type='checkbox' class='chkbx' value='#= ID #'/>")
+            .ClientTemplate("# if (IsDiffGrade && ID_diem_thi != 0) { #" +
+              "<input type='checkbox' class='chkbx' value='#= ID #' title=''/>" +
+            "# } #")
             .HeaderTemplate("<input type='checkbox' id='masterCheckBox'/>")
             .Width(40)
             .Title("")
             .HeaderHtmlAttributes(new { style = "text-align:center" })
             .HtmlAttributes(new { style = "text-align:center" })
             .Filterable(false).Groupable(false).Sortable(false);
-        columns.Bound(c => c.UserName).Width(80);
+        columns.Bound(c => c.UserName).Width(80)
+             .ClientTemplate(
+                (@Html.ActionLink("#=UserName#", "UserProfile", "MoodleUser", new { userid = "UserId" }, new { title = "Xem hồ sơ người dùng" }).ToHtmlString().Replace("UserId", "#=ID#")));
         columns.Bound(c => c.LastName).Width(150);
         columns.Bound(c => c.FirstName).Width(80);
         columns.Bound(c => c.OldGrade).Format("{0:0.0}").Width(90);
         columns.Bound(c => c.NewGrade).Format("{0:0.0}").Width(95);
         columns.Bound(c => c.IsDiffGrade).Title("")
-            .Sortable(false)
-            .Filterable(false)
-            .Groupable(false)
             .ClientTemplate("<img width='16' height='16' src=" +
             "# if (IsDiffGrade) { #" +
-                Url.Content("~/Images/cross_red_big.gif") +
+                Url.Content("~/Images/warning.png") + " title='Điểm khác nhau' }" + 
             "# } else { #" +
-                Url.Content("~/Images/tick_green_big.gif") +
-            "# } # />");
+                Url.Content("~/Images/ok-2.png") + " title='Điểm giống nhau' }" +
+            "# } # />" +
+            "# if (IsDiffGrade && ID_diem_thi != 0) { #" +
+              "<button class='button-update' title='Cập nhật điểm' onclick='update_one(#=NewGrade#, #=ID_diem_thi#)'></button>" +
+            "# } #"
+            );
     })
     .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50, 100 }).Refresh(true).Input(true).Numeric(false))
     .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
@@ -56,9 +61,12 @@
 <div>
     <button id="updateMark" class="k-button">Cập nhật điểm thi</button>
 </div>
-<br />
-<div style="text-align: center;">
-@Html.ActionLink("Quay về khóa học", "CourseQuizList", "MoodleCourse", routeValues: new { courseid = ViewBag.CourseID }, htmlAttributes: new { title = "Back to the course" })
+<div style="text-align: center;margin-top: 10px;">
+     @using (Html.BeginForm("CourseQuizList", "MoodleCourse", new { courseid = ViewBag.CourseID }, FormMethod.Post, htmlAttributes: new { title = "Back to the list of quizzes of course" }))
+    {
+        @Html.AntiForgeryToken()
+        <button class="k-button" type="submit">Quay về danh sách các bài thi</button>
+    }
 </div>
 <script type="text/javascript">
     var selectedVals = [];
@@ -89,6 +97,13 @@
         $("#Grid").data("kendoGrid").dataSource.read();
     }
 
+   function update_one(grade, id) {
+        if (confirm('Bạn muốn cập nhật điểm mới cho học viên này?')) {
+            var action = '@Url.Action("UpdateYGrade","MoodleGrade")' + '/?newgrade=' + grade + '&id_diem_thi=' + id;
+            processing(action, "Đang cập nhật điểm mới cho học viên...", gridRefresh);
+        }
+    }
+
     $("#updateMark").click(function () {
         if (selectedVals.length == 0) {
             alert('Vui lòng chọn một học viên!');
@@ -99,6 +114,6 @@
             var action = '@Url.Action("UpdateYGrades","MoodleGrade")' + '/?quizid=' + @ViewBag.QuizID + '&selectedVals=' + selectedVals
             processing(action, "Đang cập nhật điểm mới cho các học viên...", gridRefresh);
         }
-      })
+    })
 </script>
 

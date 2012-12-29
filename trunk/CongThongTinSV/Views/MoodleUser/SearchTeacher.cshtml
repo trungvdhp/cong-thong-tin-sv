@@ -1,0 +1,102 @@
+﻿@using Kendo.Mvc.UI;
+@using CongThongTinSV.Models;
+@{
+    ViewBag.Title = "Tìm kiếm tài khoản giáo viên trên Moodle";
+}
+
+@(Html.Kendo().ComboBox()
+    .Name("Khoa")
+    .Placeholder("Chọn khoa")
+    .HtmlAttributes(new {style="width:260px"})
+    .DataTextField("Text")
+    .DataValueField("Value")
+        //.SelectedIndex(0)
+    .DataSource(source =>
+    {
+        source.Read(read =>
+        {
+            read.Action("GetKhoa", "Khoa");
+        }).ServerFiltering(true);
+    })
+    .Events(e =>
+    {
+        e.Change("loadGrid");
+    })
+    //.HtmlAttributes(new { style = "display: block;"})
+)
+@(Html.Kendo().Grid<CongThongTinSV.Models.MoodleTeacher>()
+    .Name("Grid")
+    .Columns(columns => {
+        columns.Bound(c => c.ID_cb)
+            .ClientTemplate("<input type='checkbox' class='chkbx' value='#= ID_cb #'/>")
+            .HeaderTemplate("<input type='checkbox' id='masterCheckBox'/>")
+            .Width(40)
+            .Title("")
+            .HeaderHtmlAttributes(new { style = "text-align:center" })
+            .HtmlAttributes(new { style = "text-align:center" })
+            .Filterable(false).Groupable(false).Sortable(false);
+        columns.Bound(c => c.Ma_cb).ClientTemplate(
+          (@Html.ActionLink("#=ID_moodle#", "UserProfile", "MoodleUser", new { userid = "UserId" }, new { title = "Hồ sơ cá nhân" }).ToHtmlString().Replace("UserId", "#=ID_moodle#")))
+          .HtmlAttributes(new { style = "text-align:center" })
+          .Width(75);
+        columns.Bound(c => c.Ho_dem).Width(150);
+        columns.Bound(c => c.Ten).Width(85);
+        columns.Bound(c => c.Ngay_sinh).Width(100).Format("{0:dd-MM-yyyy}").HtmlAttributes(new { style = "text-align:center" });
+        columns.Bound(c => c.Gioi_tinh);
+    })
+    .Pageable(pager => pager.PageSizes(new int[]{5, 10, 20, 50, 80}).Refresh(true).Input(true).Numeric(false))
+    .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
+    .Filterable()
+    .Scrollable()
+    .Groupable()
+    .Resizable(r => r.Columns(true))
+    .Reorderable(ro => ro.Columns(true))
+    .Navigatable()
+    //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
+    //.Selectable(s => s.Mode(GridSelectionMode.Single))
+    .Events(e => {
+                e.DataBound("onDataBound");
+            })
+    .DataSource(
+        dataSource => dataSource
+            .Ajax()
+            .Read(read => read.Action("GetSearchTeachers", "MoodleUser").Data("filterGrid"))
+            .PageSize(50)
+    )
+)
+
+<script type="text/javascript">
+    var selectedVals = [];
+
+    function filterGrid() {
+        return {
+            id_khoa: $("#Khoa").val()
+        }
+    }
+    
+    function loadGrid() {
+        selectedVals.splice(0, selectedVals.length);
+        gridRefresh();
+    }
+    // on data bound, check checkboxes
+    function onDataBound(e) {
+        checkCells(selectedVals, '#masterCheckBox', '#Grid :checkbox');
+    }
+    // on click checkbox cell in a row
+    $(function () {
+        $('#Grid').on('click', '.chkbx', function () {
+            var state = $(this).is(':checked');
+            var grid = $('#Grid').data().kendoGrid;
+            var dataItem = grid.dataItem($(this).closest('tr'));
+
+            checkVal(dataItem.ID_cb, state, selectedVals);
+            $('#masterCheckBox').attr('checked', isCheckedAll('#Grid :checkbox'));
+        })
+    })
+
+    $('#masterCheckBox').click(function () { checkAll(this, '#Grid :checkbox'); })
+
+    function gridRefresh() {
+        $("#Grid").data("kendoGrid").dataSource.read();
+    }
+</script>

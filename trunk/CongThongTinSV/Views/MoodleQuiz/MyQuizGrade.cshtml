@@ -1,34 +1,45 @@
 ﻿@using Kendo.Mvc.UI;
 @using CongThongTinSV.Models;
 @{
-    ViewBag.Title = ViewBag.CourseName;
+    ViewBag.Title = ViewBag.CourseName + " : Bảng điểm các bài thi trắc nghiệm";
 }
 <div>
-<h2>@ViewBag.CourseName</h2>
-@(Html.Kendo().Grid<CongThongTinSV.Models.MoodleStudentQuizGrade>()
-    .Name("Grid")
-    .Columns(columns =>
+<h2>@ViewBag.Title</h2>
+@{
+    if(ViewBag.Error != "")
     {
-        columns.Bound(c => c.ID).Title("Bài kiểm tra")
-            .ClientTemplate("<a href=#=Url#>#=QuizName#</a>")
-            .Width(500);
-        columns.Bound(c => c.Grade).Format("{0:0.0}");
-    })
-    .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50 }).Refresh(true).Input(true).Numeric(false))
-    .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
-    .Filterable()
-    .Scrollable()
-    //.Groupable()
-    .Resizable(r => r.Columns(true))
-    .Reorderable(ro => ro.Columns(true))
-    .Navigatable()
-    //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
-    //.Selectable(s => s.Mode(GridSelectionMode.Single))
-    .DataSource(
-        dataSource => dataSource
-            .Ajax()
-            .Read(read => read.Action("GetMyQuizGrades", "MoodleQuiz", new { courseid = ViewBag.CourseID }))
-            .PageSize(50)
-    )
-)
+        <h2 class="error">Lỗi: @ViewBag.Error</h2>
+    }
+    else
+    {
+        @(Html.Kendo().Grid<CongThongTinSV.Models.MoodleStudentQuizGrade>()
+            .Name("Grid")
+            .Columns(columns =>
+            {
+                columns.Bound(c => c.ID).Title("Bài kiểm tra")
+                    .ClientTemplate("<a href=#=Url#>#=QuizName#</a>").HtmlAttributes(new { title = "Tới trang làm bài" })
+                    .Width(500);
+                columns.Bound(c => c.Grade)
+                    .ClientTemplate(
+                        (@Html.ActionLink("#= kendo.toString(Grade, '0.0') #", "MyQuizStudentGrade", "MoodleQuiz", new { quizid = "QuizID" }, new { title = "Xem bảng điểm chi tiết" })).ToHtmlString().Replace("QuizID", "#=ID#"));
+            })
+            .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50 }).Refresh(true).Input(true).Numeric(false))
+            .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
+            .Filterable()
+            .Scrollable()
+            //.Groupable()
+            .Resizable(r => r.Columns(true))
+            .Reorderable(ro => ro.Columns(true))
+            .Navigatable()
+            //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
+            //.Selectable(s => s.Mode(GridSelectionMode.Single))
+            .DataSource(
+                dataSource => dataSource
+                    .Ajax()
+                    .Read(read => read.Action("GetMyQuizGrades", "MoodleQuiz", new { courseid = ViewBag.CourseID }))
+                    .PageSize(50)
+            )
+        );
+    }
+}
 </div>

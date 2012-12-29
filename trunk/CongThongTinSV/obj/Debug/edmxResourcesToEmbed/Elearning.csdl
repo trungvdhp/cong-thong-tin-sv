@@ -1,0 +1,724 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="moodleModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="MoodleEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="fit_course" EntityType="moodleModel.fit_course" />
+    <EntitySet Name="fit_enrol" EntityType="moodleModel.fit_enrol" />
+    <EntitySet Name="fit_external_services" EntityType="moodleModel.fit_external_services" />
+    <EntitySet Name="fit_grade_grades" EntityType="moodleModel.fit_grade_grades" />
+    <EntitySet Name="fit_grade_grades_history" EntityType="moodleModel.fit_grade_grades_history" />
+    <EntitySet Name="fit_grade_import_newitem" EntityType="moodleModel.fit_grade_import_newitem" />
+    <EntitySet Name="fit_grade_import_values" EntityType="moodleModel.fit_grade_import_values" />
+    <EntitySet Name="fit_grade_items" EntityType="moodleModel.fit_grade_items" />
+    <EntitySet Name="fit_grade_items_history" EntityType="moodleModel.fit_grade_items_history" />
+    <EntitySet Name="fit_grade_letters" EntityType="moodleModel.fit_grade_letters" />
+    <EntitySet Name="fit_grade_outcomes" EntityType="moodleModel.fit_grade_outcomes" />
+    <EntitySet Name="fit_grade_outcomes_courses" EntityType="moodleModel.fit_grade_outcomes_courses" />
+    <EntitySet Name="fit_grade_outcomes_history" EntityType="moodleModel.fit_grade_outcomes_history" />
+    <EntitySet Name="fit_grade_settings" EntityType="moodleModel.fit_grade_settings" />
+    <EntitySet Name="fit_grading_areas" EntityType="moodleModel.fit_grading_areas" />
+    <EntitySet Name="fit_grading_definitions" EntityType="moodleModel.fit_grading_definitions" />
+    <EntitySet Name="fit_grading_instances" EntityType="moodleModel.fit_grading_instances" />
+    <EntitySet Name="fit_message" EntityType="moodleModel.fit_message" />
+    <EntitySet Name="fit_message_contacts" EntityType="moodleModel.fit_message_contacts" />
+    <EntitySet Name="fit_message_read" EntityType="moodleModel.fit_message_read" />
+    <EntitySet Name="fit_message_working" EntityType="moodleModel.fit_message_working" />
+    <EntitySet Name="fit_user" EntityType="moodleModel.fit_user" />
+    <EntitySet Name="fit_user_enrolments" EntityType="moodleModel.fit_user_enrolments" />
+    <EntitySet Name="fit_role" EntityType="moodleModel.fit_role" />
+    <EntitySet Name="fit_role_context_levels" EntityType="moodleModel.fit_role_context_levels" />
+    <EntitySet Name="fit_role_names" EntityType="moodleModel.fit_role_names" />
+    <EntitySet Name="fit_context" EntityType="moodleModel.fit_context" />
+    <EntitySet Name="fit_quiz" EntityType="moodleModel.fit_quiz" />
+    <EntitySet Name="fit_quiz_attempts" EntityType="moodleModel.fit_quiz_attempts" />
+    <EntitySet Name="fit_quiz_grades" EntityType="moodleModel.fit_quiz_grades" />
+    <EntitySet Name="fit_quiz_overrides" EntityType="moodleModel.fit_quiz_overrides" />
+    <EntitySet Name="fit_quiz_overview_regrades" EntityType="moodleModel.fit_quiz_overview_regrades" />
+    <EntitySet Name="fit_quiz_question_instances" EntityType="moodleModel.fit_quiz_question_instances" />
+    <EntitySet Name="fit_quiz_question_response_stats" EntityType="moodleModel.fit_quiz_question_response_stats" />
+    <EntitySet Name="fit_quiz_question_statistics" EntityType="moodleModel.fit_quiz_question_statistics" />
+    <EntitySet Name="fit_quiz_reports" EntityType="moodleModel.fit_quiz_reports" />
+    <EntitySet Name="fit_quiz_statistics" EntityType="moodleModel.fit_quiz_statistics" />
+    <EntitySet Name="fit_role_assignments" EntityType="moodleModel.fit_role_assignments" />
+  </EntityContainer>
+  <EntityType Name="fit_course">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="category" Type="Int64" Nullable="false" />
+    <Property Name="sortorder" Type="Int64" Nullable="false" />
+    <Property Name="fullname" Type="String" Nullable="false" MaxLength="254" Unicode="false" FixedLength="false" />
+    <Property Name="shortname" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="idnumber" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="summary" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="summaryformat" Type="SByte" Nullable="false" />
+    <Property Name="format" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="showgrades" Type="SByte" Nullable="false" />
+    <Property Name="sectioncache" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="modinfo" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="newsitems" Type="Int32" Nullable="false" />
+    <Property Name="startdate" Type="Int64" Nullable="false" />
+    <Property Name="numsections" Type="Int32" Nullable="false" />
+    <Property Name="marker" Type="Int64" Nullable="false" />
+    <Property Name="maxbytes" Type="Int64" Nullable="false" />
+    <Property Name="legacyfiles" Type="Int16" Nullable="false" />
+    <Property Name="showreports" Type="Int16" Nullable="false" />
+    <Property Name="visible" Type="Boolean" Nullable="false" />
+    <Property Name="visibleold" Type="Boolean" Nullable="false" />
+    <Property Name="hiddensections" Type="SByte" Nullable="false" />
+    <Property Name="groupmode" Type="Int16" Nullable="false" />
+    <Property Name="groupmodeforce" Type="Int16" Nullable="false" />
+    <Property Name="defaultgroupingid" Type="Int64" Nullable="false" />
+    <Property Name="lang" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="theme" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="timecreated" Type="Int64" Nullable="false" />
+    <Property Name="timemodified" Type="Int64" Nullable="false" />
+    <Property Name="requested" Type="Boolean" Nullable="false" />
+    <Property Name="enablecompletion" Type="Boolean" Nullable="false" />
+    <Property Name="completionstartonenrol" Type="Boolean" Nullable="false" />
+    <Property Name="completionnotify" Type="Boolean" Nullable="false" />
+    <Property Name="coursedisplay" Type="SByte" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fit_enrol">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="enrol" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="status" Type="Int64" Nullable="false" />
+    <Property Name="courseid" Type="Int64" Nullable="false" />
+    <Property Name="sortorder" Type="Int64" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="enrolperiod" Type="Int64" />
+    <Property Name="enrolstartdate" Type="Int64" />
+    <Property Name="enrolenddate" Type="Int64" />
+    <Property Name="expirynotify" Type="Boolean" />
+    <Property Name="expirythreshold" Type="Int64" />
+    <Property Name="notifyall" Type="Boolean" />
+    <Property Name="password" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="cost" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="currency" Type="String" MaxLength="3" Unicode="false" FixedLength="false" />
+    <Property Name="roleid" Type="Int64" />
+    <Property Name="customint1" Type="Int64" />
+    <Property Name="customint2" Type="Int64" />
+    <Property Name="customint3" Type="Int64" />
+    <Property Name="customint4" Type="Int64" />
+    <Property Name="customchar1" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="customchar2" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="customdec1" Type="Decimal" Precision="12" Scale="7" />
+    <Property Name="customdec2" Type="Decimal" Precision="12" Scale="7" />
+    <Property Name="customtext1" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="customtext2" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="timecreated" Type="Int64" Nullable="false" />
+    <Property Name="timemodified" Type="Int64" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fit_external_services">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="enabled" Type="Boolean" Nullable="false" />
+    <Property Name="requiredcapability" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
+    <Property Name="restrictedusers" Type="Boolean" Nullable="false" />
+    <Property Name="component" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="timecreated" Type="Int64" Nullable="false" />
+    <Property Name="timemodified" Type="Int64" />
+    <Property Name="shortname" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="downloadfiles" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fit_grade_grades">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="itemid" Type="Int64" Nullable="false" />
+    <Property Name="userid" Type="Int64" Nullable="false" />
+    <Property Name="rawgrade" Type="Decimal" Precision="10" Scale="5" />
+    <Property Name="rawgrademax" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+    <Property Name="rawgrademin" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+    <Property Name="rawscaleid" Type="Int64" />
+    <Property Name="usermodified" Type="Int64" />
+    <Property Name="finalgrade" Type="Decimal" Precision="10" Scale="5" />
+    <Property Name="hidden" Type="Int64" Nullable="false" />
+    <Property Name="locked" Type="Int64" Nullable="false" />
+    <Property Name="locktime" Type="Int64" Nullable="false" />
+    <Property Name="exported" Type="Int64" Nullable="false" />
+    <Property Name="overridden" Type="Int64" Nullable="false" />
+    <Property Name="excluded" Type="Int64" Nullable="false" />
+    <Property Name="feedback" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="feedbackformat" Type="Int64" Nullable="false" />
+    <Property Name="information" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="informationformat" Type="Int64" Nullable="false" />
+    <Property Name="timecreated" Type="Int64" />
+    <Property Name="timemodified" Type="Int64" />
+  </EntityType>
+  <EntityType Name="fit_grade_grades_history">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="action" Type="Int64" Nullable="false" />
+    <Property Name="oldid" Type="Int64" Nullable="false" />
+    <Property Name="source" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="timemodified" Type="Int64" />
+    <Property Name="loggeduser" Type="Int64" />
+    <Property Name="itemid" Type="Int64" Nullable="false" />
+    <Property Name="userid" Type="Int64" Nullable="false" />
+    <Property Name="rawgrade" Type="Decimal" Precision="10" Scale="5" />
+    <Property Name="rawgrademax" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+    <Property Name="rawgrademin" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+    <Property Name="rawscaleid" Type="Int64" />
+    <Property Name="usermodified" Type="Int64" />
+    <Property Name="finalgrade" Type="Decimal" Precision="10" Scale="5" />
+    <Property Name="hidden" Type="Int64" Nullable="false" />
+    <Property Name="locked" Type="Int64" Nullable="false" />
+    <Property Name="locktime" Type="Int64" Nullable="false" />
+    <Property Name="exported" Type="Int64" Nullable="false" />
+    <Property Name="overridden" Type="Int64" Nullable="false" />
+    <Property Name="excluded" Type="Int64" Nullable="false" />
+    <Property Name="feedback" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="feedbackformat" Type="Int64" Nullable="false" />
+    <Property Name="information" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="informationformat" Type="Int64" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fit_grade_import_newitem">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="itemname" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="importcode" Type="Int64" Nullable="false" />
+    <Property Name="importer" Type="Int64" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fit_grade_import_values">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="itemid" Type="Int64" />
+    <Property Name="newgradeitem" Type="Int64" />
+    <Property Name="userid" Type="Int64" Nullable="false" />
+    <Property Name="finalgrade" Type="Decimal" Precision="10" Scale="5" />
+    <Property Name="feedback" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="importcode" Type="Int64" Nullable="false" />
+    <Property Name="importer" Type="Int64" />
+  </EntityType>
+  <EntityType Name="fit_grade_items">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="courseid" Type="Int64" />
+    <Property Name="categoryid" Type="Int64" />
+    <Property Name="itemname" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="itemtype" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="itemmodule" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="iteminstance" Type="Int64" />
+    <Property Name="itemnumber" Type="Int64" />
+    <Property Name="iteminfo" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="idnumber" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="calculation" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="gradetype" Type="Int16" Nullable="false" />
+    <Property Name="grademax" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+    <Property Name="grademin" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+    <Property Name="scaleid" Type="Int64" />
+    <Property Name="outcomeid" Type="Int64" />
+    <Property Name="gradepass" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+    <Property Name="multfactor" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+    <Property Name="plusfactor" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+    <Property Name="aggregationcoef" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+    <Property Name="sortorder" Type="Int64" Nullable="false" />
+    <Property Name="display" Type="Int64" Nullable="false" />
+    <Property Name="decimals" Type="Boolean" />
+    <Property Name="hidden" Type="Int64" Nullable="false" />
+    <Property Name="locked" Type="Int64" Nullable="false" />
+    <Property Name="locktime" Type="Int64" Nullable="false" />
+    <Property Name="needsupdate" Type="Int64" Nullable="false" />
+    <Property Name="timecreated" Type="Int64" />
+    <Property Name="timemodified" Type="Int64" />
+  </EntityType>
+  <EntityType Name="fit_grade_items_history">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="action" Type="Int64" Nullable="false" />
+    <Property Name="oldid" Type="Int64" Nullable="false" />
+    <Property Name="source" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="timemodified" Type="Int64" />
+    <Property Name="loggeduser" Type="Int64" />
+    <Property Name="courseid" Type="Int64" />
+    <Property Name="categoryid" Type="Int64" />
+    <Property Name="itemname" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="itemtype" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="itemmodule" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="iteminstance" Type="Int64" />
+    <Property Name="itemnumber" Type="Int64" />
+    <Property Name="iteminfo" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="idnumber" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="calculation" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="gradetype" Type="Int16" Nullable="false" />
+    <Property Name="grademax" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+    <Property Name="grademin" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+    <Property Name="scaleid" Type="Int64" />
+    <Property Name="outcomeid" Type="Int64" />
+    <Property Name="gradepass" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+    <Property Name="multfactor" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+    <Property Name="plusfactor" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+    <Property Name="aggregationcoef" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+    <Property Name="sortorder" Type="Int64" Nullable="false" />
+    <Property Name="hidden" Type="Int64" Nullable="false" />
+    <Property Name="locked" Type="Int64" Nullable="false" />
+    <Property Name="locktime" Type="Int64" Nullable="false" />
+    <Property Name="needsupdate" Type="Int64" Nullable="false" />
+    <Property Name="display" Type="Int64" Nullable="false" />
+    <Property Name="decimals" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="fit_grade_letters">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="contextid" Type="Int64" Nullable="false" />
+    <Property Name="lowerboundary" Type="Decimal" Nullable="false" Precision="10" Scale="5" />
+    <Property Name="letter" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="fit_grade_outcomes">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="courseid" Type="Int64" />
+    <Property Name="shortname" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="fullname" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="scaleid" Type="Int64" />
+    <Property Name="description" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="descriptionformat" Type="SByte" Nullable="false" />
+    <Property Name="timecreated" Type="Int64" />
+    <Property Name="timemodified" Type="Int64" />
+    <Property Name="usermodified" Type="Int64" />
+  </EntityType>
+  <EntityType Name="fit_grade_outcomes_courses">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="courseid" Type="Int64" Nullable="false" />
+    <Property Name="outcomeid" Type="Int64" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fit_grade_outcomes_history">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="action" Type="Int64" Nullable="false" />
+    <Property Name="oldid" Type="Int64" Nullable="false" />
+    <Property Name="source" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="timemodified" Type="Int64" />
+    <Property Name="loggeduser" Type="Int64" />
+    <Property Name="courseid" Type="Int64" />
+    <Property Name="shortname" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="fullname" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="scaleid" Type="Int64" />
+    <Property Name="description" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="descriptionformat" Type="SByte" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fit_grade_settings">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="courseid" Type="Int64" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="value" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="fit_grading_areas">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="contextid" Type="Int64" Nullable="false" />
+    <Property Name="component" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="areaname" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="activemethod" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="fit_grading_definitions">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="areaid" Type="Int64" Nullable="false" />
+    <Property Name="method" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="description" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="descriptionformat" Type="SByte" />
+    <Property Name="status" Type="Int64" Nullable="false" />
+    <Property Name="copiedfromid" Type="Int64" />
+    <Property Name="timecreated" Type="Int64" Nullable="false" />
+    <Property Name="usercreated" Type="Int64" Nullable="false" />
+    <Property Name="timemodified" Type="Int64" Nullable="false" />
+    <Property Name="usermodified" Type="Int64" Nullable="false" />
+    <Property Name="timecopied" Type="Int64" />
+    <Property Name="options" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="fit_grading_instances">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="definitionid" Type="Int64" Nullable="false" />
+    <Property Name="raterid" Type="Int64" Nullable="false" />
+    <Property Name="itemid" Type="Int64" />
+    <Property Name="rawgrade" Type="Decimal" Precision="10" Scale="5" />
+    <Property Name="status" Type="Int64" Nullable="false" />
+    <Property Name="feedback" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="feedbackformat" Type="SByte" />
+    <Property Name="timemodified" Type="Int64" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fit_message">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="useridfrom" Type="Int64" Nullable="false" />
+    <Property Name="useridto" Type="Int64" Nullable="false" />
+    <Property Name="subject" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="fullmessage" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="fullmessageformat" Type="Int16" />
+    <Property Name="fullmessagehtml" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="smallmessage" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="notification" Type="Boolean" />
+    <Property Name="contexturl" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="contexturlname" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="timecreated" Type="Int64" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fit_message_contacts">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="userid" Type="Int64" Nullable="false" />
+    <Property Name="contactid" Type="Int64" Nullable="false" />
+    <Property Name="blocked" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fit_message_read">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="useridfrom" Type="Int64" Nullable="false" />
+    <Property Name="useridto" Type="Int64" Nullable="false" />
+    <Property Name="subject" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="fullmessage" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="fullmessageformat" Type="Int16" />
+    <Property Name="fullmessagehtml" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="smallmessage" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="notification" Type="Boolean" />
+    <Property Name="contexturl" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="contexturlname" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="timecreated" Type="Int64" Nullable="false" />
+    <Property Name="timeread" Type="Int64" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fit_message_working">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="unreadmessageid" Type="Int64" Nullable="false" />
+    <Property Name="processorid" Type="Int64" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fit_user">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="auth" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="confirmed" Type="Boolean" Nullable="false" />
+    <Property Name="policyagreed" Type="Boolean" Nullable="false" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="suspended" Type="Boolean" Nullable="false" />
+    <Property Name="mnethostid" Type="Int64" Nullable="false" />
+    <Property Name="username" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="password" Type="String" Nullable="false" MaxLength="32" Unicode="false" FixedLength="false" />
+    <Property Name="idnumber" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="firstname" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="lastname" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="email" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="emailstop" Type="Boolean" Nullable="false" />
+    <Property Name="icq" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
+    <Property Name="skype" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="yahoo" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="aim" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="msn" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="phone1" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="phone2" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="institution" Type="String" Nullable="false" MaxLength="40" Unicode="false" FixedLength="false" />
+    <Property Name="department" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="address" Type="String" Nullable="false" MaxLength="70" Unicode="false" FixedLength="false" />
+    <Property Name="city" Type="String" Nullable="false" MaxLength="120" Unicode="false" FixedLength="false" />
+    <Property Name="country" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="false" />
+    <Property Name="lang" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="theme" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="timezone" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="firstaccess" Type="Int64" Nullable="false" />
+    <Property Name="lastaccess" Type="Int64" Nullable="false" />
+    <Property Name="lastlogin" Type="Int64" Nullable="false" />
+    <Property Name="currentlogin" Type="Int64" Nullable="false" />
+    <Property Name="lastip" Type="String" Nullable="false" MaxLength="45" Unicode="false" FixedLength="false" />
+    <Property Name="secret" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
+    <Property Name="picture" Type="Int64" Nullable="false" />
+    <Property Name="url" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="description" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="descriptionformat" Type="SByte" Nullable="false" />
+    <Property Name="mailformat" Type="Boolean" Nullable="false" />
+    <Property Name="maildigest" Type="Boolean" Nullable="false" />
+    <Property Name="maildisplay" Type="SByte" Nullable="false" />
+    <Property Name="htmleditor" Type="Boolean" Nullable="false" />
+    <Property Name="autosubscribe" Type="Boolean" Nullable="false" />
+    <Property Name="trackforums" Type="Boolean" Nullable="false" />
+    <Property Name="timecreated" Type="Int64" Nullable="false" />
+    <Property Name="timemodified" Type="Int64" Nullable="false" />
+    <Property Name="trustbitmask" Type="Int64" Nullable="false" />
+    <Property Name="imagealt" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="screenreader" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fit_user_enrolments">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="status" Type="Int64" Nullable="false" />
+    <Property Name="enrolid" Type="Int64" Nullable="false" />
+    <Property Name="userid" Type="Int64" Nullable="false" />
+    <Property Name="timestart" Type="Int64" Nullable="false" />
+    <Property Name="timeend" Type="Int64" Nullable="false" />
+    <Property Name="modifierid" Type="Int64" Nullable="false" />
+    <Property Name="timecreated" Type="Int64" Nullable="false" />
+    <Property Name="timemodified" Type="Int64" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fit_role">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="name" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="shortname" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="description" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Int64" Name="sortorder" Nullable="false" />
+    <Property Type="String" Name="archetype" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="fit_role_context_levels">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="roleid" Nullable="false" />
+    <Property Type="Int64" Name="contextlevel" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fit_role_names">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="roleid" Nullable="false" />
+    <Property Type="Int64" Name="contextid" Nullable="false" />
+    <Property Type="String" Name="name" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="fit_context">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="contextlevel" Nullable="false" />
+    <Property Type="Int64" Name="instanceid" Nullable="false" />
+    <Property Type="String" Name="path" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="SByte" Name="depth" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fit_quiz">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="course" Nullable="false" />
+    <Property Type="String" Name="name" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="intro" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Int16" Name="introformat" Nullable="false" />
+    <Property Type="Int64" Name="timeopen" Nullable="false" />
+    <Property Type="Int64" Name="timeclose" Nullable="false" />
+    <Property Type="String" Name="preferredbehaviour" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="attempts" Nullable="false" />
+    <Property Type="Int16" Name="attemptonlast" Nullable="false" />
+    <Property Type="Int16" Name="grademethod" Nullable="false" />
+    <Property Type="Int16" Name="decimalpoints" Nullable="false" />
+    <Property Type="Int16" Name="questiondecimalpoints" Nullable="false" />
+    <Property Type="Int32" Name="reviewattempt" Nullable="false" />
+    <Property Type="Int32" Name="reviewcorrectness" Nullable="false" />
+    <Property Type="Int32" Name="reviewmarks" Nullable="false" />
+    <Property Type="Int32" Name="reviewspecificfeedback" Nullable="false" />
+    <Property Type="Int32" Name="reviewgeneralfeedback" Nullable="false" />
+    <Property Type="Int32" Name="reviewrightanswer" Nullable="false" />
+    <Property Type="Int32" Name="reviewoverallfeedback" Nullable="false" />
+    <Property Type="Int64" Name="questionsperpage" Nullable="false" />
+    <Property Type="Int16" Name="shufflequestions" Nullable="false" />
+    <Property Type="Int16" Name="shuffleanswers" Nullable="false" />
+    <Property Type="String" Name="questions" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Decimal" Name="sumgrades" Nullable="false" Precision="10" Scale="5" />
+    <Property Type="Decimal" Name="grade" Nullable="false" Precision="10" Scale="5" />
+    <Property Type="Int64" Name="timecreated" Nullable="false" />
+    <Property Type="Int64" Name="timemodified" Nullable="false" />
+    <Property Type="Int64" Name="timelimit" Nullable="false" />
+    <Property Type="String" Name="overduehandling" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Type="Int64" Name="graceperiod" Nullable="false" />
+    <Property Type="String" Name="password" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="subnet" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="browsersecurity" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Type="Int64" Name="delay1" Nullable="false" />
+    <Property Type="Int64" Name="delay2" Nullable="false" />
+    <Property Type="Int16" Name="showuserpicture" Nullable="false" />
+    <Property Type="Int16" Name="showblocks" Nullable="false" />
+    <Property Type="String" Name="navmethod" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="fit_quiz_attempts">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="uniqueid" Nullable="false" />
+    <Property Type="Int64" Name="quiz" Nullable="false" />
+    <Property Type="Int64" Name="userid" Nullable="false" />
+    <Property Type="Int32" Name="attempt" Nullable="false" />
+    <Property Type="Decimal" Name="sumgrades" Precision="10" Scale="5" />
+    <Property Type="Int64" Name="timestart" Nullable="false" />
+    <Property Type="Int64" Name="timefinish" Nullable="false" />
+    <Property Type="Int64" Name="timemodified" Nullable="false" />
+    <Property Type="String" Name="layout" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Int16" Name="preview" Nullable="false" />
+    <Property Type="String" Name="state" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Type="Int16" Name="needsupgradetonewqe" Nullable="false" />
+    <Property Type="Int64" Name="currentpage" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fit_quiz_grades">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="quiz" Nullable="false" />
+    <Property Type="Int64" Name="userid" Nullable="false" />
+    <Property Type="Decimal" Name="grade" Nullable="false" Precision="10" Scale="5" />
+    <Property Type="Int64" Name="timemodified" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fit_quiz_overrides">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="quiz" Nullable="false" />
+    <Property Type="Int64" Name="groupid" />
+    <Property Type="Int64" Name="userid" />
+    <Property Type="Int64" Name="timeopen" />
+    <Property Type="Int64" Name="timeclose" />
+    <Property Type="Int64" Name="timelimit" />
+    <Property Type="Int32" Name="attempts" />
+    <Property Type="String" Name="password" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="fit_quiz_overview_regrades">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="questionusageid" Nullable="false" />
+    <Property Type="Int64" Name="slot" Nullable="false" />
+    <Property Type="Decimal" Name="newfraction" Precision="12" Scale="7" />
+    <Property Type="Decimal" Name="oldfraction" Precision="12" Scale="7" />
+    <Property Type="Int16" Name="regraded" Nullable="false" />
+    <Property Type="Int64" Name="timemodified" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fit_quiz_question_instances">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="quiz" Nullable="false" />
+    <Property Type="Int64" Name="question" Nullable="false" />
+    <Property Type="Decimal" Name="grade" Nullable="false" Precision="12" Scale="7" />
+  </EntityType>
+  <EntityType Name="fit_quiz_question_response_stats">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="quizstatisticsid" Nullable="false" />
+    <Property Type="Int64" Name="questionid" Nullable="false" />
+    <Property Type="String" Name="subqid" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="aid" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="response" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Int64" Name="rcount" />
+    <Property Type="Decimal" Name="credit" Nullable="false" Precision="15" Scale="5" />
+  </EntityType>
+  <EntityType Name="fit_quiz_question_statistics">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="quizstatisticsid" Nullable="false" />
+    <Property Type="Int64" Name="questionid" Nullable="false" />
+    <Property Type="Int64" Name="slot" />
+    <Property Type="Int16" Name="subquestion" Nullable="false" />
+    <Property Type="Int64" Name="s" Nullable="false" />
+    <Property Type="Decimal" Name="effectiveweight" Precision="15" Scale="5" />
+    <Property Type="SByte" Name="negcovar" Nullable="false" />
+    <Property Type="Decimal" Name="discriminationindex" Precision="15" Scale="5" />
+    <Property Type="Decimal" Name="discriminativeefficiency" Precision="15" Scale="5" />
+    <Property Type="Decimal" Name="sd" Precision="15" Scale="10" />
+    <Property Type="Decimal" Name="facility" Precision="15" Scale="10" />
+    <Property Type="String" Name="subquestions" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Decimal" Name="maxmark" Precision="12" Scale="7" />
+    <Property Type="String" Name="positions" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Decimal" Name="randomguessscore" Precision="12" Scale="7" />
+  </EntityType>
+  <EntityType Name="fit_quiz_reports">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="name" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="Int64" Name="displayorder" Nullable="false" />
+    <Property Type="String" Name="capability" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="fit_quiz_statistics">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="quizid" Nullable="false" />
+    <Property Type="Int64" Name="groupid" Nullable="false" />
+    <Property Type="Int16" Name="allattempts" Nullable="false" />
+    <Property Type="Int64" Name="timemodified" Nullable="false" />
+    <Property Type="Int64" Name="firstattemptscount" Nullable="false" />
+    <Property Type="Int64" Name="allattemptscount" Nullable="false" />
+    <Property Type="Decimal" Name="firstattemptsavg" Precision="15" Scale="5" />
+    <Property Type="Decimal" Name="allattemptsavg" Precision="15" Scale="5" />
+    <Property Type="Decimal" Name="median" Precision="15" Scale="5" />
+    <Property Type="Decimal" Name="standarddeviation" Precision="15" Scale="5" />
+    <Property Type="Decimal" Name="skewness" Precision="15" Scale="10" />
+    <Property Type="Decimal" Name="kurtosis" Precision="15" Scale="5" />
+    <Property Type="Decimal" Name="cic" Precision="15" Scale="10" />
+    <Property Type="Decimal" Name="errorratio" Precision="15" Scale="10" />
+    <Property Type="Decimal" Name="standarderror" Precision="15" Scale="10" />
+  </EntityType>
+  <EntityType Name="fit_role_assignments">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="roleid" Nullable="false" />
+    <Property Type="Int64" Name="contextid" Nullable="false" />
+    <Property Type="Int64" Name="userid" Nullable="false" />
+    <Property Type="Int64" Name="timemodified" Nullable="false" />
+    <Property Type="Int64" Name="modifierid" Nullable="false" />
+    <Property Type="String" Name="component" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="Int64" Name="itemid" Nullable="false" />
+    <Property Type="Int64" Name="sortorder" Nullable="false" />
+  </EntityType>
+</Schema>

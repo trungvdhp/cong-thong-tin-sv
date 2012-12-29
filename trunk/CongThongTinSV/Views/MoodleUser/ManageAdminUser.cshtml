@@ -3,7 +3,24 @@
 @{
     ViewBag.Title = "Quản lý tài khoản quản trị viên trên Moodle";
 }
-
+@(Html.Kendo().DropDownList()
+    .Name("VaiTro")
+    .OptionLabel("Chọn vai trò hệ thống")
+    .HtmlAttributes(new {style="width:180px"})
+    .DataTextField("Text")
+    .DataValueField("Value")
+    .DataSource(source =>
+    {
+        source.Read(read =>
+        {
+            read.Action("GetSystemRoles", "MoodleRole");
+        }).ServerFiltering(true);
+    })
+)
+@*<button id="create_top" class="k-button" onclick="create_admin()">Đăng ký tài khoản</button>
+<button id="delete_top" class="k-button" onclick="delete_admin()">Hủy đăng ký</button>
+<button id="update_top" class="k-button" onclick="update_admin()">Khôi phục về mặc định</button>
+<button id="sync_top" class="k-button" onclick="sync_admin()">Đồng bộ tài khoản</button>*@
 @(Html.Kendo().Grid<CongThongTinSV.Models.MoodleUser>()
     .Name("Grid")
     .Columns(columns => {
@@ -15,11 +32,32 @@
             .HeaderHtmlAttributes(new { style = "text-align:center" })
             .HtmlAttributes(new { style = "text-align:center" })
             .Filterable(false).Groupable(false).Sortable(false);
-        columns.Bound(c => c.UserName).Width(130);
-        columns.Bound(c => c.ID_moodle).Width(105);
+        columns.Bound(c => c.UserName).ClientTemplate(
+         "# if (ID_moodle != 0) { #" +
+         (@Html.ActionLink("#=UserName#", "UserProfile", "MoodleUser", new { userid = "UserId" }, new { title = "Hồ sơ cá nhân" }).ToHtmlString().Replace("UserId", "#=ID_moodle#")) +
+         "# } else { ##=UserName#" +
+         "# } #")
+         .Width(130);
         columns.Bound(c => c.LastName).Width(150);
         columns.Bound(c => c.FirstName).Width(80);
-        columns.Bound(c => c.Email);
+        columns.Bound(c => c.Email).Width(150);
+        columns.Bound(c => c.Vai_tro).HtmlAttributes(new { style = "color:blue" });
+        columns.Bound(c => c.Trang_thai).Title("Thực hiện")
+            .Width(150)
+            .ClientTemplate(
+                "# if (Trang_thai) { #" +
+                    "<button class='button-delete' title='Hủy đăng ký' onclick='delete_one(#=ID#)'></button>" +
+                    "<button class='button-update' title='Khôi phục về mặc định' onclick='update_one(#=ID#)'></button>" +
+                "# } else { #" +
+                    "<button class='button-add' title='Đăng ký' onclick='create_one(#=ID#)'></button>" +
+                    "<button class='button-sync' title='Đồng bộ tài khoản' onclick='sync_one(#=ID#)'></button>" +
+                "# } #" +
+                "<button class='button-add-sysrole' title='Gán vai trò hệ thống đã chọn' onclick='assign_sysrole_one(#=ID#)'></button>" +
+                "# if (Vai_tro != '') { #" +
+                        "<button class='button-delete-sysrole' title='Hủy vai trò hệ thống đã chọn' onclick='unassign_sysrole_one(#=ID#)'></button>" +
+                        "<button class='button-stop-all' title='Hủy tất cả vai trò hệ thống' onclick='unassign_all_sysrole_one(#=ID#)'></button>" +
+                    "# } #"
+            );   
     })
     .Pageable(pager => pager.PageSizes(new int[]{5, 10, 20, 50, 80}).Refresh(true).Input(true).Numeric(false))
     .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
@@ -41,12 +79,13 @@
             .PageSize(50)
     )
 )
-<div>
-    <button id="create" class="k-button">Đăng ký tài khoản</button>
-    <button id="delete" class="k-button">Hủy đăng ký</button>
-    <button id="update" class="k-button">Khôi phục về mặc định</button>
-    <button id="sync" class="k-button">Đồng bộ tài khoản</button>
-</div>
+<button id="create_bottom" class="k-button" onclick="create_admin()">Đăng ký tài khoản</button>
+<button id="delete_bottom" class="k-button" onclick="delete_admin()">Hủy đăng ký</button>
+<button id="update_bottom" class="k-button" onclick="update_admin()">Khôi phục về mặc định</button>
+<button id="sync_bottom" class="k-button" onclick="sync_admin()">Đồng bộ tài khoản</button>
+<button id="assign_sysrole_bottom" class="k-button" onclick="assign_sysrole()">Gán vai trò</button>
+<button id="unassign_sysrole_bottom" class="k-button" onclick="unassign_sysrole()">Hủy vai trò</button>
+<button id="unassign_all_sysrole_bottom" class="k-button" onclick="unassign_all_sysrole()">Hủy tất cả vai trò</button>
 
 <script type="text/javascript">
     var selectedVals = [];
@@ -83,49 +122,143 @@
         $("#Grid").data("kendoGrid").dataSource.read();
     }
 
-    $("#create").click(function () {
+    function create_one(selectedVal) {
+        var action = '@Url.Action("CreateAdminUsers", "MoodleUser")' + '/?selectedVals=' + selectedVal;
+        processing(action, "Đang tạo tài khoản moodle elearning...", gridRefresh);
+    }
+
+    function delete_one(selectedVal) {
+        if (confirm('Bạn muốn xóa tài khoản moodle elearning của quản trị viên này?')) {
+            var action = '@Url.Action("DeleteAdminUsers", "MoodleUser")' + '/?selectedVals=' + selectedVal;
+            processing(action, "Đang xóa tài khoản moodle elearning...", gridRefresh);
+        }
+    }
+
+    function update_one(selectedVal) {
+        if (confirm('Bạn muốn khôi phục về mặc định tài khoản moodle elearning của quản trị viên này?')) {
+            var action = '@Url.Action("UpdateAdminUsers", "MoodleUser")' + '/?selectedVals=' + selectedVal;
+            processing(action, "Đang khôi phục tài khoản moodle elearning...", gridRefresh);
+        }
+    }
+
+    function sync_one(selectedVal) {
+        var action = '@Url.Action("SyncAdminUsers", "MoodleUser")' + '/?selectedVals=' + selectedVal;
+        processing(action, "Đang đồng bộ tài khoản moodle elearning...", gridRefresh);
+    }
+
+    function create_admin() {
         if (selectedVals.length == 0) {
             alert('Vui lòng chọn một quản trị viên!');
             return;
         }
         var action = '@Url.Action("CreateAdminUsers", "MoodleUser")' + '/?selectedVals=' + selectedVals;
-        processing(action, "Đang tạo tài khoản moodle cho các quản trị viên đã chọn...", gridRefresh);
-    })
+        processing(action, "Đang tạo tài khoản moodle elearning...", gridRefresh);
+    }
 
-    $("#delete").click(function () {
+    function delete_admin() {
         if (selectedVals.length == 0) {
             alert('Vui lòng chọn một quản trị viên!');
             return;
         }
 
-        if (confirm('Bạn muốn xóa tài khoản moodle của các quản trị viên đã chọn?')) {
+        if (confirm('Bạn muốn xóa tài khoản moodle elearning của các quản trị viên đã chọn?')) {
             var action = '@Url.Action("DeleteAdminUsers", "MoodleUser")' + '/?selectedVals=' + selectedVals;
-            processing(action, "Đang xóa tài khoản moodle của các quản trị viên đã chọn...", gridRefresh);
+            processing(action, "Đang xóa tài khoản moodle elearning...", gridRefresh);
         }
-    })
+    }
 
-    $("#update").click(function () {
+    function update_admin() {
         if (selectedVals.length == 0) {
             alert('Vui lòng chọn một quản trị viên!');
             return;
         }
 
-        if (confirm('Bạn muốn khôi phục về mặc định tài khoản moodle của các quản trị viên đã chọn?')) {
+        if (confirm('Bạn muốn khôi phục về mặc định tài khoản moodle elearning của các quản trị viên đã chọn?')) {
             var action = '@Url.Action("UpdateAdminUsers", "MoodleUser")' + '/?selectedVals=' + selectedVals;
-            processing(action, "Đang khôi phục tài khoản của các quản trị viên đã chọn...", gridRefresh);
+            processing(action, "Đang khôi phục tài khoản moodle elearning...", gridRefresh);
         }
-    })
+    }
 
-    $("#sync").click(function () {
+    function sync_admin() {
         if (selectedVals.length == 0) {
             alert('Vui lòng chọn một quản trị viên!');
             return;
         }
 
-        if (confirm('Bạn muốn đồng bộ tài khoản moodle và tài khoản cổng thông tin của các quản trị viên đã chọn?')) {
-            var action = '@Url.Action("SyncAdminUsers", "MoodleUser")' + '/?selectedVals=' + selectedVals;
-            processing(action, "Đang đồng bộ tài khoản của các quản trị viên đã chọn...", gridRefresh);
-        }
-    })
+        var action = '@Url.Action("SyncAdminUsers", "MoodleUser")' + '/?selectedVals=' + selectedVals;
+        processing(action, "Đang đồng bộ tài khoản moodle elearning...", gridRefresh);
+    }
 
+    function assign_sysrole_one(selectedVal) {
+        if (jQuery("#VaiTro").val() == "") {
+            alert('Vui lòng chọn một vai trò!');
+            return;
+        }
+        var action = '@Url.Action("AssignAdminUserSystemRole", "MoodleUser")' + '/?selectedVals=' + selectedVal + "&id_vai_tro=" + jQuery("#VaiTro").val();
+        processing(action, "Đang gán vai trò hệ thống " + jQuery("#VaiTro").data("kendoDropDownList").text() + " cho quản trị viên...", gridRefresh);
+    }
+
+    function unassign_sysrole_one(selectedVal) {
+        if (jQuery("#VaiTro").val() == "") {
+            alert('Vui lòng chọn một vai trò!');
+            return;
+        }
+
+        if (confirm('Bạn muốn hủy vai trò hệ thống ' + jQuery("#VaiTro").data("kendoDropDownList").text() +
+            ' của quản trị viên này?')) {
+            var action = '@Url.Action("UnassignAdminUserSystemRole", "MoodleUser")' + '/?selectedVals=' + selectedVal + "&id_vai_tro=" + jQuery("#VaiTro").val();
+            processing(action, "Đang hủy vai trò hệ thống" + jQuery("#VaiTro").data("kendoDropDownList").text() + " của quản trị viên...", gridRefresh);
+        }
+    }
+
+    function unassign_all_sysrole_one(selectedVal) {
+        if (confirm('Bạn muốn hủy tất cả vai trò hệ thống của quản trị viên này?')) {
+            var action = '@Url.Action("UnassignAdminUserAllSystemRoles", "MoodleUser")' + '/?selectedVals=' + selectedVal;
+            processing(action, "Đang hủy tất cả vai trò hệ thống của quản trị viên...", gridRefresh);
+        }
+    }
+    ///
+    function assign_sysrole() {
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một quản trị viên!');
+            return;
+        }
+
+        if (jQuery("#VaiTro").val() == "") {
+            alert('Vui lòng chọn một vai trò!');
+            return;
+        }
+        var action = '@Url.Action("AssignAdminUserSystemRole", "MoodleUser")' + '/?selectedVals=' + selectedVals + "&id_vai_tro=" + jQuery("#VaiTro").val();
+        processing(action, "Đang gán vai trò hệ thống " + jQuery("#VaiTro").data("kendoDropDownList").text() + " cho các quản trị viên đã chọn...", gridRefresh);
+    }
+
+    function unassign_sysrole() {
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một quản trị viên!');
+            return;
+        }
+
+        if (jQuery("#VaiTro").val() == "") {
+            alert('Vui lòng chọn một vai trò!');
+            return;
+        }
+
+        if (confirm('Bạn muốn hủy vai trò hệ thống ' + jQuery("#VaiTro").data("kendoDropDownList").text() +
+            ' của các quản trị viên đã chọn?')) {
+            var action = '@Url.Action("UnassignAdminUserSystemRole", "MoodleUser")' + '/?selectedVals=' + selectedVals + "&id_vai_tro=" + jQuery("#VaiTro").val();
+            processing(action, "Đang hủy vai trò hệ thống " + jQuery("#VaiTro").data("kendoDropDownList").text() + " của các quản trị viên đã chọn...", gridRefresh);
+        }
+    }
+
+    function unassign_all_sysrole() {
+        if (selectedVals.length == 0) {
+            alert('Vui lòng chọn một quản trị viên!');
+            return;
+        }
+
+        if (confirm('Bạn muốn hủy tất cả vai trò hệ thống của các quản trị viên đã chọn?')) {
+            var action = '@Url.Action("UnassignAdminUserAllSystemRoles", "MoodleUser")' + '/?selectedVals=' + selectedVals;
+            processing(action, "Đang hủy tất cả vai trò hệ thống của các quản trị viên đã chọn...", gridRefresh);
+        }
+    }
 </script>

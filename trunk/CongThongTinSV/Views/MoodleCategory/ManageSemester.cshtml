@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Quản lý danh mục Học kỳ trên Moodle";
 }
-
+<h2>@ViewBag.Title</h2>
 @(Html.Kendo().Grid<CongThongTinSV.Models.MoodleSemester>()
     .Name("Grid")
     .Columns(columns => {
@@ -18,7 +18,15 @@
         columns.Bound(c => c.ID_moodle).Width(105);
         columns.Bound(c => c.Dot).Width(80).HtmlAttributes(new { style = "text-align:center" });
         columns.Bound(c => c.Hoc_ky).Width(80).HtmlAttributes(new { style = "text-align:center" });
-        columns.Bound(c => c.Nam_hoc);
+        columns.Bound(c => c.Nam_hoc).Width(90).HtmlAttributes(new { style = "text-align:center" });
+        columns.Bound(c => c.Trang_thai).Title("Thực hiện")
+         .ClientTemplate(
+            "# if (Trang_thai) { #" +
+                "<img class='image_check' src=" + Url.Content("~/Images/check.png") + " alt='Ok' title='Đã tạo' />" +
+                "<button class='button-delete' title='Xóa danh mục' onclick='delete_one(#=ID#)'></button>" +
+            "# } else { #" +
+                "<button class='button-add' title='Tạo danh mục' onclick='create_one(#=ID#)'></button>" +
+            "# } #");   
     })
    .Pageable(pager => pager.PageSizes(new int[]{5, 10, 20, 50}).Refresh(true).Input(true).Numeric(false))
     .Sortable(s => s.SortMode(GridSortMode.MultipleColumn))
@@ -73,13 +81,24 @@
     function gridRefresh() {
         $("#Grid").data("kendoGrid").dataSource.read();
     }
+
+    function create_one(selectedVal) {
+        processing('/MoodleCategory/CreateSemesters/?selectedVals=' + selectedVal, "Đang tạo danh mục học kỳ...", gridRefresh);
+    }
+
+    function delete_one (selectedVal) {
+        if (confirm('Bạn muốn xóa danh mục học kỳ này?')) {
+            processing('/MoodleCategory/DeleteSemesters/?selectedVals=' + selectedVal, "Đang xóa danh mục học kỳ...", gridRefresh)
+        }
+    }
+
     $("#create").click(function () {
         if (selectedVals.length == 0) {
             alert('Vui lòng chọn một học kỳ!');
             return;
         }
 
-        processing('/MoodleCategory/CreateSemesters/?selectedVals='+ selectedVals, "Đang tạo các danh mục học kỳ đã chọn trên Moodle...", gridRefresh);
+        processing('/MoodleCategory/CreateSemesters/?selectedVals='+ selectedVals, "Đang tạo các danh mục học kỳ...", gridRefresh);
     })
 
     $("#delete").click(function () {
@@ -88,8 +107,8 @@
             return;
         }
 
-        if (confirm('Bạn muốn xóa toàn bộ các danh mục học kỳ đã chọn trên Moodle?')) {
-            processing('/MoodleCategory/DeleteSemesters/?selectedVals='+ selectedVals, "Đang xóa các danh mục học kỳ đã chọn trên Moodle...", gridRefresh)
+        if (confirm('Bạn muốn xóa toàn bộ các danh mục học kỳ đã chọn?')) {
+            processing('/MoodleCategory/DeleteSemesters/?selectedVals='+ selectedVals, "Đang xóa các danh mục học kỳ...", gridRefresh)
         }
     })
 

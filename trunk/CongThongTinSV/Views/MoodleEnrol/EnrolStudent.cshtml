@@ -46,7 +46,8 @@
     .AutoBind(false)
     .CascadeFrom("HocKy")
 )
-
+@*<button id="createEnrol_top" class="k-button" onclick="CreateManyEnrol()">Ghi danh</button>
+<button id="deleteEnrol_top" class="k-button" onclick="DeleteManyEnrol()">Đình chỉ ghi danh</button>*@
 @(Html.Kendo().Grid<CongThongTinSV.Models.MoodleStudent>()
     .Name("Grid")
     .Columns(columns =>
@@ -60,31 +61,34 @@
             .HeaderHtmlAttributes(new { style = "text-align:center" })
             .HtmlAttributes(new { style = "text-align:center" })
             .Filterable(false).Groupable(false).Sortable(false);
-        columns.Bound(c => c.Ma_sv).Width(80).ClientTemplate((@Html.ActionLink("#=Ma_sv#", "UserProfile", "MoodleUser", new { userid = "ID" }, null).ToHtmlString().Replace("ID", "#=ID_moodle#")));
+        columns.Bound(c => c.Ma_sv).Width(80)
+            .ClientTemplate(
+             "# if (ID_moodle != 0) { #" +
+            (@Html.ActionLink("#=Ma_sv#", "UserProfile", "MoodleUser", new { userid = "ID" }, null).ToHtmlString().Replace("ID", "#=ID_moodle#"))+
+             "# } else { ##=Ma_sv#" +
+            "# } #")
+            .HtmlAttributes(new { title = "Xem hồ sơ các nhân", style = "text-align:center" });
         columns.Bound(c => c.Ho_dem).Width(145);
         columns.Bound(c => c.Ten).Width(80);
         columns.Bound(c => c.Ngay_sinh).Width(100).Format("{0:dd-MM-yyyy}");
         columns.Bound(c => c.Gioi_tinh).Width(90);
         columns.Bound(c => c.Lop).Width(90);
-        columns.Bound(c => c.DiemX).Width(85);
+        columns.Bound(c => c.DiemX).Width(85)
+            .ClientTemplate(
+            "# if (ID_moodle != 0) { #" +
+                (@Html.ActionLink("#=DiemX#", "StudentQuizGrade", "MoodleQuiz", new { userid = "UserID", courseid = "#= getIDLHP() #" }, new { title = "Xem bảng điểm thành phần", style = "text-align:center" }).ToHtmlString().Replace("UserID", "#=ID_moodle#")) +
+            "# } else { ##=DiemX#" +
+            "# } #");
         columns.Bound(c => c.Ten_nhom);
-        columns.Bound(c => c.Trang_thai).Title("")
-           .Sortable(false)
-           .Filterable(false)
-           .Groupable(false)
-           .Width(40)
-           .ClientTemplate("<img width='16' height='16' src=" +
-           "# if (Trang_thai) { #" +
-               Url.Content("~/Images/tick_green_big.gif") +
-           "# } else { #" +
-               Url.Content("~/Images/cross_red_big.gif") +
-           "# } # />");
-        columns.Bound(c => c.ID_moodle)
-            .Title("")
-            .Sortable(false)
-            .Filterable(false)
-            .Groupable(false)
-            .ClientTemplate((@Html.ActionLink("Bảng điểm", "StudentQuizGrade", "MoodleQuiz", new { userid = "UserID", courseid = "#= getIDLHP() #" }, null).ToHtmlString().Replace("UserID", "#=ID_moodle#")));
+        columns.Bound(c => c.Trang_thai).Title("Thực hiện")
+           .Width(100)
+           .ClientTemplate(
+            "# if (Trang_thai) { #" +
+                "<img class='image_check' src=" + Url.Content("~/Images/check.png") + " alt='Ok' title='Đã ghi danh' />" +
+                "<button class='button-delete' title='Đình chỉ ghi danh' onclick='DeleteOneEnrol(#=ID#)'></button>" +
+            "# } else { #" +
+                "<button class='button-add' title='Ghi danh' onclick='CreateOneEnrol(#=ID#)'></button>" +
+            "# } #");     
     })
     .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50, 80 }).Refresh(true).Input(true).Numeric(false))
     .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
@@ -108,10 +112,8 @@
             .PageSize(50)
     )
 )
-<div style="margin-top:5px">
-    <button id="createEnrol" class="k-button">Ghi danh</button>
-    <button id="deleteEnrol" class="k-button">Đình chỉ ghi danh</button>
-</div>
+<button id="createEnrol_bottom" class="k-button" onclick="CreateManyEnrol()">Ghi danh</button>
+<button id="deleteEnrol_bottom" class="k-button" onclick="DeleteManyEnrol()">Đình chỉ ghi danh</button>
 <div>
      @(Html.Kendo().ComboBox()
         .Name("Nhom")
@@ -132,10 +134,10 @@
     )
     @Html.TextBox("TenNhom", "", new { placeholder = "Nhập tên nhóm", style = "width:120px", @class = "k-textbox" })
     @Html.TextBox("MoTa", "", new { placeholder = "Mô tả nhóm", style = "width:200px", @class = "k-textbox"})
-    <button id="createGroup" class="k-button">Tạo nhóm</button>
-    <button id="deleteGroup" class="k-button">Xóa nhóm</button>
-    <button id="addMember" class="k-button">Thêm thành viên</button>
-    <button id="deleteMember" class="k-button">Bớt thành viên</button>
+    <button id="createGroup" class="k-button" onclick="CreatGroup()">Tạo nhóm</button>
+    <button id="deleteGroup" class="k-button" onclick="DeleteGroup()">Xóa nhóm</button>
+    <button id="addMember" class="k-button" onclick="AddMember()">Thêm thành viên</button>
+    <button id="deleteMember" class="k-button" onclick="DeleteMember()">Bớt thành viên</button>
 
 </div>
 <script type="text/javascript">
@@ -172,10 +174,6 @@
             var dataItem = grid.dataItem($(this).closest('tr'));
 
             checkVal(dataItem.ID, state, selectedVals);
-            //var s = "";
-            //for (var i = 0; i < selectedVals.length; i++)
-            //    s += selectedVals[i] + ", ";
-            //alert(s);
             $('#masterCheckBox').attr('checked', isCheckedAll('#Grid :checkbox'));
         })
     })
@@ -195,37 +193,47 @@
         $("#Nhom").data("kendoComboBox").dataSource.read();
     }
 
-    $("#createEnrol").click(function () {
+    function CreateOneEnrol(selectedVal) {
+        var action = '@Url.Action("ManualEnrolStudents", "MoodleEnrol")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVal;
+        processing(action, "Đang ghi danh cho sinh viên...", gridRefresh);
+    }
+
+    function DeleteOneEnrol(selectedVal) {
+            var action = '@Url.Action("SuspendEnrolStudents", "MoodleEnrol")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVal;
+            processing(action, "Đang đình chỉ ghi danh của sinh viên...", gridRefresh);
+    }
+
+   function CreateManyEnrol() {
         if (selectedVals.length == 0) {
             alert('Vui lòng chọn một sinh viên!');
             return;
         }
         var action = '@Url.Action("ManualEnrolStudents", "MoodleEnrol")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
         processing(action, "Đang ghi danh cho các sinh viên...", gridRefresh);
-    })
+    }
 
-    $("#deleteEnrol").click(function () {
+    function DeleteManyEnrol() {
         if (selectedVals.length == 0) {
             alert('Vui lòng chọn một sinh viên!');
             return;
         }
 
         if (confirm('Bạn muốn đình chỉ ghi danh của các sinh viên đã chọn?')) {
-            var action = '@Url.Action("DeleteGhiDanhSinhVien", "MoodleEnrol")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
+            var action = '@Url.Action("SuspendEnrolStudents", "MoodleEnrol")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals;
             processing(action, "Đang đình chỉ ghi danh của các sinh viên...", gridRefresh);
         }
-    })
+    }
 
-    $("#createGroup").click(function () {
+    function CreateGroup() {
         if (jQuery("#TenNhom").val() == "") {
             alert('Tên nhóm không được để trống!');
             return;
         }
         var action = '@Url.Action("CreateGroup", "MoodleGroup")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&ten_nhom=' + jQuery("#TenNhom").val() + '&mo_ta=' + jQuery("#MoTa").val();
         processing(action, "Đang tạo nhóm học viên trong lớp học phần...", groupRefresh);
-    })
+    }
 
-    $("#deleteGroup").click(function () {
+    function DeleteGroup() {
         if ($('#Nhom').val() == '') {
             alert('Vui lòng chọn 1 nhóm');
             return;
@@ -235,9 +243,9 @@
             var action = '@Url.Action("DeleteGroups", "MoodleGroup")' + '/?selectedVals=' + jQuery("#Nhom").val();
             processing(action, "Đang xóa nhóm học viên " + $("#Nhom").data("kendoComboBox").text() + "...", gridgroupRefresh);
         }
-    })
+    }
 
-    $("#addMember").click(function () {
+    function AddMember() {
         if (selectedVals.length == 0) {
             alert('Vui lòng chọn một sinh viên!');
             return;
@@ -249,9 +257,9 @@
         }
         var action = '@Url.Action("AddGroupMembers", "MoodleGroup")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + '&id_nhom=' + jQuery("#Nhom").val();
         processing(action, "Đang thêm các học viên vào nhóm " + $("#Nhom").data("kendoComboBox").text() + "...", gridRefresh);
-    })
+    }
 
-    $("#deleteMember").click(function () {
+    function DeleteMember() {
         if (selectedVals.length == 0) {
             alert('Vui lòng chọn một sinh viên!');
             return;
@@ -265,5 +273,5 @@
             var action = '@Url.Action("DeleteGroupMembers", "MoodleGroup")' + '/?id_lop_tc=' + jQuery("#LopHocPhan").val() + '&selectedVals=' + selectedVals + '&id_nhom=' + jQuery("#Nhom").val();
             processing(action, "Đang xóa các học viên khỏi nhóm " + $("#Nhom").data("kendoComboBox").text() + "...", gridRefresh);
         }
-    })
+    }
 </script>

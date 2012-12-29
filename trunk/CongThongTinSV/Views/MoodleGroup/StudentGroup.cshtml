@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = "Quản lý nhóm và phân tổ nhóm học viên trên Moodle";
 }
-
 @(Html.Kendo().ComboBox()
     .Name("HocKy")
     .Placeholder("Chọn học kỳ...")
@@ -18,7 +17,6 @@
         }).ServerFiltering(true);
     })
 )
-
 @(Html.Kendo().ComboBox()
     .Name("LopHocPhan")
     .Placeholder("Chọn lớp học phần...")
@@ -40,6 +38,10 @@
     .AutoBind(false)
     .CascadeFrom("HocKy")
 )
+@Html.TextBox("TenNhom", "", new { placeholder = "Nhập tên nhóm", style = "width:120px", @class = "k-textbox" })
+@Html.TextBox("MoTaNhom", "", new { placeholder = "Mô tả nhóm", style = "width:160px", @class = "k-textbox" })
+<button id="createGroup" class="k-button">Tạo nhóm</button>
+<button id="deleteGroup" class="k-button">Xóa nhóm</button>
 @(Html.Kendo().Grid<CongThongTinSV.Models.MoodleGroup>()
     .Name("Grid")
     .Columns(columns =>
@@ -53,11 +55,11 @@
             .HeaderHtmlAttributes(new { style = "text-align:center" })
             .HtmlAttributes(new { style = "text-align:center" })
             .Filterable(false).Groupable(false).Sortable(false);
-        columns.Bound(c => c.Ten_nhom).Width(120);
+        columns.Bound(c => c.Ten_nhom).Width(150);
         columns.Bound(c => c.Mo_ta).Width(250);
         columns.Bound(c => c.Ten_to);
     })
-    .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50, 80 }).Refresh(true).Input(true).Numeric(false))
+    .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20}).Refresh(true).Input(true).Numeric(false))
     .Sortable(s => s.SortMode(GridSortMode.MultipleColumn))
     .Filterable()
     .Scrollable()
@@ -79,38 +81,30 @@
             .PageSize(50)
     )
 )
-<div>
-    @Html.TextBox("TenTo", "", new { placeholder = "Nhập tên tổ", style = "width:100px", @class = "k-textbox" })
-    @Html.TextBox("MoTaTo", "", new { placeholder = "Mô tả tổ", style = "width:150px", @class = "k-textbox" })
-    <button id="createGrouping" class="k-button">Tạo tổ</button>
-    <button id="updateGrouping" class="k-button">Cập nhật tổ</button>
-    @Html.TextBox("TenNhom", "", new { placeholder = "Nhập tên nhóm", style = "width:110px", @class = "k-textbox" })
-    @Html.TextBox("MoTaNhom", "", new { placeholder = "Mô tả nhóm", style = "width:150px", @class = "k-textbox" })
-    <button id="createGroup" class="k-button">Tạo nhóm</button>
-    <button id="deleteGroup" class="k-button">Xóa nhóm</button>
-</div>
-<div>
-    @(Html.Kendo().ComboBox()
-        .Name("To")
-        .Placeholder("Chọn tổ")
-        .HtmlAttributes(new { style = "width:150px" })
-        .DataTextField("Text")
-        .DataValueField("Value")
-        .DataSource(source =>
+@(Html.Kendo().ComboBox()
+    .Name("To")
+    .Placeholder("Chọn tổ...")
+    .HtmlAttributes(new { style = "width:187px" })
+    .DataTextField("Text")
+    .DataValueField("Value")
+    .DataSource(source =>
+    {
+        source.Read(read =>
         {
-            source.Read(read =>
-            {
-                read.Action("GetGroupingList", "MoodleGroup").Data("filterGrid");
-            }).ServerFiltering(true);
-        })
-        .Enable(false)
-        .AutoBind(false)
-        .CascadeFrom("LopHocPhan")
-    )
-    <button id="assignGrouping" class="k-button">Thêm nhóm vào tổ</button>
-    <button id="unassignGrouping" class="k-button">Xóa nhóm khỏi tổ</button>
-    <button id="deleteGrouping" class="k-button">Xóa tổ</button>
-</div>
+            read.Action("GetGroupingList", "MoodleGroup").Data("filterGrid");
+        }).ServerFiltering(true);
+    })
+    .Enable(false)
+    .AutoBind(false)
+    .CascadeFrom("LopHocPhan")
+)
+@Html.TextBox("TenTo", "", new { placeholder = "Nhập tên tổ", style = "width:120px", @class = "k-textbox" })
+@Html.TextBox("MoTaTo", "", new { placeholder = "Mô tả tổ", style = "width:160px", @class = "k-textbox" })
+<button id="createGrouping" class="k-button">Tạo tổ</button>
+<button id="updateGrouping" class="k-button">Cập nhật tổ</button>
+<button id="assignGrouping" class="k-button">Thêm nhóm vào tổ</button>
+<button id="unassignGrouping" class="k-button">Xóa nhóm khỏi tổ</button>
+<button id="deleteGrouping" class="k-button">Xóa tổ</button>
 <script type="text/javascript">
     var selectedVals = [];
 

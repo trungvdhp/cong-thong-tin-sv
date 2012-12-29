@@ -22,7 +22,8 @@
         e.Change("loadGrid");
     })
 )
-
+@*<button id="create_top" class="k-button" onclick="Create()">Tạo lớp học phần</button>
+<button id="delete_top" class="k-button" onclick="Delete()">Xóa lớp học phần</button>*@
 @(Html.Kendo().Grid<CongThongTinSV.Models.MoodleCourse>()
     .Name("Grid")
     .Columns(columns => {
@@ -35,18 +36,35 @@
             .HeaderHtmlAttributes(new { style = "text-align:center" })
             .HtmlAttributes(new { style = "text-align:center" })
             .Filterable(false).Groupable(false).Sortable(false);
-        columns.Bound(c => c.ID_moodle).Width(105);
         columns.Bound(c => c.Lop_hoc_phan)
-              .ClientTemplate((@Html.ActionLink("#=Lop_hoc_phan#", "CourseQuizList", "MoodleQuiz", new { courseid = "ID" }, null).ToHtmlString().Replace("ID", "#=ID_moodle#")));
+              .ClientTemplate(
+              "# if (Trang_thai) { #" +
+                (@Html.ActionLink("#=Lop_hoc_phan#", "CourseQuizList", "MoodleQuiz", new { courseid = "ID" }, new { title = "Xem danh sách các bài thi" }).ToHtmlString().Replace("ID", "#=ID_moodle#")) + 
+              "# } else { ##=Lop_hoc_phan## } #"
+              );
         columns.Bound(c => c.Ky_hieu).Width(95).HtmlAttributes(new { style = "text-align:center" });
         columns.Bound(c => c.So_tin_chi).Width(95).HtmlAttributes(new { style = "text-align:center" });
         columns.Bound(c => c.Tu_ngay).Width(100).Format("{0:dd-MM-yyyy}").HtmlAttributes(new { style = "text-align:center" });
         columns.Bound(c => c.Den_ngay).Width(100).Format("{0:dd-MM-yyyy}").HtmlAttributes(new { style = "text-align:center" });
-        columns.Bound(c => c.ID_moodle).Title("")
+        columns.Bound(c => c.ID_moodle).Title("Xem")
+          .HeaderHtmlAttributes(new { style = "text-align:center" })
+          .HtmlAttributes(new { style = "text-align:center" })
           .Filterable(false)
           .Groupable(false)
           .Sortable(false)
-          .ClientTemplate((@Html.ActionLink("Bảng điểm", "CourseStudentGrade", "MoodleCourse", new { courseid = "ID" }, null).ToHtmlString().Replace("ID", "#=ID_moodle#")));
+          .Width(90)
+          .ClientTemplate(
+           "# if (Trang_thai) { #" +
+            (@Html.ActionLink("Bảng điểm", "CourseStudentGrade", "MoodleCourse", new { courseid = "ID" }, null).ToHtmlString().Replace("ID", "#=ID_moodle#")) +
+        "# } #");
+       columns.Bound(c => c.Trang_thai).Title("Thực hiện").Width(100)
+       .ClientTemplate(
+          "# if (Trang_thai) { #" +
+            "<img class='image_check' src=" + Url.Content("~/Images/check.png") + " alt='Ok' title='Đã tạo' />" +
+            "<button class='button-delete' title='Xóa lớp học phần' onclick='delete_one(#=ID#)'></button>" +
+          "# } else { #" +
+            "<button class='button-add' title='Tạo lớp học phần' onclick='create_one(#=ID#)'></button>" +
+          "# } #");  
     })
     .Pageable(pager => pager.PageSizes(new int[]{5, 10, 20, 50, 100, 1000}).Refresh(true).Input(true).Numeric(false))
         .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
@@ -70,8 +88,8 @@
     )
 )
 <div>
-    <button id="create" class="k-button">Tạo lớp</button>
-    <button id="delete" class="k-button">Xóa lớp</button>
+    <button id="create_bottom" class="k-button" onclick="Create()">Tạo lớp học phần</button>
+    <button id="delete_bottom" class="k-button" onclick="Delete()">Xóa lớp học phần</button>
 </div>
 <script type="text/javascript">
     var selectedVals = [];
@@ -107,16 +125,28 @@
         $("#Grid").data("kendoGrid").dataSource.read();
     }
 
-    $("#create").click(function () {
+    function create_one(selectedVal) {
+        var action = '@Url.Action("CreateCourses", "MoodleCourse")' + '/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVal;
+        processing(action, "Đang tạo lớp học phần...", gridRefresh);
+    }
+
+    function delete_one(selectedVal) {
+        if (confirm('Bạn muốn xóa lớp học phần này?')) {
+            var action = '@Url.Action("DeleteCourses","MoodleCourse")' + '/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVal;
+            processing(action, "Đang xóa lớp học phần...", gridRefresh);
+        }
+    }
+
+    function Create() {
         if (selectedVals.length == 0) {
             alert('Vui lòng chọn một lớp học phần!');
             return;
         }
         var action = '@Url.Action("CreateCourses", "MoodleCourse")' + '/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals;
-        processing(action, "Đang tạo các lớp học phần trên moodle...", gridRefresh);
-    })
+        processing(action, "Đang tạo các lớp học phần...", gridRefresh);
+    }
 
-    $("#delete").click(function () {
+    function Delete() {
         if (selectedVals.length == 0) {
             alert('Vui lòng chọn một lớp học phần!');
             return;
@@ -124,7 +154,7 @@
 
         if (confirm('Bạn muốn xóa toàn bộ các lớp học phần đã chọn?')) {
             var action = '@Url.Action("DeleteCourses","MoodleCourse")' + '/?id_hocky=' + jQuery("#HocKy").val() + '&selectedVals=' + selectedVals;
-            processing(action, "Đang xóa các lớp học phần trên moodle...", gridRefresh);
+            processing(action, "Đang xóa các lớp học phần...", gridRefresh);
         }
-    })
+    }
 </script>

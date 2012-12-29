@@ -207,9 +207,9 @@ namespace CongThongTinSV.App_Lib
         public static DateTime ConvertToDateTime(int timestamp)
         {
             //create a new DateTime value based on the Unix Epoch
-            DateTime converted = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            DateTime mindate = new DateTime(1970, 1, 1, 0, 0, 0, 0);
             //add the timestamp to the value
-            DateTime newDateTime = converted.AddSeconds(timestamp);
+            DateTime newDateTime = mindate.AddSeconds(timestamp);
 
             //return the System.DateTime value
             return newDateTime.ToLocalTime();
@@ -224,6 +224,12 @@ namespace CongThongTinSV.App_Lib
         public static string ConvertToDateTimeString(int timestamp, string format)
         {
             DateTime date = ConvertToDateTime(timestamp);
+            DateTime mindate = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+
+            if (date == mindate)
+            {
+                return "Never";
+            }
 
             return date.ToString(format);
         }
@@ -308,6 +314,7 @@ namespace CongThongTinSV.App_Lib
         /// <returns></returns>
         public static bool InArray(string array, char[] separator,  string value)
         {
+            if (array == null) return false;
             string[] arr = array.Split(separator);
             return arr.Contains(value);
         }

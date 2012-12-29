@@ -18,12 +18,14 @@
            .HtmlAttributes(new { style = "text-align:center" })
            .Filterable(false).Groupable(false).Sortable(false);
         columns.Bound(c => c.Ten_quyen);
-        columns.Bound(c => c.Action_name).Width(300);
-        columns.Command(command => { command.Edit(); command.Destroy(); }).Width(200);
+        columns.Bound(c => c.Action_name).Width(320);
+        columns.Command(command => { command.Edit().Text("Sửa"); command.Destroy().Text("Xóa"); }).Width(180);
     })
     .ToolBar(toolBar =>
     {
-        toolBar.Create();
+        toolBar.Create().Text("Thêm quyền");
+        //toolBar.Custom().Text("Xóa các quyền").Url("#").HtmlAttributes(new { onclick = "Delete()" });
+        toolBar.Custom().Text("Đồng bộ quyền").Url("#").HtmlAttributes(new { onclick = "Sync()" });
     })
     .Editable(editable => editable.Mode(GridEditMode.InLine))
     .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50, 100 }).Refresh(true).Input(true).Numeric(false))
@@ -57,8 +59,8 @@
     )
 )
 <div>
-    <button id="delete" class="k-button">Xóa các quyền</button>
-    <button id="sync" class="k-button">Đồng bộ quyền</button>
+    <button id="delete" class="k-button" onclick="Delete()">Xóa các quyền</button>
+    <button id="sync" class="k-button" onclick="Sync()">Đồng bộ quyền</button>
 </div>
 <script type="text/javascript">
     var selectedVals = [];
@@ -102,7 +104,7 @@
         $("#Grid").data("kendoGrid").dataSource.read();
     }
 
-    $("#delete").click(function () {
+    function Delete() {
         if (selectedVals.length == 0) {
             alert('Vui lòng chọn một quyền!');
             return;
@@ -112,10 +114,10 @@
             var action = '@Url.Action("DeleteCapabilities","Capability")' + '/?selectedVals=' + selectedVals;
             processing(action, "Đang xóa các quyền đã chọn...", gridRefresh);
         }
-    })
+    }
 
-    $("#sync").click(function () {
+    function Sync() {
         var action = '@Url.Action("SyncCapability","Capability")';
         processing(action, "Đang đồng bộ quyền...", gridRefresh);
-     })
+     }
 </script>

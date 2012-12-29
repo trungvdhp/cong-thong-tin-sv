@@ -28,5 +28,8 @@ namespace CongThongTinSV.Models
 
         [DisplayName("Năm học")]
         public string Nam_hoc { get; set; }
+
+        [DisplayName("Trạng thái")]
+        public bool Trang_thai { get; set; }
     }
 }

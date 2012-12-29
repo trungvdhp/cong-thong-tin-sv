@@ -1,16 +1,63 @@
 ﻿@using Kendo.Mvc.UI;
 @using CongThongTinSV.Models;
 @{
-    ViewBag.Title = ViewBag.FullName + ": Các khóa học đã tham gia";
+    ViewBag.Title = ViewBag.FullName + ": Bảng điểm các khóa học bạn đã ghi danh";
 }
-
+<h2>Bảng điểm các khóa học bạn đã ghi danh</h2>
 @(Html.Kendo().Grid<CongThongTinSV.Models.MoodleStudentCourseGrade>()
     .Name("Grid")
     .Columns(columns => {
         columns.Bound(c => c.ID).Title("Khóa học")
-            .ClientTemplate((@Html.ActionLink("#=CourseName#", "MyQuizGrade", "MoodleQuiz", new { courseid = "CourseId" }, null).ToHtmlString().Replace("CourseId", "#=ID#")))
+            .ClientTemplate((@Html.ActionLink("#=CourseName#", "MyQuizGrade", "MoodleQuiz", new { courseid = "CourseId" }, new { title = "Xem bảng điểm các bài thi của tôi" }).ToHtmlString().Replace("CourseId", "#=ID#")))
             .Width(500);
-        columns.Bound(c => c.Grade).Format("{0:0.0}");
+        columns.Bound(c => c.Grade)
+            .ClientTemplate(
+                (@Html.ActionLink("#= kendo.toString(Grade, '0.0') #", "MyCourseStudentGrade", "MoodleCourse", new { courseid = "CourseID" }, new { title = "Xem bảng điểm tổng kết khóa học" })).ToHtmlString().Replace("CourseID", "#=ID#"));
+    })
+    .Pageable(pager => pager.PageSizes(new int[]{5, 10, 20, 50}).Refresh(true).Input(true).Numeric(false))
+    .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
+    .Filterable()
+    .Scrollable()
+    //.Groupable()
+    .Resizable(r => r.Columns(true))
+    .Reorderable(ro => ro.Columns(true))
+    //.Navigatable()
+    //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
+    .Selectable(s => s.Mode(GridSelectionMode.Single))
+    .DataSource(
+        dataSource => dataSource
+            .Ajax()
+            .Read(read => read.Action("GetMyCourseGrades", "MoodleCourse"))
+            .PageSize(50)
+    )
+    .Events(e => e.Change("onChange"))
+)
+
+<h2 id="coursename"></h2>
+@(Html.Kendo().Grid<CongThongTinSV.Models.MoodleCourseMember>()
+    .Name("MemberGrid")
+    .HtmlAttributes(new {style = "height: 500px;"})
+    .Columns(columns => {
+        columns.Bound(c => c.ImageUrl)
+            .Sortable(false)
+            .Groupable(false)
+            .Filterable(false)
+            .HeaderHtmlAttributes(new { style = "text-align: center;" })
+            .HtmlAttributes(new { style = "text-align: center;" })
+            .ClientTemplate("<a href='../MoodleUser/UserCourseProfile/?userid=#=UserID#&courseid=#=get_courseid()#'>" +
+                    "<img src=#=ImageUrl# alt='Picture of #=LastName# #=FirstName#' title='Ảnh đại diện của #=LastName# #=FirstName#' />" + 
+                    "</a>"
+                    )
+            .Width(120);
+        columns.Bound(c => c.UserID).Title("Họ và tên")
+            .ClientTemplate(
+                (@Html.ActionLink("#=LastName# #=FirstName#", "UserCourseProfile", "MoodleUser", new { userid = "UserID", courseid = "CourseID" }, new { title = "Xem hồ sơ khóa học của #=LastName# #=FirstName#" })).ToHtmlString().Replace("CourseID", "#=get_courseid()#").Replace("UserID","#=UserID#"))
+                .Width(180);
+        columns.Bound(c => c.City).Width(150);
+        columns.Bound(c => c.Country).Width(100);
+        columns.Bound(c => c.LastAccess).Width(150);
+        columns.Bound(c => c.Roles).HtmlAttributes(new { style = "color: blue;"});
+        
     })
     .Pageable(pager => pager.PageSizes(new int[]{5, 10, 20, 50}).Refresh(true).Input(true).Numeric(false))
     .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
@@ -25,7 +72,28 @@
     .DataSource(
         dataSource => dataSource
             .Ajax()
-            .Read(read => read.Action("GetMyCourseGrades", "MoodleCourse"))
+            .Read(read => read.Action("GetCourseMembers", "MoodleCourse").Data("filterGrid"))
             .PageSize(50)
     )
 )
+
+<script type="text/javascript">
+    var courseID = "0";
+
+    function get_courseid() {
+        return courseID;
+    }
+
+    function filterGrid() {
+        return {
+            courseid: courseID
+        }
+    }
+
+    function onChange(arg) {
+        var course = this.select();
+        courseID = this.dataItem(course).ID;
+        document.getElementById('coursename').innerHTML = this.dataItem(course).CourseName + " - Danh sách thành viên";
+        $("#MemberGrid").data("kendoGrid").dataSource.read();
+    }
+</script>

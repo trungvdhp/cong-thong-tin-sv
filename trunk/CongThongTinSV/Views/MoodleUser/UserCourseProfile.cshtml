@@ -1,68 +1,74 @@
 ﻿@using CongThongTinSV.Models
 @using CongThongTinSV.App_Lib
 @{
-    MoodleCourseUserResponse userProfile = ViewBag.CourseUser;
-    ViewBag.Title = ViewBag.CourseName + ": Hồ sơ cá nhân: " + userProfile.fullname;
-    string title = userProfile.fullname + " (" + ViewBag.CourseName +")";
-}
-@{
-    
+    ViewBag.Title = ViewBag.CourseName + ": Hồ sơ cá nhân: " + ViewBag.FullName;
+    string title = ViewBag.FullName + " (" + ViewBag.CourseName +")";
 }
 <h2 style="text-align:center">@title</h2>
-<table style="color:black" summary="">
-    <tr>
-        <td rowspan="8" style="vertical-align: top;">
-                <a href="UserProfile?userid=@userProfile.id">
-                <img src=@userProfile.profileimageurl alt="Picture of " + @userProfile.fullname title="Picture of " + @userProfile.fullname class="userpicture defaultuserpic" width="100" height="100" />
-                </a>
-        </td>
-    </tr>
-    <tr>
-        <td>Thư điện tử:</td>
-        <td>
-            <a href="mailto:@userProfile.email"  title="">@userProfile.email</a>
-        </td>
-    </tr>
-    <tr>
-        <td>Lần truy cập gần nhất:</td>
-        <td>@Utility.ConvertToDetailDateTimeString(userProfile.lastaccess)</td>
-    </tr>
-    <tr>
-        <td>Vai trò:</td>
-        <td>
-            @{
-                int len = userProfile.roles.Count;
-                for(int i = 0; i < len; i++)
-                {
-                    if(i > 0)
-                    {                 
-                        <text>,&nbsp</text>
-                    }
-                    <a href="http://" >@userProfile.roles[i].name</a>
-                }
+@{
+    if(ViewBag.Error != "")
+    {
+        <h2 class="error">Lỗi: @ViewBag.Error</h2>
+    }
+    else
+    {
+        MoodleCourseUserResponse userProfile = ViewBag.CourseUser;
+        <table style="color:black" summary="">
+            <tr>
+                <td rowspan="8" style="vertical-align: top;">
+                        <a href="UserProfile?userid=@userProfile.id">
+                        <img src="@userProfile.profileimageurl" alt="Picture of @userProfile.fullname" title="Picture of @userProfile.fullname" class="userpicture defaultuserpic" width="100" height="100" />
+                        </a>
+                </td>
+            </tr>
+            <tr>
+                <td class="nowrap">Thư điện tử:</td>
+                <td>
+                    <a href="mailto:@userProfile.email"  title="">@userProfile.email</a>
+                </td>
+            </tr>
+            <tr>
+                <td class="nowrap">Lần truy cập gần nhất:</td>
+                <td>@Utility.ConvertToDetailDateTimeString(userProfile.lastaccess)</td>
+            </tr>
+            <tr>
+                <td class="nowrap">Vai trò:</td>
+                <td>
+                    @{
+                        int len = userProfile.roles.Count;
+                        for(int i = 0; i < len; i++)
+                        {
+                            if(i > 0)
+                            {                 
+                                <text>,&nbsp</text>
+                            }
+                            <a href="#" >@userProfile.roles[i].name</a>
+                        }
                 
-            }</td>
-    </tr>
-    <tr>
-        <td>Các khóa học:</td>
-        <td>
-            @{
-                len = userProfile.enrolledcourses.Count;
-                for(int i = 0; i < len; i++)
-                {
-                    if(i > 0)
-                    {                 
-                        <text>,&nbsp</text>
-                    }
-                    <text>
-                    @Html.ActionLink(userProfile.enrolledcourses[i].fullname, "UserCourseProfile", "MoodleUser", routeValues: new { userid = userProfile.id, courseid = userProfile.enrolledcourses[i].id }, htmlAttributes: new { title = "Course user profile" })
-                    </text>
-                }
-            }</td>
-    </tr>
-</table>
+                    }</td>
+            </tr>
+            <tr>
+                <td class="nowrap">Các khóa học:</td>
+                <td>
+                    @{
+                        len = userProfile.enrolledcourses.Count;
+                        for(int i = 0; i < len; i++)
+                        {
+                            if(i > 0)
+                            {                 
+                                <text>,&nbsp</text>
+                            }
+                            <text>
+                            @Html.ActionLink(userProfile.enrolledcourses[i].fullname, "UserCourseProfile", "MoodleUser", routeValues: new { userid = userProfile.id, courseid = userProfile.enrolledcourses[i].id }, htmlAttributes: new { title = "Course user profile" })
+                            </text>
+                        }
+                    }</td>
+            </tr>
+        </table>
+    }
+}
 <div style="text-align: center; margin-top: 5px">
-    @using (Html.BeginForm("UserProfile", "MoodleUser", new { userid = userProfile.id }, FormMethod.Post, null))
+    @using (Html.BeginForm("UserProfile", "MoodleUser", new { userid = ViewBag.UserID }, FormMethod.Post, null))
     {
         @Html.AntiForgeryToken()
         <button class="k-button" type="submit">Hồ sơ đầy đủ</button>
