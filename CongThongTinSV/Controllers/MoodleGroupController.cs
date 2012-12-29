@@ -20,7 +20,7 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        //[Authorize(Roles = "MoodleGroup.GetGroups")]
+        [Authorize(Roles = "MoodleGroup.StudentGroup")]
         public ActionResult GetGroups([DataSourceRequest] DataSourceRequest request, string id_lop_tc)
         {
             return Json(MoodleLib.GetGroups(id_lop_tc).ToDataSourceResult(request));
