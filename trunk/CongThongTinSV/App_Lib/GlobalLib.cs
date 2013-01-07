@@ -14,6 +14,17 @@ namespace CongThongTinSV.App_Lib
 {
     public class GlobalLib
     {
+        #region Helper
+        /// <summary>
+        /// Get excel template folder path
+        /// </summary>
+        /// <returns></returns>
+        public static string GetExcelTemplateFolderPath()
+        {
+            return System.Web.HttpContext.Current.Server.MapPath("~") + "./App_Data/Temp/Excel/";
+        }
+        #endregion
+
         #region User
         /// <summary>
         /// Get current user data

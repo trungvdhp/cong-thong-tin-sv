@@ -168,6 +168,7 @@
   <ItemGroup>
     <Compile Include="App_Lib\GlobalLib.cs" />
     <Compile Include="App_Lib\MoodleLib.cs" />
+    <Compile Include="App_Lib\OfficeLib.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -728,6 +729,7 @@
     <Content Include="Images\delete-alt.png" />
     <Content Include="Images\delete.png" />
     <Content Include="Images\grid-dot.png" />
+    <Content Include="Images\sprite-ui.png" />
     <Content Include="Images\stop-all.png" />
     <Content Include="Images\stop.png" />
     <Content Include="Images\sync.png" />
@@ -909,12 +911,19 @@
     <Content Include="Views\MoodleUser\MyCourseProfile.cshtml" />
     <Content Include="Views\MoodleQuiz\MyQuizGrade.cshtml" />
     <Content Include="Views\MoodleCourse\StudentCourseGrade.cshtml" />
-    <Content Include="Views\MoodleQuiz\CourseQuizList.cshtml" />
+    <Content Include="Views\MoodleQuiz\QuizList.cshtml" />
     <Content Include="Views\TaiLieu\ChiaSe.cshtml" />
     <Content Include="Views\TaiLieu\Sua.cshtml" />
+    <Content Include="Views\MoodleUser\SearchStudent.cshtml" />
+    <Content Include="Views\MoodleUser\SearchTeacher.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\MoodleQuiz\MyQuizStudentGrade.cshtml" />
+    <Content Include="Views\MoodleCourse\MyCourseStudentGrade.cshtml" />
+    <Content Include="Views\MoodleEnrol\EnrolAdminUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\Temp\Excel\" />
     <Folder Include="Content\Resource\" />
     <Folder Include="Views\GiangVien\" />
     <Folder Include="Views\MoodleRole\" />
@@ -924,6 +933,35 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>5</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

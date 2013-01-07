@@ -4,17 +4,17 @@
 }
 
 <h2>@title</h2>
+<button id="exportToExcel" class="k-button" onclick="exportToExcel()">Xuất ra Excel</button>
 @(Html.Kendo().Grid<CongThongTinSV.Models.MoodleQuizStudentGrade>()
     .Name("Grid")
     .Columns(columns =>
     {
         columns.Bound(c => c.ID)
-            .ClientTemplate("# if (IsDiffGrade && ID_diem_thi != 0) { #" +
-              "<input type='checkbox' class='chkbx' value='#= ID #' title=''/>" +
-            "# } #")
+            .ClientTemplate("<input type='checkbox' class='chkbx' value='#= ID #' title=''/>")
             .HeaderTemplate("<input type='checkbox' id='masterCheckBox'/>")
-            .Width(40)
+            .Width(50)
             .Title("")
+            .IncludeInMenu(false)
             .HeaderHtmlAttributes(new { style = "text-align:center" })
             .HtmlAttributes(new { style = "text-align:center" })
             .Filterable(false).Groupable(false).Sortable(false);
@@ -26,6 +26,7 @@
         columns.Bound(c => c.OldGrade).Format("{0:0.0}").Width(90);
         columns.Bound(c => c.NewGrade).Format("{0:0.0}").Width(95);
         columns.Bound(c => c.IsDiffGrade).Title("")
+            .IncludeInMenu(false)
             .ClientTemplate("<img width='16' height='16' src=" +
             "# if (IsDiffGrade) { #" +
                 Url.Content("~/Images/warning.png") + " title='Điểm khác nhau' }" + 
@@ -45,7 +46,7 @@
     .Resizable(r => r.Columns(true))
     .Reorderable(ro => ro.Columns(true))
     .Navigatable()
-    //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
+    .ColumnMenu(menu => menu.Enabled(true).Sortable(false))
     //.Selectable(s => s.Mode(GridSelectionMode.Single))
     .Events(e =>
     {
@@ -57,19 +58,27 @@
             .Read(read => read.Action("GetQuizStudentGrades", "MoodleQuiz", new { quizid = ViewBag.QuizID }))
             .PageSize(50)
     )
+    //.ToolBar(toolbar => toolbar.Custom().Text("Xuất ra excel").Url("#").HtmlAttributes(new { onclick = "exportToExcel()", style= "float:right;"}))
 )
 <div>
     <button id="updateMark" class="k-button">Cập nhật điểm thi</button>
 </div>
 <div style="text-align: center;margin-top: 10px;">
-     @using (Html.BeginForm("CourseQuizList", "MoodleCourse", new { courseid = ViewBag.CourseID }, FormMethod.Post, htmlAttributes: new { title = "Back to the list of quizzes of course" }))
-    {
-        @Html.AntiForgeryToken()
-        <button class="k-button" type="submit">Quay về danh sách các bài thi</button>
-    }
+    <button class="k-button" type="submit" onclick="pageback()">Quay về danh sách các bài thi</button>
 </div>
 <script type="text/javascript">
     var selectedVals = [];
+    var requestObject;
+
+    //export to excel
+    function exportToExcel() {
+        var dataFields = [];
+        var dataTitles = [];
+
+        getFieldAndTitles('#Grid .k-header', dataFields, dataTitles);
+
+        document.location.href = '@Url.Action("ExportQuizGradeToExcel", "MoodleQuiz")' + '/?sort=' + requestObject.sort + '&filter=' + requestObject.filter + '&datafields=' + dataFields + '&datatitles=' + dataTitles + '&quizid=@ViewBag.QuizID' + '&quizname=' + '@HttpUtility.UrlEncode(title)';
+    }
 
     function loadGrid() {
         selectedVals.splice(0, selectedVals.length);
@@ -78,6 +87,15 @@
     // on data bound, check checkboxes
     function onDataBound(e) {
         checkCells(selectedVals, '#masterCheckBox', '#Grid :checkbox');
+
+        // ask the parameterMap to create the request object for you
+        var grid = $('#Grid').data('kendoGrid');
+        requestObject = (new kendo.data.transports["aspnetmvc-server"]({ prefix: "" }))
+        .options.parameterMap({
+            page: grid.dataSource.page(),
+            sort: grid.dataSource.sort(),
+            filter: grid.dataSource.filter()
+        });
     }
     // on click checkbox cell in a row
     $(function () {
@@ -91,7 +109,9 @@
         })
     })
 
-    $('#masterCheckBox').click(function () { checkAll(this, '#Grid :checkbox'); })
+    $('#masterCheckBox').click(function () {
+        checkAll(this, '#Grid :checkbox');
+    })
 
     function gridRefresh() {
         $("#Grid").data("kendoGrid").dataSource.read();
@@ -99,7 +119,7 @@
 
    function update_one(grade, id) {
         if (confirm('Bạn muốn cập nhật điểm mới cho học viên này?')) {
-            var action = '@Url.Action("UpdateYGrade","MoodleGrade")' + '/?newgrade=' + grade + '&id_diem_thi=' + id;
+            var action = '@Url.Action("UpdateYGrade","MoodleQuiz")' + '/?newgrade=' + grade + '&id_diem_thi=' + id;
             processing(action, "Đang cập nhật điểm mới cho học viên...", gridRefresh);
         }
     }
@@ -111,7 +131,7 @@
         }
 
         if (confirm('Bạn muốn cập nhật điểm mới cho các học viên đã chọn?')) {
-            var action = '@Url.Action("UpdateYGrades","MoodleGrade")' + '/?quizid=' + @ViewBag.QuizID + '&selectedVals=' + selectedVals
+            var action = '@Url.Action("UpdateYGrades","MoodleQuiz")' + '/?quizid=' + @ViewBag.QuizID + '&selectedVals=' + selectedVals
             processing(action, "Đang cập nhật điểm mới cho các học viên...", gridRefresh);
         }
     })

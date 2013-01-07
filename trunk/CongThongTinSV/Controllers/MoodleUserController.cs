@@ -87,10 +87,9 @@ namespace CongThongTinSV.Controllers
         }
 
         [Authorize(Roles = "MoodleUser.SyncStudents")]
-        public ActionResult SyncStudents(string selectedVals, string id_chuyen_nganh)
+        public ActionResult SyncStudents(string id_chuyen_nganh)
         {
-            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-            var list = MoodleLib.GetStudents(id_chuyen_nganh).Where(t => t.ID_moodle == 0 && s.Contains(t.ID_sv.ToString()));
+            var list = MoodleLib.GetStudents(id_chuyen_nganh).Where(t => t.ID_moodle == 0);
 
             if (list.Count() != 0)
             {
@@ -98,6 +97,99 @@ namespace CongThongTinSV.Controllers
             }
 
             return View();
+        }
+
+        [Description("Xuất danh sách sinh viên ra excel")]
+        [Authorize(Roles = "MoodleUser.ExportStudentToExcel")]
+        public FileResult ExportStudentToExcel([DataSourceRequest]DataSourceRequest request, string id_chuyen_nganh, string chuyen_nganh, string datafields, string datatitles)
+        {
+            // Get data
+            IEnumerable<MoodleStudent> students = MoodleLib.GetStudents(id_chuyen_nganh).ToDataSourceResult(request).Data.Cast<MoodleStudent>();
+            string[] fields = datafields.Split(new char[] { ',' });
+            string[] titles = datatitles.Split(new char[] { ',' });
+            int len = fields.Count();
+            int startRow = 1, startColumn = 1;
+            //Init workbook
+            var workbook = new ExcelExportor(GlobalLib.GetExcelTemplateFolderPath() + "Students", "", "Danh sách sinh viên");
+            //Set header
+            workbook.SetCellValue(chuyen_nganh);
+            workbook.SetFontBold();
+            workbook.SetFontSize(14);
+            //workbook.SetRowHeight(20);
+            workbook.ExpandCellToRange(startRow, startColumn, 1, len);
+            workbook.MergeColumns(len);
+            workbook.SetHorizontalAlignment(Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter);
+            //workbook.SetVerticalAlignment();
+            //workbook.SetBoderLineStyles();
+            //Set title
+            startRow++;
+            workbook.Set1DArrayValue(titles.ToArray(), false, startRow, startColumn);
+            workbook.SetFreezePanes(true);
+            workbook.SetFontBold(true);
+            //workbook.SetColumnWidth();
+            workbook.SetHorizontalAlignment(Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter);
+            //workbook.SetBoderLineStyles();
+
+            //Set data
+            startRow++;
+            for (int i = 0; i < len; i++)
+            {
+                if (fields[i] == "Ma_sv")
+                {
+                    workbook.Set1DArrayValue(students.Select(t => t.Ma_sv).ToArray(), true, startRow, i + 1);
+                    //workbook.SetColumnWidth(12);
+                    workbook.SetHorizontalAlignment(Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter);
+                    //workbook.SetBoderLineStyles();
+                }
+                else if (fields[i] == "Ho_dem")
+                {
+                    workbook.Set1DArrayValue(students.Select(t => t.Ho_dem).ToArray(), true, startRow, i + 1);
+                    //workbook.SetColumnWidth();
+                    //workbook.SetBoderLineStyles();
+                }
+                else if (fields[i] == "Ten")
+                {
+                    workbook.Set1DArrayValue(students.Select(t => t.Ten).ToArray(), true, startRow, i + 1);
+                    //workbook.SetColumnWidth();
+                    //workbook.SetBoderLineStyles();
+                }
+                else if (fields[i] == "Ngay_sinh")
+                {
+                    workbook.Set1DArrayValue(students.Select(t => t.Ngay_sinh).Cast<object>().ToArray(), true, startRow, i + 1);
+                    workbook.SetNumberFormat("dd-MM-yyyy");
+                    //workbook.SetColumnWidth();
+                    workbook.SetHorizontalAlignment(Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter);
+                    //workbook.SetBoderLineStyles();
+                }
+                else if (fields[i] == "Gioi_tinh")
+                {
+                    workbook.Set1DArrayValue(students.Select(t => t.Gioi_tinh).ToArray(), true, startRow, i + 1);
+                    //workbook.SetColumnWidth();
+                    //workbook.SetBoderLineStyles();
+                }
+                else if (fields[i] == "Lop")
+                {
+                    workbook.Set1DArrayValue(students.Select(t => t.Lop).ToArray(), true, startRow, i + 1);
+                    //workbook.SetColumnWidth();
+                    //workbook.SetBoderLineStyles();
+                }
+            }
+
+            //format entire workbook
+            workbook.ExpandCellToRange(1, 1, startRow + students.Count() - 1, len);
+            workbook.SetColumnWidth();
+            workbook.SetRowHeight();
+            workbook.SetVerticalAlignment();
+            workbook.SetBoderLineStyles();
+
+            //Save workbook
+            workbook.SaveAs();
+
+            //Return the result to the end user
+
+            return File(workbook.GetByteArray(),    //The binary data of the XLS file
+                "application/vnd.ms-excel",         //MIME type of Excel files
+                workbook.ExportSheetName + " " + chuyen_nganh);          //Suggested file name in the "Save as" dialog which will be displayed to the end user
         }
         #endregion
 
@@ -175,10 +267,9 @@ namespace CongThongTinSV.Controllers
         }
 
         [Authorize(Roles = "MoodleUser.SyncTeachers")]
-        public ActionResult SyncTeachers(string selectedVals, string id_khoa)
+        public ActionResult SyncTeachers(string id_khoa)
         {
-            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-            var list = MoodleLib.GetTeachers(id_khoa).Where(t => t.ID_moodle == 0 && s.Contains(t.ID_cb.ToString()));
+            var list = MoodleLib.GetTeachers(id_khoa).Where(t => t.ID_moodle == 0);
 
             if (list.Count() != 0)
             {
@@ -237,6 +328,99 @@ namespace CongThongTinSV.Controllers
             }
 
             return View();
+        }
+
+        [Description("Xuất danh sách giáo viên ra excel")]
+        [Authorize(Roles = "MoodleUser.ExportTeacherToExcel")]
+        public FileResult ExportTeacherToExcel([DataSourceRequest]DataSourceRequest request, string id_khoa, string khoa, string datafields, string datatitles)
+        {
+            // Get data
+            IEnumerable<MoodleTeacher> teachers = MoodleLib.GetTeachers(id_khoa).ToDataSourceResult(request).Data.Cast<MoodleTeacher>();
+            string[] fields = datafields.Split(new char[] { ',' });
+            string[] titles = datatitles.Split(new char[] { ',' });
+            int len = fields.Count();
+            int startRow = 1, startColumn = 1;
+            //Init workbook
+            var workbook = new ExcelExportor(GlobalLib.GetExcelTemplateFolderPath() + "Teachers", "", "Danh sách giáo viên");
+            //Set header
+            workbook.SetCellValue(khoa);
+            workbook.SetFontBold();
+            workbook.SetFontSize(14);
+            //workbook.SetRowHeight(20);
+            workbook.ExpandCellToRange(startRow, startColumn, 1, len);
+            workbook.MergeColumns(len);
+            workbook.SetHorizontalAlignment(Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter);
+            //workbook.SetVerticalAlignment();
+            //workbook.SetBoderLineStyles();
+            //Set title
+            startRow++;
+            workbook.Set1DArrayValue(titles.ToArray(), false, startRow, startColumn);
+            workbook.SetFreezePanes(true);
+            workbook.SetFontBold(true);
+            //workbook.SetColumnWidth();
+            workbook.SetHorizontalAlignment(Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter);
+            //workbook.SetBoderLineStyles();
+
+            //Set data
+            startRow++;
+            for (int i = 0; i < len; i++)
+            {
+                if (fields[i] == "Ma_cb")
+                {
+                    workbook.Set1DArrayValue(teachers.Select(t => t.Ma_cb).ToArray(), true, startRow, i + 1);
+                    //workbook.SetColumnWidth(12);
+                    workbook.SetHorizontalAlignment(Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter);
+                    //workbook.SetBoderLineStyles();
+                }
+                else if (fields[i] == "Ho_dem")
+                {
+                    workbook.Set1DArrayValue(teachers.Select(t => t.Ho_dem).ToArray(), true, startRow, i + 1);
+                    //workbook.SetColumnWidth();
+                    //workbook.SetBoderLineStyles();
+                }
+                else if (fields[i] == "Ten")
+                {
+                    workbook.Set1DArrayValue(teachers.Select(t => t.Ten).ToArray(), true, startRow, i + 1);
+                    //workbook.SetColumnWidth();
+                    //workbook.SetBoderLineStyles();
+                }
+                else if (fields[i] == "Ngay_sinh")
+                {
+                    workbook.Set1DArrayValue(teachers.Select(t => t.Ngay_sinh).Cast<object>().ToArray(), true, startRow, i + 1);
+                    workbook.SetNumberFormat("dd-MM-yyyy");
+                    //workbook.SetColumnWidth();
+                    workbook.SetHorizontalAlignment(Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter);
+                    //workbook.SetBoderLineStyles();
+                }
+                else if (fields[i] == "Gioi_tinh")
+                {
+                    workbook.Set1DArrayValue(teachers.Select(t => t.Gioi_tinh).ToArray(), true, startRow, i + 1);
+                    //workbook.SetColumnWidth();
+                    //workbook.SetBoderLineStyles();
+                }
+                else if (fields[i] == "Vai_tro")
+                {
+                    workbook.Set1DArrayValue(teachers.Select(t => t.Vai_tro).ToArray(), true, startRow, i + 1);
+                    //workbook.SetColumnWidth();
+                    //workbook.SetBoderLineStyles();
+                }
+            }
+
+            //format entire workbook
+            workbook.ExpandCellToRange(1, 1, startRow + teachers.Count() - 1, len);
+            workbook.SetColumnWidth();
+            workbook.SetRowHeight();
+            workbook.SetVerticalAlignment();
+            workbook.SetBoderLineStyles();
+
+            //Save workbook
+            workbook.SaveAs();
+
+            //Return the result to the end user
+
+            return File(workbook.GetByteArray(),    //The binary data of the XLS file
+                "application/vnd.ms-excel",         //MIME type of Excel files
+                workbook.ExportSheetName + " " + khoa);          //Suggested file name in the "Save as" dialog which will be displayed to the end user
         }
         #endregion
 
@@ -299,10 +483,9 @@ namespace CongThongTinSV.Controllers
         }
 
         [Authorize(Roles = "MoodleUser.SyncAdminUsers")]
-        public ActionResult SyncAdminUsers(string selectedVals)
+        public ActionResult SyncAdminUsers()
         {
-            IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-            var list = MoodleLib.GetAdminUsers().Where(t => t.ID_moodle == 0 && s.Contains(t.ID.ToString()));
+            var list = MoodleLib.GetAdminUsers().Where(t => t.ID_moodle == 0);
 
             if (list.Count() != 0)
             {

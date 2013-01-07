@@ -38,6 +38,7 @@
         }).ServerFiltering(true);
     })
 )
+<button id="exportToExcel" class="k-button" onclick="exportToExcel()">Xuất ra Excel</button>
 @*<button id="create_top" class="k-button" onclick="create_teacher()">Đăng ký tài khoản</button>
 <button id="delete_top" class="k-button" onclick="delete_teacher()">Hủy đăng ký</button>
 <button id="update_top" class="k-button" onclick="update_teacher()">Khôi phục về mặc định</button>
@@ -50,30 +51,42 @@
             .HeaderTemplate("<input type='checkbox' id='masterCheckBox'/>")
             .Width(40)
             .Title("")
+            .IncludeInMenu(false)
             .HeaderHtmlAttributes(new { style = "text-align:center" })
             .HtmlAttributes(new { style = "text-align:center" })
             .Filterable(false).Groupable(false).Sortable(false);
         columns.Bound(c => c.Ma_cb).ClientTemplate(
           "# if (ID_moodle != 0) { #" +
-          (@Html.ActionLink("#=ID_moodle#", "UserProfile", "MoodleUser", new { userid = "UserId" }, new { title = "Hồ sơ cá nhân" }).ToHtmlString().Replace("UserId", "#=ID_moodle#")) +
+          (@Html.ActionLink("#=Ma_cb#", "UserProfile", "MoodleUser", new { userid = "UserId" }, new { title = "Xem hồ sơ cá nhân" }).ToHtmlString().Replace("UserId", "#=ID_moodle#")) +
           "# } else { ##=Ma_cb#" +
           "# } #")
           .HtmlAttributes(new { style = "text-align:center" })
-          .Width(105);
+          .Width(85);
         columns.Bound(c => c.Ho_dem).Width(150);
         columns.Bound(c => c.Ten).Width(80);
         columns.Bound(c => c.Ngay_sinh).Width(100).Format("{0:dd-MM-yyyy}").HtmlAttributes(new { style = "text-align:center" });
         columns.Bound(c => c.Gioi_tinh).Width(90);
         columns.Bound(c => c.Vai_tro).HtmlAttributes(new { style = "color:blue" });
+        columns.Bound(c => c.ID_moodle).Width(110).Title("Xem")
+           .Filterable(false)
+           .Groupable(false)
+           .Sortable(false)
+           .IncludeInMenu(false)
+           .HeaderHtmlAttributes(new { style = "text-align:center" })
+           .HtmlAttributes(new { style = "text-align:center" })
+           .ClientTemplate(
+               "# if (Trang_thai) { #" +
+                   (@Html.ActionLink("Các khóa học", "StudentCourseGrade", "MoodleCourse", new { userid = "UserId" }, null).ToHtmlString().Replace("UserId", "#=ID_moodle#")) +
+               "# } #");
         columns.Bound(c => c.Trang_thai).Title("Thực hiện")
-            .Width(150)
+            .Width(140)
+            .IncludeInMenu(false)
             .ClientTemplate(
                 "# if (Trang_thai) { #" +
                     "<button class='button-delete' title='Hủy đăng ký' onclick='delete_one(#=ID_cb#)'></button>" +
                     "<button class='button-update' title='Khôi phục về mặc định' onclick='update_one(#=ID_cb#)'></button>" +
                 "# } else { #" +
                     "<button class='button-add' title='Đăng ký' onclick='create_one(#=ID_cb#)'></button>" +
-                    "<button class='button-sync' title='Đồng bộ tài khoản' onclick='sync_one(#=ID_cb#)'></button>" +
                 "# } #" +
                 "<button class='button-add-sysrole' title='Gán vai trò hệ thống đã chọn' onclick='assign_sysrole_one(#=ID_cb#)'></button>" +
                 "# if (Vai_tro != '') { #" +
@@ -90,7 +103,7 @@
     .Resizable(r => r.Columns(true))
     .Reorderable(ro => ro.Columns(true))
     .Navigatable()
-    //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
+    .ColumnMenu(menu => menu.Enabled(true).Sortable(false))
     //.Selectable(s => s.Mode(GridSelectionMode.Single))
     .Events(e => {
                 e.DataBound("onDataBound");
@@ -101,6 +114,7 @@
             .Read(read => read.Action("GetTeachers", "MoodleUser").Data("filterGrid"))
             .PageSize(50)
     )
+    //.ToolBar(toolbar => toolbar.Custom().Text("Xuất ra excel").Url("#").HtmlAttributes(new { onclick = "exportToExcel()", style= "float:right;"}))
 )
 <button id="create_bottom" class="k-button" onclick="create_teacher()">Đăng ký tài khoản</button>
 <button id="delete_bottom" class="k-button" onclick="delete_teacher()">Hủy đăng ký</button>
@@ -111,6 +125,23 @@
 <button id="unassign_all_sysrole_bottom" class="k-button" onclick="unassign_all_sysrole()">Hủy tất cả vai trò</button>
 <script type="text/javascript">
     var selectedVals = [];
+    var requestObject;
+
+    //export to excel
+    function exportToExcel() {
+
+        if (jQuery("#Khoa").val() == "") {
+            alert('Vui lòng chọn một khoa!');
+            return;
+        }
+
+        var dataFields = [];
+        var dataTitles = [];
+
+        getFieldAndTitles('#Grid .k-header', dataFields, dataTitles);
+
+        document.location.href = '@Url.Action("ExportTeacherToExcel", "MoodleUser")' + '/?sort=' + requestObject.sort + '&filter=' + requestObject.filter + '&datafields=' + dataFields + '&datatitles=' + dataTitles + '&id_khoa=' + jQuery("#Khoa").val() + '&khoa=' + $("#Khoa").data("kendoComboBox").text();
+    };
 
     function filterGrid() {
         return {
@@ -125,6 +156,15 @@
     // on data bound, check checkboxes
     function onDataBound(e) {
         checkCells(selectedVals, '#masterCheckBox', '#Grid :checkbox');
+
+        // ask the parameterMap to create the request object for you
+        var grid = $('#Grid').data('kendoGrid');
+        requestObject = (new kendo.data.transports["aspnetmvc-server"]({ prefix: "" }))
+        .options.parameterMap({
+            page: grid.dataSource.page(),
+            sort: grid.dataSource.sort(),
+            filter: grid.dataSource.filter()
+        });
     }
     // on click checkbox cell in a row
     $(function () {
@@ -163,11 +203,6 @@
         }
     }
 
-    function sync_one(selectedVal) {
-        var action = '@Url.Action("SyncTeachers", "MoodleUser")' + '/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVal;
-        processing(action, "Đang đồng bộ tài khoản moodle elearning...", gridRefresh);
-    }
-
     function create_teacher() {
         if (selectedVals.length == 0) {
             alert('Vui lòng chọn một giáo viên!');
@@ -202,12 +237,7 @@
     }
 
     function sync_teacher() {
-        if (selectedVals.length == 0) {
-            alert('Vui lòng chọn một giáo viên!');
-            return;
-        }
-
-        var action = '@Url.Action("SyncTeachers", "MoodleUser")' + '/?id_khoa=' + jQuery("#Khoa").val() + '&selectedVals=' + selectedVals;
+        var action = '@Url.Action("SyncTeachers", "MoodleUser")' + '/?id_khoa=' + jQuery("#Khoa").val();
         processing(action, "Đang đồng bộ tài khoản moodle elearning...", gridRefresh);
     }
 

@@ -11,24 +11,26 @@
     }
     else
     {
+        <button id="exportToExcel" class="k-button" onclick="exportToExcel()">Xuất ra Excel</button>
         @(Html.Kendo().Grid<CongThongTinSV.Models.MoodleQuizStudentGrade>()
             .Name("Grid")
             .Columns(columns =>
             {
-                columns.Bound(c => c.ID)
-                    .ClientTemplate("<input type='checkbox' class='chkbx' value='#= ID #'/>")
-                    .HeaderTemplate("<input type='checkbox' id='masterCheckBox'/>")
-                    .Width(40)
-                    .Title("")
-                    .HeaderHtmlAttributes(new { style = "text-align:center" })
-                    .HtmlAttributes(new { style = "text-align:center" })
-                    .Filterable(false).Groupable(false).Sortable(false);
+                //columns.Bound(c => c.ID)
+                //    .ClientTemplate("<input type='checkbox' class='chkbx' value='#= ID #'/>")
+                //    .HeaderTemplate("<input type='checkbox' id='masterCheckBox'/>")
+                //    .Width(40)
+                //    .Title("")
+                //    .IncludeInMenu(false)
+                //    .HeaderHtmlAttributes(new { style = "text-align:center" })
+                //    .HtmlAttributes(new { style = "text-align:center" })
+                //    .Filterable(false).Groupable(false).Sortable(false);
                 columns.Bound(c => c.UserName).Width(80)
                     .ClientTemplate(
                         (@Html.ActionLink("#=UserName#", "UserProfile", "MoodleUser", new { userid = "UserId" }, new { title = "Xem hồ sơ người dùng" }).ToHtmlString().Replace("UserId", "#=ID#")));
                 columns.Bound(c => c.LastName).Width(150);
                 columns.Bound(c => c.FirstName).Width(80);
-                columns.Bound(c => c.NewGrade).Format("{0:0.0}");
+                columns.Bound(c => c.NewGrade).Format("{0:0.0}").Title("Điểm");
             })
             .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50, 100 }).Refresh(true).Input(true).Numeric(false))
             .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
@@ -38,7 +40,7 @@
             .Resizable(r => r.Columns(true))
             .Reorderable(ro => ro.Columns(true))
             .Navigatable()
-            //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
+            .ColumnMenu(menu => menu.Enabled(true).Sortable(false))
             //.Selectable(s => s.Mode(GridSelectionMode.Single))
             .Events(e =>
             {
@@ -50,43 +52,56 @@
                     .Read(read => read.Action("GetMyQuizStudentGrades", "MoodleQuiz", new { quizid = ViewBag.QuizID }))
                     .PageSize(50)
             )
+             //.ToolBar(toolbar => toolbar.Custom().Text("Xuất ra excel").Url("#").HtmlAttributes(new { onclick = "exportToExcel()", style= "float:right;"}))
         )
     }
 }
 <div style="text-align: center;margin-top: 10px;">
-     @using (Html.BeginForm("MyQuizGrade", "MoodleQuiz", new { courseid = ViewBag.CourseID }, FormMethod.Post, htmlAttributes: new { title = "Back to the my quiz grade" }))
-    {
-        @Html.AntiForgeryToken()
-        <button class="k-button" type="submit">Quay về bảng điểm các bài thi</button>
-    }
+    <button class="k-button" type="submit" onclick="pageback()">Quay về danh sách các bài thi</button>
 </div>
 <script type="text/javascript">
-    var selectedVals = [];
+    //var selectedVals = [];
+    var requestObject;
 
-    function loadGrid() {
-        selectedVals.splice(0, selectedVals.length);
-        gridRefresh();
+    //export to excel
+    function exportToExcel() {
+        var dataFields = [];
+        var dataTitles = [];
+
+        getFieldAndTitles('#Grid .k-header', dataFields, dataTitles);
+
+        document.location.href = '@Url.Action("ExportQuizGradeToExcel", "MoodleQuiz")' + '/?sort=' + requestObject.sort + '&filter=' + requestObject.filter + '&datafields=' + dataFields + '&datatitles=' + dataTitles + '&quizid=@ViewBag.QuizID' + '&quizname=' + '@HttpUtility.UrlEncode(title)';
     }
+
     // on data bound, check checkboxes
     function onDataBound(e) {
-        checkCells(selectedVals, '#masterCheckBox', '#Grid :checkbox');
+        //checkCells(selectedVals, '#masterCheckBox', '#Grid :checkbox');
+
+        // ask the parameterMap to create the request object for you
+        var grid = $('#Grid').data('kendoGrid');
+        requestObject = (new kendo.data.transports["aspnetmvc-server"]({ prefix: "" }))
+        .options.parameterMap({
+            page: grid.dataSource.page(),
+            sort: grid.dataSource.sort(),
+            filter: grid.dataSource.filter()
+        });
     }
     // on click checkbox cell in a row
-    $(function () {
-        $('#Grid').on('click', '.chkbx', function () {
-            var state = $(this).is(':checked');
-            var grid = $('#Grid').data().kendoGrid;
-            var dataItem = grid.dataItem($(this).closest('tr'));
+    //$(function () {
+    //    $('#Grid').on('click', '.chkbx', function () {
+    //        var state = $(this).is(':checked');
+    //        var grid = $('#Grid').data().kendoGrid;
+    //        var dataItem = grid.dataItem($(this).closest('tr'));
 
-            checkVal(dataItem.ID, state, selectedVals);
-            $('#masterCheckBox').attr('checked', isCheckedAll('#Grid :checkbox'));
-        })
-    })
+    //        checkVal(dataItem.ID, state, selectedVals);
+    //        $('#masterCheckBox').attr('checked', isCheckedAll('#Grid :checkbox'));
+    //    })
+    //})
 
-    $('#masterCheckBox').click(function () { checkAll(this, '#Grid :checkbox'); })
+    //$('#masterCheckBox').click(function () { checkAll(this, '#Grid :checkbox'); })
 
-    function gridRefresh() {
-        $("#Grid").data("kendoGrid").dataSource.read();
-    }
+    //function gridRefresh() {
+    //    $("#Grid").data("kendoGrid").dataSource.read();
+    //}
 </script>
 

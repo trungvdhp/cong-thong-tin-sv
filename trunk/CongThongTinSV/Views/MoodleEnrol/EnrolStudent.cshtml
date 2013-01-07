@@ -46,6 +46,7 @@
     .AutoBind(false)
     .CascadeFrom("HocKy")
 )
+<button id="exportToExcel" class="k-button" onclick="exportToExcel()">Xuất ra Excel</button>
 @*<button id="createEnrol_top" class="k-button" onclick="CreateManyEnrol()">Ghi danh</button>
 <button id="deleteEnrol_top" class="k-button" onclick="DeleteManyEnrol()">Đình chỉ ghi danh</button>*@
 @(Html.Kendo().Grid<CongThongTinSV.Models.MoodleStudent>()
@@ -55,7 +56,7 @@
         columns.Bound(c => c.ID)
             .ClientTemplate("<input type='checkbox' class='chkbx' value='#= ID #'/>")
             .HeaderTemplate("<input type='checkbox' id='masterCheckBox'/>")
-            .Width(40)
+            .Width(50)
             .Title("")
             .IncludeInMenu(false)
             .HeaderHtmlAttributes(new { style = "text-align:center" })
@@ -67,7 +68,7 @@
             (@Html.ActionLink("#=Ma_sv#", "UserProfile", "MoodleUser", new { userid = "ID" }, null).ToHtmlString().Replace("ID", "#=ID_moodle#"))+
              "# } else { ##=Ma_sv#" +
             "# } #")
-            .HtmlAttributes(new { title = "Xem hồ sơ các nhân", style = "text-align:center" });
+            .HtmlAttributes(new { title = "Xem hồ sơ cá nhân", style = "text-align:center" });
         columns.Bound(c => c.Ho_dem).Width(145);
         columns.Bound(c => c.Ten).Width(80);
         columns.Bound(c => c.Ngay_sinh).Width(100).Format("{0:dd-MM-yyyy}");
@@ -75,13 +76,14 @@
         columns.Bound(c => c.Lop).Width(90);
         columns.Bound(c => c.DiemX).Width(85)
             .ClientTemplate(
-            "# if (ID_moodle != 0) { #" +
+            "# if (Trang_thai) { #" +
                 (@Html.ActionLink("#=DiemX#", "StudentQuizGrade", "MoodleQuiz", new { userid = "UserID", courseid = "#= getIDLHP() #" }, new { title = "Xem bảng điểm thành phần", style = "text-align:center" }).ToHtmlString().Replace("UserID", "#=ID_moodle#")) +
             "# } else { ##=DiemX#" +
             "# } #");
         columns.Bound(c => c.Ten_nhom);
         columns.Bound(c => c.Trang_thai).Title("Thực hiện")
            .Width(100)
+           .IncludeInMenu(false)
            .ClientTemplate(
             "# if (Trang_thai) { #" +
                 "<img class='image_check' src=" + Url.Content("~/Images/check.png") + " alt='Ok' title='Đã ghi danh' />" +
@@ -98,7 +100,7 @@
     .Resizable(r => r.Columns(true))
     .Reorderable(ro => ro.Columns(true))
     .Navigatable()
-    //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
+    .ColumnMenu(menu => menu.Enabled(true).Sortable(false))
     //.Selectable(s => s.Mode(GridSelectionMode.Single))
     //.HtmlAttributes(new {style = "height:400px"})
     .Events(e =>
@@ -111,6 +113,7 @@
             .Read(read => read.Action("GetEnrolStudents", "MoodleEnrol").Data("filterGrid"))
             .PageSize(50)
     )
+    //.ToolBar(toolbar => toolbar.Custom().Text("Xuất ra excel").Url("#").HtmlAttributes(new { onclick = "exportToExcel()", style= "float:right;"}))
 )
 <button id="createEnrol_bottom" class="k-button" onclick="CreateManyEnrol()">Ghi danh</button>
 <button id="deleteEnrol_bottom" class="k-button" onclick="DeleteManyEnrol()">Đình chỉ ghi danh</button>
@@ -142,6 +145,8 @@
 </div>
 <script type="text/javascript">
     var selectedVals = [];
+    var requestObject;
+
     function getIDLHP() {
         return $("#LopHocPhan").val();
     }
@@ -165,6 +170,15 @@
     // on data bound, check checkboxes
     function onDataBound(e) {
         checkCells(selectedVals, '#masterCheckBox', '#Grid :checkbox');
+
+        // ask the parameterMap to create the request object for you
+        var grid = $('#Grid').data('kendoGrid');
+        requestObject = (new kendo.data.transports["aspnetmvc-server"]({ prefix: "" }))
+        .options.parameterMap({
+            page: grid.dataSource.page(),
+            sort: grid.dataSource.sort(),
+            filter: grid.dataSource.filter()
+        });
     }
     // on click checkbox cell in a row
     $(function () {
@@ -274,4 +288,18 @@
             processing(action, "Đang xóa các học viên khỏi nhóm " + $("#Nhom").data("kendoComboBox").text() + "...", gridRefresh);
         }
     }
+
+    function exportToExcel() {
+        if (jQuery("#LopHocPhan").val() == "") {
+            alert('Vui lòng chọn một lớp học phần!');
+            return;
+        }
+
+        var dataFields = [];
+        var dataTitles = [];
+
+        getFieldAndTitles('#Grid .k-header', dataFields, dataTitles);
+
+        document.location.href = '@Url.Action("ExportEnrolStudentToExcel", "MoodleEnrol")' + '/?sort=' + requestObject.sort + '&filter=' + requestObject.filter + '&datafields=' + dataFields + '&datatitles=' + dataTitles + '&id_lop_tc=' + jQuery("#LopHocPhan").val() + '&ten_lop=' + $("#LopHocPhan").data("kendoComboBox").text();
+    };
 </script>

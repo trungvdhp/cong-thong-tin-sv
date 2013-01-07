@@ -39,7 +39,7 @@
         columns.Bound(c => c.Lop_hoc_phan)
               .ClientTemplate(
               "# if (Trang_thai) { #" +
-                (@Html.ActionLink("#=Lop_hoc_phan#", "CourseQuizList", "MoodleQuiz", new { courseid = "ID" }, new { title = "Xem danh sách các bài thi" }).ToHtmlString().Replace("ID", "#=ID_moodle#")) + 
+                (@Html.ActionLink("#=Lop_hoc_phan#", "QuizList", "MoodleQuiz", new { courseid = "ID" }, new { title = "Xem danh sách các bài thi" }).ToHtmlString().Replace("ID", "#=ID_moodle#")) + 
               "# } else { ##=Lop_hoc_phan## } #"
               );
         columns.Bound(c => c.Ky_hieu).Width(95).HtmlAttributes(new { style = "text-align:center" });

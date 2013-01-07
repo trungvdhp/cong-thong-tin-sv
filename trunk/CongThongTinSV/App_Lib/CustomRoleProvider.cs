@@ -7,7 +7,7 @@ using CongThongTinSV.Models;
 
 namespace CongThongTinSV.App_Lib
 {
-    public class CustomRoleProvider:RoleProvider
+    public class CustomRoleProvider : RoleProvider
     {
         public override string[] GetRolesForUser(string username)
         {
