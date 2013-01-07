@@ -12,19 +12,24 @@
     }
     else
     {
+        <button id="exportToExcel" class="k-button" onclick="exportToExcel()">Xuất ra Excel</button>
         @(Html.Kendo().Grid<CongThongTinSV.Models.MoodleCourseStudentGrade>()
             .Name("Grid")
             .Columns(columns =>
             {
-                columns.Bound(c => c.ID)
-                    .ClientTemplate("<input type='checkbox' class='chkbx' value='#= ID #'/>")
-                    .HeaderTemplate("<input type='checkbox' id='masterCheckBox'/>")
-                    .Width(40)
-                    .Title("")
-                    .HeaderHtmlAttributes(new { style = "text-align:center" })
-                    .HtmlAttributes(new { style = "text-align:center" })
-                    .Filterable(false).Groupable(false).Sortable(false);
-                columns.Bound(c => c.UserName).Width(80).ClientTemplate((@Html.ActionLink("#=UserName#", "UserProfile", "MoodleUser", new { userid = "ID" }, null).ToHtmlString().Replace("ID", "#=ID#")));
+                //columns.Bound(c => c.ID)
+                //    .ClientTemplate("<input type='checkbox' class='chkbx' value='#= ID #'/>")
+                //    .HeaderTemplate("<input type='checkbox' id='masterCheckBox'/>")
+                //    .Width(40)
+                //    .Title("")
+                //    .IncludeInMenu(false)
+                //    .HeaderHtmlAttributes(new { style = "text-align:center" })
+                //    .HtmlAttributes(new { style = "text-align:center" })
+                //    .Filterable(false).Groupable(false).Sortable(false);
+                columns.Bound(c => c.UserName)
+                    .Title("Mã sinh viên")
+                    .Width(115)
+                    .ClientTemplate((@Html.ActionLink("#=UserName#", "UserProfile", "MoodleUser", new { userid = "ID" }, null).ToHtmlString().Replace("ID", "#=ID#")));
                 columns.Bound(c => c.LastName).Width(140);
                 columns.Bound(c => c.FirstName).Width(80);
                 columns.Bound(c => c.ZGrade).Format("{0:0.0}");
@@ -37,7 +42,7 @@
             .Resizable(r => r.Columns(true))
             .Reorderable(ro => ro.Columns(true))
             .Navigatable()
-            //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
+            .ColumnMenu(menu => menu.Enabled(true).Sortable(false))
             //.Selectable(s => s.Mode(GridSelectionMode.Single))
             .Events(e =>
             {
@@ -50,34 +55,51 @@
                     .PageSize(50)
             )
         )
+        //.ToolBar(toolbar => toolbar.Custom().Text("Xuất ra excel").Url("#").HtmlAttributes(new { onclick = "exportToExcel()", style= "float:right;"}))
     }
 }
+<div style="text-align: center;margin-top: 10px;">
+    <button class="k-button" type="submit" onclick="pageback()">Quay về danh sách các khóa học</button>
+</div>
 <script type="text/javascript">
-    var selectedVals = [];
+    //var selectedVals = [];
+    var requestObject;
 
-    function loadGrid() {
-        selectedVals.splice(0, selectedVals.length);
-        gridRefresh();
+    //export to excel
+    function exportToExcel() {
+        var dataFields = [];
+        var dataTitles = [];
+
+        getFieldAndTitles('#Grid .k-header', dataFields, dataTitles);
+
+        document.location.href = '@Url.Action("ExportCourseGradeToExcel", "MoodleCourse")' + '/?sort=' + requestObject.sort + '&filter=' + requestObject.filter + '&datafields=' + dataFields + '&datatitles=' + dataTitles + '&courseid=@ViewBag.CourseID' + '&coursename=' + '@HttpUtility.UrlEncode(ViewBag.CourseName)';
     }
+
     // on data bound, check checkboxes
     function onDataBound(e) {
-        checkCells(selectedVals, '#masterCheckBox', '#Grid :checkbox');
+        //checkCells(selectedVals, '#masterCheckBox', '#Grid :checkbox');
+
+        // ask the parameterMap to create the request object for you
+        var grid = $('#Grid').data('kendoGrid');
+        requestObject = (new kendo.data.transports["aspnetmvc-server"]({ prefix: "" }))
+        .options.parameterMap({
+            page: grid.dataSource.page(),
+            sort: grid.dataSource.sort(),
+            filter: grid.dataSource.filter()
+        });
     }
+
     // on click checkbox cell in a row
-    $(function () {
-        $('#Grid').on('click', '.chkbx', function () {
-            var state = $(this).is(':checked');
-            var grid = $('#Grid').data().kendoGrid;
-            var dataItem = grid.dataItem($(this).closest('tr'));
+    //$(function () {
+    //    $('#Grid').on('click', '.chkbx', function () {
+    //        var state = $(this).is(':checked');
+    //        var grid = $('#Grid').data().kendoGrid;
+    //        var dataItem = grid.dataItem($(this).closest('tr'));
 
-            checkVal(dataItem.ID, state, selectedVals);
-            $('#masterCheckBox').attr('checked', isCheckedAll('#Grid :checkbox'));
-        })
-    })
+    //        checkVal(dataItem.ID, state, selectedVals);
+    //        $('#masterCheckBox').attr('checked', isCheckedAll('#Grid :checkbox'));
+    //    })
+    //})
 
-    $('#masterCheckBox').click(function () { checkAll(this, '#Grid :checkbox'); })
-
-    function gridRefresh() {
-        $("#Grid").data("kendoGrid").dataSource.read();
-    }
+    //$('#masterCheckBox').click(function () { checkAll(this, '#Grid :checkbox'); })
 </script>

@@ -73,13 +73,13 @@
             "# } #")
             .HtmlAttributes(new { title = "Xem hồ sơ các nhân", style = "text-align:center" });
         columns.Bound(c => c.Ho_dem).Width(145);
-        columns.Bound(c => c.Ten).Width(80);
+        columns.Bound(c => c.Ten).Width(65);
         columns.Bound(c => c.Ngay_sinh).Width(100).Format("{0:dd-MM-yyyy}");
         columns.Bound(c => c.Gioi_tinh).Width(90);
         columns.Bound(c => c.Khoa).Width(150);
         columns.Bound(c => c.Vai_tro).HtmlAttributes(new { style = "color:blue" });
         columns.Bound(c => c.Trang_thai).Title("Thực hiện")
-            .Width(110)
+            .Width(130)
             .ClientTemplate(
                 "# if (Trang_thai) { #" +
                     "<img class='image_check' src=" + Url.Content("~/Images/check.png") +  " alt='Ok' title='Đã kích hoạt' />" +

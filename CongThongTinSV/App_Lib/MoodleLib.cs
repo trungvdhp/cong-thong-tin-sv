@@ -218,7 +218,29 @@ namespace CongThongTinSV.App_Lib
                            on d1.ID_diem equals d2.ID_diem
                            select d2;
 
+            var kq = diemthis.ToList();
+            if(diemthis == null) return null;
             return diemthis.AsEnumerable().FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Get grade by userid and courseid
+        /// </summary>
+        /// <param name="quizid">Id of quiz</param>
+        /// <returns>Quiz</returns>
+        /// 
+        public static string GetYGradeString(string studentid, string courseid)
+        {
+            MARK_DiemThi_TC grade = GetYGrade(studentid, courseid);
+
+            if (grade != null)
+            {
+                return string.Format("{0:0.0}", grade.Diem_thi);
+            }
+            else
+            {
+                return "không xác định";
+            }
         }
 
         /// <summary>
@@ -1713,7 +1735,7 @@ namespace CongThongTinSV.App_Lib
         /// <returns></returns>
         public static IEnumerable<MoodleCourseMember> GetCourseMembers(string courseid)
         {
-            var members = GetEnrolledUsers(courseid).ToList();
+            var members = GetEnrolledUsers(courseid);
 
             return (from user in members
                     select new MoodleCourseMember
@@ -1743,13 +1765,8 @@ namespace CongThongTinSV.App_Lib
         public static IEnumerable<MoodleCourse> GetCourses(string id_hocky)
         {
             Entities db = new Entities();
-            int hk = 0;
-
-            try
-            {
-                hk = Convert.ToInt32(id_hocky);
-            }
-            catch (Exception) { }
+            int hk;
+            int.TryParse(id_hocky, out hk);
 
             if (hk <= 0) return new List<MoodleCourse>();
 
@@ -1965,7 +1982,7 @@ namespace CongThongTinSV.App_Lib
             else
             {
                 // Good
-                results = serializer.Deserialize<List<MoodleCourseContentResponse>>(response).ToList();
+                results = serializer.Deserialize<List<MoodleCourseContentResponse>>(response);
             }
 
             return results;
@@ -2144,18 +2161,65 @@ namespace CongThongTinSV.App_Lib
             }
         }
 
+        ///// <summary>
+        ///// Update grade of user in course
+        ///// </summary>
+        ///// <param name="newgrade">New grade</param>
+        ///// <param name="userid">ID of user</param>
+        ///// <param name="courseid">ID of course</param>
+        ///// <returns></returns>
+        //public static int UpdateYGrade(string newgrade, string userid = "0", string courseid = "0")
+        //{
+        //    if (newgrade == "") { return -1; }
+
+        //    float grade;
+        //    float.TryParse(newgrade, out grade);
+
+        //    if (grade < 0) { return -1; }
+
+        //    Entities db = new Entities();
+        //    MARK_DiemThi_TC entity = GetYGrade(userid, courseid);
+
+        //    if (entity == null) { return -1; }
+
+        //    entity.Diem_thi = grade;
+        //    db.Entry(entity).State = System.Data.EntityState.Modified;
+
+        //    try
+        //    {
+        //        return db.SaveChanges();
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return -1;
+        //    }
+        //}
+
         /// <summary>
-        /// Update Y grades of users in course
+        /// Update grade by id_diem_thi
         /// </summary>
-        /// <param name="list">List of users in course</param>
+        /// <param name="id_diem_thi">ID of grade</param>
         /// <returns></returns>
-        public static int UpdateYGrade(decimal? newgrade, string userid = "0", string courseid = "0")
+        public static int UpdateYGrade(string newgrade, string id_diem_thi)
         {
-            if (newgrade == null) { return -1; }
+            if (newgrade == "") { return -1; }
+
+            float grade;
+            float.TryParse(newgrade, out grade);
+
+            if (grade < 0) { return -1; }
+
+            int id_dt;
+            int.TryParse(id_diem_thi, out id_dt);
+
+            if (id_dt <= 0) { return -1; }
 
             Entities db = new Entities();
-            MARK_DiemThi_TC entity = GetYGrade(userid, courseid);
-            entity.Diem_thi = (float)newgrade;
+            MARK_DiemThi_TC entity = db.MARK_DiemThi_TC.SingleOrDefault(t => t.ID_diem_thi == id_dt);
+
+            if (entity == null) { return -1; }
+
+            entity.Diem_thi = grade;
             db.Entry(entity).State = System.Data.EntityState.Modified;
 
             try
@@ -2277,13 +2341,13 @@ namespace CongThongTinSV.App_Lib
                            LastName = u.LastName,
                            FirstName = u.FirstName,
                            NewGrade = u.NewGrade,
-                           IsDiffGrade = (diem == null && !u.NewGrade.HasValue) ||
+                           IsDiffGrade = diem == null || !u.NewGrade.HasValue ||
                                          (diem != null && u.NewGrade.HasValue && string.Format("{0:0.0}", diem.Diem_thi) == string.Format("{0:0.0}", u.NewGrade))
                                          ? false : true
                        };
             }
 
-            return list.OrderByDescending(t => t.IsDiffGrade);
+            return list;//.OrderByDescending(t => t.IsDiffGrade);
         }
 
         /// <summary>
@@ -2583,7 +2647,7 @@ namespace CongThongTinSV.App_Lib
                           ID = ds.ID,
                       };
 
-            return sv3.ToList();
+            return sv3;
         }
 
         /// <summary>

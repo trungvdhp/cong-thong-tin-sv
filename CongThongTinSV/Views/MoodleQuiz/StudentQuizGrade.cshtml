@@ -1,9 +1,10 @@
 ﻿@using CongThongTinSV.Models;
+@using CongThongTinSV.App_Lib;
 
 @{
     ViewBag.Title = ViewBag.FullName + " - " + ViewBag.CourseName;
+    string heading = ViewBag.FullName + " (" + ViewBag.CourseName + ") - Điểm thi cũ: ";
 }
-<div>
 @{
     if(ViewBag.Error != "")
     {
@@ -12,9 +13,8 @@
     }
     else
     {
-        string heading = ViewBag.FullName + " (" + ViewBag.CourseName + ") - Điểm thi cũ: " + ViewBag.Grade;
-        bool haveGrade = ViewBag.Grade == "không xác định" ? false : true;
-        <h2>@heading</h2>
+        bool haveGrade = ViewBag.GradeID == 0 ? false : true;
+        <h2 id="oldgrade">@heading@ViewBag.Grade</h2>
         @(Html.Kendo().Grid<CongThongTinSV.Models.MoodleStudentQuizGrade>()
             .Name("Grid")
             .Columns(columns =>
@@ -49,21 +49,20 @@
     }
 }
 <div style="text-align: center;margin-top: 10px;">
-     @using (Html.BeginForm("StudentCourseGrade", "MoodleCourse", new { userid = ViewBag.UserID, courseid = ViewBag.CourseID }, FormMethod.Post, htmlAttributes: new { title = "Back to the student course grade" }))
-    {
-        @Html.AntiForgeryToken()
-        <button class="k-button" type="submit">Quay về bảng điểm các khóa học</button>
-    }
-</div>
+    <button class="k-button" type="submit" onclick="pageback()">Quay về danh sách các bài thi</button>
 </div>
 <script type ="text/javascript">
+    function gradeRefresh() {
+        //document.getElementById('oldgrade').innerHTML = '@heading@MoodleLib.GetYGradeString(ViewBag.UserID, ViewBag.CourseID)';
+        window.location.reload(false);
+    }
+
     function UpdateYGrade(e) {
         e.preventDefault();
         var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
         if (confirm('Bạn muốn cập nhật điểm mới cho học viên này?')) {
-            var action = '@Url.Action("UpdateYGrade","MoodleGrade")' + '/?newgrade=' + dataItem.Grade + '&userid=' +
-'@ViewBag.UserID' + '&courseid=' + '@ViewBag.CourseID';
-             processing(action, "Đang cập nhật điểm mới cho học viên...", gridRefresh);
+            var action = '@Url.Action("UpdateYGrade","MoodleQuiz")' + '/?newgrade=' + dataItem.Grade + '&id_diem_thi=' + '@ViewBag.GradeID';
+            processing(action, "Đang cập nhật điểm mới cho học viên...", gradeRefresh);
          }
     }
 </script>

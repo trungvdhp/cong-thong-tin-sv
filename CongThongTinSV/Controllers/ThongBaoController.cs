@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Text.RegularExpressions;
 using System.Web.Security;
 using CongThongTinSV.App_Lib;
+using CongThongTinSV.Models;
 
 namespace CongThongTinSV.Controllers
 {

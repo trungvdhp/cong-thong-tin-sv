@@ -810,6 +810,9 @@
           <Property Name="Dien_thoai" Type="nvarchar" MaxLength="100" />
           <Property Name="MAC" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'DHHH.dbo.SYS_VaiTro' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
         <EntityType Name="tbl_inbox">
           <Key>
             <PropertyRef Name="ID" />

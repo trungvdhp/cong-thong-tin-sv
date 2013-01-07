@@ -23,6 +23,7 @@
     })
     //.HtmlAttributes(new { style = "display: block;"})
 )
+<button id="exportToExcel" class="k-button" onclick="exportToExcel()">Xuất ra Excel</button>
 @*<button id="create_top" class="k-button" onclick="create_stu()">Đăng ký tài khoản</button>
 <button id="delete_top" class="k-button" onclick="delete_stu()">Hủy đăng ký</button> 
 <button id="update_top" class="k-button" onclick="update_stu()">Khôi phục về mặc định</button>
@@ -33,18 +34,19 @@
         columns.Bound(c => c.ID_sv)
             .ClientTemplate("<input type='checkbox' class='chkbx' value='#= ID_sv #'/>")
             .HeaderTemplate("<input type='checkbox' id='masterCheckBox'/>")
-            .Width(40)
+            .Width(50)
             .Title("")
             .HeaderHtmlAttributes(new { style = "text-align:center" })
             .HtmlAttributes(new { style = "text-align:center" })
-            .Filterable(false).Groupable(false).Sortable(false);
+            .Filterable(false).Groupable(false).Sortable(false)
+            .IncludeInMenu(false);
         columns.Bound(c => c.Ma_sv).ClientTemplate(
             "# if (ID_moodle != 0) { #" +
-            (@Html.ActionLink("#=Ma_sv#", "UserProfile", "MoodleUser", new { userid = "UserId" }, new { title = "Hồ sơ cá nhân" }).ToHtmlString().Replace("UserId", "#=ID_moodle#")) +
+            (@Html.ActionLink("#=Ma_sv#", "UserProfile", "MoodleUser", new { userid = "UserId" }, new { title = "Xem hồ sơ cá nhân" }).ToHtmlString().Replace("UserId", "#=ID_moodle#")) +
             "# } else { ##=Ma_sv#" +
             "# } #")
             .HtmlAttributes(new { style = "text-align:center" })
-            .Width(105);
+            .Width(85);
         columns.Bound(c => c.Ho_dem).Width(150);
         columns.Bound(c => c.Ten).Width(80);
         columns.Bound(c => c.Ngay_sinh).Width(100).Format("{0:dd-MM-yyyy}").HtmlAttributes(new { style = "text-align:center" });
@@ -54,21 +56,21 @@
             .Filterable(false)
             .Groupable(false)
             .Sortable(false)
+            .IncludeInMenu(false)
             .HeaderHtmlAttributes(new { style = "text-align:center" })
             .HtmlAttributes(new { style = "text-align:center" })
             .ClientTemplate(
                 "# if (Trang_thai) { #" +
                     (@Html.ActionLink("Các khóa học", "StudentCourseGrade", "MoodleCourse", new { userid = "UserId" }, null).ToHtmlString().Replace("UserId", "#=ID_moodle#")) +
-                "# } else { #" +
                 "# } #");
         columns.Bound(c => c.Trang_thai).Title("Thực hiện")
-         .ClientTemplate(
+            .IncludeInMenu(false)
+            .ClientTemplate(
             "# if (Trang_thai) { #" +
                 "<button class='button-delete' title='Hủy đăng ký' onclick='delete_one(#=ID_sv#)'></button>" +
                 "<button class='button-update' title='Khôi phục về mặc định' onclick='update_one(#=ID_sv#)'></button>" +
                 "# } else { #" +
                 "<button class='button-add' title='Đăng ký' onclick='create_one(#=ID_sv#)'></button>" +
-                "<button class='button-sync' title='Đồng bộ tài khoản' onclick='sync_one(#=ID_sv#)'></button>" +
             "# } #");   
     })
     .Pageable(pager => pager.PageSizes(new int[]{5, 10, 20, 50, 100, 1000}).Refresh(true).Input(true).Numeric(false))
@@ -80,7 +82,7 @@
     .Reorderable(ro => ro.Columns(true))
     .Navigatable()
     .HtmlAttributes(new { style = "height:400px" })
-    //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
+    .ColumnMenu(menu => menu.Enabled(true).Sortable(false))
     //.Selectable(s => s.Mode(GridSelectionMode.Single))
     .Events(e => {
                 e.DataBound("onDataBound");
@@ -91,6 +93,7 @@
             .Read(read => read.Action("GetStudents", "MoodleUser").Data("filterGrid"))
             .PageSize(50)
     )
+    //.ToolBar(toolbar => toolbar.Custom().Text("Xuất ra excel").Url("#").HtmlAttributes(new { onclick = "exportToExcel()", style = "float:right;" }))
 )
 <div>
     <button id="create_bottom" class="k-button" onclick="create_stu()">Đăng ký tài khoản</button>
@@ -101,6 +104,7 @@
 
 <script type="text/javascript">
     var selectedVals = [];
+    var requestObject;
 
     function filterGrid() {
         return {
@@ -115,6 +119,15 @@
     // on data bound, check checkboxes
     function onDataBound(e) {
         checkCells(selectedVals, '#masterCheckBox', '#Grid :checkbox');
+
+        // ask the parameterMap to create the request object for you
+        var grid = $('#Grid').data('kendoGrid');
+        requestObject = (new kendo.data.transports["aspnetmvc-server"]({ prefix: "" }))
+        .options.parameterMap({
+            page: grid.dataSource.page(),
+            sort: grid.dataSource.sort(),
+            filter: grid.dataSource.filter()
+        });
     }
     // on click checkbox cell in a row
     $(function () {
@@ -153,11 +166,6 @@
         }
     }
 
-    function sync_one(selectedVal) {
-        var action = '@Url.Action("SyncStudents", "MoodleUser")' + '/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVal;
-        processing(action, "Đang đồng bộ tài khoản moodle elearning...", gridRefresh);
-    }
-
     function create_stu() {
         if (selectedVals.length == 0) {
             alert('Vui lòng chọn một sinh viên!');
@@ -192,13 +200,23 @@
     }
 
    function sync_stu() {
-        if (selectedVals.length == 0) {
-            alert('Vui lòng chọn một sinh viên!');
-            return;
-        }
-
-        var action = '@Url.Action("SyncStudents", "MoodleUser")' + '/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&selectedVals=' + selectedVals;
+        var action = '@Url.Action("SyncStudents", "MoodleUser")' + '/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val();
         processing(action, "Đang đồng bộ tài khoản moodle elearning...", gridRefresh);
     }
 
+    function exportToExcel() {
+        //event.preventDefault();
+
+        if (jQuery("#ChuyenNganh").val() == "") {
+            alert('Vui lòng chọn một chuyên ngành!');
+            return;
+        }
+
+        var dataFields = [];
+        var dataTitles = [];
+
+        getFieldAndTitles('#Grid .k-header', dataFields, dataTitles);
+     
+        document.location.href = '@Url.Action("ExportStudentToExcel", "MoodleUser")' + '/?sort=' + requestObject.sort + '&filter=' + requestObject.filter + '&datafields=' + dataFields + '&datatitles=' + dataTitles + '&id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&chuyen_nganh=' + $("#ChuyenNganh").data("kendoComboBox").text();
+     };
 </script>

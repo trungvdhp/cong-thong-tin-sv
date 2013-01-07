@@ -34,7 +34,7 @@
             .Filterable(false).Groupable(false).Sortable(false);
         columns.Bound(c => c.UserName).ClientTemplate(
          "# if (ID_moodle != 0) { #" +
-         (@Html.ActionLink("#=UserName#", "UserProfile", "MoodleUser", new { userid = "UserId" }, new { title = "Hồ sơ cá nhân" }).ToHtmlString().Replace("UserId", "#=ID_moodle#")) +
+         (@Html.ActionLink("#=UserName#", "UserProfile", "MoodleUser", new { userid = "UserId" }, new { title = "Xem hồ sơ cá nhân" }).ToHtmlString().Replace("UserId", "#=ID_moodle#")) +
          "# } else { ##=UserName#" +
          "# } #")
          .Width(130);
@@ -42,15 +42,24 @@
         columns.Bound(c => c.FirstName).Width(80);
         columns.Bound(c => c.Email).Width(150);
         columns.Bound(c => c.Vai_tro).HtmlAttributes(new { style = "color:blue" });
+        columns.Bound(c => c.ID_moodle).Width(110).Title("Xem")
+           .Filterable(false)
+           .Groupable(false)
+           .Sortable(false)
+           .HeaderHtmlAttributes(new { style = "text-align:center" })
+           .HtmlAttributes(new { style = "text-align:center" })
+           .ClientTemplate(
+               "# if (Trang_thai) { #" +
+                   (@Html.ActionLink("Các khóa học", "StudentCourseGrade", "MoodleCourse", new { userid = "UserId" }, null).ToHtmlString().Replace("UserId", "#=ID_moodle#")) +
+               "# } #");
         columns.Bound(c => c.Trang_thai).Title("Thực hiện")
-            .Width(150)
+            .Width(140)
             .ClientTemplate(
                 "# if (Trang_thai) { #" +
                     "<button class='button-delete' title='Hủy đăng ký' onclick='delete_one(#=ID#)'></button>" +
                     "<button class='button-update' title='Khôi phục về mặc định' onclick='update_one(#=ID#)'></button>" +
                 "# } else { #" +
                     "<button class='button-add' title='Đăng ký' onclick='create_one(#=ID#)'></button>" +
-                    "<button class='button-sync' title='Đồng bộ tài khoản' onclick='sync_one(#=ID#)'></button>" +
                 "# } #" +
                 "<button class='button-add-sysrole' title='Gán vai trò hệ thống đã chọn' onclick='assign_sysrole_one(#=ID#)'></button>" +
                 "# if (Vai_tro != '') { #" +
@@ -141,11 +150,6 @@
         }
     }
 
-    function sync_one(selectedVal) {
-        var action = '@Url.Action("SyncAdminUsers", "MoodleUser")' + '/?selectedVals=' + selectedVal;
-        processing(action, "Đang đồng bộ tài khoản moodle elearning...", gridRefresh);
-    }
-
     function create_admin() {
         if (selectedVals.length == 0) {
             alert('Vui lòng chọn một quản trị viên!');
@@ -180,12 +184,7 @@
     }
 
     function sync_admin() {
-        if (selectedVals.length == 0) {
-            alert('Vui lòng chọn một quản trị viên!');
-            return;
-        }
-
-        var action = '@Url.Action("SyncAdminUsers", "MoodleUser")' + '/?selectedVals=' + selectedVals;
+        var action = '@Url.Action("SyncAdminUsers", "MoodleUser")';
         processing(action, "Đang đồng bộ tài khoản moodle elearning...", gridRefresh);
     }
 

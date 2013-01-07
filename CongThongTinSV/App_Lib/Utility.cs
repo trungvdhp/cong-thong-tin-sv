@@ -226,7 +226,7 @@ namespace CongThongTinSV.App_Lib
             DateTime date = ConvertToDateTime(timestamp);
             DateTime mindate = new DateTime(1970, 1, 1, 0, 0, 0, 0);
 
-            if (date == mindate)
+            if (date.ToShortDateString() == mindate.ToShortDateString())
             {
                 return "Never";
             }
@@ -266,6 +266,13 @@ namespace CongThongTinSV.App_Lib
         public static string ConvertToDetailDateTimeString(int timestamp)
         {
             DateTime date = ConvertToDateTime(timestamp);
+            DateTime mindate = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+
+            if (date.ToShortDateString() == mindate.ToShortDateString())
+            {
+                return "Never";
+            }
+
             TimeSpan span = DateTime.Now.Subtract(date);
 
             return date.ToLongDateString() + ", " + date.ToLongTimeString() + 
@@ -314,9 +321,36 @@ namespace CongThongTinSV.App_Lib
         /// <returns></returns>
         public static bool InArray(string array, char[] separator,  string value)
         {
-            if (array == null) return false;
+            if (array == null)
+            {
+                return false;
+            }
+
             string[] arr = array.Split(separator);
+
             return arr.Contains(value);
+        }
+
+        /// <summary>
+        /// Validate a name as file name, sheet name...
+        /// </summary>
+        /// <param name="name">Name</param>
+        /// <param name="maxLength">Max length</param>
+        /// <param name="replacement">Replacement string</param>
+        /// <returns></returns>
+        public static string ValidateName(string name, int maxLength = 0, string replacement = "")
+        {
+            foreach (char c in Path.GetInvalidFileNameChars())
+            {
+                name = name.Replace(c.ToString(), replacement);
+            }
+
+            if (maxLength > 0 && name.Length > maxLength)
+            {
+                name = name.Substring(0, maxLength);
+            }
+
+            return name;
         }
     }
 }
