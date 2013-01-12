@@ -76,29 +76,51 @@ namespace CongThongTinSV.App_Lib
         /// </summary>
         /// <param name="courseid">ID of course</param>
         /// <returns>CourseIDNumber(ID_mon, Hoc_ky, Nam_hoc)</returns>
-        public static CourseInfo GetCourseIDNumber(string courseid)
+        public static CourseInfo GetCourseInfo(string courseid)
         {
             Entities db = new Entities();
             MoodleEntities mdb = new MoodleEntities();
-            var rs = new CourseInfo();
+            var rs = new CourseInfo
+            {
+                ID_lop_tc = 0,
+                Mon_hoc = new MARK_MonHoc
+                {
+                    ID_mon = 0,
+                    Ten_mon = "",
+                    Ky_hieu = ""
+                },
+                Hoc_ky = 0,
+                Nam_hoc = "",
+                Nhom = "",
+                So_tin_chi = 0
+            };
+
             var course = mdb.fit_course.AsEnumerable().SingleOrDefault(t => t.id.ToString() == courseid);
 
             if (course != null)
             {
                 string[] s = course.idnumber.Split(new char[] { '.' });
 
-                if (s.Length > 2)
+                if (s.Length > 5)
                 {
                     int tmp;
-                    MARK_MonHoc mon = GetMonHocByKyHieu(s[0]);
-                    rs.ID_mon = mon == null ? 0 : mon.ID_mon;
+                    var mon = GetMonHocByKyHieu(s[0]);
+
+                    if (mon != null)
+                    {
+                        rs.Mon_hoc = mon ;
+                    }
+
                     int.TryParse(s[1], out tmp);
                     rs.Hoc_ky = tmp;
                     rs.Nam_hoc = s[2];
+                    rs.Nhom = s[3];
+                    int.TryParse(s[4], out tmp);
+                    rs.So_tin_chi = tmp;
+                    int.TryParse(s[5], out tmp);
+                    rs.ID_lop_tc = tmp;
                 }
             }
-            else
-                return null;
 
             return rs;
         }
@@ -115,6 +137,93 @@ namespace CongThongTinSV.App_Lib
             int.TryParse(userid, out id);
 
             return mdb.fit_user.SingleOrDefault(t => t.id == id);
+        }
+
+        /// <summary>
+        /// Get users are not a student
+        /// </summary>
+        /// <param name="courseid">ID of course</param>
+        /// <returns>List of users, who are not a student</returns>
+        public static IEnumerable<MoodleUser> GetNoneStudents(string courseid)
+        {
+            MoodleEntities mdb = new MoodleEntities();
+            long context = MoodleLib.GetContextID("50", courseid);
+            long cid;
+            long.TryParse(courseid, out cid);
+            var role = mdb.fit_role_assignments.Where(t => t.contextid == context && t.roleid != 5);
+            var enrol = mdb.fit_enrol.Where(t => t.courseid == cid);
+            List<int> user_enrolments = (from u in mdb.fit_user_enrolments
+                                         join e in enrol
+                                         on u.enrolid equals e.id
+                                         where u.status == 1
+                                         select (int)u.userid).ToList();
+
+            var user = from r in role.AsEnumerable()
+                       join u in mdb.fit_user
+                       on r.userid equals u.id
+                       select new MoodleUser
+                       {
+                           ID_moodle = (int)u.id,
+                           FirstName = u.firstname,
+                           LastName = u.lastname,
+                           ID_vai_tro = r.roleid.ToString()
+                       };
+
+            return user.Where(t => !user_enrolments.Contains(t.ID_moodle));
+        }
+
+        /// <summary>
+        /// Convert IDnumber of student to ID_sv
+        /// </summary>
+        /// <param name="idnumber">IDnumber of student</param>
+        /// <returns></returns>
+        public static int ConvertIDNumberToIDSV(string idnumber)
+        {
+            int id_sv;
+
+            if (idnumber.Contains("st"))
+            {
+                idnumber = idnumber.Replace("st", "");
+            }
+
+            int.TryParse(idnumber, out id_sv);
+
+            return id_sv;
+        }
+
+        /// <summary>
+        /// Get birthday of user
+        /// </summary>
+        /// <param name="userid">ID of user</param>
+        /// <returns></returns>
+        private static DateTime? GetNgaySinh(long userid)
+        {
+            MoodleEntities mdb = new MoodleEntities();
+            var bd = mdb.fit_user_info_data.SingleOrDefault(t => t.fieldid == 2 && t.userid == userid);
+            if (bd == null)
+            {
+                return null;
+            }
+
+            return (DateTime?)Utility.ConvertToDateTime(int.Parse(bd.data));
+        }
+
+        /// <summary>
+        /// Get class of user
+        /// </summary>
+        /// <param name="userid">ID of user</param>
+        /// <returns></returns>
+        private static string GetLop(long userid)
+        {
+            MoodleEntities mdb = new MoodleEntities();
+            var bd = mdb.fit_user_info_data.SingleOrDefault(t => t.fieldid == 1 && t.userid == userid);
+
+            if (bd == null)
+            {
+                return "";
+            }
+
+            return bd.data;
         }
 
         /// <summary>
@@ -209,9 +318,10 @@ namespace CongThongTinSV.App_Lib
         public static MARK_DiemThi_TC GetYGrade(string studentid, string courseid)
         {
             Entities db = new Entities();
-            CourseInfo course = GetCourseIDNumber(courseid);
+            CourseInfo course = GetCourseInfo(courseid);
+            int id_mon = course == null ? 0 : course.Mon_hoc.ID_mon;
             STU_HoSoSinhVien student = GetStudentByUserID(studentid);
-            var diemtc = db.MARK_Diem_TC.Where(t => t.ID_mon == course.ID_mon && t.ID_sv == student.ID_sv);
+            var diemtc = db.MARK_Diem_TC.Where(t => t.ID_mon == id_mon && t.ID_sv == student.ID_sv);
             var diemthitc = db.MARK_DiemThi_TC.Where(t => t.Hoc_ky_thi == course.Hoc_ky && t.Nam_hoc_thi == course.Nam_hoc);
             var diemthis = from d1 in diemtc
                            join d2 in diemthitc
@@ -533,6 +643,15 @@ namespace CongThongTinSV.App_Lib
                 postData += "&users[" + i + "][city]=Hai Phong";
                 postData += "&users[" + i + "][country]=VN";
                 postData += "&users[" + i + "][idnumber]=st" + item.ID_sv;
+                postData += "&users[" + i + "][customfields][0][type]=Lop";
+                postData += "&users[" + i + "][customfields][0][value]=" + item.Lop;
+
+                if (item.Ngay_sinh != null)
+                {
+                    postData += "&users[" + i + "][customfields][1][type]=NgaySinh";
+                    postData += "&users[" + i + "][customfields][1][value]=" + Utility.ConvertToTimestamp((DateTime)item.Ngay_sinh);
+                }
+
                 i++;
             }
 
@@ -632,6 +751,56 @@ namespace CongThongTinSV.App_Lib
         /// <returns></returns>
         public static bool UpdateStudents(IEnumerable<MoodleStudent> list)
         {
+            MoodleEntities mdb = new MoodleEntities();
+
+            foreach (var item in list)
+            {
+                //update birthday
+                var bd = mdb.fit_user_info_data.SingleOrDefault(t => t.userid == item.ID_moodle && t.fieldid == 2);
+
+                if (bd == null)
+                {
+                    mdb.fit_user_info_data.Add(new fit_user_info_data
+                    {
+                        id = mdb.fit_user_info_data.Max(t => t.id) + 1,
+                        userid = item.ID_moodle,
+                        fieldid = 2,
+                        data = item.Ngay_sinh == null ? "1337014800" : Utility.ConvertToTimestamp((DateTime)item.Ngay_sinh).ToString(),
+                        dataformat = 0
+                    });
+                }
+                else
+                {
+                    bd.data = item.Ngay_sinh == null ? "1337014800" : Utility.ConvertToTimestamp((DateTime)item.Ngay_sinh).ToString();
+                    mdb.Entry(bd).State = System.Data.EntityState.Modified;
+                }
+
+                mdb.SaveChanges();
+
+                //update class
+
+                var cls = mdb.fit_user_info_data.SingleOrDefault(t => t.userid == item.ID_moodle && t.fieldid == 1);
+
+                if (cls == null)
+                {
+                    mdb.fit_user_info_data.Add(new fit_user_info_data
+                    {
+                        id = mdb.fit_user_info_data.Max(t => t.id) + 1,
+                        userid = item.ID_moodle,
+                        fieldid = 1,
+                        data = item.Lop,
+                        dataformat = 1
+                    });
+                }
+                else
+                {
+                    cls.data = item.Lop;
+                    mdb.Entry(cls).State = System.Data.EntityState.Modified;
+                }
+
+                mdb.SaveChanges();
+            }
+
             int i = 0;
             string postData = "wsfunction=core_user_update_users";
 
@@ -660,6 +829,15 @@ namespace CongThongTinSV.App_Lib
                 postData += "&users[" + i + "][lastname]=" + HttpUtility.UrlEncode(item.Ho_dem);
                 postData += "&users[" + i + "][email]=" + "st" + item.Ma_sv + "@st.vimaru.edu.vn";
                 postData += "&users[" + i + "][idnumber]=st" + item.ID_sv;
+                //postData += "&users[" + i + "][customfields][0][type]=Lop";
+                //postData += "&users[" + i + "][customfields][0][value]=" + item.Lop;
+
+                //if (item.Ngay_sinh != null)
+                //{
+                //    postData += "&users[" + i + "][customfields][1][type]=NgaySinh";
+                //    postData += "&users[" + i + "][customfields][1][value]=" + Utility.ConvertToTimestamp((DateTime)item.Ngay_sinh);
+                //}
+
                 i++;
             }
 
@@ -688,6 +866,7 @@ namespace CongThongTinSV.App_Lib
         {
             Entities db = new Entities();
             MoodleEntities mdb = new MoodleEntities();
+
             var sinhviens = from sv in list
                             join user in mdb.fit_user.AsEnumerable()
                             on sv.Ma_sv equals user.username
@@ -699,13 +878,16 @@ namespace CongThongTinSV.App_Lib
 
             foreach (var item in sinhviens)
             {
-                MOD_NguoiDung entity = new MOD_NguoiDung();
+                if (item.ID_moodle == 0)
+                {
+                    MOD_NguoiDung entity = new MOD_NguoiDung();
 
-                entity.ID_moodle = Convert.ToInt32(item.ID_moodle);
-                entity.ID_nd = item.ID_sv;
-                entity.ID_nhom_nd = 3;
+                    entity.ID_moodle = Convert.ToInt32(item.ID_moodle);
+                    entity.ID_nd = item.ID_sv;
+                    entity.ID_nhom_nd = 3;
 
-                db.MOD_NguoiDung.Add(entity);
+                    db.MOD_NguoiDung.Add(entity);
+                }
             }
 
             try
@@ -1741,9 +1923,10 @@ namespace CongThongTinSV.App_Lib
                     select new MoodleCourseMember
                     {
                         UserID = (int)user.id,
-                        UserName = user.username,
-                        LastName = user.lastname,
-                        FirstName = user.firstname,
+                        //UserName = user.username,
+                        //LastName = Utility.GetLastName(user.fullname),
+                        //FirstName = Utility.GetFirstName(user.fullname),
+                        FullName = user.fullname,
                         Email = user.email,
                         RoleIDs = string.Join(",", user.roles.Select(t => t.roleid).ToArray()),
                         Roles = string.Join(", ", user.roles.Select(t => t.name).ToArray()),
@@ -1805,7 +1988,7 @@ namespace CongThongTinSV.App_Lib
                          Trang_thai = (c == null ? false : true),
                          ID_hocky = hk,
                          Ky_hieu = a.Ky_hieu,
-                         ID_number = a.Ky_hieu + "." + hocky.Hoc_ky + "." + hocky.Nam_hoc + "." + a.ID_lop_tc,
+                         ID_number = a.Ky_hieu + "." + hocky.Hoc_ky + "." + hocky.Nam_hoc + "." + Utility.RightString("0" + a.STT_lop, 2) + "." + a.So_tin_chi + "." + a.ID_lop_tc,
                          So_tin_chi = a.So_tin_chi,
                          Tu_ngay = a.Tu_ngay,
                          Den_ngay = a.Den_ngay,
@@ -1845,7 +2028,7 @@ namespace CongThongTinSV.App_Lib
                 postData += "&courses[" + i + "][shortname]=" + HttpUtility.UrlEncode(item.Lop_hoc_phan);
                 postData += "&courses[" + i + "][categoryid]=" + item.ID_hocky;
                 postData += "&courses[" + i + "][idnumber]=" + item.ID_number;
-                postData += "&courses[" + i + "][summary]=" + HttpUtility.UrlEncode(item.Lop_hoc_phan + "." + item.Ky_hieu + "." + item.ID_number + "." + item.So_tin_chi + " tín chỉ");
+                postData += "&courses[" + i + "][summary]=" + HttpUtility.UrlEncode(item.Lop_hoc_phan + "." + item.ID_number);
                 //postData += "&courses[" + i + "][summaryformat]=1";
                 //postData += "&courses[" + i + "][format]=weeks";
                 //postData += "&courses[" + i + "][showgrades]=1";
@@ -2080,16 +2263,18 @@ namespace CongThongTinSV.App_Lib
                 var grades = mdb.fit_grade_grades.Where(t => t.itemid == iz);
                 list = from u in user
                        join z in grades
-                       on u.ID equals z.userid
+                       on u.ID_moodle equals z.userid
                        into grade
                        from g in grade.DefaultIfEmpty()
                        select new MoodleCourseStudentGrade
                        {
-                           ID = u.ID,
-                           UserName = u.UserName,
-                           LastName = u.LastName,
-                           FirstName = u.FirstName,
-                           ZGrade = (g == null ? null : (g.finalgrade.HasValue ? (g.finalgrade > 10 ? g.finalgrade / 10 : g.finalgrade) : g.finalgrade))
+                           ID = u.ID_moodle,
+                           Ma_sv = u.Ma_sv,
+                           Ho_dem = u.Ho_dem,
+                           Ten = u.Ten,
+                           Ngay_sinh = u.Ngay_sinh,
+                           Lop = u.Lop,
+                           DiemZ = (g == null ? null : (g.finalgrade.HasValue ? (g.finalgrade > 10 ? g.finalgrade / 10 : g.finalgrade) : g.finalgrade))
                        };
             }
 
@@ -2097,7 +2282,7 @@ namespace CongThongTinSV.App_Lib
         }
 
         /// <summary>
-        /// Get grade of user courses
+        /// Get final grade of user courses
         /// </summary>
         /// <param name="courseid"></param>
         /// <returns></returns>
@@ -2105,6 +2290,23 @@ namespace CongThongTinSV.App_Lib
         {
             MoodleEntities mdb = new MoodleEntities();
             var courses = GetUserCourses(userid);
+
+            List<MoodleStudentCourseGrade> list = new List<MoodleStudentCourseGrade>();
+
+            foreach (var course in courses)
+            {
+                CourseInfo info = GetCourseInfo(course.id.ToString());
+                list.Add(new MoodleStudentCourseGrade
+                {
+                    ID = (int)course.id,
+                    Lop_hoc_phan = course.fullname,
+                    Ky_hieu = info.Mon_hoc.Ky_hieu,
+                    Nam_hoc = info.Nam_hoc,
+                    Hoc_ky = info.Hoc_ky,
+                    So_tin_chi = info.So_tin_chi
+                });
+            }
+
             long id;
             long.TryParse(userid, out id);
             var fitgrades = mdb.fit_grade_grades.Where(t => t.userid == id);
@@ -2118,20 +2320,83 @@ namespace CongThongTinSV.App_Lib
                              item.courseid
                          };
 
-            var rs = from course in courses
+            var rs = from course in list
                      join z in grades
-                     on course.id equals z.courseid
+                     on course.ID equals z.courseid
                      into grade
                      from g in grade.DefaultIfEmpty()
                      select new MoodleStudentCourseGrade
                      {
-                         ID = (int)course.id,
-                         CourseName = course.fullname,
-                         Grade = (g == null ? null : (g.finalgrade.HasValue ? (g.finalgrade > 10 ? g.finalgrade / 10 : g.finalgrade) : g.finalgrade))
+                         ID = (int)course.ID,
+                         Lop_hoc_phan = course.Lop_hoc_phan,
+                         Ky_hieu = course.Ky_hieu,
+                         Hoc_ky = course.Hoc_ky,
+                         Nam_hoc = course.Nam_hoc,
+                         So_tin_chi = course.So_tin_chi,
+                         Diem = (g == null ? null : (g.finalgrade.HasValue ? (g.finalgrade > 10 ? g.finalgrade / 10 : g.finalgrade) : g.finalgrade))
                      };
 
             return rs;
         }
+
+        public static ExcelExportor ExportCourseGradeToExcel(string exportFileName, string templateFileName, string exportSheetName, IEnumerable<MoodleCourseStudentGrade> grades, string courseid)
+        {
+            //Get course info
+            CourseInfo course = GetCourseInfo(courseid);
+            string subject = course.Mon_hoc.Ten_mon;
+            int startRow = 13, startColumn = 1, totalRows = grades.Count();
+
+            //Init workbook
+            var workbook = new ExcelExportor(exportFileName, templateFileName, exportSheetName);
+
+            //Set header
+            string hocky = "Học kỳ " + course.Hoc_ky + " - Năm học " + course.Nam_hoc;
+            workbook.SetCellValue(hocky, 3, 5, 3, 5);
+            string hocphan = "Học phần: " + course.Mon_hoc.Ten_mon + " (" + course.Mon_hoc.Ky_hieu + ") - Nhóm " + course.Nhom;
+            workbook.SetCellValue(hocphan, 7, 4, 7, 4);
+            string sotinchi = "Số Tín Chỉ: " + course.So_tin_chi;
+            workbook.SetCellValue(sotinchi, 8, 4, 8, 4);
+
+            //Insert empty rows
+            workbook.SetRange(startRow, startColumn, startRow, startColumn);
+            workbook.InsertRows(totalRows);
+            //Set STT
+            workbook.SetOrdinalNumbers(1, 1, totalRows, true, startRow, startColumn++);
+            workbook.SetHorizontalAlignment(Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight);
+            //Set Ma sinh vien column
+            workbook.Set1DArrayValue(grades.Select(t => t.Ma_sv).ToArray(), true, startRow, startColumn++);
+            //Set Ho dem column
+            workbook.Set1DArrayValue(grades.Select(t => t.Ho_dem.ToUpper()).ToArray(), true, startRow, startColumn++);
+            //Set Ten column
+            workbook.Set1DArrayValue(grades.Select(t => t.Ten.ToUpper()).ToArray(), true, startRow, startColumn++);
+            //Set Ngay sinh column
+            workbook.Set1DArrayValue(grades.Select(t => t.Ngay_sinh).Cast<object>().ToArray(), true, startRow, startColumn++);
+            workbook.SetHorizontalAlignment(Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter);
+            workbook.SetNumberFormat("dd/MM/yy");
+            //Set Lop column
+            workbook.Set1DArrayValue(grades.Select(t => t.Lop).ToArray(), true, startRow, startColumn++);
+            //Set Diem thi column
+            workbook.Set1DArrayValue(grades.Select(t => t.DiemZ.ToString()).ToArray(), true, startRow, 10);
+            workbook.SetHorizontalAlignment(Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter);
+            workbook.SetNumberFormat("0.0");
+            //Set format
+            workbook.SetRange(startRow, 1, startRow + totalRows - 1, 14);
+            workbook.SetBoderLineStyles();
+            workbook.SetFontBold(false);
+            workbook.SetRange(startRow, 3, startRow + totalRows - 1, 3);
+            workbook.SetBoderLineStyles(new Microsoft.Office.Interop.Excel.XlLineStyle[] 
+            {
+                Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous,
+                Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous,
+                Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous,
+                Microsoft.Office.Interop.Excel.XlLineStyle.xlLineStyleNone,
+                Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous,
+                Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous,
+            });
+
+            return workbook;
+        }
+
         #endregion
 
         #region MoodleQuiz
@@ -2147,7 +2412,7 @@ namespace CongThongTinSV.App_Lib
             foreach (MoodleQuizStudentGrade grade in list)
             {
                 MARK_DiemThi_TC entity = db.MARK_DiemThi_TC.Single(t => t.ID_diem_thi == grade.ID_diem_thi);
-                entity.Diem_thi = (float)grade.NewGrade;
+                entity.Diem_thi = (float)grade.DiemY_moi;
                 db.Entry(entity).State = System.Data.EntityState.Modified;
             }
 
@@ -2248,16 +2513,18 @@ namespace CongThongTinSV.App_Lib
                 var grades = mdb.fit_grade_grades.Where(t => t.itemid == iz);
                 list = from u in user
                        join z in grades
-                       on u.ID equals z.userid
+                       on u.ID_moodle equals z.userid
                        into grade
                        from g in grade.DefaultIfEmpty()
                        select new MoodleQuizStudentGrade
                        {
-                           ID = u.ID,
-                           UserName = u.UserName,
-                           LastName = u.LastName,
-                           FirstName = u.FirstName,
-                           NewGrade = (g == null ? null : (g.finalgrade.HasValue ? (g.finalgrade > 10 ? g.finalgrade / 10 : g.finalgrade) : g.finalgrade))
+                           ID = u.ID_moodle,
+                           Ma_sv = u.Ma_sv,
+                           Ho_dem = u.Ho_dem,
+                           Ten = u.Ten,
+                           Ngay_sinh = u.Ngay_sinh,
+                           Lop = u.Lop,
+                           DiemY_moi = (g == null ? null : (g.finalgrade.HasValue ? (g.finalgrade > 10 ? g.finalgrade / 10 : g.finalgrade) : g.finalgrade))
                        };
             }
 
@@ -2286,68 +2553,105 @@ namespace CongThongTinSV.App_Lib
                 var grades = mdb.fit_grade_grades.Where(t => t.itemid == iz);
                 list = from u in user
                        join z in grades
-                       on u.ID equals z.userid
+                       on u.ID_moodle equals z.userid
                        into grade
                        from g in grade.DefaultIfEmpty()
                        select new MoodleQuizStudentGrade
                        {
-                           ID = u.ID,
-                           UserName = u.UserName,
-                           LastName = u.LastName,
-                           FirstName = u.FirstName,
-                           NewGrade = (g == null ? null : (g.finalgrade.HasValue ? (g.finalgrade > 10 ? g.finalgrade / 10 : g.finalgrade) : null))
+                           ID = u.ID_moodle,
+                           ID_sv = u.ID_sv,
+                           Ma_sv = u.Ma_sv,
+                           Ho_dem = u.Ho_dem,
+                           Ten = u.Ten,
+                           Ngay_sinh = u.Ngay_sinh,
+                           Lop = u.Lop,
+                           DiemY_moi = (g == null ? null : (g.finalgrade.HasValue ? (g.finalgrade > 10 ? g.finalgrade / 10 : g.finalgrade) : null))
                        };
+                //var t3 = list.ToList();
             }
 
-            CourseInfo idnumber = GetCourseIDNumber(courseid);
+            CourseInfo loptc = GetCourseInfo(courseid);
 
-            if (idnumber != null)
+            if (loptc != null)
             {
-                var students = from u in user
-                               join sv in db.STU_HoSoSinhVien
-                               on u.UserName equals sv.Ma_sv
-                               select new
-                               {
-                                   ID = u.ID,
-                                   ID_sv = sv.ID_sv
-                               };
+                var diemx = from dtc in db.MARK_Diem_TC
+                            join dtp in db.MARK_DiemThanhPhan_TC
+                            on dtc.ID_diem equals dtp.ID_diem
+                            where dtc.ID_mon == loptc.Mon_hoc.ID_mon
+                                && dtp.Hoc_ky_TP == loptc.Hoc_ky
+                                && dtp.Nam_hoc_TP == loptc.Nam_hoc
+                                && dtp.ID_thanh_phan == 1
+                            select new
+                            {
+                                dtc.ID_sv,
+                                dtp.Diem
+                            };
 
-                var diemtc = db.MARK_Diem_TC.Where(t => t.ID_mon == idnumber.ID_mon);
-                var diemthitc = db.MARK_DiemThi_TC.Where(t => t.Hoc_ky_thi == idnumber.Hoc_ky && t.Nam_hoc_thi == idnumber.Nam_hoc);
-                var diemthis = from sv in students
-                               join d1 in diemtc
-                               on sv.ID_sv equals d1.ID_sv
-                               join d2 in diemthitc
-                               on d1.ID_diem equals d2.ID_diem
-                               select new
-                               {
-                                   sv,
-                                   d2.Diem_thi,
-                                   d2.ID_diem_thi
-                               };
+                //var t1 = diemx.Where(t => t.ID_sv == 11135).ToList();
+                
+                var diemtc = db.MARK_Diem_TC.Where(t => t.ID_mon == loptc.Mon_hoc.ID_mon);
+                var diemthitc = db.MARK_DiemThi_TC.Where(t => t.Hoc_ky_thi == loptc.Hoc_ky && t.Nam_hoc_thi == loptc.Nam_hoc);
+                var diemy = from sv in user
+                            join d1 in diemtc
+                            on sv.ID_sv equals d1.ID_sv
+                            join d2 in diemthitc
+                            on d1.ID_diem equals d2.ID_diem
+                            select new
+                            {
+                                sv,
+                                d2.Diem_thi,
+                                d2.ID_diem_thi,
+                            };
 
                 list = from u in list
-                       join d in diemthis
-                       on u.ID equals d.sv.ID
+                       join d in diemx
+                       on u.ID_sv equals d.ID_sv
                        into d1
                        from diem in d1.DefaultIfEmpty()
                        select new MoodleQuizStudentGrade
                        {
                            ID = u.ID,
+                           ID_sv = u.ID_sv,
+                           Ma_sv = u.Ma_sv,
+                           Ho_dem = u.Ho_dem,
+                           Ten = u.Ten,
+                           Ngay_sinh = u.Ngay_sinh,
+                           Lop = u.Lop,
+                           DiemY_moi = u.DiemY_moi,
+                           DiemX = diem == null ? null : (float?)diem.Diem,
+                       };
+
+                //var t5 = list.Where(t => t.ID_sv == 11135).ToList();
+
+                list = from u in list
+                       join d in diemy
+                       on u.ID_sv equals d.sv.ID_sv
+                       into d1
+                       from diem in d1.DefaultIfEmpty()
+                       select new MoodleQuizStudentGrade
+                       {
+                           ID = u.ID,
+                           ID_sv = u.ID_sv,
+                           Ma_sv = u.Ma_sv,
+                           Ho_dem = u.Ho_dem,
+                           Ten = u.Ten,
+                           Ngay_sinh = u.Ngay_sinh,
+                           Lop = u.Lop,
+                           DiemX = u.DiemX,
                            ID_diem_thi = diem == null ? 0 : diem.ID_diem_thi,
-                           ID_sv = diem == null ? 0 : diem.sv.ID_sv,
-                           OldGrade = diem == null ? null : (float?)diem.Diem_thi,
-                           UserName = u.UserName,
-                           LastName = u.LastName,
-                           FirstName = u.FirstName,
-                           NewGrade = u.NewGrade,
-                           IsDiffGrade = diem == null || !u.NewGrade.HasValue ||
-                                         (diem != null && u.NewGrade.HasValue && string.Format("{0:0.0}", diem.Diem_thi) == string.Format("{0:0.0}", u.NewGrade))
+                           DiemY_cu = diem == null ? null : (float?)diem.Diem_thi,
+                           DiemY_moi = u.DiemY_moi,
+                           DiemZ_moi = diem == null || u.DiemY_moi == null ? null : (float?)(0.3 * u.DiemX + 0.7 * (float)u.DiemY_moi),
+                           Diem_chu = Utility.ConvertGradeToText(diem == null || u.DiemY_moi == null ? null : (float?)(0.3 * u.DiemX + 0.7 * (float)u.DiemY_moi)),
+                           Khac_diem = diem == null || !u.DiemY_moi.HasValue ||
+                                         (diem != null && u.DiemY_moi.HasValue && string.Format("{0:0.0}", diem.Diem_thi) == string.Format("{0:0.0}", u.DiemY_moi))
                                          ? false : true
                        };
+
+                //var t4 = list.Where(t => t.ID_sv == 11135).ToList();
             }
 
-            return list;//.OrderByDescending(t => t.IsDiffGrade);
+            return list.OrderByDescending(t => t.Khac_diem);
         }
 
         /// <summary>
@@ -2391,6 +2695,64 @@ namespace CongThongTinSV.App_Lib
 
             return rs;
         }
+
+        public static ExcelExportor ExportQuizGradeToExcel(string exportFileName, string templateFileName, string exportSheetName, IEnumerable<MoodleQuizStudentGrade> grades, string courseid)
+        {
+            //Get course info
+            CourseInfo course = GetCourseInfo(courseid);
+            string subject = course.Mon_hoc.Ten_mon;
+            int startRow = 13, startColumn = 1, totalRows = grades.Count();
+
+            //Init workbook
+            var workbook = new ExcelExportor(exportFileName, templateFileName, exportSheetName);
+
+            //Set header
+            string hocky = "Học kỳ " + course.Hoc_ky + " - Năm học " + course.Nam_hoc;
+            workbook.SetCellValue(hocky, 3, 5, 3, 5);
+            string hocphan = "Học phần: " + course.Mon_hoc.Ten_mon + " (" + course.Mon_hoc.Ky_hieu + ") - Nhóm " + course.Nhom;
+            workbook.SetCellValue(hocphan, 7, 4, 7, 4);
+            string sotinchi = "Số Tín Chỉ: " + course.So_tin_chi;
+            workbook.SetCellValue(sotinchi, 8, 4, 8, 4);
+
+            //Insert empty rows
+            workbook.SetRange(startRow, startColumn, startRow, startColumn);
+            workbook.InsertRows(totalRows);
+            //Set STT
+            workbook.SetOrdinalNumbers(1, 1, totalRows, true, startRow, startColumn++);
+            workbook.SetHorizontalAlignment(Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight);
+            //Set Ma sinh vien column
+            workbook.Set1DArrayValue(grades.Select(t => t.Ma_sv).ToArray(), true, startRow, startColumn++);
+            //Set Ho dem column
+            workbook.Set1DArrayValue(grades.Select(t => t.Ho_dem.ToUpper()).ToArray(), true, startRow, startColumn++);
+            //Set Ten column
+            workbook.Set1DArrayValue(grades.Select(t => t.Ten.ToUpper()).ToArray(), true, startRow, startColumn++);
+            //Set Ngay sinh column
+            workbook.Set1DArrayValue(grades.Select(t => t.Ngay_sinh).Cast<object>().ToArray(), true, startRow, startColumn++);
+            workbook.SetHorizontalAlignment(Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter);
+            workbook.SetNumberFormat("dd/MM/yy");
+            //Set Lop column
+            workbook.Set1DArrayValue(grades.Select(t => t.Lop).ToArray(), true, startRow, startColumn++);
+            //Set Diem thi column
+            workbook.Set1DArrayValue(grades.Select(t => t.DiemY_moi.ToString()).ToArray(), true, startRow, 10);
+            workbook.SetHorizontalAlignment(Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter);
+            workbook.SetNumberFormat("0.0");
+            //Set format
+            workbook.SetRange(startRow, 1, startRow + totalRows - 1, 14);
+            workbook.SetBoderLineStyles();
+            workbook.SetFontBold(false);
+            workbook.SetRange(startRow, 3, startRow + totalRows - 1, 3);
+            workbook.SetBoderLineStyles(new Microsoft.Office.Interop.Excel.XlLineStyle[] 
+            {
+                Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous,
+                Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous,
+                Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous,
+                Microsoft.Office.Interop.Excel.XlLineStyle.xlLineStyleNone,
+                Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous,
+                Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous,
+            });
+
+            return workbook;
+        }
         #endregion
 
         #region MoodleEnrol
@@ -2430,9 +2792,10 @@ namespace CongThongTinSV.App_Lib
         /// </summary>
         /// <param name="courseid">ID of course</param>
         /// <returns></returns>
-        public static IEnumerable<MoodleUser> GetEnrolledStudents(string courseid = "0")
+        public static IEnumerable<MoodleStudent> GetEnrolledStudents(string courseid = "0")
         {
             MoodleEntities mdb = new MoodleEntities();
+            Entities db = new Entities();
             long context = MoodleLib.GetContextID("50", courseid);
             long cid;
             long.TryParse(courseid, out cid);
@@ -2444,15 +2807,18 @@ namespace CongThongTinSV.App_Lib
                                          where u.status == 1
                                          select (int)u.userid).ToList();
 
-            var user = from r in role
-                       join u in mdb.fit_user
+            var user = from r in role.AsEnumerable()
+                       join u in mdb.fit_user.AsEnumerable()
                        on r.userid equals u.id
-                       select new MoodleUser
+                       select new MoodleStudent
                        {
-                           ID = (int)u.id,
-                           UserName = u.username,
-                           LastName = u.lastname,
-                           FirstName = u.firstname
+                           ID_moodle = (int)u.id,
+                           ID_sv = ConvertIDNumberToIDSV(u.idnumber),
+                           Ma_sv = u.username,
+                           Ten = u.firstname,
+                           Ho_dem = u.lastname,
+                           Ngay_sinh = GetNgaySinh(u.id),
+                           Lop = GetLop(u.id)
                        };
             //var users = GetEnrolledUsers(courseid).Where(t => t.roles.Any(r => r.roleid == 5)).OrderBy(t => t.firstname);
             //var students = from u in users
@@ -2464,7 +2830,7 @@ namespace CongThongTinSV.App_Lib
             //                   FirstName = u.firstname
             //               };
             
-            return user.Where(t => !user_enrolments.Contains(t.ID)).OrderBy(t => t.FirstName);
+            return user.Where(t => !user_enrolments.Contains(t.ID_moodle)).OrderBy(t => t.Ten);
         }
 
         /// <summary>

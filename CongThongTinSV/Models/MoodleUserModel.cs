@@ -160,14 +160,17 @@ namespace CongThongTinSV.Models
         [DisplayName("UserID")]
         public int UserID { get; set; }
 
-        [DisplayName("Tên đăng nhập")]
-        public string UserName { get; set; }
+        //[DisplayName("Tên đăng nhập")]
+        //public string UserName { get; set; }
 
-        [DisplayName("Họ và đệm")]
-        public string LastName { get; set; }
+        //[DisplayName("Họ và đệm")]
+        //public string LastName { get; set; }
 
-        [DisplayName("Tên")]
-        public string FirstName { get; set; }
+        //[DisplayName("Tên")]
+        //public string FirstName { get; set; }
+
+        [DisplayName("Họ và tên")]
+        public string FullName { get; set; }
 
         [DisplayName("Email")]
         public string Email { get; set; }

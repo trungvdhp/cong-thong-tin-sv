@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -13,6 +14,7 @@ namespace CongThongTinSV.App_Lib
 {
     public class Utility
     {
+        #region File utilities
         /// <summary>
         /// Write text to a file
         /// </summary>
@@ -78,6 +80,7 @@ namespace CongThongTinSV.App_Lib
 
             return rs;
         }
+
         /// <summary>
         /// Get Service Table
         /// </summary>
@@ -90,82 +93,9 @@ namespace CongThongTinSV.App_Lib
                 , new string[] { "FullName", "ShortName" }
                 );
         }
-        /// <summary>
-        /// Method for transform all XmlNode from XmlDocument to a TreeView
-        /// </summary>
-        /// <param name="xmlNode">a XmlNode</param>
-        /// <param name="treeNode">a TreeNode</param>
-        public static void AddNode(XmlNode xmlNode, TreeNode treeNode)
-        {
-            XmlNode xNode;
-            TreeNode tNode;
-            XmlNodeList nodeList;
-            int i = 0;
-            if (xmlNode.HasChildNodes)
-            {
-                nodeList = xmlNode.ChildNodes;
-                for (i = 0; i <= nodeList.Count - 1; i++)
-                {
-                    xNode = xmlNode.ChildNodes[i];
-                    try
-                    {
-                        treeNode.ChildNodes.Add(new TreeNode(xNode.Attributes["name"].Value.ToString()));
-                    }
-                    catch //(System.Exception ex)
-                    {
-                        treeNode.ChildNodes.Add(new TreeNode(xNode.Name));
-                    }
+        #endregion
 
-                    tNode = treeNode.ChildNodes[i];
-                    AddNode(xNode, tNode);
-                }
-            }
-            else
-            {
-                treeNode.Text = xmlNode.InnerText.ToString();
-            }
-        }
-
-        /// <summary>
-        /// Method for get id number from full name
-        /// </summary>
-        /// <param name="fullName">full name</param>
-        /// <returns>id number string</returns>
-        public static string GetIdnumber(string fullName)
-        {
-            string rs = "";
-
-            //split full name by char ' ' into string array
-            string[] split = fullName.Split(new char[] { ' ' });
-            //get total elements of string array
-            int len = split.Length - 1;
-
-            //cut and join first letter of each word
-            for (int i = 0; i < len; ++i)
-            {
-                char c = '-';
-                int j = 0;
-                int n = split[i].Length;
-
-                while (j < n)
-                {
-                    c = split[i][j++];
-
-                    if (char.IsLetterOrDigit(c))
-                        break;
-                }
-
-                if (j == n) 
-                    c = split[i][0];
-
-                rs += c.ToString();
-            }
-
-            rs += split[len - 1].Substring(split[len - 1].IndexOf('-')) + split[len];
-
-            //return lower result string 
-            return rs.ToLower();
-        }
+        #region Date and time utilities
 
         /// <summary>
         /// Method for converting a System.DateTime value to a UNIX Timestamp
@@ -221,17 +151,17 @@ namespace CongThongTinSV.App_Lib
         /// <param name="timestamp">value to be converted</param>
         /// <param name="format">datetime format</param>
         /// <returns>Vietnamese datetime string</returns>
-        public static string ConvertToDateTimeString(int timestamp, string format)
+        public static string ConvertToDateTimeString(int timestamp, string format, string cultureInfo = "vi-VN")
         {
             DateTime date = ConvertToDateTime(timestamp);
             DateTime mindate = new DateTime(1970, 1, 1, 0, 0, 0, 0);
 
             if (date.ToShortDateString() == mindate.ToShortDateString())
             {
-                return "Never";
+                return cultureInfo == "vi-VN" ? "Chưa bao giờ" : "Never";
             }
 
-            return date.ToString(format);
+            return date.ToString(format, new CultureInfo(cultureInfo));
         }
         /// <summary>
         /// Method for converting a Date Time String in cultureInfo("fr-FR")
@@ -247,36 +177,127 @@ namespace CongThongTinSV.App_Lib
             //return the System.DateTime value
             return new DateTime(Convert.ToInt32(s[2]), Convert.ToInt32(s[1]), Convert.ToInt32(s[0])).ToLocalTime();
         }
-        
-        public static string ConvertToString(TimeSpan span)
+
+        public static string ConvertToString(TimeSpan span, string cultureInfo = "vi-VN")
         {
-            string formatted = string.Format("{0}{1}{2}{3}",
-            span.Duration().Days > 0 ? string.Format("{0:0} days ", span.Days) : string.Empty,
-            span.Duration().Hours > 0 ? string.Format("{0:0} hours ", span.Hours) : string.Empty,
-            span.Duration().Minutes > 0 ? string.Format("{0:0} minutes ", span.Minutes) : string.Empty,
-            span.Duration().Seconds > 0 ? string.Format("{0:0} secs", span.Seconds) : string.Empty);
+            string formatted = "";
 
-            if (formatted.EndsWith(" ")) formatted = formatted.Substring(0, formatted.Length - 2);
+            if (cultureInfo != "vi-VN")
+            {
+                formatted = string.Format("{0}{1}{2}{3}",
+                span.Duration().Days > 0 ? string.Format("{0:0} days ", span.Days) : string.Empty,
+                span.Duration().Hours > 0 ? string.Format("{0:0} hours ", span.Hours) : string.Empty,
+                span.Duration().Minutes > 0 ? string.Format("{0:0} minutes ", span.Minutes) : string.Empty,
+                span.Duration().Seconds > 0 ? string.Format("{0:0} secs", span.Seconds) : string.Empty);
 
-            if (string.IsNullOrEmpty(formatted)) formatted = "0 secs";
+                if (formatted.EndsWith(" ")) formatted = formatted.Substring(0, formatted.Length - 2);
 
+                if (string.IsNullOrEmpty(formatted)) formatted = "0 secs";
+            }
+            else
+            {
+               formatted = string.Format("{0}{1}{2}{3}",
+               span.Duration().Days > 0 ? string.Format("{0:0} ngày ", span.Days) : string.Empty,
+               span.Duration().Hours > 0 ? string.Format("{0:0} giờ ", span.Hours) : string.Empty,
+               span.Duration().Minutes > 0 ? string.Format("{0:0} phút ", span.Minutes) : string.Empty,
+               span.Duration().Seconds > 0 ? string.Format("{0:0} giây", span.Seconds) : string.Empty);
+
+                if (formatted.EndsWith(" ")) formatted = formatted.Substring(0, formatted.Length - 2);
+
+                if (string.IsNullOrEmpty(formatted)) formatted = "0 giây";
+            }
+           
             return formatted;
         }
 
-        public static string ConvertToDetailDateTimeString(int timestamp)
+        public static string ConvertToDetailDateTimeString(int timestamp, string format = "F", string cultureInfo = "vi-VN")
         {
             DateTime date = ConvertToDateTime(timestamp);
             DateTime mindate = new DateTime(1970, 1, 1, 0, 0, 0, 0);
 
             if (date.ToShortDateString() == mindate.ToShortDateString())
             {
-                return "Never";
+                return cultureInfo == "vn" ? "Chưa bao giờ": "Never";
             }
 
             TimeSpan span = DateTime.Now.Subtract(date);
 
-            return date.ToLongDateString() + ", " + date.ToLongTimeString() + 
-                " (" + ConvertToString(span) + ")";
+            return string.Format(new CultureInfo(cultureInfo), "{0:" + format + "}", date) + ", " + " (" + ConvertToString(span) + ")";
+        }
+        #endregion
+
+        #region String utilities
+        /// <summary>
+        /// Get right substring of a input string
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        public static string RightString(string input, int length)
+        {
+            int startIndex = input.Length - length;
+
+            return input.Substring(startIndex);
+        }
+
+        /// <summary>
+        /// Checks if a specified value exists in a string array that contains the substrings in this string that are delimited by a separator string
+        /// </summary>
+        /// <param name="array">string array</param>
+        /// <param name="separator">separator</param>
+        /// <param name="value">value needs to check</param>
+        /// <returns></returns>
+        public static bool InArray(string array, char[] separator, string value)
+        {
+            if (array == null)
+            {
+                return false;
+            }
+
+            string[] arr = array.Split(separator);
+
+            return arr.Contains(value);
+        }
+
+        /// <summary>
+        /// Method for get id number from full name
+        /// </summary>
+        /// <param name="fullName">full name</param>
+        /// <returns>id number string</returns>
+        public static string GetIdnumber(string fullName)
+        {
+            string rs = "";
+
+            //split full name by char ' ' into string array
+            string[] split = fullName.Split(new char[] { ' ' });
+            //get total elements of string array
+            int len = split.Length - 1;
+
+            //cut and join first letter of each word
+            for (int i = 0; i < len; ++i)
+            {
+                char c = '-';
+                int j = 0;
+                int n = split[i].Length;
+
+                while (j < n)
+                {
+                    c = split[i][j++];
+
+                    if (char.IsLetterOrDigit(c))
+                        break;
+                }
+
+                if (j == n)
+                    c = split[i][0];
+
+                rs += c.ToString();
+            }
+
+            rs += split[len - 1].Substring(split[len - 1].IndexOf('-')) + split[len];
+
+            //return lower result string 
+            return rs.ToLower();
         }
 
         /// <summary>
@@ -300,38 +321,6 @@ namespace CongThongTinSV.App_Lib
         }
 
         /// <summary>
-        /// Get right substring of a input string
-        /// </summary>
-        /// <param name="input"></param>
-        /// <param name="length"></param>
-        /// <returns></returns>
-        public static string RightString(string input, int length)
-        {
-            int startIndex = input.Length - length;
-
-            return input.Substring(startIndex);
-        }
-
-        /// <summary>
-        /// Checks if a specified value exists in a string array that contains the substrings in this string that are delimited by a separator string
-        /// </summary>
-        /// <param name="array">string array</param>
-        /// <param name="separator">separator</param>
-        /// <param name="value">value needs to check</param>
-        /// <returns></returns>
-        public static bool InArray(string array, char[] separator,  string value)
-        {
-            if (array == null)
-            {
-                return false;
-            }
-
-            string[] arr = array.Split(separator);
-
-            return arr.Contains(value);
-        }
-
-        /// <summary>
         /// Validate a name as file name, sheet name...
         /// </summary>
         /// <param name="name">Name</param>
@@ -352,5 +341,109 @@ namespace CongThongTinSV.App_Lib
 
             return name;
         }
+
+        /// <summary>
+        /// Constant array of Vietnamese signs 
+        /// </summary>
+        private static readonly string[] VietnameseSigns = new string[]
+		{
+			"aAeEoOuUiIdDyY",
+			"áàạảãâấầậẩẫăắằặẳẵ",
+			"ÁÀẠẢÃÂẤẦẬẨẪĂẮẰẶẲẴ",
+			"éèẹẻẽêếềệểễ",
+			"ÉÈẸẺẼÊẾỀỆỂỄ",
+			"óòọỏõôốồộổỗơớờợởỡ",
+			"ÓÒỌỎÕÔỐỒỘỔỖƠỚỜỢỞỠ",
+			"úùụủũưứừựửữ",
+			"ÚÙỤỦŨƯỨỪỰỬỮ",
+			"íìịỉĩ",
+			"ÍÌỊỈĨ",
+			"đ",
+			"Đ",
+			"ýỳỵỷỹ",
+			"ÝỲỴỶỸ"
+		};
+
+        /// <summary>
+        /// Remove vietnamese signs
+        /// </summary>
+        /// <param name="str">Vienamese string</param>
+        /// <returns></returns>
+        public static string RemoveSign4VietnameseString(string str)
+        {
+            for (int i = 1; i < VietnameseSigns.Length; i++)
+            {
+                for (int j = 0; j < VietnameseSigns[i].Length; j++)
+                    str = str.Replace(VietnameseSigns[i][j], VietnameseSigns[0][i - 1]);
+            }
+            return str;
+        }
+        #endregion
+
+        #region Other utilities
+        /// <summary>
+        /// Convert grade to text
+        /// </summary>
+        /// <param name="grade">Grade to convert</param>
+        /// <returns>Text grade</returns>
+        public static string ConvertGradeToText(float? grade)
+        {
+            if (grade == null) { return ""; }
+
+            if (grade < 3.95) { return "F"; }
+
+            if (grade < 4.95) { return "D"; }
+
+            if (grade < 5.45) { return "D+"; }
+
+            if (grade < 6.45) { return "C"; }
+
+            if (grade < 6.95) { return "C+"; }
+
+            if (grade < 7.95) { return "B"; }
+
+            if (grade < 8.45) { return "B+"; }
+
+            if (grade < 8.95) { return "A"; }
+
+            return "A+";
+        }
+
+        /// <summary>
+        /// Method for transform all XmlNode from XmlDocument to a TreeView
+        /// </summary>
+        /// <param name="xmlNode">a XmlNode</param>
+        /// <param name="treeNode">a TreeNode</param>
+        public static void AddNode(XmlNode xmlNode, TreeNode treeNode)
+        {
+            XmlNode xNode;
+            TreeNode tNode;
+            XmlNodeList nodeList;
+            int i = 0;
+            if (xmlNode.HasChildNodes)
+            {
+                nodeList = xmlNode.ChildNodes;
+                for (i = 0; i <= nodeList.Count - 1; i++)
+                {
+                    xNode = xmlNode.ChildNodes[i];
+                    try
+                    {
+                        treeNode.ChildNodes.Add(new TreeNode(xNode.Attributes["name"].Value.ToString()));
+                    }
+                    catch //(System.Exception ex)
+                    {
+                        treeNode.ChildNodes.Add(new TreeNode(xNode.Name));
+                    }
+
+                    tNode = treeNode.ChildNodes[i];
+                    AddNode(xNode, tNode);
+                }
+            }
+            else
+            {
+                treeNode.Text = xmlNode.InnerText.ToString();
+            }
+        }
+        #endregion
     }
 }

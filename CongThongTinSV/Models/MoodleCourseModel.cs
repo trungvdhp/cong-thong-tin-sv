@@ -106,9 +106,12 @@ namespace CongThongTinSV.Models
 
     public class CourseInfo
     {
-        public int ID_mon { get; set; }
+        public MARK_MonHoc Mon_hoc { get; set; }
         public int Hoc_ky { get; set; }
         public string Nam_hoc { get; set; }
+        public string Nhom { get; set; }
+        public int So_tin_chi { get; set; }
+        public int ID_lop_tc { get; set; }
     }
 
     public class MoodleCourseStudentGrade
@@ -123,16 +126,22 @@ namespace CongThongTinSV.Models
         public int ID_sv { get; set; }
 
         [DisplayName("Mã SV")]
-        public string UserName { get; set; }
+        public string Ma_sv { get; set; }
 
         [DisplayName("Họ và đệm")]
-        public string LastName { get; set; }
+        public string Ho_dem { get; set; }
 
         [DisplayName("Tên")]
-        public string FirstName { get; set; }
+        public string Ten { get; set; }
 
-        [DisplayName("Điểm Z")]
-        public decimal? ZGrade { get; set; }
+        [DisplayName("Ngày sinh")]
+        public DateTime? Ngay_sinh { get; set; }
+
+        [DisplayName("Lớp")]
+        public string Lop { get; set; }
+
+        [DisplayName("Điểm tổng kết")]
+        public decimal? DiemZ { get; set; }
     }
 
     public class MoodleStudentCourseGrade
@@ -141,10 +150,22 @@ namespace CongThongTinSV.Models
         public int ID { get; set; }
 
         [DisplayName("Lớp học phần")]
-        public string CourseName { get; set; }
+        public string Lop_hoc_phan { get; set; }
+
+        [DisplayName("Học phần")]
+        public string Ky_hieu { get; set; }
 
         [DisplayName("Điểm tổng kết")]
-        public decimal? Grade { get; set; }
+        public decimal? Diem { get; set; }
+
+        [DisplayName("Năm học")]
+        public string Nam_hoc { get; set; }
+
+        [DisplayName("Học kỳ")]
+        public int Hoc_ky { get; set; }
+
+        [DisplayName("Số tín chỉ")]
+        public int So_tin_chi { get; set; }
     }
 
 }

@@ -39,6 +39,8 @@
     <EntitySet Name="fit_role_names" EntityType="moodleModel.Store.fit_role_names" store:Type="Tables" Schema="moodle" />
     <EntitySet Name="fit_user" EntityType="moodleModel.Store.fit_user" store:Type="Tables" Schema="moodle" />
     <EntitySet Name="fit_user_enrolments" EntityType="moodleModel.Store.fit_user_enrolments" store:Type="Tables" Schema="moodle" />
+    <EntitySet Name="fit_user_info_data" EntityType="moodleModel.Store.fit_user_info_data" store:Type="Tables" Schema="moodle" />
+    <EntitySet Name="fit_user_info_field" EntityType="moodleModel.Store.fit_user_info_field" store:Type="Tables" Schema="moodle" />
   </EntityContainer>
   <EntityType Name="fit_context">
     <Key>
@@ -720,5 +722,40 @@
     <Property Name="modifierid" Type="bigint" Nullable="false" />
     <Property Name="timecreated" Type="bigint" Nullable="false" />
     <Property Name="timemodified" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fit_user_info_data">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="userid" Type="bigint" Nullable="false" />
+    <Property Name="fieldid" Type="bigint" Nullable="false" />
+    <Property Name="data" Type="longtext" Nullable="false" />
+    <Property Name="dataformat" Type="tinyint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fit_user_info_field">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="shortname" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="name" Type="longtext" Nullable="false" />
+    <Property Name="datatype" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="description" Type="longtext" />
+    <Property Name="descriptionformat" Type="tinyint" Nullable="false" />
+    <Property Name="categoryid" Type="bigint" Nullable="false" />
+    <Property Name="sortorder" Type="bigint" Nullable="false" />
+    <Property Name="required" Type="tinyint" Nullable="false" />
+    <Property Name="locked" Type="tinyint" Nullable="false" />
+    <Property Name="visible" Type="smallint" Nullable="false" />
+    <Property Name="forceunique" Type="tinyint" Nullable="false" />
+    <Property Name="signup" Type="tinyint" Nullable="false" />
+    <Property Name="defaultdata" Type="longtext" />
+    <Property Name="defaultdataformat" Type="tinyint" Nullable="false" />
+    <Property Name="param1" Type="longtext" />
+    <Property Name="param2" Type="longtext" />
+    <Property Name="param3" Type="longtext" />
+    <Property Name="param4" Type="longtext" />
+    <Property Name="param5" Type="longtext" />
   </EntityType>
 </Schema>

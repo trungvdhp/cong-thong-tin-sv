@@ -18,7 +18,7 @@ namespace CongThongTinSV.Controllers
         public ActionResult UpdateYGrades(string selectedVals, string quizid = "0")
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
-            var list = MoodleLib.GetQuizStudentGrades(quizid).Where(t => s.Contains(t.ID.ToString()) && t.IsDiffGrade).ToList();
+            var list = MoodleLib.GetQuizStudentGrades(quizid).Where(t => s.Contains(t.ID.ToString()) && t.Khac_diem).ToList();
 
             if (list.Count() != 0)
             {
@@ -41,6 +41,7 @@ namespace CongThongTinSV.Controllers
         public ActionResult QuizList(string courseid = "0")
         {
             var course = MoodleLib.GetCourseByID(courseid);
+
             if (course != null)
             {
                 ViewBag.CourseName = MoodleLib.GetCourseByID(courseid).fullname;
@@ -190,92 +191,48 @@ namespace CongThongTinSV.Controllers
             return View();
         }
 
-        [Description("Xuất bảng điểm chi tiết bài thi trắc nghiệm ra excel")]
+        [Description("Xuất bảng điểm bài thi trắc nghiệm dạng kết quả đánh giá học phần ra excel")]
         [Authorize(Roles = "MoodleQuiz.ExportQuizGradeToExcel")]
-        public FileResult ExportQuizGradeToExcel([DataSourceRequest]DataSourceRequest request, string quizid, string quizname, string datafields, string datatitles)
+        public FileResult ExportQuizGradeToExcel([DataSourceRequest]DataSourceRequest request, string quizid, string courseid, string coursename)
         {
             // Get data
             IEnumerable<MoodleQuizStudentGrade> grades = MoodleLib.GetQuizStudentGrades(quizid).ToDataSourceResult(request).Data.Cast<MoodleQuizStudentGrade>();
 
-            string[] fields = datafields.Split(new char[] { ',' });
-            string[] titles = datatitles.Split(new char[] { ',' });
-            int len = fields.Count();
-            int startRow = 1, startColumn = 1;
-            //Init workbook
-            var workbook = new ExcelExportor(GlobalLib.GetExcelTemplateFolderPath() + "QuizGrades", "", "Bảng điểm bài thi");
-            //Set header
-            workbook.SetCellValue(quizname);
-            workbook.SetFontBold();
-            workbook.SetFontSize(14);
-            //workbook.ExpandCellToRange(startRow, startColumn, 1, len);
-            //workbook.MergeColumns(len);
-            //workbook.SetHorizontalAlignment(Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter);
-            //workbook.SetVerticalAlignment();
-            //workbook.SetBoderLineStyles();
-            //Set title
-            startRow++;
-            workbook.Set1DArrayValue(titles.ToArray(), false, startRow, startColumn);
-            workbook.SetFreezePanes(true);
-            workbook.SetFontBold(true);
-            //workbook.SetColumnWidth();
-            workbook.SetHorizontalAlignment(Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter);
-            //workbook.SetBoderLineStyles();
-
-            //Set data
-            startRow++;
-            for (int i = 0; i < len; i++)
-            {
-                if (fields[i] == "UserName")
-                {
-                    workbook.Set1DArrayValue(grades.Select(t => t.UserName).ToArray(), true, startRow, i + 1);
-                    //workbook.SetColumnWidth(12);
-                    workbook.SetHorizontalAlignment(Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter);
-                    //workbook.SetBoderLineStyles();
-                }
-                else if (fields[i] == "FirstName")
-                {
-                    workbook.Set1DArrayValue(grades.Select(t => t.FirstName).ToArray(), true, startRow, i + 1);
-                    //workbook.SetColumnWidth();
-                    //workbook.SetBoderLineStyles();
-                }
-                else if (fields[i] == "LastName")
-                {
-                    workbook.Set1DArrayValue(grades.Select(t => t.LastName).ToArray(), true, startRow, i + 1);
-                    //workbook.SetColumnWidth();
-                    //workbook.SetBoderLineStyles();
-                }
-                else if (fields[i] == "NewGrade")
-                {
-                    workbook.Set1DArrayValue(grades.Select(t => t.NewGrade.ToString()).ToArray(), true, startRow, i + 1);
-                    workbook.SetHorizontalAlignment(Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter);
-                    workbook.SetNumberFormat("0.0");
-                    //workbook.SetBoderLineStyles();
-                }
-                else if (fields[i] == "OldGrade")
-                {
-                    workbook.Set1DArrayValue(grades.Select(t => t.OldGrade.ToString()).ToArray(), true, startRow, i + 1);
-                    workbook.SetHorizontalAlignment(Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter);
-                    workbook.SetNumberFormat("0.0");
-                    //workbook.SetBoderLineStyles();
-                }
-            }
-
-            //format entire workbook
-
-            workbook.ExpandCellToRange(2, 1, startRow + grades.Count() - 2, len);
-            workbook.SetColumnWidth();
-            workbook.SetRowHeight();
-            workbook.SetVerticalAlignment();
-            workbook.SetBoderLineStyles();
-
+            ExcelExportor workbook = MoodleLib.ExportQuizGradeToExcel(GlobalLib.GetExcelTemplateFolderPath() + "Grade.xls", GlobalLib.GetExcelTemplateFolderPath() + "GradeTemp.xls", "Kết quả đánh giá học phần", grades, courseid);
+           
             //Save workbook
             workbook.SaveAs();
+            
+            return File(workbook.GetByteArray(),
+                "application/vnd.ms-excel", 
+                workbook.ExportSheetName + " " + coursename);
+        }
 
-            //Return the result to the end user
+        [Description("Xuất bảng điểm bài thi trắc nghiệm dạng kết quả đánh giá học phần ra pdf")]
+        [Authorize(Roles = "MoodleQuiz.ExportQuizGradeToPdf")]
+        public FileResult ExportQuizGradeToPdf([DataSourceRequest]DataSourceRequest request, string quizid, string courseid, string coursename)
+        {
+            // Get data
+            IEnumerable<MoodleQuizStudentGrade> grades = MoodleLib.GetQuizStudentGrades(quizid).ToDataSourceResult(request).Data.Cast<MoodleQuizStudentGrade>();
 
-            return File(workbook.GetByteArray(),    //The binary data of the XLS file
-                "application/vnd.ms-excel",         //MIME type of Excel files
-                workbook.ExportSheetName + " " + quizname);          //Suggested file name in the "Save as" dialog which will be displayed to the end user
+            ExcelExportor workbook = MoodleLib.ExportQuizGradeToExcel(GlobalLib.GetExcelTemplateFolderPath() + "Grade.pdf", GlobalLib.GetExcelTemplateFolderPath() + "GradeTemp.xls", "Kết quả đánh giá học phần", grades, courseid);
+
+            //Save workbook
+            workbook.ExportAsFixedFormat();
+
+            return File(workbook.GetByteArray(), 
+                "application/pdf",
+                workbook.ExportSheetName + " " + coursename);
+        }
+
+        [Description("Xuất báo cáo kết quả đánh giá học phần")]
+        [Authorize(Roles = "MoodleQuiz.ExportQuizGradeToReport")]
+        public ActionResult ExportQuizGradeToReport([DataSourceRequest]DataSourceRequest request, string quizid)
+        {
+            ViewBag.QuizID = quizid;
+            ViewBag.Request = request;
+
+            return View();
         }
     }
 }

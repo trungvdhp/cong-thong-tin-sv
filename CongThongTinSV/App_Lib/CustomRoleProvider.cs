@@ -11,8 +11,7 @@ namespace CongThongTinSV.App_Lib
     {
         public override string[] GetRolesForUser(string username)
         {
-            UserData userData = GlobalLib.GetCurrentUserData();
-            return GlobalLib.GetActionNamesByService(userData.MoodleService);
+            return GlobalLib.GetActionNames();
         }
 
         public override bool IsUserInRole(string username, string roleName)

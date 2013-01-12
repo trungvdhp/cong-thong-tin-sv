@@ -92,7 +92,7 @@
                 "<button class='button-add' title='Ghi danh' onclick='CreateOneEnrol(#=ID#)'></button>" +
             "# } #");     
     })
-    .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50, 80 }).Refresh(true).Input(true).Numeric(false))
+    .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50, 80 }).Refresh(true).Input(true).Numeric(false).Messages(m =>{ m.ItemsPerPage("dòng mỗi trang"); m.First("Trang đầu tiên"); m.Last("Trang cuối cùng"); m.Next("Trang sau"); m.Previous("Trang trước"); m.Refresh("Làm mới");}))
     .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
     .Filterable()
     .Scrollable()
@@ -100,6 +100,7 @@
     .Resizable(r => r.Columns(true))
     .Reorderable(ro => ro.Columns(true))
     .Navigatable()
+    .HtmlAttributes(new { style="height:400px"})
     .ColumnMenu(menu => menu.Enabled(true).Sortable(false))
     //.Selectable(s => s.Mode(GridSelectionMode.Single))
     //.HtmlAttributes(new {style = "height:400px"})
@@ -116,33 +117,30 @@
     //.ToolBar(toolbar => toolbar.Custom().Text("Xuất ra excel").Url("#").HtmlAttributes(new { onclick = "exportToExcel()", style= "float:right;"}))
 )
 <button id="createEnrol_bottom" class="k-button" onclick="CreateManyEnrol()">Ghi danh</button>
-<button id="deleteEnrol_bottom" class="k-button" onclick="DeleteManyEnrol()">Đình chỉ ghi danh</button>
-<div>
-     @(Html.Kendo().ComboBox()
-        .Name("Nhom")
-        .Placeholder("Chọn nhóm...")
-        .HtmlAttributes(new { style = "width:150px" })
-        .DataTextField("Text")
-        .DataValueField("Value")
-        .DataSource(source =>
-        {
-            source.Read(read =>
-            {
-                read.Action("GetGroupList", "MoodleGroup").Data("filterGrid");
-            }).ServerFiltering(true);
-        })
-        .Enable(false)
-        .AutoBind(false)
-        .CascadeFrom("LopHocPhan")
-    )
-    @Html.TextBox("TenNhom", "", new { placeholder = "Nhập tên nhóm", style = "width:120px", @class = "k-textbox" })
-    @Html.TextBox("MoTa", "", new { placeholder = "Mô tả nhóm", style = "width:200px", @class = "k-textbox"})
-    <button id="createGroup" class="k-button" onclick="CreatGroup()">Tạo nhóm</button>
-    <button id="deleteGroup" class="k-button" onclick="DeleteGroup()">Xóa nhóm</button>
-    <button id="addMember" class="k-button" onclick="AddMember()">Thêm thành viên</button>
-    <button id="deleteMember" class="k-button" onclick="DeleteMember()">Bớt thành viên</button>
-
-</div>
+<button id="deleteEnrol_bottom" class="k-button" onclick="DeleteManyEnrol()">Đình chỉ</button>
+@(Html.Kendo().ComboBox()
+.Name("Nhom")
+.Placeholder("Chọn nhóm...")
+.HtmlAttributes(new { style = "width:140px" })
+.DataTextField("Text")
+.DataValueField("Value")
+.DataSource(source =>
+{
+    source.Read(read =>
+    {
+        read.Action("GetGroupList", "MoodleGroup").Data("filterGrid");
+    }).ServerFiltering(true);
+})
+.Enable(false)
+.AutoBind(false)
+.CascadeFrom("LopHocPhan")
+)
+@Html.TextBox("TenNhom", "", new { placeholder = "Nhập tên nhóm", style = "width:100px", @class = "k-textbox" })
+@Html.TextBox("MoTa", "", new { placeholder = "Mô tả nhóm", style = "width:150px", @class = "k-textbox"})
+<button id="createGroup" class="k-button" onclick="CreatGroup()">Tạo nhóm</button>
+<button id="deleteGroup" class="k-button" onclick="DeleteGroup()">Xóa nhóm</button>
+<button id="addMember" class="k-button" onclick="AddMember()">Thêm thành viên</button>
+<button id="deleteMember" class="k-button" onclick="DeleteMember()">Bớt thành viên</button>
 <script type="text/javascript">
     var selectedVals = [];
     var requestObject;

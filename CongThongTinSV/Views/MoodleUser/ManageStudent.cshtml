@@ -1,8 +1,8 @@
-﻿@using Kendo.Mvc.UI;
-@using CongThongTinSV.Models;
+﻿@using CongThongTinSV.Models;
 @{
     ViewBag.Title = "Quản lý tài khoản sinh viên trên Moodle";
 }
+
 @(Html.Kendo().ComboBox()
     .Name("ChuyenNganh")
     .Placeholder("Chọn chuyên ngành...")
@@ -30,7 +30,8 @@
 <button id="sync_top" class="k-button" onclick="sync_stu()">Đồng bộ tài khoản</button>*@
 @(Html.Kendo().Grid<CongThongTinSV.Models.MoodleStudent>()
     .Name("Grid")
-    .Columns(columns => {
+    .Columns(columns =>
+    {
         columns.Bound(c => c.ID_sv)
             .ClientTemplate("<input type='checkbox' class='chkbx' value='#= ID_sv #'/>")
             .HeaderTemplate("<input type='checkbox' id='masterCheckBox'/>")
@@ -71,9 +72,17 @@
                 "<button class='button-update' title='Khôi phục về mặc định' onclick='update_one(#=ID_sv#)'></button>" +
                 "# } else { #" +
                 "<button class='button-add' title='Đăng ký' onclick='create_one(#=ID_sv#)'></button>" +
-            "# } #");   
+            "# } #");
     })
-    .Pageable(pager => pager.PageSizes(new int[]{5, 10, 20, 50, 100, 1000}).Refresh(true).Input(true).Numeric(false))
+    .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50, 100, 1000 }).Refresh(true).Input(true).Numeric(false).Messages(m =>
+    {
+        m.ItemsPerPage("dòng mỗi trang");
+        m.First("Trang đầu tiên");
+        m.Last("Trang cuối cùng");
+        m.Next("Trang sau");
+        m.Previous("Trang trước");
+        m.Refresh("Làm mới");
+    }))
     .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
     .Filterable()
     .Scrollable()
@@ -83,17 +92,18 @@
     .Navigatable()
     .HtmlAttributes(new { style = "height:400px" })
     .ColumnMenu(menu => menu.Enabled(true).Sortable(false))
-    //.Selectable(s => s.Mode(GridSelectionMode.Single))
-    .Events(e => {
-                e.DataBound("onDataBound");
-            })
+        //.Selectable(s => s.Mode(GridSelectionMode.Single))
+    .Events(e =>
+    {
+        e.DataBound("onDataBound");
+    })
     .DataSource(
         dataSource => dataSource
             .Ajax()
             .Read(read => read.Action("GetStudents", "MoodleUser").Data("filterGrid"))
             .PageSize(50)
     )
-    //.ToolBar(toolbar => toolbar.Custom().Text("Xuất ra excel").Url("#").HtmlAttributes(new { onclick = "exportToExcel()", style = "float:right;" }))
+        //.ToolBar(toolbar => toolbar.Custom().Text("Xuất ra excel").Url("#").HtmlAttributes(new { onclick = "exportToExcel()", style = "float:right;" }))
 )
 <div>
     <button id="create_bottom" class="k-button" onclick="create_stu()">Đăng ký tài khoản</button>
@@ -119,7 +129,6 @@
     // on data bound, check checkboxes
     function onDataBound(e) {
         checkCells(selectedVals, '#masterCheckBox', '#Grid :checkbox');
-
         // ask the parameterMap to create the request object for you
         var grid = $('#Grid').data('kendoGrid');
         requestObject = (new kendo.data.transports["aspnetmvc-server"]({ prefix: "" }))
@@ -199,7 +208,7 @@
         }
     }
 
-   function sync_stu() {
+    function sync_stu() {
         var action = '@Url.Action("SyncStudents", "MoodleUser")' + '/?id_chuyen_nganh=' + jQuery("#ChuyenNganh").val();
         processing(action, "Đang đồng bộ tài khoản moodle elearning...", gridRefresh);
     }
@@ -218,5 +227,5 @@
         getFieldAndTitles('#Grid .k-header', dataFields, dataTitles);
      
         document.location.href = '@Url.Action("ExportStudentToExcel", "MoodleUser")' + '/?sort=' + requestObject.sort + '&filter=' + requestObject.filter + '&datafields=' + dataFields + '&datatitles=' + dataTitles + '&id_chuyen_nganh=' + jQuery("#ChuyenNganh").val() + '&chuyen_nganh=' + $("#ChuyenNganh").data("kendoComboBox").text();
-     };
+    };
 </script>

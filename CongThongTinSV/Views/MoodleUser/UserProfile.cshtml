@@ -6,14 +6,12 @@
 }
 
 <h2 style="text-align:center">@userProfile.fullname</h2>
+<div class="float-left" style="margin-right:10px">
+    <a href="UserProfile?userid=@userProfile.id">
+        <img src="@userProfile.profileimageurl" alt="Picture of @userProfile.fullname" title="Picture of  @userProfile.fullname" class="userpicture defaultuserpic" width="100" height="100" />
+    </a>
+</div>
 <table style="color:black" summary="">
-    <tr>
-        <td rowspan="8" style="vertical-align: top;">
-                <a href="UserProfile?userid=@userProfile.id">
-                <img src="@userProfile.profileimageurl" alt="Picture of @userProfile.fullname" title="Picture of @userProfile.fullname" class="userpicture defaultuserpic" width="100" height="100" />
-                </a>
-        </td>
-    </tr>
     <tr>
         <td class="nowrap">Quốc gia:</td>
         <td>@userProfile.country</td>
@@ -36,14 +34,21 @@
             <tr>
                 <td class="nowrap">@userProfile.customfields[i].name:</td>
                 <td>
-                    @{
-                        if (userProfile.customfields[i].value == "0"){
-                            <text>Not set</text>
-                        }
-                        else{
-                            <text>@Utility.ConvertToDateTimeString(int.Parse(userProfile.customfields[i].value),"dd-MM-yyyy")</text>
-                        }
+                @{
+                if (userProfile.customfields[i].type == "textarea")
+                {
+                    <text>@userProfile.customfields[i].value</text>
+                }
+                else if(userProfile.customfields[i].type == "datetime")
+                {
+                    if (userProfile.customfields[i].value == "0"){
+                        <text>Not set</text>
                     }
+                    else{
+                        <text>@Utility.ConvertToDateTimeString(int.Parse(userProfile.customfields[i].value),"dd-MM-yyyy")</text>
+                    }
+                }
+                }
                 </td>
             </tr>
         }

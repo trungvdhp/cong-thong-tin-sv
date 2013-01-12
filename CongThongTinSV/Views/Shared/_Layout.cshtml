@@ -6,13 +6,10 @@
         <link href="~/VIMARU_ICO.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
         @Styles.Render("~/Content/css")
-        <link href="@Url.Content("~/Content/jqGrid/redmond/jquery-ui-1.9.0.custom.css")" rel="stylesheet" type="text/css" />
-        <link href="@Url.Content("~/Content/jqGrid/ui.jqgrid.css")" rel="stylesheet" type="text/css" />
         <link href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.common.min.css")" rel="stylesheet" type="text/css" />
 	    <link href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" />
-        <link href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.common.min.css")" rel="stylesheet" />
         <link href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.default.min.css")" rel="stylesheet" />
-         <link rel="alternate stylesheet" type="text/css" media="screen" title="black" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.black.min.css")" />
+        <link rel="alternate stylesheet" type="text/css" media="screen" title="black" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.black.min.css")" />
         <link rel="alternate stylesheet" type="text/css" media="screen" title="blueopal" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.blueopal.min.css")" />
         <link rel="alternate stylesheet" type="text/css" media="screen" title="bootstrap" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.bootstrap.min.css")" />
         <link rel="alternate stylesheet" type="text/css" media="screen" title="highcontrast" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.highcontrast.min.css")" />
@@ -21,18 +18,30 @@
         <link rel="alternate stylesheet" type="text/css" media="screen" title="moonlight" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.moonlight.min.css")" />
         <link rel="alternate stylesheet" type="text/css" media="screen" title="silver" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.silver.min.css")" />
         <link rel="alternate stylesheet" type="text/css" media="screen" title="uniform" href="@Url.Content("~/Content/kendo/2012.3.1114/kendo.uniform.min.css")" />
-         @Scripts.Render("~/bundles/jquery")
-        <script src="@Url.Content("~/Scripts/jqGrid/jquery-1.7.2.min.js")" type="text/javascript"></script>
-        <script src="@Url.Content("~/Scripts/jqGrid/i18n/grid.locale-en.js")" type="text/javascript"></script>
-        <script src="@Url.Content("~/Scripts/jqGrid/jquery.jqGrid.min.js")" type="text/javascript"></script>
+
+        @Scripts.Render("~/bundles/jquery")
         <script src="@Url.Content("~/Scripts/kendo/2012.3.1114/jquery.min.js")"></script>
 	    <script src="@Url.Content("~/Scripts/kendo/2012.3.1114/kendo.all.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/kendo/lang/kendo.vi-VN.js")"></script>
 	    <script src="@Url.Content("~/Scripts/kendo/2012.3.1114/kendo.aspnetmvc.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/kendo/lang/kendo.culture.vi-VN.min.js")"></script>
         <script src="@Url.Content("~/Scripts/jquery.blockUI.js")"></script>
         <script src="@Url.Content("~/Scripts/myscript.js")"></script>
         <script src="@Url.Content("~/Scripts/styleswitch.js")"></script>
         @Scripts.Render("~/bundles/modernizr")
+
         <script type="text/javascript">
+            function SetMenuWidth()
+            {
+                var menu = $('#Menu');
+                menu.width(menu.width() + 0.5);
+            }
+
+            $(document).ready(function () {
+                kendo.culture("vi-VN");
+                SetMenuWidth();
+            });
+
             function SelectSkin(e) {
                 var dataItem = this.dataItem(e.item.index());
                 chooseStyle(dataItem.Value, 60);
@@ -44,7 +53,7 @@
             <div class="content-wrapper">
                 <div class="float-left">
                     <a href="../Home/Index">
-                        <img src="@Url.Content("~/images/vimaru-logo.png")" alt="Student Portal" style="margin-left:-18px" width="342" height="90" />
+                        <img src="@Url.Content("~/images/vimaru-logo.png")" alt="Student Portal" class="logo"/>
                     </a>
                 </div>
                 <div class="float-right">
@@ -61,16 +70,13 @@
                       .Items(items =>
                       {
                             items.Add().Text("Trang chủ").Action("Index","Home");
-                         
-                        if (userData != null && userData.MoodleService != "")
-                        {
                             items.Add().Text("Tra cứu")
-                           .Items(children =>
-                           {
-                               children.Add()
-                                   .Text("Tra cứu điểm học tập")
-                                   .Action("DiemHocTap", "TraCuu");
-                           });
+                              .Items(children =>
+                              {
+                                  children.Add()
+                                      .Text("Tra cứu điểm học tập")
+                                      .Action("DiemHocTap", "TraCuu");
+                              });
                             items.Add().Text("Lớp học phần")
                             .Items(children =>
                             {
@@ -78,20 +84,23 @@
                                     .Text("Yêu cầu mở lớp")
                                     .Action("YeuCauMoLop", "LopHocPhan");
                             });
+                        if (userData != null && userData.MoodleToken != "exception")
+                        {
                             items.Add().Text("Elearning")
                                .Content(@<text>
                                 <div class="dropdown-solutions">
                                     <div class="col">
                                         <h2>NGƯỜI DÙNG</h2>
                                         <ul>
-                                            @if(userData.MoodleService != "user")
-                                            {
-                                                <li>@Html.ActionLink("Đổi mật khẩu", "ChangePassword", "MoodleUser")</li>
-                                            }
+                                        @if(userData.MoodleService != "user")
+                                        {
+                                            <li>@Html.ActionLink("Đổi mật khẩu", "ChangePassword", "MoodleUser")</li>
+                                        }
                                             <li>@Html.ActionLink("Hồ sơ của tôi", "MyProfile", "MoodleUser")</li>
                                             <li>@Html.ActionLink("Các khóa học của tôi", "MyCourseGrade", "MoodleCourse")</li>
                                             <li>@Html.ActionLink("Tra cứu sinh viên", "SearchStudent", "MoodleUser")</li>
-                                            <li>@Html.ActionLink("Tra cứu giáo viên", "SearchTeacher", "MoodleUser")</li> 
+                                            <li>@Html.ActionLink("Tra cứu giáo viên", "SearchTeacher", "MoodleUser")</li>
+
                                         </ul>
                                     </div>
                                 @if(userData.MoodleService == "admin"){
@@ -101,28 +110,34 @@
                                             <li>@Html.ActionLink("Danh mục học kỳ", "ManageSemester", "MoodleCategory")</li>
                                             <li>@Html.ActionLink("Dịch vụ web", "Manage", "MoodleWebService")</li>
                                             <li>@Html.ActionLink("Quyền hạn", "Manage", "Capability")</li>
-                                            <li>@Html.ActionLink("Phân quyền", "Manage", "MoodleCapability")</li>  
+                                            <li>@Html.ActionLink("Phân quyền", "Manage", "MoodleCapability")</li>
+
                                         </ul>
                                     </div>
                                 }
                                 @if(userData.MoodleService != "user")
                                 {
-                                    <div class="col">
-                                        <h2>QUẢN TRỊ NGƯỜI DÙNG</h2>
-                                        <ul>
-                                            <li>@Html.ActionLink("Sinh viên", "ManageStudent", "MoodleUser")</li>
-                                            <li>@Html.ActionLink("Giáo viên", "ManageTeacher", "MoodleUser")</li>
-                                            <li>@Html.ActionLink("Quản trị viên", "ManageAdminUser", "MoodleUser")</li>
-                                        </ul>
-                                    </div>
+                                     if (userData.MoodleService != "course")
+                                     {
+                                        <div class="col">
+                                            <h2>QUẢN TRỊ NGƯỜI DÙNG</h2>
+                                            <ul>
+                                                <li>@Html.ActionLink("Sinh viên", "ManageStudent", "MoodleUser")</li>
+                                                <li>@Html.ActionLink("Giáo viên", "ManageTeacher", "MoodleUser")</li>
+                                                <li>@Html.ActionLink("Quản trị viên", "ManageAdminUser", "MoodleUser")</li>
+
+                                            </ul>
+                                        </div>
+                                     }
                                      <div class="col">
                                         <h2>QUẢN TRỊ KHÓA HỌC</h2>
-                                            <ul> <!-- moving the UL to the next line will cause an IE7 problem -->
+                                            <ul>
                                                 <li>@Html.ActionLink("Lớp học phần", "Manage", "MoodleCourse")</li>
                                                 <li>@Html.ActionLink("Ghi danh sinh viên", "EnrolStudent", "MoodleEnrol")</li>
                                                 <li>@Html.ActionLink("Ghi danh giáo viên", "EnrolTeacher", "MoodleEnrol")</li>
                                                 <li>@Html.ActionLink("Ghi danh quản trị viên", "EnrolAdminUser", "MoodleEnrol")</li>
                                                 <li>@Html.ActionLink("Nhóm học viên", "StudentGroup", "MoodleGroup")</li>
+
                                             </ul>
                                         </div>
                                 }

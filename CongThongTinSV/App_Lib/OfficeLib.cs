@@ -8,6 +8,9 @@ using System.IO;
 
 namespace CongThongTinSV.App_Lib
 {
+    /// <summary>
+    /// Excel exportor class provide functions for read, write, format and save excel file in C#
+    /// </summary>
     public class ExcelExportor
     {
         private Excel.Application ExcelApp;
@@ -223,13 +226,12 @@ namespace CongThongTinSV.App_Lib
         }
 
         /// <summary>
-        /// Set line style of boders
+        /// Set line style of boders (lines of [Top, Bottom, Left, Right, InsideHorizontal, InsideVertical])
         /// </summary>
         /// <param name="borderLineStyles">Lines of [Top, Bottom, Left, Right, InsideHorizontal, InsideVertical]</param>
         public void SetBoderLineStyles(Excel.XlLineStyle[] borderLineStyles = null)
         {
             borderLineStyles = borderLineStyles ?? new Excel.XlLineStyle[] { Excel.XlLineStyle.xlContinuous, Excel.XlLineStyle.xlContinuous, Excel.XlLineStyle.xlContinuous, Excel.XlLineStyle.xlContinuous, Excel.XlLineStyle.xlContinuous, Excel.XlLineStyle.xlContinuous };
-
             range.Borders[Excel.XlBordersIndex.xlEdgeTop].LineStyle = borderLineStyles[0];
             range.Borders[Excel.XlBordersIndex.xlEdgeBottom].LineStyle = borderLineStyles[1];
             range.Borders[Excel.XlBordersIndex.xlEdgeLeft].LineStyle = borderLineStyles[2];
@@ -264,73 +266,14 @@ namespace CongThongTinSV.App_Lib
             worksheet.Application.ActiveWindow.FreezePanes = true;
         }
 
-        public void SetRangeAllFormat(
-            string format = "@",
-            string backColor = "White",
-            string foreColor = "Black",
-            bool isFontBold = false,
-            bool isFontItalic = false,
-            bool isFontUnderline = false,
-            Excel.XlHAlign horizontalAlignment = Excel.XlHAlign.xlHAlignLeft,
-            Excel.XlHAlign verticalAlignment = Excel.XlHAlign.xlHAlignCenter,
-            int columnWith = -1,
-            int rowHeight = -1,
-            int mergeColumns = 0,
-            Excel.XlLineStyle[] borderLineStyles = null,
-            string[] borderColors = null,
-            bool isFreezePanes = false)
+        /// <summary>
+        /// Insert empty rows
+        /// </summary>
+        /// <param name="rowCount">Number of rows to insert</param>
+        public void InsertRows(int rowCount)
         {
-            borderLineStyles = borderLineStyles ?? new Excel.XlLineStyle[] { Excel.XlLineStyle.xlContinuous, Excel.XlLineStyle.xlContinuous, Excel.XlLineStyle.xlContinuous, Excel.XlLineStyle.xlContinuous, Excel.XlLineStyle.xlContinuous, Excel.XlLineStyle.xlContinuous };
-            borderColors = borderColors ?? new string[] { "Black", "Black", "Black", "Black", "Black", "Black" };
-
-            if (mergeColumns > 0)
-            {
-                range.Merge(mergeColumns);
-            }
-
-            range.NumberFormat = format;
-
-            range.Interior.Color = Color.FromName(backColor).ToArgb();
-            range.Font.Color = Color.FromName(foreColor).ToArgb();
-            range.Font.Bold = isFontBold;
-            range.Font.Italic = isFontItalic;
-            range.Font.Underline = isFontUnderline;
-
-            range.Borders[Excel.XlBordersIndex.xlEdgeTop].LineStyle = borderLineStyles[0];
-            range.Borders[Excel.XlBordersIndex.xlEdgeTop].Color = Color.FromName(borderColors[0]).ToArgb();
-            range.Borders[Excel.XlBordersIndex.xlEdgeBottom].LineStyle = borderLineStyles[1];
-            range.Borders[Excel.XlBordersIndex.xlEdgeBottom].Color = Color.FromName(borderColors[1]).ToArgb();
-            range.Borders[Excel.XlBordersIndex.xlEdgeLeft].LineStyle = borderLineStyles[2];
-            range.Borders[Excel.XlBordersIndex.xlEdgeLeft].Color = Color.FromName(borderColors[2]).ToArgb();
-            range.Borders[Excel.XlBordersIndex.xlEdgeRight].LineStyle = borderLineStyles[3];
-            range.Borders[Excel.XlBordersIndex.xlEdgeRight].Color = Color.FromName(borderColors[3]).ToArgb();
-            range.Borders[Excel.XlBordersIndex.xlInsideHorizontal].LineStyle = borderLineStyles[4];
-            range.Borders[Excel.XlBordersIndex.xlInsideHorizontal].Color = Color.FromName(borderColors[4]).ToArgb();
-            range.Borders[Excel.XlBordersIndex.xlInsideVertical].LineStyle = borderLineStyles[5];
-            range.Borders[Excel.XlBordersIndex.xlInsideVertical].Color = Color.FromName(borderColors[5]).ToArgb();
-
-            range.HorizontalAlignment = horizontalAlignment;
-            range.VerticalAlignment = verticalAlignment;
-
-            if (columnWith == -1)
-            {
-                range.Columns.AutoFit();
-            }
-            else
-            {
-                range.ColumnWidth = columnWith;
-            }
-
-            if (rowHeight == -1)
-            {
-                range.Rows.AutoFit();
-            }
-            else
-            {
-                range.RowHeight = rowHeight;
-            }
-
-            range.Application.ActiveWindow.FreezePanes = isFreezePanes;
+            range.Select();
+            range.Resize[rowCount].EntireRow.Insert();
         }
 
         /// <summary>
@@ -344,7 +287,7 @@ namespace CongThongTinSV.App_Lib
         {
             range = (Excel.Range)worksheet.get_Range((Excel.Range)worksheet.Cells[startRow, startColumn], (Excel.Range)worksheet.Cells[endRow, endColumn]);
         }
-
+        
         /// <summary>
         /// Expand a cell to range
         /// </summary>
@@ -421,16 +364,61 @@ namespace CongThongTinSV.App_Lib
         }
 
         /// <summary>
-        /// Save workbook as a specified excel file format
+        /// Set columns or rows ordinal number
         /// </summary>
-        /// <param name="xlFileFormat">Excel file format</param>
-        public void SaveAs(Excel.XlFileFormat xlFileFormat = Excel.XlFileFormat.xlWorkbookNormal)
+        /// <param name="startNum">Start number</param>
+        /// <param name="step">Step</param>
+        /// <param name="count">Number of steps</param>
+        /// <param name="isSetByColumn">True (default) : set by column, False: set by row</param>
+        /// <param name="startRow">Start row to set</param>
+        /// <param name="startColumn">Start column to set</param>
+        public void SetOrdinalNumbers(int startNum=1, int step=1, int count=1, bool isSetByColumn = true, int startRow = 1, int startColumn = 1)
         {
-            //save as and quit
-            workbook.SaveAs(ExportFileName, xlFileFormat);
-            workbook.Close();
-            ExcelApp.Quit();
-            ExcelApp = null;
+            if (isSetByColumn)
+            {
+                object[,] obj = new object[count, 1];
+
+                for (int i = 0; i < count; i++)
+                {
+                    obj[i, 0] = startNum;
+                    startNum += step;
+                }
+
+                SetRange(startRow, startColumn, startRow + count - 1, startColumn);
+                range.Value = obj;
+            }
+            else
+            {
+                object[,] obj = new object[1, count];
+
+                for (int i = 0; i < count; i++)
+                {
+                    obj[0, i] = startNum;
+                    startNum += step;
+                }
+
+                SetRange(startRow, startColumn, startRow, startColumn + count - 1);
+                range.Value = obj;
+            }
+        }
+
+        /// <summary>
+        /// Dispose Excel App and Objects
+        /// </summary>
+        public void Dispose()
+        {
+            ////close and quit
+            //if (workbook != null)
+            //{
+            //    workbook.Close(false, Type.Missing, Type.Missing);
+            //    workbook = null;
+            //}
+
+            if(ExcelApp != null)
+            {
+                ExcelApp.Quit();
+                ExcelApp = null;
+            }
 
             //release COM Object
             System.Runtime.InteropServices.Marshal.ReleaseComObject(range);
@@ -440,6 +428,56 @@ namespace CongThongTinSV.App_Lib
 
             //reclaims memory
             GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+        }
+
+        /// <summary>
+        /// Save workbook as a specified excel file format
+        /// </summary>
+        /// <param name="xlFileFormat">Excel file format</param>
+        public void SaveAs(Excel.XlFileFormat xlFileFormat = Excel.XlFileFormat.xlWorkbookNormal)
+        {
+            //save as and quit
+            workbook.SaveAs(ExportFileName, xlFileFormat);
+            Dispose();
+        }
+
+        /// <summary>
+        /// Export as fixed format
+        /// </summary>
+        /// <param name="xlFixedFormatType">PDF or XPS file type, default type PDF</param>
+        public void ExportAsFixedFormat(Excel.XlFixedFormatType xlFixedFormatType = Excel.XlFixedFormatType.xlTypePDF)
+        {
+            Excel.XlFixedFormatQuality paramExportQuality = Excel.XlFixedFormatQuality.xlQualityStandard;
+            bool paramOpenAfterPublish = false;
+            bool paramIncludeDocProps = true;
+            bool paramIgnorePrintAreas = true;
+            object paramFromPage = Type.Missing;
+            object paramToPage = Type.Missing;
+
+            try
+            {
+
+                // Save it in the target format.
+                if (workbook != null)
+                {
+                    workbook.ExportAsFixedFormat(xlFixedFormatType,
+                         ExportFileName, paramExportQuality,
+                         paramIncludeDocProps, paramIgnorePrintAreas, paramFromPage,
+                         paramToPage, paramOpenAfterPublish,
+                         Type.Missing);
+                }
+            }
+            catch (Exception)
+            {
+                // Respond to the error.
+            }
+            finally
+            {
+                Dispose();
+            }
         }
 
         /// <summary>

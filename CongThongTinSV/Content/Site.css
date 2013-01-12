@@ -10,13 +10,14 @@ body
     background-color: #fff;
     border-top: solid 10px #000;
     color: #333;
-    font-size: .85em;
+    font-size: .82em;
     font-family: "Segoe UI" , Verdana, Helvetica, Sans-Serif;
     margin: 0;
     padding: 0;
     border-top-width: thin;
 }
-a {
+a
+{
     outline: none;
     padding: 3px;
     text-decoration: none;
@@ -25,6 +26,10 @@ a {
     {
         color: #FF0000;
     }
+img
+{
+    border:none;
+}
 
 header, footer, hgroup, nav, section
 {
@@ -68,6 +73,7 @@ h1 {
 h2 {
     font-size: 1.35em;
     margin-bottom: 10px;
+    margin-top:5px;
 }
 
 h3 {
@@ -382,7 +388,7 @@ fieldset {
 
 label {
     display: block;
-    font-size: 1.2em;
+    font-size: 1.1em;
     font-weight: 600;
 }
 
@@ -496,7 +502,7 @@ input[type="checkbox"].input-validation-error {
 table {
     border-collapse: collapse;
     border-spacing: 0;
-    margin-top: 0.75em;
+    margin-top: 0em;
     border: 0 none;
 }
 
@@ -763,7 +769,7 @@ hr
     min-width: 180px;
     padding: 15px 30px 0px;
     position: absolute;
-    right: -150px;
+    right: -100px;
 }
 
     .dropdown-solutions .col:first-child {
@@ -823,3 +829,10 @@ hr
         color: #FF0000;
         /*text-decoration: underline;*/
     }
+/*Logo*/
+.logo
+{
+    margin-left:-18px;
+    width:342px;
+    height:90px;
+}

@@ -44,6 +44,8 @@
           <EntitySet Name="fit_role_names" EntityType="moodleModel.Store.fit_role_names" store:Type="Tables" Schema="moodle" />
           <EntitySet Name="fit_user" EntityType="moodleModel.Store.fit_user" store:Type="Tables" Schema="moodle" />
           <EntitySet Name="fit_user_enrolments" EntityType="moodleModel.Store.fit_user_enrolments" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_user_info_data" EntityType="moodleModel.Store.fit_user_info_data" store:Type="Tables" Schema="moodle" />
+          <EntitySet Name="fit_user_info_field" EntityType="moodleModel.Store.fit_user_info_field" store:Type="Tables" Schema="moodle" />
         </EntityContainer>
         <EntityType Name="fit_context">
           <Key>
@@ -726,6 +728,41 @@
           <Property Name="timecreated" Type="bigint" Nullable="false" />
           <Property Name="timemodified" Type="bigint" Nullable="false" />
         </EntityType>
+        <EntityType Name="fit_user_info_data">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="userid" Type="bigint" Nullable="false" />
+          <Property Name="fieldid" Type="bigint" Nullable="false" />
+          <Property Name="data" Type="longtext" Nullable="false" />
+          <Property Name="dataformat" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_user_info_field">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="shortname" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="name" Type="longtext" Nullable="false" />
+          <Property Name="datatype" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="description" Type="longtext" />
+          <Property Name="descriptionformat" Type="tinyint" Nullable="false" />
+          <Property Name="categoryid" Type="bigint" Nullable="false" />
+          <Property Name="sortorder" Type="bigint" Nullable="false" />
+          <Property Name="required" Type="tinyint" Nullable="false" />
+          <Property Name="locked" Type="tinyint" Nullable="false" />
+          <Property Name="visible" Type="smallint" Nullable="false" />
+          <Property Name="forceunique" Type="tinyint" Nullable="false" />
+          <Property Name="signup" Type="tinyint" Nullable="false" />
+          <Property Name="defaultdata" Type="longtext" />
+          <Property Name="defaultdataformat" Type="tinyint" Nullable="false" />
+          <Property Name="param1" Type="longtext" />
+          <Property Name="param2" Type="longtext" />
+          <Property Name="param3" Type="longtext" />
+          <Property Name="param4" Type="longtext" />
+          <Property Name="param5" Type="longtext" />
+        </EntityType>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -769,6 +806,8 @@
           <EntitySet Name="fit_quiz_reports" EntityType="moodleModel.fit_quiz_reports" />
           <EntitySet Name="fit_quiz_statistics" EntityType="moodleModel.fit_quiz_statistics" />
           <EntitySet Name="fit_role_assignments" EntityType="moodleModel.fit_role_assignments" />
+          <EntitySet Name="fit_user_info_data" EntityType="moodleModel.fit_user_info_data" />
+          <EntitySet Name="fit_user_info_field" EntityType="moodleModel.fit_user_info_field" />
         </EntityContainer>
         <EntityType Name="fit_course">
           <Key>
@@ -1450,6 +1489,41 @@
           <Property Type="String" Name="component" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Type="Int64" Name="itemid" Nullable="false" />
           <Property Type="Int64" Name="sortorder" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_user_info_data">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="userid" Nullable="false" />
+          <Property Type="Int64" Name="fieldid" Nullable="false" />
+          <Property Type="String" Name="data" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="SByte" Name="dataformat" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fit_user_info_field">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="shortname" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="datatype" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="description" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="SByte" Name="descriptionformat" Nullable="false" />
+          <Property Type="Int64" Name="categoryid" Nullable="false" />
+          <Property Type="Int64" Name="sortorder" Nullable="false" />
+          <Property Type="SByte" Name="required" Nullable="false" />
+          <Property Type="SByte" Name="locked" Nullable="false" />
+          <Property Type="Int16" Name="visible" Nullable="false" />
+          <Property Type="SByte" Name="forceunique" Nullable="false" />
+          <Property Type="SByte" Name="signup" Nullable="false" />
+          <Property Type="String" Name="defaultdata" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="SByte" Name="defaultdataformat" Nullable="false" />
+          <Property Type="String" Name="param1" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="param2" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="param3" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="param4" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="param5" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2172,6 +2246,43 @@
                 <ScalarProperty Name="userid" ColumnName="userid" />
                 <ScalarProperty Name="contextid" ColumnName="contextid" />
                 <ScalarProperty Name="roleid" ColumnName="roleid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_user_info_data">
+            <EntityTypeMapping TypeName="moodleModel.fit_user_info_data">
+              <MappingFragment StoreEntitySet="fit_user_info_data">
+                <ScalarProperty Name="dataformat" ColumnName="dataformat" />
+                <ScalarProperty Name="data" ColumnName="data" />
+                <ScalarProperty Name="fieldid" ColumnName="fieldid" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fit_user_info_field">
+            <EntityTypeMapping TypeName="moodleModel.fit_user_info_field">
+              <MappingFragment StoreEntitySet="fit_user_info_field">
+                <ScalarProperty Name="param5" ColumnName="param5" />
+                <ScalarProperty Name="param4" ColumnName="param4" />
+                <ScalarProperty Name="param3" ColumnName="param3" />
+                <ScalarProperty Name="param2" ColumnName="param2" />
+                <ScalarProperty Name="param1" ColumnName="param1" />
+                <ScalarProperty Name="defaultdataformat" ColumnName="defaultdataformat" />
+                <ScalarProperty Name="defaultdata" ColumnName="defaultdata" />
+                <ScalarProperty Name="signup" ColumnName="signup" />
+                <ScalarProperty Name="forceunique" ColumnName="forceunique" />
+                <ScalarProperty Name="visible" ColumnName="visible" />
+                <ScalarProperty Name="locked" ColumnName="locked" />
+                <ScalarProperty Name="required" ColumnName="required" />
+                <ScalarProperty Name="sortorder" ColumnName="sortorder" />
+                <ScalarProperty Name="categoryid" ColumnName="categoryid" />
+                <ScalarProperty Name="descriptionformat" ColumnName="descriptionformat" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="datatype" ColumnName="datatype" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="shortname" ColumnName="shortname" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
