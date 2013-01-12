@@ -77,8 +77,8 @@
         columns.Bound(diem => diem.Y).Width(50);
         columns.Bound(diem => diem.Z).Width(50);
         columns.Bound(diem => diem.Diem_chu).Width(50);
-        columns.Bound(diem => diem.Nam_hoc).Width(100);//.Visible(false);
-        columns.Bound(diem => diem.Hoc_ky).Width(50);//.Visible(false);
+        columns.Bound(diem => diem.Nam_hoc).Width(100).Hidden();
+        columns.Bound(diem => diem.Hoc_ky).Width(50).Hidden();
     })
     .Groupable()
     .Pageable()
@@ -95,7 +95,8 @@
 )
 
 <script>
-    var ID_sv=null;
+    var ID_sv = null;
+
     function getTuKhoa() {
         return {
             TuKhoa: $("#TuKhoa").val(),
@@ -103,13 +104,7 @@
             HocKy: $("#HocKy").val()
         };
     }
-    function getTuKhoa() {
-        return {
-            TuKhoa: $("#TuKhoa").val(),
-            NamHoc: $("#NamHoc").val(),
-            HocKy: $("#HocKy").val()
-        };
-    }
+
     $("#TraCuuButton").click(function () {
         //$("#GridBangDiem").fadeIn(1000, function () { });
         $("#GridBangDiem").data("kendoGrid").dataSource.read();

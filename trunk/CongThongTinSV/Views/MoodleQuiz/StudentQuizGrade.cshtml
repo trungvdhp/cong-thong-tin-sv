@@ -25,11 +25,21 @@
                 columns.Bound(c => c.Grade)
                     .Width(70)
                     .ClientTemplate(
-                        (@Html.ActionLink("#= kendo.toString(Grade, '0.0') #", "QuizStudentGrade", "MoodleQuiz", new { quizid = "QuizID" }, new { title = "Xem bảng điểm chi tiết" })).ToHtmlString().Replace("QuizID", "#=ID#"));
-                columns.Command(command => command.Custom("Cập nhật điểm").Click("UpdateYGrade"))
+                     "# if (Grade != null) { #" +
+                        (@Html.ActionLink("#= kendo.toString(Grade, '0.0') #", "QuizStudentGrade", "MoodleQuiz", new { quizid = "QuizID" }, new { title = "Xem bảng điểm chi tiết" })).ToHtmlString().Replace("QuizID", "#=ID#") +
+                        "# } #");
+                columns.Bound(c => c.Grade).Title("Thực hiện")
+                    .Sortable(false)
+                    .Groupable(false)
+                    .Filterable(false)
+                    .ClientTemplate(
+                        "# if (Grade != null) { #" +
+                            "<button class='k-button' onclick='updateYgrade(#=Grade#)'>Cập nhật điểm</button>" +
+                        "# } #"
+                    )
                     .Visible(haveGrade);
             })
-            .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50 }).Refresh(true).Input(true).Numeric(false))
+            .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50 }).Refresh(true).Input(true).Numeric(false).Messages(m =>{ m.ItemsPerPage("dòng mỗi trang"); m.First("Trang đầu tiên"); m.Last("Trang cuối cùng"); m.Next("Trang sau"); m.Previous("Trang trước"); m.Refresh("Làm mới");}))
             .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
             .Filterable()
             .Scrollable()
@@ -37,6 +47,7 @@
             .Resizable(r => r.Columns(true))
             .Reorderable(ro => ro.Columns(true))
             .Navigatable()
+            .HtmlAttributes(new { style="height:400px"})
             //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
             //.Selectable(s => s.Mode(GridSelectionMode.Single))
             .DataSource(
@@ -57,11 +68,9 @@
         window.location.reload(false);
     }
 
-    function UpdateYGrade(e) {
-        e.preventDefault();
-        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+    function updateYgrade(grade) {
         if (confirm('Bạn muốn cập nhật điểm mới cho học viên này?')) {
-            var action = '@Url.Action("UpdateYGrade","MoodleQuiz")' + '/?newgrade=' + dataItem.Grade + '&id_diem_thi=' + '@ViewBag.GradeID';
+            var action = '@Url.Action("UpdateYGrade","MoodleQuiz")' + '/?newgrade=' + grade + '&id_diem_thi=' + '@ViewBag.GradeID';
             processing(action, "Đang cập nhật điểm mới cho học viên...", gradeRefresh);
          }
     }

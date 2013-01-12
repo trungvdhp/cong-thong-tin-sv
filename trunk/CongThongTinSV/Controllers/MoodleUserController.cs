@@ -89,7 +89,7 @@ namespace CongThongTinSV.Controllers
         [Authorize(Roles = "MoodleUser.SyncStudents")]
         public ActionResult SyncStudents(string id_chuyen_nganh)
         {
-            var list = MoodleLib.GetStudents(id_chuyen_nganh).Where(t => t.ID_moodle == 0);
+            var list = MoodleLib.GetStudents(id_chuyen_nganh);//.Where(t => t.ID_moodle == 0);
 
             if (list.Count() != 0)
             {

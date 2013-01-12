@@ -1,0 +1,18 @@
+﻿@{
+    Layout = null;
+    DataSourceRequest request = (DataSourceRequest)ViewBag.Request;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Báo cáo Kết quả đánh giá học phần</title>
+</head>
+<body>
+    <div style ="float:left;text-align:center;width:100%">
+        <iframe id="reportFrame" name="reportFrame" style="width:800px;height:1400px;margin:0;border:none;text-align:center" src="@Url.Content("~/Reports/KetQuaDanhGiaHocPhan.aspx?quizid=" + @ViewBag.QuizID + "&sort=" + @Request.QueryString["sort"] + " &filter=" + @Request.QueryString["filter"])"></iframe>  
+    </div>
+</body>
+</html>

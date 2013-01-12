@@ -63,5 +63,7 @@ namespace CongThongTinSV
         public DbSet<fit_quiz_reports> fit_quiz_reports { get; set; }
         public DbSet<fit_quiz_statistics> fit_quiz_statistics { get; set; }
         public DbSet<fit_role_assignments> fit_role_assignments { get; set; }
+        public DbSet<fit_user_info_data> fit_user_info_data { get; set; }
+        public DbSet<fit_user_info_field> fit_user_info_field { get; set; }
     }
 }

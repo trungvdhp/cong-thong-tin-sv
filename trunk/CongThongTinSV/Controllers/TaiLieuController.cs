@@ -8,7 +8,6 @@ using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
 using System.IO;
 using CongThongTinSV.Models;
-using CongThongTinSV.Libraries;
 using CongThongTinSV.App_Lib;
 
 namespace CongThongTinSV.Controllers
@@ -51,8 +50,7 @@ namespace CongThongTinSV.Controllers
         {
             string str = Path.GetFileName(file.FileName);
             string uploadPath = HttpContext.Server.MapPath("../") + "/Content/Resource/";
-            var fileName = DateTime.Now.Ticks + "_"+ Language.RemoveSign4VietnameseString(str);
-            FormsAuthenticationTicket ticket = ((FormsIdentity)System.Web.HttpContext.Current.User.Identity).Ticket;
+            var fileName = DateTime.Now.Ticks + "_"+ Utility.RemoveSign4VietnameseString(str);
             file.SaveAs(uploadPath + fileName);
             Entities db = new Entities();
             var userData = GlobalLib.GetCurrentUserData();

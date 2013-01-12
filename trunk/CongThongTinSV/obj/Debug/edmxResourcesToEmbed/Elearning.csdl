@@ -39,6 +39,8 @@
     <EntitySet Name="fit_quiz_reports" EntityType="moodleModel.fit_quiz_reports" />
     <EntitySet Name="fit_quiz_statistics" EntityType="moodleModel.fit_quiz_statistics" />
     <EntitySet Name="fit_role_assignments" EntityType="moodleModel.fit_role_assignments" />
+    <EntitySet Name="fit_user_info_data" EntityType="moodleModel.fit_user_info_data" />
+    <EntitySet Name="fit_user_info_field" EntityType="moodleModel.fit_user_info_field" />
   </EntityContainer>
   <EntityType Name="fit_course">
     <Key>
@@ -720,5 +722,40 @@
     <Property Type="String" Name="component" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Type="Int64" Name="itemid" Nullable="false" />
     <Property Type="Int64" Name="sortorder" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fit_user_info_data">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="userid" Nullable="false" />
+    <Property Type="Int64" Name="fieldid" Nullable="false" />
+    <Property Type="String" Name="data" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="SByte" Name="dataformat" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fit_user_info_field">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="shortname" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="name" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="datatype" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="description" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="SByte" Name="descriptionformat" Nullable="false" />
+    <Property Type="Int64" Name="categoryid" Nullable="false" />
+    <Property Type="Int64" Name="sortorder" Nullable="false" />
+    <Property Type="SByte" Name="required" Nullable="false" />
+    <Property Type="SByte" Name="locked" Nullable="false" />
+    <Property Type="Int16" Name="visible" Nullable="false" />
+    <Property Type="SByte" Name="forceunique" Nullable="false" />
+    <Property Type="SByte" Name="signup" Nullable="false" />
+    <Property Type="String" Name="defaultdata" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="SByte" Name="defaultdataformat" Nullable="false" />
+    <Property Type="String" Name="param1" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="param2" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="param3" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="param4" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="param5" MaxLength="Max" FixedLength="false" Unicode="false" />
   </EntityType>
 </Schema>

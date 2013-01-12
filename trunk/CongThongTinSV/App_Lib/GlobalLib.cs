@@ -147,26 +147,30 @@ namespace CongThongTinSV.App_Lib
         /// </summary>
         /// <param name="serviceShortName">Shortname of service</param>
         /// <returns></returns>
-        public static string[] GetActionNamesByService(string serviceShortName)
+        public static string[] GetActionNames()
         {
             Entities db = new Entities();
-            MOD_DichVu service = db.MOD_DichVu.SingleOrDefault(t => t.Ten_rut_gon == serviceShortName);
+            UserData userData = GetCurrentUserData();
 
-            if (service != null)
+            if (userData.MoodleToken != "exception")
             {
-                if (service.Root == true)
+                MOD_DichVu service = db.MOD_DichVu.SingleOrDefault(t => t.Ten_rut_gon == userData.MoodleService);
+
+                if (service != null)
                 {
-                    List<string> actions = db.MOD_Quyen.Select(t => t.Action_name).ToList();
-                    actions.Add("Admin");
-                    actions.Add("MoodleAdmin");
-                    return actions.ToArray();
-                }
-                else
-                {
-                    return service.MOD_Quyen.Select(t => t.Action_name).ToArray();
+                    if (service.Root == true)
+                    {
+                        List<string> actions = db.MOD_Quyen.Select(t => t.Action_name).ToList();
+                        actions.Add("Admin");
+                        actions.Add("MoodleAdmin");
+                        return actions.ToArray();
+                    }
+                    else
+                    {
+                        return service.MOD_Quyen.Select(t => t.Action_name).ToArray();
+                    }
                 }
             }
-
             return new string[] { };
         }
 

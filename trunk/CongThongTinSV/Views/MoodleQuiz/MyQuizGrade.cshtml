@@ -23,7 +23,7 @@
                     .ClientTemplate(
                         (@Html.ActionLink("#= kendo.toString(Grade, '0.0') #", "MyQuizStudentGrade", "MoodleQuiz", new { quizid = "QuizID" }, new { title = "Xem bảng điểm chi tiết" })).ToHtmlString().Replace("QuizID", "#=ID#"));
             })
-            .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50 }).Refresh(true).Input(true).Numeric(false))
+            .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50 }).Refresh(true).Input(true).Numeric(false).Messages(m =>{ m.ItemsPerPage("dòng mỗi trang"); m.First("Trang đầu tiên"); m.Last("Trang cuối cùng"); m.Next("Trang sau"); m.Previous("Trang trước"); m.Refresh("Làm mới");}))
             .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
             .Filterable()
             .Scrollable()
@@ -31,6 +31,7 @@
             .Resizable(r => r.Columns(true))
             .Reorderable(ro => ro.Columns(true))
             .Navigatable()
+            .HtmlAttributes(new { style="height:450px"})
             //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
             //.Selectable(s => s.Mode(GridSelectionMode.Single))
             .DataSource(

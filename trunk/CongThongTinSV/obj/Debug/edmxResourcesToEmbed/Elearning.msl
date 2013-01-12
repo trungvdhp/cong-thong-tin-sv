@@ -720,5 +720,42 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="fit_user_info_data">
+      <EntityTypeMapping TypeName="moodleModel.fit_user_info_data">
+        <MappingFragment StoreEntitySet="fit_user_info_data">
+          <ScalarProperty Name="dataformat" ColumnName="dataformat" />
+          <ScalarProperty Name="data" ColumnName="data" />
+          <ScalarProperty Name="fieldid" ColumnName="fieldid" />
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="fit_user_info_field">
+      <EntityTypeMapping TypeName="moodleModel.fit_user_info_field">
+        <MappingFragment StoreEntitySet="fit_user_info_field">
+          <ScalarProperty Name="param5" ColumnName="param5" />
+          <ScalarProperty Name="param4" ColumnName="param4" />
+          <ScalarProperty Name="param3" ColumnName="param3" />
+          <ScalarProperty Name="param2" ColumnName="param2" />
+          <ScalarProperty Name="param1" ColumnName="param1" />
+          <ScalarProperty Name="defaultdataformat" ColumnName="defaultdataformat" />
+          <ScalarProperty Name="defaultdata" ColumnName="defaultdata" />
+          <ScalarProperty Name="signup" ColumnName="signup" />
+          <ScalarProperty Name="forceunique" ColumnName="forceunique" />
+          <ScalarProperty Name="visible" ColumnName="visible" />
+          <ScalarProperty Name="locked" ColumnName="locked" />
+          <ScalarProperty Name="required" ColumnName="required" />
+          <ScalarProperty Name="sortorder" ColumnName="sortorder" />
+          <ScalarProperty Name="categoryid" ColumnName="categoryid" />
+          <ScalarProperty Name="descriptionformat" ColumnName="descriptionformat" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="datatype" ColumnName="datatype" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="shortname" ColumnName="shortname" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -6,6 +6,7 @@
 }
 <h2>@ViewBag.Title</h2>
 <button id="exportToExcel" class="k-button" onclick="exportToExcel()">Xuất ra Excel</button>
+<button id="exportToPdf" class="k-button" onclick="exportToPdf()">Xuất ra Pdf</button>
 @(Html.Kendo().Grid<CongThongTinSV.Models.MoodleCourseStudentGrade>()
     .Name("Grid")
     .Columns(columns =>
@@ -18,16 +19,19 @@
         //    .HeaderHtmlAttributes(new { style = "text-align:center" })
         //    .HtmlAttributes(new { style = "text-align:center" })
         //    .Filterable(false).Groupable(false).Sortable(false);
-        columns.Bound(c => c.UserName)
+        columns.Bound(c => c.Ma_sv)
             .Title("Mã sinh viên")
             .Width(115)
-            .ClientTemplate((@Html.ActionLink("#=UserName#", "UserCourseProfile", "MoodleUser", new { userid = "UserID", courseid = ViewBag.CourseID }, new { title = 
+            .HtmlAttributes(new { style = "text-align:center" })
+            .ClientTemplate((@Html.ActionLink("#=Ma_sv#", "UserCourseProfile", "MoodleUser", new { userid = "UserID", courseid = ViewBag.CourseID }, new { title = 
 "Xem hồ sơ khóa học" }).ToHtmlString().Replace("UserID", "#=ID#")));
-        columns.Bound(c => c.LastName).Width(140);
-        columns.Bound(c => c.FirstName).Width(80);
-        columns.Bound(c => c.ZGrade).Format("{0:0.0}");
+        columns.Bound(c => c.Ho_dem).Width(140);
+        columns.Bound(c => c.Ten).Width(80);
+        columns.Bound(c => c.Ngay_sinh).Width(100).Format("{0:dd-MM-yyyy}").HtmlAttributes(new { style = "text-align:center" });
+        columns.Bound(c => c.Lop).Width(90);
+        columns.Bound(c => c.DiemZ).Format("{0:0.0}");
     })
-    .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50, 100 }).Refresh(true).Input(true).Numeric(false))
+    .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50, 80 }).Refresh(true).Input(true).Numeric(false).Messages(m =>{ m.ItemsPerPage("dòng mỗi trang"); m.First("Trang đầu tiên"); m.Last("Trang cuối cùng"); m.Next("Trang sau"); m.Previous("Trang trước"); m.Refresh("Làm mới");}))
     .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
     .Filterable()
     .Scrollable()
@@ -35,7 +39,8 @@
     .Resizable(r => r.Columns(true))
     .Reorderable(ro => ro.Columns(true))
     .Navigatable()
-    .ColumnMenu(menu => menu.Enabled(true).Sortable(false))
+    .HtmlAttributes(new { style="height:400px"})
+    //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
     //.Selectable(s => s.Mode(GridSelectionMode.Single))
     .Events(e =>
     {
@@ -58,12 +63,12 @@
 
     //export to excel
     function exportToExcel() {
-        var dataFields = [];
-        var dataTitles = [];
+        document.location.href = '@Url.Action("ExportCourseGradeToExcel", "MoodleCourse")' + '/?sort=' + requestObject.sort + '&filter=' + requestObject.filter + '&courseid=@ViewBag.CourseID' + '&coursename=' + '@HttpUtility.UrlEncode(ViewBag.CourseName)';
+    }
 
-        getFieldAndTitles('#Grid .k-header', dataFields, dataTitles);
-
-        document.location.href = '@Url.Action("ExportCourseGradeToExcel", "MoodleCourse")' + '/?sort=' + requestObject.sort + '&filter=' + requestObject.filter + '&datafields=' + dataFields + '&datatitles=' + dataTitles + '&courseid=@ViewBag.CourseID' + '&coursename=' + '@HttpUtility.UrlEncode(ViewBag.CourseName)';
+    //export to pdf
+    function exportToPdf() {
+        document.location.href = '@Url.Action("ExportCourseGradeToPdf", "MoodleCourse")' + '/?sort=' + requestObject.sort + '&filter=' + requestObject.filter + '&courseid=@ViewBag.CourseID' + '&coursename=' + '@HttpUtility.UrlEncode(ViewBag.CourseName)';
     }
 
     // on data bound, check checkboxes

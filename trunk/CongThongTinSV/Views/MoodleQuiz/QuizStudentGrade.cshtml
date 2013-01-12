@@ -5,6 +5,8 @@
 
 <h2>@title</h2>
 <button id="exportToExcel" class="k-button" onclick="exportToExcel()">Xuất ra Excel</button>
+<button id="exportToPdf" class="k-button" onclick="exportToPdf()">Xuất ra Pdf</button>
+<button id="report" class="k-button" onclick="report()">Xuất ra báo cáo</button>
 @(Html.Kendo().Grid<CongThongTinSV.Models.MoodleQuizStudentGrade>()
     .Name("Grid")
     .Columns(columns =>
@@ -18,34 +20,53 @@
             .HeaderHtmlAttributes(new { style = "text-align:center" })
             .HtmlAttributes(new { style = "text-align:center" })
             .Filterable(false).Groupable(false).Sortable(false);
-        columns.Bound(c => c.UserName).Width(80)
-             .ClientTemplate(
-                (@Html.ActionLink("#=UserName#", "UserProfile", "MoodleUser", new { userid = "UserId" }, new { title = "Xem hồ sơ người dùng" }).ToHtmlString().Replace("UserId", "#=ID#")));
-        columns.Bound(c => c.LastName).Width(150);
-        columns.Bound(c => c.FirstName).Width(80);
-        columns.Bound(c => c.OldGrade).Format("{0:0.0}").Width(90);
-        columns.Bound(c => c.NewGrade).Format("{0:0.0}").Width(95);
-        columns.Bound(c => c.IsDiffGrade).Title("")
+        columns.Bound(c => c.Ma_sv).Width(75)
+            .HtmlAttributes(new { style = "text-align:center" })
+            .ClientTemplate(
+                (@Html.ActionLink("#=Ma_sv#", "UserProfile", "MoodleUser", new { userid = "UserId" }, new { title = "Xem hồ sơ người dùng" }).ToHtmlString().Replace("UserId", "#=ID#")));
+        columns.Bound(c => c.Ho_dem).Width(135);
+        columns.Bound(c => c.Ten).Width(70);
+        columns.Bound(c => c.Ngay_sinh).Width(95).Format("{0:dd-MM-yyyy}").HtmlAttributes(new { style = "text-align:center" });
+        columns.Bound(c => c.Lop).Width(85)
+            .HtmlAttributes(new { style = "text-align:center" });
+        columns.Bound(c => c.DiemX).Format("{0:0.0}")
+            .Width(45)
+            .HtmlAttributes(new { style = "text-align:center" });
+        columns.Bound(c => c.DiemY_cu)
+            .Format("{0:0.0}")
+            .Width(60)
+            .HtmlAttributes(new { style = "text-align:center" });
+        columns.Bound(c => c.DiemY_moi)
+            .Format("{0:0.0}")
+            .Width(70)
+            .HtmlAttributes(new { style = "text-align:center" });
+        columns.Bound(c => c.DiemZ_moi)
+            .Format("{0:0.0}")
+            .Width(70)
+            .HtmlAttributes(new { style = "text-align:center" });
+        columns.Bound(c => c.Diem_chu).Width(95);
+        columns.Bound(c => c.Khac_diem).Title("Cập nhật")
             .IncludeInMenu(false)
             .ClientTemplate("<img width='16' height='16' src=" +
-            "# if (IsDiffGrade) { #" +
-                Url.Content("~/Images/warning.png") + " title='Điểm khác nhau' }" + 
+            "# if (Khac_diem) { #" +
+                Url.Content("~/Images/warning.png") + " title='Điểm Y cũ và mới khác nhau' }" + 
             "# } else { #" +
-                Url.Content("~/Images/ok-2.png") + " title='Điểm giống nhau' }" +
+                Url.Content("~/Images/ok-2.png") + " title='Điểm Y cũ và mới giống nhau' }" +
             "# } # />" +
-            "# if (IsDiffGrade && ID_diem_thi != 0) { #" +
-              "<button class='button-update' title='Cập nhật điểm' onclick='update_one(#=NewGrade#, #=ID_diem_thi#)'></button>" +
+            "# if (Khac_diem && ID_diem_thi != 0) { #" +
+              "<button class='button-update' title='Cập nhật điểm' onclick='update_one(#=DiemY_moi#, #=ID_diem_thi#)'></button>" +
             "# } #"
             );
     })
-    .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50, 100 }).Refresh(true).Input(true).Numeric(false))
-    .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
+    .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50, 100 }).Refresh(true).Input(true).Numeric(false).Messages(m =>{ m.ItemsPerPage("dòng mỗi trang"); m.First("Trang đầu tiên"); m.Last("Trang cuối cùng"); m.Next("Trang sau"); m.Previous("Trang trước"); m.Refresh("Làm mới");}))
+    .Sortable(s => s.SortMode(GridSortMode.MultipleColumn))
     .Filterable()
     .Scrollable()
     .Groupable()
     .Resizable(r => r.Columns(true))
     .Reorderable(ro => ro.Columns(true))
     .Navigatable()
+    .HtmlAttributes(new { style="height:400px"})
     .ColumnMenu(menu => menu.Enabled(true).Sortable(false))
     //.Selectable(s => s.Mode(GridSelectionMode.Single))
     .Events(e =>
@@ -72,18 +93,23 @@
 
     //export to excel
     function exportToExcel() {
-        var dataFields = [];
-        var dataTitles = [];
+        document.location.href = '@Url.Action("ExportQuizGradeToExcel", "MoodleQuiz")' + '/?sort=' + requestObject.sort + '&filter=' + requestObject.filter + '&quizid=@ViewBag.QuizID' + '&courseid=@ViewBag.CourseID' + '&coursename=' + '@HttpUtility.UrlEncode(ViewBag.CourseName)';
+    }
 
-        getFieldAndTitles('#Grid .k-header', dataFields, dataTitles);
+    //export to pdf
+    function exportToPdf() {
+        document.location.href = '@Url.Action("ExportQuizGradeToPdf", "MoodleQuiz")' + '/?sort=' + requestObject.sort + '&filter=' + requestObject.filter + '&quizid=@ViewBag.QuizID' + '&courseid=@ViewBag.CourseID' + '&coursename=' + '@HttpUtility.UrlEncode(ViewBag.CourseName)';
+    }
 
-        document.location.href = '@Url.Action("ExportQuizGradeToExcel", "MoodleQuiz")' + '/?sort=' + requestObject.sort + '&filter=' + requestObject.filter + '&datafields=' + dataFields + '&datatitles=' + dataTitles + '&quizid=@ViewBag.QuizID' + '&quizname=' + '@HttpUtility.UrlEncode(title)';
+    function report() {
+        window.open('@Url.Action("ExportQuizGradeToReport", "MoodleQuiz")' + '/?quizid=@ViewBag.QuizID' + '&sort=' + requestObject.sort + '&filter=' + requestObject.filter);
     }
 
     function loadGrid() {
         selectedVals.splice(0, selectedVals.length);
         gridRefresh();
     }
+
     // on data bound, check checkboxes
     function onDataBound(e) {
         checkCells(selectedVals, '#masterCheckBox', '#Grid :checkbox');

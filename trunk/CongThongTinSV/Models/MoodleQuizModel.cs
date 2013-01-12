@@ -19,22 +19,37 @@ namespace CongThongTinSV.Models
         public int ID_sv { get; set; }
 
         [DisplayName("Mã SV")]
-        public string UserName { get; set; }
+        public string Ma_sv { get; set; }
 
         [DisplayName("Họ và đệm")]
-        public string LastName { get; set; }
+        public string Ho_dem { get; set; }
 
         [DisplayName("Tên")]
-        public string FirstName { get; set; }
+        public string Ten { get; set; }
 
-        [DisplayName("Điểm cũ")]
-        public float? OldGrade { get; set; }
+        [DisplayName("Ngày sinh")]
+        public DateTime? Ngay_sinh { get; set; }
 
-        [DisplayName("Điểm mới")]
-        public decimal? NewGrade { get; set; }
+        [DisplayName("Lớp")]
+        public string Lop { get; set; }
+
+        [DisplayName("X")]
+        public float? DiemX { get; set; }
+
+        [DisplayName("Y cũ")]
+        public float? DiemY_cu { get; set; }
+
+        [DisplayName("Y mới")]
+        public decimal? DiemY_moi { get; set; }
+
+        [DisplayName("Z mới")]
+        public float? DiemZ_moi { get; set; }
+
+        [DisplayName("Điểm chữ")]
+        public string Diem_chu { get; set; }
 
         [DisplayName("Khác điểm")]
-        public bool IsDiffGrade { get; set; }
+        public bool Khac_diem { get; set; }
     }
 
     public class MoodleStudentQuizGrade

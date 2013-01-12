@@ -1,0 +1,43 @@
+﻿@using CongThongTinSV.Models;
+
+@{
+    ViewBag.Title = ViewBag.CourseName;
+}
+<div>
+<h2>@ViewBag.CourseName</h2>
+@{
+    List<MoodleCourseContentResponse> list  = ViewBag.CourseContent;
+    int len = list.Count;
+    @(Html.Kendo().PanelBar()
+        .Name("panelbar-sprites")
+        .ExpandAll(true)
+        .Items(panelbar =>
+        {
+            for (int i = 0; i < len; i++)
+            {
+                int n = list[i].modules.Count;
+                
+                if (n > 0)
+                {
+                    panelbar.Add().Text(list[i].name)
+                        .Items(item =>
+                        {
+                            for (int j = 0; j < n; j++)
+                            {
+                                if (list[i].modules[j].modname == "quiz")
+                                {
+                                    item.Add().Text(list[i].modules[j].name)
+                                        .Action("QuizStudentGrade", "MoodleQuiz", new { quizid = list[i].modules[j].id })
+                                        .ImageUrl(list[i].modules[j].modicon);
+                                }
+                            }
+                        });
+                }
+            }
+        })
+     )
+}
+</div>
+<div style="text-align: center;margin-top: 10px;">
+    <button class="k-button" type="submit" onclick="pageback()">Quay về danh sách các khóa học</button>
+</div>
