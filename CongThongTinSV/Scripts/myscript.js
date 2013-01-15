@@ -89,6 +89,9 @@ function checkCells(selectedVals, master, childCol) {
                 func();
                 $.unblockUI();
             },
+            error: function (e) {
+                Error(e.error);
+            },
             cache: false
         });
     }

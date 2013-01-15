@@ -22,31 +22,37 @@ namespace CongThongTinSV.Reports
             if (!IsPostBack)
             {
                 string quizid = Request.QueryString["quizid"];
-                string sortStr = Request.QueryString["sort"];
-                IEnumerable<string> sorts = Request.QueryString["sort"].Split(new char[]{'~'});
-                string filters = Request.QueryString["filter"];
+                string sortStr = Request.QueryString["sort"].Trim();
+                IEnumerable<string> sorts = Request.QueryString["sort"].Trim().Split(new char[]{'~'});
+                string filters = Request.QueryString["filter"].Trim();
                 DataSourceRequest request = new DataSourceRequest();
                 IList<SortDescriptor> lstSort = new List<SortDescriptor>();
                 IList<FilterDescriptor> lstFilter = new List<FilterDescriptor>();
 
-                if (sortStr != "")
+                try
                 {
-                    foreach (string item in sorts)
+                    if (sortStr != "")
                     {
-                        SortDescriptor sort = new SortDescriptor();
-                        sort.Deserialize(item);
-                        lstSort.Add(sort);
+                        foreach (string item in sorts)
+                        {
+                            SortDescriptor sort = new SortDescriptor();
+                            sort.Deserialize(item);
+                            lstSort.Add(sort);
+                        }
+
+                        if (lstSort.Count > 0)
+                        {
+                            request.Sorts = lstSort;
+                        }
                     }
 
-                    if (lstSort.Count > 0)
+                    if (filters != "")
                     {
-                        request.Sorts = lstSort;
+                        request.Filters = FilterDescriptorFactory.Create(filters);
                     }
                 }
-
-                if (filters != "")
+                catch (Exception)
                 {
-                    request.Filters = FilterDescriptorFactory.Create(filters);
                 }
 
                 IEnumerable<MoodleQuizStudentGrade> data = MoodleLib.GetQuizStudentGrades(quizid).ToDataSourceResult(request).Data.Cast<MoodleQuizStudentGrade>();
