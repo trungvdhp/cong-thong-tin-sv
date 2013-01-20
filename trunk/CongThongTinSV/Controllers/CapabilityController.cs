@@ -52,19 +52,34 @@ namespace CongThongTinSV.Controllers
         public ActionResult DeleteCapabilities(string selectedVals)
         {
             IEnumerable<string> ids = selectedVals.Split(new char[] { ',' });
+            var data = new Message();
 
             if (ids.Count() != 0)
             {
-                GlobalLib.DeleteCapabilities(ids);
+                if (GlobalLib.DeleteCapabilities(ids) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi xóa các quyền";
+                    data.state = "error";
+                }
+                else
+                {
+
+                    data.title = "Success";
+                    data.message = "Xóa các quyền thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
         [Authorize(Roles = "Admin")]
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult UpdateCapability([DataSourceRequest] DataSourceRequest request, Capability quyen)
         {
+            var data = new Message();
+
             if (quyen != null && ModelState.IsValid)
             {
                 GlobalLib.UpdateCapability(quyen);
@@ -76,9 +91,23 @@ namespace CongThongTinSV.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult SyncCapability()
         {
-            GlobalLib.SyncCapability();
+            var data = new Message();
 
-            return View();
+            if (GlobalLib.SyncCapability() == -1)
+            {
+                data.title = "Error";
+                data.message = "Lỗi khi đồng bộ quyền";
+                data.state = "error";
+            }
+            else
+            {
+
+                data.title = "Success";
+                data.message = "Đồng bộ quyền thành công";
+                data.state = "success";
+            }
+
+            return Json(data);
         }
     }
 }

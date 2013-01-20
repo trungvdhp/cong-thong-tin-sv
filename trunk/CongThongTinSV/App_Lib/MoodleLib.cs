@@ -829,15 +829,6 @@ namespace CongThongTinSV.App_Lib
                 postData += "&users[" + i + "][lastname]=" + HttpUtility.UrlEncode(item.Ho_dem);
                 postData += "&users[" + i + "][email]=" + "st" + item.Ma_sv + "@st.vimaru.edu.vn";
                 postData += "&users[" + i + "][idnumber]=st" + item.ID_sv;
-                //postData += "&users[" + i + "][customfields][0][type]=Lop";
-                //postData += "&users[" + i + "][customfields][0][value]=" + item.Lop;
-
-                //if (item.Ngay_sinh != null)
-                //{
-                //    postData += "&users[" + i + "][customfields][1][type]=NgaySinh";
-                //    postData += "&users[" + i + "][customfields][1][value]=" + Utility.ConvertToTimestamp((DateTime)item.Ngay_sinh);
-                //}
-
                 i++;
             }
 

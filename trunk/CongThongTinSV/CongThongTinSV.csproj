@@ -513,6 +513,7 @@
     <Content Include="Content\jqGrid\redmond\jquery-ui-1.9.0.custom.css" />
     <Content Include="Content\jqGrid\redmond\jquery-ui-1.9.0.custom.min.css" />
     <Content Include="Content\jqGrid\ui.jqgrid.css" />
+    <Content Include="Content\jquery.toastmessage-min.css" />
     <Content Include="Content\kendo\2012.3.1114\Black\editor.png" />
     <Content Include="Content\kendo\2012.3.1114\Black\imagebrowser.png" />
     <Content Include="Content\kendo\2012.3.1114\Black\loading-image.gif" />
@@ -638,7 +639,13 @@
     <Content Include="Content\kendo\2012.3.1114\Uniform\slider-h.gif" />
     <Content Include="Content\kendo\2012.3.1114\Uniform\slider-v.gif" />
     <Content Include="Content\kendo\2012.3.1114\Uniform\sprite.png" />
+    <Content Include="Images\close.gif" />
+    <Content Include="Images\error-red.png" />
+    <Content Include="Images\notice-blue.png" />
+    <Content Include="Images\success-green.png" />
+    <Content Include="Images\warning-yellow.png" />
     <Content Include="Reports\KetQuaDanhGiaHocPhan.aspx" />
+    <Content Include="Scripts\jquery.toastmessage-min.js" />
     <Content Include="Scripts\kendo\lang\kendo.culture.vi-VN.min.js" />
     <Content Include="Scripts\kendo\lang\kendo.culture.vi.min.js" />
     <Content Include="Scripts\kendo\lang\kendo.vi-VN.js" />

@@ -62,13 +62,25 @@ namespace CongThongTinSV.Controllers
         public ActionResult DeleteWebServices(string selectedVals)
         {
             IEnumerable<string> ids = selectedVals.Split(new char[] { ',' });
+            var data = new Message();
 
             if (ids.Count() != 0)
             {
-                MoodleLib.DeleteWebServices(ids);
+                if ( MoodleLib.DeleteWebServices(ids) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi xóa các dịch vụ web";
+                    data.state = "error";
+                }
+                else
+                {
+                    data.title = "Success";
+                    data.message = "Xóa các dịch vụ web thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
         [Authorize(Roles = "MoodleAdmin")]
@@ -86,9 +98,22 @@ namespace CongThongTinSV.Controllers
         [Authorize(Roles = "MoodleAdmin")]
         public ActionResult SyncWebService()
         {
-            MoodleLib.SyncWebService();
+            var data = new Message();
 
-            return View();
+            if (MoodleLib.SyncWebService() == -1)
+            {
+                data.title = "Error";
+                data.message = "Lỗi khi đồng bộ các dịch vụ web";
+                data.state = "error";
+            }
+            else
+            {
+                data.title = "Success";
+                data.message = "Đồng bộ các dịch vụ web thành công";
+                data.state = "success";
+            }
+
+            return Json(data);
         }
     }
 }
