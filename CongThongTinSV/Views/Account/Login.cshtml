@@ -2,16 +2,20 @@
 @model CongThongTinSV.Models.LoginModel
 
 @{
-    ViewBag.Title = "Đăng nhập";
+    if (ViewBag.ReturnUrl != null && Request.IsAuthenticated)
+    {
+        ViewBag.Title = "Đăng nhập để truy cập trang " + ViewBag.ReturnUrl;
+    }
+    else
+    {
+        ViewBag.Title = "Đăng nhập";
+    }
 }
-<script type="text/javascript">
-    $(document).ready(function () {
-
-    })
-</script>
 <h1>@ViewBag.Title</h1>
 <hr />
 @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
+   
+    
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
     <fieldset>

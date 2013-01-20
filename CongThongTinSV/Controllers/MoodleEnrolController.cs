@@ -41,13 +41,25 @@ namespace CongThongTinSV.Controllers
 
             list = MoodleLib.GetEnrolStudentXGrades(id_lop_tc);
             list = list.Where(t => t.ID_moodle != 0 && !t.Trang_thai && s.Contains(t.ID.ToString()));
+            var data = new Message();
 
             if (list.Count() != 0)
             {
-                MoodleLib.ManualEnrolStudents(list);
+                if (MoodleLib.ManualEnrolStudents(list) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi ghi danh cho sinh viên";
+                    data.state = "error";
+                }
+                else
+                {
+                    data.title = "Success";
+                    data.message = "Ghi danh cho sinh viên thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
         [Authorize(Roles = "MoodleEnrol.SuspendEnrolStudents")]
@@ -55,13 +67,25 @@ namespace CongThongTinSV.Controllers
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
             var list = MoodleLib.GetEnrolStudents(id_lop_tc).Where(t => t.Trang_thai && s.Contains(t.ID.ToString()));
+            var data = new Message();
 
             if (list.Count() != 0)
             {
-                MoodleLib.SuspendEnrolStudents(list);
+                if (MoodleLib.SuspendEnrolStudents(list) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi đình chỉ ghi danh của sinh viên";
+                    data.state = "error";
+                }
+                else
+                {
+                    data.title = "Success";
+                    data.message = "Đình chỉ ghi danh của sinh viên thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
         [Description("Xuất danh sách sinh viên thuộc lớp học phần ra excel")]
@@ -198,13 +222,25 @@ namespace CongThongTinSV.Controllers
 
             list = MoodleLib.GetEnrolTeachers(id_lop_tc);
             list = list.Where(t => t.ID_moodle > 0 && s.Contains(t.ID_cb.ToString()));
+            var data = new Message();
 
-            if (list.Count() > 0)
+            if (list.Count() != 0)
             {
-                MoodleLib.ManualEnrolTeachers(list, id_vai_tro, suspended);
+                if (MoodleLib.ManualEnrolTeachers(list, id_vai_tro, suspended) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi " + (suspended == "0" ? "ghi danh cho " : "đình chỉ ghi danh của ") + "giảng viên";
+                    data.state = "error";
+                }
+                else
+                {
+                    data.title = "Success";
+                    data.message = (suspended == "0" ? "Ghi danh cho " : "Đình chỉ ghi danh của ") + "giảng viên thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
         [Authorize(Roles = "MoodleEnrol.UnassignTeacherRole")]
@@ -212,13 +248,25 @@ namespace CongThongTinSV.Controllers
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
             var list = MoodleLib.GetEnrolTeachers(id_lop_tc).Where(t => s.Contains(t.ID_cb.ToString()) && Utility.InArray(t.ID_vai_tro, new char[] { ',' }, id_vai_tro));
+            var data = new Message();
 
             if (list.Count() != 0)
             {
-                MoodleLib.UnassignTeacherRole(list, id_vai_tro);
+                if (MoodleLib.UnassignTeacherRole(list, id_vai_tro) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi hủy vai trò của giảng viên";
+                    data.state = "error";
+                }
+                else
+                {
+                    data.title = "Success";
+                    data.message = "Hủy vai trò của giảng viên thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
         [Authorize(Roles = "MoodleEnrol.UnassignTeacherAllRoles")]
@@ -226,13 +274,25 @@ namespace CongThongTinSV.Controllers
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
             var list = MoodleLib.GetEnrolTeachers(id_lop_tc).Where(t => s.Contains(t.ID_cb.ToString()) && t.ID_vai_tro != "");
+            var data = new Message();
 
             if (list.Count() != 0)
             {
-                MoodleLib.UnassignTeacherAllRoles(list);
+                if (MoodleLib.UnassignTeacherAllRoles(list) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi hủy tất cả vai trò của giảng viên";
+                    data.state = "error";
+                }
+                else
+                {
+                    data.title = "Success";
+                    data.message = "Hủy tất cả vai trò của giảng viên thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
         #endregion
 
@@ -263,13 +323,25 @@ namespace CongThongTinSV.Controllers
 
             list = MoodleLib.GetEnrolAdminUsers(id_lop_tc);
             list = list.Where(t => t.ID_moodle > 0 && s.Contains(t.ID.ToString()));
+            var data = new Message();
 
-            if (list.Count() > 0)
+            if (list.Count() != 0)
             {
-                MoodleLib.ManualEnrolAdminUsers(list, id_vai_tro, suspended);
+                if (MoodleLib.ManualEnrolAdminUsers(list, id_vai_tro, suspended) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi " + (suspended == "0" ? "ghi danh cho " : "đình chỉ ghi danh của ") + "quản trị viên";
+                    data.state = "error";
+                }
+                else
+                {
+                    data.title = "Success";
+                    data.message = (suspended == "0" ? "Ghi danh cho " : "Đình chỉ ghi danh của ") + "quản trị viên thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
         [Authorize(Roles = "MoodleEnrol.UnassignAdminUserRole")]
@@ -277,13 +349,25 @@ namespace CongThongTinSV.Controllers
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
             var list = MoodleLib.GetEnrolAdminUsers(id_lop_tc).Where(t => s.Contains(t.ID.ToString()) && Utility.InArray(t.ID_vai_tro, new char[] { ',' }, id_vai_tro));
+            var data = new Message();
 
             if (list.Count() != 0)
             {
-                MoodleLib.UnassignAdminUserRole(list, id_vai_tro);
+                if (MoodleLib.UnassignAdminUserRole(list, id_vai_tro) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi hủy vai trò của quản trị viên";
+                    data.state = "error";
+                }
+                else
+                {
+                    data.title = "Success";
+                    data.message = "Hủy vai trò của quản trị viên thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
         [Authorize(Roles = "MoodleEnrol.UnassignAdminUsersAllRoles")]
@@ -292,12 +376,25 @@ namespace CongThongTinSV.Controllers
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
             var list = MoodleLib.GetEnrolAdminUsers(id_lop_tc).Where(t => s.Contains(t.ID.ToString()) && t.ID_vai_tro != "");
 
+            var data = new Message();
+
             if (list.Count() != 0)
             {
-                MoodleLib.UnassignAdminUserAllRoles(list);
+                if (MoodleLib.UnassignAdminUserAllRoles(list) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi hủy tất cả vai trò của quản trị viên";
+                    data.state = "error";
+                }
+                else
+                {
+                    data.title = "Success";
+                    data.message = "Hủy tất cả vai trò của quản trị viên thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
         #endregion
     }

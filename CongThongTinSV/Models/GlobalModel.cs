@@ -95,4 +95,11 @@ namespace CongThongTinSV.Models
         [DisplayName("Trạng thái")]
         public bool Trang_thai { get; set; }
     }
+
+    public class Message
+    {
+        public string title { get; set; }
+        public string state { get; set; }
+        public string message { get; set; }
+    }
 }

@@ -49,13 +49,26 @@ namespace CongThongTinSV.Controllers
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
             var list = MoodleLib.GetStudents(id_chuyen_nganh).Where(t => t.ID_moodle == 0 && s.Contains(t.ID_sv.ToString()));
+            var data = new Message();
 
             if (list.Count() != 0)
             {
-                MoodleLib.CreateStudents(list);
+                if (MoodleLib.CreateStudents(list) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi tạo tài khoản sinh viên";
+                    data.state = "error";
+                }
+                else
+                {
+
+                    data.title = "Success";
+                    data.message = "Tạo tài khoản sinh viên thành công";
+                    data.state = "success";
+                }
             }
-            
-            return View();
+
+            return Json(data);
         }
 
         [Authorize(Roles = "MoodleUser.DeleteStudents")]
@@ -64,12 +77,26 @@ namespace CongThongTinSV.Controllers
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
             var list = MoodleLib.GetStudents(id_chuyen_nganh).Where(t => t.ID_moodle > 0 && s.Contains(t.ID_sv.ToString()));
 
+            var data = new Message();
+
             if (list.Count() != 0)
             {
-                MoodleLib.DeleteStudents(list);
+                if (MoodleLib.DeleteStudents(list) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi xóa tài khoản sinh viên";
+                    data.state = "error";
+                }
+                else
+                {
+
+                    data.title = "Success";
+                    data.message = "Xóa tài khoản sinh viên thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
         [Authorize(Roles = "MoodleUser.UpdateStudents")]
@@ -78,12 +105,26 @@ namespace CongThongTinSV.Controllers
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
             var list =MoodleLib.GetStudents(id_chuyen_nganh).Where(t => t.ID_moodle > 0 && s.Contains(t.ID_sv.ToString()));
 
+            var data = new Message();
+
             if (list.Count() != 0)
             {
-                MoodleLib.UpdateStudents(list);
+                if (!MoodleLib.UpdateStudents(list))
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi cập nhật tài khoản sinh viên";
+                    data.state = "error";
+                }
+                else
+                {
+
+                    data.title = "Success";
+                    data.message = "Cập nhật tài khoản sinh viên thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
         [Authorize(Roles = "MoodleUser.SyncStudents")]
@@ -91,12 +132,26 @@ namespace CongThongTinSV.Controllers
         {
             var list = MoodleLib.GetStudents(id_chuyen_nganh);//.Where(t => t.ID_moodle == 0);
 
+            var data = new Message();
+
             if (list.Count() != 0)
             {
-                MoodleLib.SyncStudents(list);
+                if (MoodleLib.SyncStudents(list) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi đồng bộ tài khoản sinh viên";
+                    data.state = "error";
+                }
+                else
+                {
+
+                    data.title = "Success";
+                    data.message = "Đồng bộ tài khoản sinh viên thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
         [Description("Xuất danh sách sinh viên ra excel")]
@@ -194,7 +249,7 @@ namespace CongThongTinSV.Controllers
         #endregion
 
         #region Teacher
-        [Description("Tìm kiếm tài khoản moodle giáo viên")]
+        [Description("Tìm kiếm tài khoản moodle giảng viên")]
         [Authorize(Roles = "MoodleUser.SearchTeacher")]
         public ActionResult SearchTeacher()
         {
@@ -228,12 +283,26 @@ namespace CongThongTinSV.Controllers
 
             var list = MoodleLib.GetTeachers(id_khoa).Where(t => t.ID_moodle == 0 && s.Contains(t.ID_cb.ToString()));
 
+            var data = new Message();
+
             if (list.Count() != 0)
             {
-                MoodleLib.CreateTeachers(list);
+                if (MoodleLib.CreateTeachers(list) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi tạo tài khoản giảng viên";
+                    data.state = "error";
+                }
+                else
+                {
+
+                    data.title = "Success";
+                    data.message = "Tạo tài khoản giảng viên thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
         [Authorize(Roles = "MoodleUser.DeleteTeachers")]
@@ -242,13 +311,26 @@ namespace CongThongTinSV.Controllers
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
 
             var list = MoodleLib.GetTeachers(id_khoa).Where(t => t.ID_moodle > 0 && s.Contains(t.ID_cb.ToString()));
+            var data = new Message();
 
             if (list.Count() != 0)
             {
-                MoodleLib.DeleteTeachers(list);
+                if (MoodleLib.DeleteTeachers(list) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi xóa tài khoản giảng viên";
+                    data.state = "error";
+                }
+                else
+                {
+
+                    data.title = "Success";
+                    data.message = "Xóa tài khoản giảng viên thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
         [Authorize(Roles = "MoodleUser.UpdateTeachers")]
@@ -258,12 +340,26 @@ namespace CongThongTinSV.Controllers
 
             var list = MoodleLib.GetTeachers(id_khoa).Where(t => t.ID_moodle > 0 && s.Contains(t.ID_cb.ToString()));
 
+            var data = new Message();
+
             if (list.Count() != 0)
             {
-                MoodleLib.UpdateTeachers(list);
+                if (!MoodleLib.UpdateTeachers(list))
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi cập nhật tài khoản giảng viên";
+                    data.state = "error";
+                }
+                else
+                {
+
+                    data.title = "Success";
+                    data.message = "Cập nhật tài khoản giảng viên thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
         [Authorize(Roles = "MoodleUser.SyncTeachers")]
@@ -271,12 +367,26 @@ namespace CongThongTinSV.Controllers
         {
             var list = MoodleLib.GetTeachers(id_khoa).Where(t => t.ID_moodle == 0);
 
+            var data = new Message();
+
             if (list.Count() != 0)
             {
-                MoodleLib.SyncTeachers(list);
+                if (MoodleLib.SyncTeachers(list) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi đồng bộ tài khoản giảng viên";
+                    data.state = "error";
+                }
+                else
+                {
+
+                    data.title = "Success";
+                    data.message = "Đồng bộ tài khoản giảng viên thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
         [Authorize(Roles = "MoodleUser.AssignTeacherSystemRole")]
@@ -293,13 +403,26 @@ namespace CongThongTinSV.Controllers
 
             list = MoodleLib.GetTeachers(id_khoa);
             list = list.Where(t => t.ID_moodle > 0 && s.Contains(t.ID_cb.ToString()));
+            var data = new Message();
 
-            if (list.Count() > 0)
+            if (list.Count() != 0)
             {
-                MoodleLib.AssignTeacherSystemRole(list, id_vai_tro);
+                if (MoodleLib.AssignTeacherSystemRole(list, id_vai_tro) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi gán quyền hệ thống cho giảng viên";
+                    data.state = "error";
+                }
+                else
+                {
+
+                    data.title = "Success";
+                    data.message = "Gán quyền hệ thống cho giảng viên thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
         [Authorize(Roles = "MoodleUser.UnassignTeacherSystemRole")]
@@ -308,12 +431,26 @@ namespace CongThongTinSV.Controllers
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
             var list = MoodleLib.GetTeachers(id_khoa).Where(t => s.Contains(t.ID_cb.ToString()) && Utility.InArray(t.ID_vai_tro, new char[] { ',' }, id_vai_tro));
 
+            var data = new Message();
+
             if (list.Count() != 0)
             {
-                MoodleLib.UnassignTeacherSystemRole(list, id_vai_tro);
+                if (MoodleLib.UnassignTeacherSystemRole(list, id_vai_tro) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi hủy quyền hệ thống của giảng viên";
+                    data.state = "error";
+                }
+                else
+                {
+
+                    data.title = "Success";
+                    data.message = "Hủy quyền hệ thống của giảng viên thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
         [Authorize(Roles = "MoodleUser.UnassignTeacherAllSystemRoles")]
@@ -322,15 +459,29 @@ namespace CongThongTinSV.Controllers
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
             var list = MoodleLib.GetTeachers(id_khoa).Where(t => s.Contains(t.ID_cb.ToString()) && t.ID_vai_tro != "");
 
+            var data = new Message();
+
             if (list.Count() != 0)
             {
-                MoodleLib.UnassignTeacherAllSystemRoles(list);
+                if (MoodleLib.UnassignTeacherAllSystemRoles(list) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi hủy tất cả quyền hệ thống của giảng viên";
+                    data.state = "error";
+                }
+                else
+                {
+
+                    data.title = "Success";
+                    data.message = "Hủy tất cả quyền hệ thống của giảng viên thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
-        [Description("Xuất danh sách giáo viên ra excel")]
+        [Description("Xuất danh sách giảng viên ra excel")]
         [Authorize(Roles = "MoodleUser.ExportTeacherToExcel")]
         public FileResult ExportTeacherToExcel([DataSourceRequest]DataSourceRequest request, string id_khoa, string khoa, string datafields, string datatitles)
         {
@@ -341,7 +492,7 @@ namespace CongThongTinSV.Controllers
             int len = fields.Count();
             int startRow = 1, startColumn = 1;
             //Init workbook
-            var workbook = new ExcelExportor(GlobalLib.GetExcelTemplateFolderPath() + "Teachers", "", "Danh sách giáo viên");
+            var workbook = new ExcelExportor(GlobalLib.GetExcelTemplateFolderPath() + "Teachers", "", "Danh sách giảng viên");
             //Set header
             workbook.SetCellValue(khoa);
             workbook.SetFontBold();
@@ -443,13 +594,26 @@ namespace CongThongTinSV.Controllers
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
 
             var list = MoodleLib.GetAdminUsers().Where(t => t.ID_moodle == 0 && s.Contains(t.ID.ToString()));
+            var data = new Message();
 
             if (list.Count() != 0)
             {
-                MoodleLib.CreateAdminUsers(list);
+                if (MoodleLib.CreateAdminUsers(list) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi tạo tài khoản quản trị viên";
+                    data.state = "error";
+                }
+                else
+                {
+
+                    data.title = "Success";
+                    data.message = "Tạo tài khoản quản trị viên thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
         [Authorize(Roles = "MoodleUser.DeleteAdminUsers")]
@@ -458,13 +622,26 @@ namespace CongThongTinSV.Controllers
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
 
             var list = MoodleLib.GetAdminUsers().Where(t => t.ID_moodle > 0 && s.Contains(t.ID.ToString()));
+            var data = new Message();
 
             if (list.Count() != 0)
             {
-                MoodleLib.DeleteAdminUsers(list);
+                if (MoodleLib.DeleteAdminUsers(list) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi xóa tài khoản quản trị viên";
+                    data.state = "error";
+                }
+                else
+                {
+
+                    data.title = "Success";
+                    data.message = "Tạo tài khoản quản trị viên thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
         [Authorize(Roles = "MoodleUser.UpdateAdminUsers")]
@@ -473,26 +650,52 @@ namespace CongThongTinSV.Controllers
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
 
             var list = MoodleLib.GetAdminUsers().Where(t => t.ID_moodle > 0 && s.Contains(t.ID.ToString()));
+            var data = new Message();
 
             if (list.Count() != 0)
             {
-                MoodleLib.UpdateAdminUsers(list);
+                if (!MoodleLib.UpdateAdminUsers(list))
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi cập nhật tài khoản quản trị viên";
+                    data.state = "error";
+                }
+                else
+                {
+
+                    data.title = "Success";
+                    data.message = "Cập nhật tài khoản quản trị viên thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
         [Authorize(Roles = "MoodleUser.SyncAdminUsers")]
         public ActionResult SyncAdminUsers()
         {
             var list = MoodleLib.GetAdminUsers().Where(t => t.ID_moodle == 0);
+            var data = new Message();
 
             if (list.Count() != 0)
             {
-                MoodleLib.SyncAdminUsers(list);
+                if (MoodleLib.SyncAdminUsers(list) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi đồng bộ tài khoản quản trị viên";
+                    data.state = "error";
+                }
+                else
+                {
+
+                    data.title = "Success";
+                    data.message = "Đồng bộ tài khoản quản trị viên thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
 
@@ -510,13 +713,26 @@ namespace CongThongTinSV.Controllers
 
             list = MoodleLib.GetAdminUsers();
             list = list.Where(t => t.ID_moodle > 0 && s.Contains(t.ID.ToString()));
+            var data = new Message();
 
-            if (list.Count() > 0)
+            if (list.Count() != 0)
             {
-                MoodleLib.AssignAdminUserSystemRole(list, id_vai_tro);
+                if (MoodleLib.AssignAdminUserSystemRole(list, id_vai_tro) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi gán quyền hệ thống cho quản trị viên";
+                    data.state = "error";
+                }
+                else
+                {
+
+                    data.title = "Success";
+                    data.message = "Gán quyền hệ thống cho quản trị viên thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
         [Authorize(Roles = "MoodleUser.UnassignAdminUserSystemRole")]
@@ -524,13 +740,26 @@ namespace CongThongTinSV.Controllers
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
             var list = MoodleLib.GetAdminUsers().Where(t => s.Contains(t.ID.ToString()) && Utility.InArray(t.ID_vai_tro, new char[] { ',' }, id_vai_tro));
+            var data = new Message();
 
             if (list.Count() != 0)
             {
-                MoodleLib.UnassignAdminUserSystemRole(list, id_vai_tro);
+                if (MoodleLib.UnassignAdminUserSystemRole(list, id_vai_tro) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi hủy quyền hệ thống của quản trị viên";
+                    data.state = "error";
+                }
+                else
+                {
+
+                    data.title = "Success";
+                    data.message = "Hủy quyền hệ thống của quản trị viên thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
         [Authorize(Roles = "MoodleUser.UnassignAdminUserAllSystemRoles")]
@@ -539,12 +768,26 @@ namespace CongThongTinSV.Controllers
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
             var list = MoodleLib.GetAdminUsers().Where(t => s.Contains(t.ID.ToString()) && t.ID_vai_tro != "");
 
+            var data = new Message();
+
             if (list.Count() != 0)
             {
-                MoodleLib.UnassignAdminUserAllSystemRoles(list);
+                if (MoodleLib.UnassignAdminUserAllSystemRoles(list) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi hủy tất cả quyền hệ thống của quản trị viên";
+                    data.state = "error";
+                }
+                else
+                {
+
+                    data.title = "Success";
+                    data.message = "Hủy tất cả quyền hệ thống của quản trị viên thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
         #endregion
 

@@ -19,21 +19,46 @@ namespace CongThongTinSV.Controllers
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
             var list = MoodleLib.GetQuizStudentGrades(quizid).Where(t => s.Contains(t.ID.ToString()) && t.Khac_diem).ToList();
+            var data = new Message();
 
             if (list.Count() != 0)
             {
-                MoodleLib.UpdateYGrades(list);
+                if (MoodleLib.UpdateYGrades(list) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi cập nhật điểm thi";
+                    data.state = "error";
+                }
+                else
+                {
+                    data.title = "Success";
+                    data.message = "Cập nhật điểm thi thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
         [Authorize(Roles = "MoodleQuiz.UpdateYGrades")]
         public ActionResult UpdateYGrade(string newgrade, string id_diem_thi="0")
         {
-            MoodleLib.UpdateYGrade(newgrade, id_diem_thi);
+            var data = new Message();
 
-            return View();
+            if (MoodleLib.UpdateYGrade(newgrade, id_diem_thi) == -1)
+            {
+                data.title = "Error";
+                data.message = "Lỗi khi cập nhật điểm thi";
+                data.state = "error";
+            }
+            else
+            {
+                data.title = "Success";
+                data.message = "Cập nhật điểm thi thành công";
+                data.state = "success";
+            }
+
+            return Json(data);
         }
 
         [Description("Xem danh sách các bài thi trắc nghiệm của khóa học bất kỳ")]

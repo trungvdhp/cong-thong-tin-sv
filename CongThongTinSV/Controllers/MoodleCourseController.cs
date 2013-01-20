@@ -43,13 +43,25 @@ namespace CongThongTinSV.Controllers
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
             var list = MoodleLib.GetCourses(id_hocky).Where(t => t.ID_moodle == 0 && s.Contains(t.ID.ToString()));
+            var data = new Message();
 
             if (list.Count() != 0)
             {
-                MoodleLib.CreateCourses(list);
+                if (MoodleLib.CreateCourses(list) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi tạo khóa học";
+                    data.state = "error";
+                }
+                else
+                {
+                    data.title = "Success";
+                    data.message = "Tạo khóa học thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
         [Description("Xóa các khóa học trên moodle")]
@@ -58,13 +70,25 @@ namespace CongThongTinSV.Controllers
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
             var list = MoodleLib.GetCourses(id_hocky).Where(t => t.ID_moodle > 0 && s.Contains(t.ID.ToString()));
+            var data = new Message();
 
             if (list.Count() != 0)
             {
-                 MoodleLib.DeleteCourses(list);
+                if (MoodleLib.DeleteCourses(list) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi xóa khóa học";
+                    data.state = "error";
+                }
+                else
+                {
+                    data.title = "Success";
+                    data.message = "Xóa khóa học thành công";
+                    data.state = "success";
+                }
             }
-           
-            return View();
+
+            return Json(data);
         }
 
         [Description("Xem bảng điểm tổng kết khóa học tôi được ghi danh")]

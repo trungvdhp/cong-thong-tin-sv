@@ -68,7 +68,7 @@ function checkCells(selectedVals, master, childCol) {
     }
 
     // processing action with message and complete function ajax
-    function processing(action, mess, func) {
+    function processing(url, mess, func) {
         $.blockUI({
             message: mess,
             css: {
@@ -82,18 +82,37 @@ function checkCells(selectedVals, master, childCol) {
             }
         });
 
-        $.ajax({
-            url: action,
-            //success: ,
-            complete: function (e) {
-                func();
-                $.unblockUI();
+        //url, data, callback, type 
+        $.post(url,
+            null,
+            function (data) {
+                if (data.state == "error" || data.state == "warning") {
+                    $().toastmessage('showToast', {
+                        text: data.message,
+                        sticky: true,
+                        position: 'middle-center',
+                        type: data.state,
+                        close: function () {
+                            func();
+                            $.unblockUI();
+                        }
+                    });
+                }
+                else if (data.state == "success" || data.state == "notice") {
+                    $().toastmessage('showToast', {
+                        text: data.message,
+                        sticky: false,
+                        position: 'middle-center',
+                        type: data.state,
+                        close: function () {
+                            func();
+                            $.unblockUI();
+                        }
+                    });
+                }
             },
-            error: function (e) {
-                Error(e.error);
-            },
-            cache: false
-        });
+            'json'
+       );
     }
 
     //page back

@@ -47,22 +47,47 @@ namespace CongThongTinSV.Controllers
                 ID_lop_tc = id_lop_tc
             });
 
-            MoodleLib.CreateGroups(list);
+            var data = new Message();
 
-            return View();
+            if ( MoodleLib.CreateGroups(list) == -1)
+            {
+                data.title = "Error";
+                data.message = "Lỗi khi tạo nhóm học viên";
+                data.state = "error";
+            }
+            else
+            {
+                data.title = "Success";
+                data.message = "Tạo nhóm học viên thành công";
+                data.state = "success";
+            } 
+
+            return Json(data);
         }
 
         [Authorize(Roles = "MoodleGroup.DeleteGroups")]
         public ActionResult DeleteGroups(string selectedVals)
         {
             IEnumerable<string> list = selectedVals.Split(new char[] { ',' });
+            var data = new Message();
 
             if (list.Count() != 0)
             {
-                MoodleLib.DeleteGroups(list);
+                if (MoodleLib.DeleteGroups(list) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi xóa nhóm học viên";
+                    data.state = "error";
+                }
+                else
+                {
+                    data.title = "Success";
+                    data.message = "Xóa nhóm học viên thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
         [Authorize(Roles = "MoodleGroup.AddGroupMembers")]
@@ -70,13 +95,25 @@ namespace CongThongTinSV.Controllers
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
             var list = MoodleLib.GetEnrolStudents(id_lop_tc).Where(t => t.Trang_thai == true && s.Contains(t.ID.ToString()) && t.Ten_nhom == "");
+            var data = new Message();
 
             if (list.Count() != 0)
             {
-                MoodleLib.AddGroupMembers(list, id_nhom);
+                if (MoodleLib.AddGroupMembers(list, id_nhom) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi thêm thành viên vào nhóm";
+                    data.state = "error";
+                }
+                else
+                {
+                    data.title = "Success";
+                    data.message = "Thêm thành viên vào nhóm thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
         [Authorize(Roles = "MoodleGroup.DeleteGroupMembers")]
@@ -84,13 +121,25 @@ namespace CongThongTinSV.Controllers
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
             var list = MoodleLib.GetEnrolStudents(id_lop_tc).Where(t => s.Contains(t.ID.ToString()) && t.ID_nhom.ToString() == id_nhom);
+            var data = new Message();
 
             if (list.Count() != 0)
             {
-                MoodleLib.DeleteGroupMembers(list, id_nhom);
+                if (MoodleLib.DeleteGroupMembers(list, id_nhom) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi bớt các thành viên khỏi nhóm";
+                    data.state = "error";
+                }
+                else
+                {
+                    data.title = "Success";
+                    data.message = "Bớt các thành viên khỏi nhóm thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
         #endregion
 
@@ -116,21 +165,47 @@ namespace CongThongTinSV.Controllers
                 ID_lop_tc = id_lop_tc
             });
 
-            MoodleLib.CreateGroupings(list);
+            var data = new Message();
 
-            return View();
+            if (MoodleLib.CreateGroupings(list) == -1)
+            {
+                data.title = "Error";
+                data.message = "Lỗi khi tạo tổ nhóm học viên";
+                data.state = "error";
+            }
+            else
+            {
+                data.title = "Success";
+                data.message = "Tạo tổ nhóm học viên thành công";
+                data.state = "success";
+            }
+
+            return Json(data);
         }
 
         [Authorize(Roles = "MoodleGroup.DeleteGroupings")]
         public ActionResult DeleteGroupings(string selectedVals)
         {
             IEnumerable<string> list = selectedVals.Split(new char[] { ',' });
+            var data = new Message();
 
             if (list.Count() != 0)
             {
-                MoodleLib.DeleteGroupings(list);
+                if (MoodleLib.DeleteGroupings(list) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi xóa tổ nhóm học viên";
+                    data.state = "error";
+                }
+                else
+                {
+                    data.title = "Success";
+                    data.message = "Xóa nhóm tổ nhóm học viên thành công";
+                    data.state = "success";
+                }
             }
-            return View();
+
+            return Json(data);
         }
 
         [Authorize(Roles = "MoodleGroup.UpdateGrouping")]
@@ -144,9 +219,22 @@ namespace CongThongTinSV.Controllers
                 Mo_ta = mo_ta
             });
 
-            MoodleLib.UpdateGroupings(list);
+            var data = new Message();
 
-            return View();
+            if (MoodleLib.UpdateGroupings(list) == -1)
+            {
+                data.title = "Error";
+                data.message = "Lỗi khi cập nhật tổ nhóm học viên";
+                data.state = "error";
+            }
+            else
+            {
+                data.title = "Success";
+                data.message = "Cập nhật tổ nhóm học viên thành công";
+                data.state = "success";
+            }
+
+            return Json(data);
         }
 
         [Authorize(Roles = "MoodleGroup.AssignGrouping")]
@@ -154,13 +242,25 @@ namespace CongThongTinSV.Controllers
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
             var list = MoodleLib.GetGroups(id_lop_tc).Where(t => t.ID_to == 0 && s.Contains(t.ID_nhom.ToString()));
+            var data = new Message();
 
             if (list.Count() != 0)
             {
-                MoodleLib.AssignGrouping(list, id_to);
+                if (MoodleLib.AssignGrouping(list, id_to) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi thêm các nhóm học viên vào tổ";
+                    data.state = "error";
+                }
+                else
+                {
+                    data.title = "Success";
+                    data.message = "Thêm các nhóm học viên vào tổ thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
         [Authorize(Roles = "MoodleGroup.UnassignGrouping")]
@@ -169,12 +269,25 @@ namespace CongThongTinSV.Controllers
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
             var list = MoodleLib.GetGroups(id_lop_tc).Where(t => t.ID_to.ToString() == id_to && s.Contains(t.ID_nhom.ToString()));
 
+            var data = new Message();
+
             if (list.Count() != 0)
             {
-                MoodleLib.UnassignGrouping(list, id_to);
+                if (MoodleLib.UnassignGrouping(list, id_to) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi bớt các nhóm học viên khỏi tổ";
+                    data.state = "error";
+                }
+                else
+                {
+                    data.title = "Success";
+                    data.message = "Bớt các nhóm học viên khỏi tổ thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
         #endregion
     }

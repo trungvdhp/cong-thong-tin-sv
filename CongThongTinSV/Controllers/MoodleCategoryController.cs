@@ -43,13 +43,25 @@ namespace CongThongTinSV.Controllers
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
             var list = MoodleLib.GetSemesters().Where(t => t.ID_moodle == 0 && s.Contains(t.ID.ToString()));
+            var data = new Message();
 
             if (list.Count() != 0)
             {
-                MoodleLib.CreateSemesters(list);
+                if (MoodleLib.CreateSemesters(list) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi tạo danh mục học kỳ";
+                    data.state = "error";
+                }
+                else
+                {
+                    data.title = "Success";
+                    data.message = "Tạo danh mục học kỳ thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
 
         [Description("Xóa các học kỳ")]
@@ -58,13 +70,25 @@ namespace CongThongTinSV.Controllers
         {
             IEnumerable<string> s = selectedVals.Split(new char[] { ',' });
             var list = MoodleLib.GetSemesters().Where(t => t.ID_moodle > 0 && s.Contains(t.ID.ToString()));
+            var data = new Message();
 
             if (list.Count() != 0)
             {
-                 MoodleLib.DeleteSemesters(list);
+                if (MoodleLib.DeleteSemesters(list) == -1)
+                {
+                    data.title = "Error";
+                    data.message = "Lỗi khi xóa danh mục học kỳ";
+                    data.state = "error";
+                }
+                else
+                {
+                    data.title = "Success";
+                    data.message = "Xóa danh mục học kỳ thành công";
+                    data.state = "success";
+                }
             }
 
-            return View();
+            return Json(data);
         }
     }
 }
