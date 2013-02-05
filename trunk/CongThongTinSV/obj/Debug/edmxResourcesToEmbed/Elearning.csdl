@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="moodleModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="MoodleEntities" p1:LazyLoadingEnabled="true">
-    <EntitySet Name="fit_course" EntityType="moodleModel.fit_course" />
     <EntitySet Name="fit_enrol" EntityType="moodleModel.fit_enrol" />
     <EntitySet Name="fit_external_services" EntityType="moodleModel.fit_external_services" />
     <EntitySet Name="fit_grade_grades" EntityType="moodleModel.fit_grade_grades" />
@@ -22,7 +21,6 @@
     <EntitySet Name="fit_message_contacts" EntityType="moodleModel.fit_message_contacts" />
     <EntitySet Name="fit_message_read" EntityType="moodleModel.fit_message_read" />
     <EntitySet Name="fit_message_working" EntityType="moodleModel.fit_message_working" />
-    <EntitySet Name="fit_user" EntityType="moodleModel.fit_user" />
     <EntitySet Name="fit_user_enrolments" EntityType="moodleModel.fit_user_enrolments" />
     <EntitySet Name="fit_role" EntityType="moodleModel.fit_role" />
     <EntitySet Name="fit_role_context_levels" EntityType="moodleModel.fit_role_context_levels" />
@@ -41,46 +39,16 @@
     <EntitySet Name="fit_role_assignments" EntityType="moodleModel.fit_role_assignments" />
     <EntitySet Name="fit_user_info_data" EntityType="moodleModel.fit_user_info_data" />
     <EntitySet Name="fit_user_info_field" EntityType="moodleModel.fit_user_info_field" />
+    <EntitySet Name="fit_question" EntityType="moodleModel.fit_question" />
+    <EntitySet Name="fit_question_answers" EntityType="moodleModel.fit_question_answers" />
+    <EntitySet Name="fit_question_attempt_step_data" EntityType="moodleModel.fit_question_attempt_step_data" />
+    <EntitySet Name="fit_question_attempt_steps" EntityType="moodleModel.fit_question_attempt_steps" />
+    <EntitySet Name="fit_question_attempts" EntityType="moodleModel.fit_question_attempts" />
+    <EntitySet Name="fit_user" EntityType="moodleModel.fit_user" />
+    <EntitySet Name="fit_course" EntityType="moodleModel.fit_course" />
+    <EntitySet Name="fit_files" EntityType="moodleModel.fit_files" />
+    <EntitySet Name="fit_files_reference" EntityType="moodleModel.fit_files_reference" />
   </EntityContainer>
-  <EntityType Name="fit_course">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-    <Property Name="category" Type="Int64" Nullable="false" />
-    <Property Name="sortorder" Type="Int64" Nullable="false" />
-    <Property Name="fullname" Type="String" Nullable="false" MaxLength="254" Unicode="false" FixedLength="false" />
-    <Property Name="shortname" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
-    <Property Name="idnumber" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="summary" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-    <Property Name="summaryformat" Type="SByte" Nullable="false" />
-    <Property Name="format" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
-    <Property Name="showgrades" Type="SByte" Nullable="false" />
-    <Property Name="sectioncache" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-    <Property Name="modinfo" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-    <Property Name="newsitems" Type="Int32" Nullable="false" />
-    <Property Name="startdate" Type="Int64" Nullable="false" />
-    <Property Name="numsections" Type="Int32" Nullable="false" />
-    <Property Name="marker" Type="Int64" Nullable="false" />
-    <Property Name="maxbytes" Type="Int64" Nullable="false" />
-    <Property Name="legacyfiles" Type="Int16" Nullable="false" />
-    <Property Name="showreports" Type="Int16" Nullable="false" />
-    <Property Name="visible" Type="Boolean" Nullable="false" />
-    <Property Name="visibleold" Type="Boolean" Nullable="false" />
-    <Property Name="hiddensections" Type="SByte" Nullable="false" />
-    <Property Name="groupmode" Type="Int16" Nullable="false" />
-    <Property Name="groupmodeforce" Type="Int16" Nullable="false" />
-    <Property Name="defaultgroupingid" Type="Int64" Nullable="false" />
-    <Property Name="lang" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
-    <Property Name="theme" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="timecreated" Type="Int64" Nullable="false" />
-    <Property Name="timemodified" Type="Int64" Nullable="false" />
-    <Property Name="requested" Type="Boolean" Nullable="false" />
-    <Property Name="enablecompletion" Type="Boolean" Nullable="false" />
-    <Property Name="completionstartonenrol" Type="Boolean" Nullable="false" />
-    <Property Name="completionnotify" Type="Boolean" Nullable="false" />
-    <Property Name="coursedisplay" Type="SByte" Nullable="false" />
-  </EntityType>
   <EntityType Name="fit_enrol">
     <Key>
       <PropertyRef Name="id" />
@@ -113,6 +81,13 @@
     <Property Name="customtext2" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="timecreated" Type="Int64" Nullable="false" />
     <Property Name="timemodified" Type="Int64" Nullable="false" />
+    <Property Type="Int64" Name="customint5" />
+    <Property Type="Int64" Name="customint6" />
+    <Property Type="Int64" Name="customint7" />
+    <Property Type="Int64" Name="customint8" />
+    <Property Type="String" Name="customchar3" MaxLength="1333" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="customtext3" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="customtext4" MaxLength="Max" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="fit_external_services">
     <Key>
@@ -430,61 +405,6 @@
     <Property Name="unreadmessageid" Type="Int64" Nullable="false" />
     <Property Name="processorid" Type="Int64" Nullable="false" />
   </EntityType>
-  <EntityType Name="fit_user">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-    <Property Name="auth" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-    <Property Name="confirmed" Type="Boolean" Nullable="false" />
-    <Property Name="policyagreed" Type="Boolean" Nullable="false" />
-    <Property Name="deleted" Type="Boolean" Nullable="false" />
-    <Property Name="suspended" Type="Boolean" Nullable="false" />
-    <Property Name="mnethostid" Type="Int64" Nullable="false" />
-    <Property Name="username" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="password" Type="String" Nullable="false" MaxLength="32" Unicode="false" FixedLength="false" />
-    <Property Name="idnumber" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
-    <Property Name="firstname" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="lastname" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="email" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="emailstop" Type="Boolean" Nullable="false" />
-    <Property Name="icq" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
-    <Property Name="skype" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="yahoo" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="aim" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="msn" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="phone1" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-    <Property Name="phone2" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-    <Property Name="institution" Type="String" Nullable="false" MaxLength="40" Unicode="false" FixedLength="false" />
-    <Property Name="department" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
-    <Property Name="address" Type="String" Nullable="false" MaxLength="70" Unicode="false" FixedLength="false" />
-    <Property Name="city" Type="String" Nullable="false" MaxLength="120" Unicode="false" FixedLength="false" />
-    <Property Name="country" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="false" />
-    <Property Name="lang" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
-    <Property Name="theme" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="timezone" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="firstaccess" Type="Int64" Nullable="false" />
-    <Property Name="lastaccess" Type="Int64" Nullable="false" />
-    <Property Name="lastlogin" Type="Int64" Nullable="false" />
-    <Property Name="currentlogin" Type="Int64" Nullable="false" />
-    <Property Name="lastip" Type="String" Nullable="false" MaxLength="45" Unicode="false" FixedLength="false" />
-    <Property Name="secret" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
-    <Property Name="picture" Type="Int64" Nullable="false" />
-    <Property Name="url" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
-    <Property Name="description" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-    <Property Name="descriptionformat" Type="SByte" Nullable="false" />
-    <Property Name="mailformat" Type="Boolean" Nullable="false" />
-    <Property Name="maildigest" Type="Boolean" Nullable="false" />
-    <Property Name="maildisplay" Type="SByte" Nullable="false" />
-    <Property Name="htmleditor" Type="Boolean" Nullable="false" />
-    <Property Name="autosubscribe" Type="Boolean" Nullable="false" />
-    <Property Name="trackforums" Type="Boolean" Nullable="false" />
-    <Property Name="timecreated" Type="Int64" Nullable="false" />
-    <Property Name="timemodified" Type="Int64" Nullable="false" />
-    <Property Name="trustbitmask" Type="Int64" Nullable="false" />
-    <Property Name="imagealt" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
-    <Property Name="screenreader" Type="Boolean" Nullable="false" />
-  </EntityType>
   <EntityType Name="fit_user_enrolments">
     <Key>
       <PropertyRef Name="id" />
@@ -599,6 +519,7 @@
     <Property Type="String" Name="state" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
     <Property Type="Int16" Name="needsupgradetonewqe" Nullable="false" />
     <Property Type="Int64" Name="currentpage" Nullable="false" />
+    <Property Type="Int64" Name="timecheckstate" />
   </EntityType>
   <EntityType Name="fit_quiz_grades">
     <Key>
@@ -757,5 +678,208 @@
     <Property Type="String" Name="param3" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Type="String" Name="param4" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Type="String" Name="param5" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="fit_question">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="category" Nullable="false" />
+    <Property Type="Int64" Name="parent" Nullable="false" />
+    <Property Type="String" Name="name" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="questiontext" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="SByte" Name="questiontextformat" Nullable="false" />
+    <Property Type="String" Name="generalfeedback" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="SByte" Name="generalfeedbackformat" Nullable="false" />
+    <Property Type="Decimal" Name="defaultmark" Nullable="false" Precision="12" Scale="7" />
+    <Property Type="Decimal" Name="penalty" Nullable="false" Precision="12" Scale="7" />
+    <Property Type="String" Name="qtype" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="Int64" Name="length" Nullable="false" />
+    <Property Type="String" Name="stamp" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="version" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="Boolean" Name="hidden" Nullable="false" />
+    <Property Type="Int64" Name="timecreated" Nullable="false" />
+    <Property Type="Int64" Name="timemodified" Nullable="false" />
+    <Property Type="Int64" Name="createdby" />
+    <Property Type="Int64" Name="modifiedby" />
+  </EntityType>
+  <EntityType Name="fit_question_answers">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="question" Nullable="false" />
+    <Property Type="String" Name="answer" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="SByte" Name="answerformat" Nullable="false" />
+    <Property Type="Decimal" Name="fraction" Nullable="false" Precision="12" Scale="7" />
+    <Property Type="String" Name="feedback" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="SByte" Name="feedbackformat" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fit_question_attempt_step_data">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="attemptstepid" Nullable="false" />
+    <Property Type="String" Name="name" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="value" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="fit_question_attempt_steps">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="questionattemptid" Nullable="false" />
+    <Property Type="Int64" Name="sequencenumber" Nullable="false" />
+    <Property Type="String" Name="state" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+    <Property Type="Decimal" Name="fraction" Precision="12" Scale="7" />
+    <Property Type="Int64" Name="timecreated" Nullable="false" />
+    <Property Type="Int64" Name="userid" />
+  </EntityType>
+  <EntityType Name="fit_question_attempts">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="questionusageid" Nullable="false" />
+    <Property Type="Int64" Name="slot" Nullable="false" />
+    <Property Type="String" Name="behaviour" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Type="Int64" Name="questionid" Nullable="false" />
+    <Property Type="Int64" Name="variant" Nullable="false" />
+    <Property Type="Decimal" Name="maxmark" Nullable="false" Precision="12" Scale="7" />
+    <Property Type="Decimal" Name="minfraction" Nullable="false" Precision="12" Scale="7" />
+    <Property Type="Boolean" Name="flagged" Nullable="false" />
+    <Property Type="String" Name="questionsummary" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="rightanswer" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="responsesummary" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Int64" Name="timemodified" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fit_user">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="auth" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="Boolean" Name="confirmed" Nullable="false" />
+    <Property Type="Boolean" Name="policyagreed" Nullable="false" />
+    <Property Type="Boolean" Name="deleted" Nullable="false" />
+    <Property Type="Boolean" Name="suspended" Nullable="false" />
+    <Property Type="Int64" Name="mnethostid" Nullable="false" />
+    <Property Type="String" Name="username" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="password" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="idnumber" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="firstname" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="lastname" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="email" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="Boolean" Name="emailstop" Nullable="false" />
+    <Property Type="String" Name="icq" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="skype" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="yahoo" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="aim" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="msn" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="phone1" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="phone2" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="institution" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="department" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="address" Nullable="false" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="city" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="country" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="lang" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="theme" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="timezone" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="Int64" Name="firstaccess" Nullable="false" />
+    <Property Type="Int64" Name="lastaccess" Nullable="false" />
+    <Property Type="Int64" Name="lastlogin" Nullable="false" />
+    <Property Type="Int64" Name="currentlogin" Nullable="false" />
+    <Property Type="String" Name="lastip" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="secret" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Type="Int64" Name="picture" Nullable="false" />
+    <Property Type="String" Name="url" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="description" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="SByte" Name="descriptionformat" Nullable="false" />
+    <Property Type="Boolean" Name="mailformat" Nullable="false" />
+    <Property Type="Boolean" Name="maildigest" Nullable="false" />
+    <Property Type="SByte" Name="maildisplay" Nullable="false" />
+    <Property Type="Boolean" Name="htmleditor" Nullable="false" />
+    <Property Type="Boolean" Name="autosubscribe" Nullable="false" />
+    <Property Type="Boolean" Name="trackforums" Nullable="false" />
+    <Property Type="Int64" Name="timecreated" Nullable="false" />
+    <Property Type="Int64" Name="timemodified" Nullable="false" />
+    <Property Type="Int64" Name="trustbitmask" Nullable="false" />
+    <Property Type="String" Name="imagealt" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="fit_course">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="category" Nullable="false" />
+    <Property Type="Int64" Name="sortorder" Nullable="false" />
+    <Property Type="String" Name="fullname" Nullable="false" MaxLength="254" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="shortname" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="idnumber" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="summary" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="SByte" Name="summaryformat" Nullable="false" />
+    <Property Type="String" Name="format" Nullable="false" MaxLength="21" FixedLength="false" Unicode="false" />
+    <Property Type="SByte" Name="showgrades" Nullable="false" />
+    <Property Type="String" Name="sectioncache" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="modinfo" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="newsitems" Nullable="false" />
+    <Property Type="Int64" Name="startdate" Nullable="false" />
+    <Property Type="Int64" Name="marker" Nullable="false" />
+    <Property Type="Int64" Name="maxbytes" Nullable="false" />
+    <Property Type="Int16" Name="legacyfiles" Nullable="false" />
+    <Property Type="Int16" Name="showreports" Nullable="false" />
+    <Property Type="Boolean" Name="visible" Nullable="false" />
+    <Property Type="Boolean" Name="visibleold" Nullable="false" />
+    <Property Type="Int16" Name="groupmode" Nullable="false" />
+    <Property Type="Int16" Name="groupmodeforce" Nullable="false" />
+    <Property Type="Int64" Name="defaultgroupingid" Nullable="false" />
+    <Property Type="String" Name="lang" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="theme" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Int64" Name="timecreated" Nullable="false" />
+    <Property Type="Int64" Name="timemodified" Nullable="false" />
+    <Property Type="Boolean" Name="requested" Nullable="false" />
+    <Property Type="Boolean" Name="enablecompletion" Nullable="false" />
+    <Property Type="Boolean" Name="completionstartonenrol" Nullable="false" />
+    <Property Type="Boolean" Name="completionnotify" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fit_files">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="contenthash" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="pathnamehash" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Type="Int64" Name="contextid" Nullable="false" />
+    <Property Type="String" Name="component" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="filearea" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Int64" Name="itemid" Nullable="false" />
+    <Property Type="String" Name="filepath" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="filename" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="Int64" Name="userid" />
+    <Property Type="Int64" Name="filesize" Nullable="false" />
+    <Property Type="String" Name="mimetype" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="Int64" Name="status" Nullable="false" />
+    <Property Type="String" Name="source" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="author" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="license" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="Int64" Name="timecreated" Nullable="false" />
+    <Property Type="Int64" Name="timemodified" Nullable="false" />
+    <Property Type="Int64" Name="sortorder" Nullable="false" />
+    <Property Type="Int64" Name="referencefileid" />
+    <Property Type="Int64" Name="referencelastsync" />
+    <Property Type="Int64" Name="referencelifetime" />
+  </EntityType>
+  <EntityType Name="fit_files_reference">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="repositoryid" Nullable="false" />
+    <Property Type="Int64" Name="lastsync" />
+    <Property Type="Int64" Name="lifetime" />
+    <Property Type="String" Name="reference" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="referencehash" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
   </EntityType>
 </Schema>

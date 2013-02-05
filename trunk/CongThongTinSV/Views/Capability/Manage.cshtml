@@ -45,7 +45,6 @@
     .DataSource(
         dataSource => dataSource
             .Ajax()
-            .Events(events => events.Error("error_handler"))
             .Model(model =>
             {
                 model.Id(p => p.ID_quyen);
@@ -55,6 +54,7 @@
             .Create("CreateCapability", "Capability")
             .Update("UpdateCapability", "Capability")
             .Destroy("DeleteCapability", "Capability")
+            .Events(e => e.Sync("gridRefresh").Error("onError"))
             .PageSize(50)
     )
 )
@@ -65,9 +65,9 @@
 <script type="text/javascript">
     var selectedVals = [];
 
-    function error_handler(e) {
+    function onError(e) {
         if (e.errors) {
-            var message = "Errors:\n";
+            var message = "";
             $.each(e.errors, function (key, value) {
                 if ('errors' in value) {
                     $.each(value.errors, function () {
@@ -75,7 +75,8 @@
                     });
                 }
             });
-            alert(message);
+
+            showMessage("error", message, true, null);
         }
     }
 
@@ -86,6 +87,7 @@
     // on data bound, check checkboxes
     function onDataBound(e) {
         checkCells(selectedVals, '#masterCheckBox', '#Grid :checkbox');
+        resizeGrid("#Grid");
     }
     // on click checkbox cell in a row
     $(function () {

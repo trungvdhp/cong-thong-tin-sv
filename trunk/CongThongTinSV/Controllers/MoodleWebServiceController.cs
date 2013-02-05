@@ -40,7 +40,10 @@ namespace CongThongTinSV.Controllers
         {
             if (webservice != null && ModelState.IsValid)
             {
-                MoodleLib.CreateWebService(webservice);
+                if (MoodleLib.CreateWebService(webservice) == -1)
+                {
+                    ModelState.AddModelError("Error", "Lỗi khi tạo mới dịch vụ: " + webservice.Ten_dv);
+                }
             }
 
             return Json(ModelState.ToDataSourceResult());
@@ -52,7 +55,10 @@ namespace CongThongTinSV.Controllers
         {
             if (webservice != null)
             {
-                MoodleLib.DeleteWebService(webservice);
+                if(MoodleLib.DeleteWebService(webservice) == -1)
+                {
+                    ModelState.AddModelError("Error", "Lỗi khi xóa dịch vụ: " + webservice.Ten_dv);
+                }
             }
 
             return Json(ModelState.ToDataSourceResult());
@@ -89,7 +95,10 @@ namespace CongThongTinSV.Controllers
         {
             if (webservice != null && ModelState.IsValid)
             {
-                MoodleLib.UpdateWebService(webservice);
+                if (!MoodleLib.UpdateWebService(webservice))
+                {
+                    ModelState.AddModelError("Error", "Lỗi khi cập nhật dịch vụ: " + webservice.Ten_dv);
+                }
             }
 
             return Json(ModelState.ToDataSourceResult());

@@ -43,6 +43,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Kendo.Mvc, Version=2012.3.1114.340, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Telerik\Kendo UI Trial Q3 2012\wrappers\aspnetmvc\Binaries\Mvc3\Kendo.Mvc.dll</HintPath>
@@ -189,6 +192,7 @@
     <Compile Include="Controllers\MoodleCategoryController.cs" />
     <Compile Include="Controllers\MoodleCourseController.cs" />
     <Compile Include="Controllers\MoodleEnrolController.cs" />
+    <Compile Include="Controllers\MoodleFileController.cs" />
     <Compile Include="Controllers\MoodleQuizController.cs" />
     <Compile Include="Controllers\MoodleGroupController.cs" />
     <Compile Include="Controllers\MoodleMessageController.cs" />
@@ -245,6 +249,12 @@
     <Compile Include="fit_external_services.cs">
       <DependentUpon>Elearning.tt</DependentUpon>
     </Compile>
+    <Compile Include="fit_files.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_files_reference.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
     <Compile Include="fit_grade_grades.cs">
       <DependentUpon>Elearning.tt</DependentUpon>
     </Compile>
@@ -297,6 +307,21 @@
       <DependentUpon>Elearning.tt</DependentUpon>
     </Compile>
     <Compile Include="fit_message_working.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_question.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_question_answers.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_question_attempts.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_question_attempt_steps.cs">
+      <DependentUpon>Elearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fit_question_attempt_step_data.cs">
       <DependentUpon>Elearning.tt</DependentUpon>
     </Compile>
     <Compile Include="fit_quiz.cs">
@@ -379,6 +404,7 @@
     <Compile Include="Models\MoodleCategoryModel.cs" />
     <Compile Include="Models\MoodleCourseModel.cs" />
     <Compile Include="Models\MoodleEnrolModel.cs" />
+    <Compile Include="Models\MoodleFileModel.cs" />
     <Compile Include="Models\MoodleQuizModel.cs" />
     <Compile Include="Models\MoodleGroupModel.cs" />
     <Compile Include="Models\MoodleRoleModel.cs" />
@@ -640,6 +666,7 @@
     <Content Include="Content\kendo\2012.3.1114\Uniform\slider-v.gif" />
     <Content Include="Content\kendo\2012.3.1114\Uniform\sprite.png" />
     <Content Include="Images\close.gif" />
+    <Content Include="Images\default-image.gif" />
     <Content Include="Images\error-red.png" />
     <Content Include="Images\notice-blue.png" />
     <Content Include="Images\success-green.png" />
@@ -744,7 +771,6 @@
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Images\accept.png" />
     <Content Include="Images\add.png" />
-    <Content Include="Images\bg-max.jpg" />
     <Content Include="Images\check.png" />
     <Content Include="Images\database-add.png" />
     <Content Include="Images\database-delete.png" />
@@ -904,7 +930,7 @@
     <Content Include="Views\MoodleUser\ManageStudent.cshtml" />
     <Content Include="Views\MoodleCategory\ManageSemester.cshtml" />
     <Content Include="Views\MoodleCourse\Manage.cshtml" />
-    <Content Include="Views\TaiLieu\Upload.cshtml" />
+    <Content Include="Views\ThongBao\TaiLieu\Upload.cshtml" />
     <Content Include="Views\TraCuu\SinhVien.cshtml" />
     <Content Include="Views\TraCuu\DiemHocTap.cshtml" />
     <Content Include="Views\MoodleEnrol\EnrolStudent.cshtml" />
@@ -916,14 +942,13 @@
     </Content>
     <Content Include="Views\MoodleEnrol\EnrolTeacher.cshtml" />
     <Content Include="Views\MoodleUser\ChangePassword.cshtml" />
-    <Content Include="Views\TaiLieu\Index.cshtml" />
+    <Content Include="Views\ThongBao\TaiLieu\Index.cshtml" />
     <Content Include="Views\MoodleUser\UserProfile.cshtml">
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\ThongBao\Gui.cshtml" />
     <Content Include="Views\MoodleQuiz\StudentQuizGrade.cshtml" />
     <Content Include="Views\MoodleUser\UserCourseProfile.cshtml" />
-    <Content Include="Views\MoodleQuiz\MyQuizDetailResult.cshtml" />
     <Content Include="Views\MoodleQuiz\QuizStudentGrade.cshtml" />
     <Content Include="Views\MoodleCourse\CourseStudentGrade.cshtml" />
     <Content Include="Views\MoodleUser\ManageAdminUser.cshtml" />
@@ -936,8 +961,8 @@
     <Content Include="Views\MoodleQuiz\MyQuizGrade.cshtml" />
     <Content Include="Views\MoodleCourse\StudentCourseGrade.cshtml" />
     <Content Include="Views\MoodleQuiz\QuizList.cshtml" />
-    <Content Include="Views\TaiLieu\ChiaSe.cshtml" />
-    <Content Include="Views\TaiLieu\Sua.cshtml" />
+    <Content Include="Views\ThongBao\TaiLieu\ChiaSe.cshtml" />
+    <Content Include="Views\ThongBao\TaiLieu\Sua.cshtml" />
     <Content Include="Views\MoodleUser\SearchStudent.cshtml" />
     <Content Include="Views\MoodleUser\SearchTeacher.cshtml">
       <SubType>Code</SubType>
@@ -946,6 +971,8 @@
     <Content Include="Views\MoodleCourse\MyCourseStudentGrade.cshtml" />
     <Content Include="Views\MoodleEnrol\EnrolAdminUser.cshtml" />
     <Content Include="Views\MoodleQuiz\ExportQuizGradeToReport.cshtml" />
+    <Content Include="Views\MoodleQuiz\StudentQuizReview.cshtml" />
+    <Content Include="Views\MoodleQuiz\MyQuizReview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Temp\Excel\" />

@@ -1,0 +1,102 @@
+﻿@using CongThongTinSV.Models
+@using CongThongTinSV.App_Lib
+@{
+    ViewBag.Title = ViewBag.QuizName;
+    string title = ViewBag.CourseName + " - " + ViewBag.QuizName;
+}
+
+<h2>@title</h2>
+@{
+    if(ViewBag.Error != "")
+    {
+        <h2 class="error">Lỗi: @ViewBag.Error</h2>
+    }
+    else
+    {
+        MoodleQuizAttempt attempt = (MoodleQuizAttempt)ViewBag.Attempt;
+        string hoten = attempt.Ho_dem + " " + attempt.Ten;
+        
+        <table class="generaltable generalbox quizreviewsummary">
+            <tbody>
+                <tr>
+                    <th class="cell" scope="row">Họ và tên</th>
+                    <td class="cell">@Html.ActionLink(hoten, "UserCourseProfile", "MoodleUser", routeValues: new { userid = attempt.ID, courseid = ViewBag.CourseID }, htmlAttributes: new { title = "Hồ sơ khóa học" })</td>
+                </tr>
+                <tr>
+                    <th class="cell" scope="row">Bắt đầu vào lúc</th>
+                    <td class="cell">@Utility.ConvertToString(attempt.Bat_dau, "dddd, dd MMMM yyyy, h:mm tt")</td>
+                </tr>
+                <tr>
+                    <th class="cell" scope="row">Kết thúc lúc</th>
+                    <td class="cell">@Utility.ConvertToString(attempt.Ket_thuc, "dddd, dd MMMM yyyy, h:mm tt")</td>
+
+                </tr>
+                <tr>
+                    <th class="cell" scope="row">Thời gian thực hiện</th>
+                    <td class="cell">@attempt.Thoi_gian_lam</td>
+                </tr>
+                @if(attempt.Qua_han != "0")
+                {
+                <tr>
+                    <th class="cell" scope="row">Quá hạn</th>
+                    <td class="cell">@attempt.Qua_han</td>
+                </tr>
+                }
+                <tr>
+                    <th class="cell" scope="row">Tổng điểm</th>
+                    <td class="cell">@attempt.Tong_diem</td>
+                </tr>
+                <tr>
+                    <th class="cell" scope="row">Điểm hệ 10</th>
+                    <td class="cell">@attempt.Diem_he_10</td>
+                </tr>
+                <tr>
+                    <th class="cell" scope="row">Điểm hệ 4</th>
+                    <td class="cell">@attempt.Diem_he_4</td>
+                </tr>
+            </tbody>
+        </table>
+        @(Html.Kendo().Grid<CongThongTinSV.Models.MoodleQuizQuestion>()
+        .Name("Grid")
+        .Columns(columns =>
+        {
+            columns.Bound(c => c.STT).Width(60)
+                .HtmlAttributes(new { style = "vertical-align: top"})
+                .ClientTemplate(
+                    "<b>Câu #= STT #</b>"
+                );
+            columns.Bound(c => c.Cau_hoi)
+                .ClientTemplate(
+                    "<div class='question'><div class='question-text'>#= Cau_hoi #</div><div class='answer'>#= Noi_dung #</div></div>"
+                );
+        })
+        .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50, 100 }).Refresh(true).Input(true).Numeric(false).Messages(m => { m.ItemsPerPage("dòng mỗi trang"); m.First("Trang đầu tiên"); m.Last("Trang cuối cùng"); m.Next("Trang sau"); m.Previous("Trang trước"); m.Refresh("Làm mới"); }))
+        .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
+        .Filterable()
+        .Scrollable()
+        //.Groupable()
+        .Resizable(r => r.Columns(true))
+        .Reorderable(ro => ro.Columns(true))
+        .Navigatable()
+        .HtmlAttributes(new { style = "height:auto" })
+        //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
+        //.Selectable(s => s.Mode(GridSelectionMode.Single))
+        .Events(e =>
+        {
+            e.DataBound("onDataBound");
+        })
+        .DataSource(
+            dataSource => dataSource
+                .Ajax()
+                .Read(read => read.Action("GetStudentQuizQuestions", "MoodleQuiz", new { userid = attempt.ID, quizid = ViewBag.QuizID }))
+                .PageSize(50)
+        )
+        //.ToolBar(toolbar => toolbar.Custom().Text("Xuất ra excel").Url("#").HtmlAttributes(new { onclick = "exportToExcel()", style= "float:right;"}))
+        );
+    }
+}
+<script type="text/javascript">
+    function onDataBound(e) {
+        resizeGrid("#Grid");
+    }
+</script>

@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
+using System.Web.Routing;
 using System.Web.Script.Serialization;
 using CongThongTinSV.Models;
+using HtmlAgilityPack;
 
 namespace CongThongTinSV.App_Lib
 {
@@ -377,6 +383,41 @@ namespace CongThongTinSV.App_Lib
 
             return q.Count() > 0;
         }
+
+        public static string ParseImageSource(string html, string _contextid, string _component, string _filearea, string _itemid, string _filepath)
+        {
+            List<string> imgScrs = new List<string>();
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(html);
+            var nodes = doc.DocumentNode.SelectNodes(@"//img[@src]");
+            if (nodes == null) return html;
+
+            foreach (var img in nodes)
+            {
+                HtmlAttribute att = img.Attributes["src"];
+                string _filename = att.Value.Substring(att.Value.LastIndexOf('/') + 1);
+                UrlHelper u = new UrlHelper(HttpContext.Current.Request.RequestContext);
+                var source = u.Action("GetFile", "MoodleFile", new RouteValueDictionary(new
+                {
+                    contextid = _contextid,
+                    component = _component,
+                    filearea = _filearea,
+                    itemid = _itemid,
+                    filepath = _filepath,
+                    filename = _filename
+                }));
+
+                att.Value = source;
+            }
+
+            MemoryStream memoryStream = new MemoryStream();
+            doc.Save(memoryStream);
+            memoryStream.Seek(0, System.IO.SeekOrigin.Begin);
+            StreamReader sr = new StreamReader(memoryStream);
+
+            return sr.ReadToEnd();
+        }
+
         #endregion
 
         #region MoodleSemester
@@ -2633,7 +2674,7 @@ namespace CongThongTinSV.App_Lib
                            DiemY_cu = diem == null ? null : (float?)diem.Diem_thi,
                            DiemY_moi = u.DiemY_moi,
                            DiemZ_moi = diem == null || u.DiemY_moi == null ? null : (float?)(0.3 * u.DiemX + 0.7 * (float)u.DiemY_moi),
-                           Diem_chu = Utility.ConvertGradeToText(diem == null || u.DiemY_moi == null ? null : (float?)(0.3 * u.DiemX + 0.7 * (float)u.DiemY_moi)),
+                           Diem_chu = Utility.Convert10ScaleToText(diem == null || u.DiemY_moi == null ? null : (float?)(0.3 * u.DiemX + 0.7 * (float)u.DiemY_moi)),
                            Khac_diem = diem == null || !u.DiemY_moi.HasValue ||
                                          (diem != null && u.DiemY_moi.HasValue && string.Format("{0:0.0}", diem.Diem_thi) == string.Format("{0:0.0}", u.DiemY_moi))
                                          ? false : true
@@ -2685,6 +2726,158 @@ namespace CongThongTinSV.App_Lib
                      };
 
             return rs;
+        }
+
+        public static IEnumerable<MoodleQuizQuestion> GetStudentQuizQuestions(string userid = "0", string quizid = "0")
+        {
+            List<MoodleQuizQuestion> list = new List<MoodleQuizQuestion>();
+            var quiz = GetQuizByID(quizid);
+
+            if(quiz == null) { return list; }
+
+            var course = GetCourseByQuiz(quiz);
+            string contextid = GetContextID("50", course.id.ToString()).ToString();
+            MoodleEntities mdb = new MoodleEntities();
+            long uid, qid;
+            long.TryParse(userid, out uid);
+            long.TryParse(quizid, out qid);
+            qid -= 10;
+            var attempt = mdb.fit_quiz_attempts.SingleOrDefault(t => t.userid == uid && t.quiz == qid);
+
+            if (attempt != null)
+            {
+                var slots = attempt.layout.Split(new char[] { ',' }).Select(long.Parse).ToList();
+                var questions = from q in mdb.fit_question
+                                join a in mdb.fit_question_attempts
+                                on q.id equals a.questionid
+                                where a.questionusageid == attempt.uniqueid
+                                //orderby preferences.IndexOf(a.slot)
+                                select new MoodleQuizQuestion
+                                {
+                                    ID = a.id,
+                                    ID_cau_hoi = a.questionid,
+                                    STT = a.slot,
+                                    Cau_hoi = q.questiontext,
+                                    Noi_dung = ""
+                                };
+ 
+                list = questions.AsEnumerable().OrderBy(t => slots.IndexOf(t.STT)).ToList();
+                int len = list.Count;
+
+                for(int i = 0; i < len; i++)
+                {
+                    long id = list[i].ID;
+                    long idch = list[i].ID_cau_hoi;
+
+                    list[i].STT = i + 1;
+                    list[i].Cau_hoi = ParseImageSource(list[i].Cau_hoi,
+                        contextid,
+                        "question",
+                        "questiontext",
+                        idch.ToString(),
+                        "/");
+
+                    var qids = (from step in mdb.fit_question_attempt_steps
+                                join step_data in mdb.fit_question_attempt_step_data
+                                on step.id equals step_data.attemptstepid
+                                where step.state == "todo" && step.questionattemptid == id
+                                select step_data.value)
+                              .FirstOrDefault()
+                              .Split(new char[] { ',' })
+                              .Select(long.Parse)
+                              .ToList();
+
+                    var answers = mdb.fit_question_answers
+                        .Where(t => t.question == idch)
+                        .AsEnumerable()
+                        .OrderBy(o => qids.IndexOf(o.id))
+                        .ToList();
+
+                    var answereds = (from step in mdb.fit_question_attempt_steps
+                                     join step_data in mdb.fit_question_attempt_step_data
+                                     on step.id equals step_data.attemptstepid
+                                     where step.state == "complete" && step.questionattemptid == id && step_data.name == "answer"
+                                     select step_data.value)
+                                    .FirstOrDefault()
+                                    .Split(new char[] { ',' })
+                                    .Select(int.Parse)
+                                    .ToList();
+
+                    int n = answers.Count;
+                    int m = answereds.Count;
+
+                    if (m > 0)
+                    {
+                        int k = 0;
+
+                        for (int j = 0; j < n; j++)
+                        {
+                            answers[j].answer = ParseImageSource(answers[j].answer,
+                            contextid,
+                            "question",
+                            "answer",
+                            answers[j].id.ToString(),
+                            "/");
+
+                            if (answers[j].fraction == 1)
+                            {
+                                for (k = 0; k < m; k++)
+                                {
+                                    if (j == answereds[k])
+                                    {
+                                        list[i].Noi_dung += "<div class='correct-my-answer'>" + "<div class='answer-item' >" + ((char)(j + 97)).ToString() + ".&nbsp</div><div class='answer-item' >" + answers[j].answer + "</div></div>";
+                                        break;
+                                    }
+                                }
+
+                                if(k == m)
+                                {
+                                    list[i].Noi_dung += "<div class='correct-answer'>" + "<div class='answer-item' >" + ((char)(j + 97)).ToString() + ".&nbsp</div><div class='answer-item' >" + answers[j].answer + "</div></div>";
+                                }
+                            }
+                            else
+                            {
+                                for (k = 0; k < m; k++)
+                                {
+                                    if (j == answereds[k])
+                                    {
+                                        list[i].Noi_dung += "<div class='incorrect-answer'>" + "<div class='answer-item' >" + ((char)(j + 97)).ToString() + ".&nbsp</div><div class='answer-item' >" + answers[j].answer + "</div></div>";
+                                        break;
+                                    }
+                                }
+
+                                if(k == m)
+                                {
+                                    list[i].Noi_dung += "<div class='normal-answer'>" + "<div class='answer-item' >" + ((char)(j + 97)).ToString() + ".&nbsp</div><div class='answer-item' >" + answers[j].answer + "</div></div>";
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int j = 0; j < n; j++)
+                        {
+                            answers[j].answer = ParseImageSource(answers[j].answer,
+                            contextid,
+                            "question",
+                            "answer",
+                            answers[j].id.ToString(),
+                            "/");
+
+                            if (answers[j].fraction == 1)
+                            {
+                                list[i].Noi_dung += "<div class='correct-answer'>" + "<div class='answer-item' >" + ((char)(j + 97)).ToString() + ".&nbsp</div><div class='answer-item' >" + answers[j].answer + "</div></div>";
+                            }
+                            else
+                            {
+                                list[i].Noi_dung += "<div class='normal-answer'>" + "<div class='answer-item' >" + ((char)(j + 97)).ToString() + ".&nbsp</div><div class='answer-item' >" + answers[j].answer + "</div></div>";
+                            }
+                        }
+                    }
+                }
+            }
+
+            return list;
         }
 
         public static ExcelExportor ExportQuizGradeToExcel(string exportFileName, string templateFileName, string exportSheetName, IEnumerable<MoodleQuizStudentGrade> grades, string courseid)
@@ -4419,7 +4612,7 @@ namespace CongThongTinSV.App_Lib
         /// </summary>
         /// <param name="webservice">WebService</param>
         /// <returns></returns>
-        public static int UpdateWebService(MoodleWebService webservice)
+        public static bool UpdateWebService(MoodleWebService webservice)
         {
             Entities db = new Entities();
             MOD_DichVu entity = db.MOD_DichVu.SingleOrDefault(t => t.ID_dv == webservice.ID_dv);
@@ -4429,17 +4622,18 @@ namespace CongThongTinSV.App_Lib
                 entity.Ten_dv = webservice.Ten_dv;
                 entity.Ten_rut_gon = webservice.Ten_rut_gon;
                 db.Entry(entity).State = System.Data.EntityState.Modified;
+
+                try
+                {
+                    db.SaveChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                }
             }
 
-            try
-            {
-                return db.SaveChanges();
-            }
-            catch (Exception)
-            {
-            }
-
-            return -1;
+            return false;
         }
 
         /// <summary>
@@ -4580,6 +4774,36 @@ namespace CongThongTinSV.App_Lib
             }
 
             return -1;
+        }
+        #endregion
+
+        #region MoodleFile
+        public static KeyValuePair<string, string> GetFileInfo(string contextid, string component, string filearea, string itemid, string filepath, string filename)
+        {
+            MoodleEntities mdb = new MoodleEntities();
+            string path = System.Web.HttpContext.Current.Server.MapPath("~") + "./images/default-image.gif";
+            string mimetype = "image/gif";
+            long context = 0;
+            long.TryParse(contextid, out context);
+            long item = 0;
+            long.TryParse(itemid, out item);
+            var file = mdb.fit_files.SingleOrDefault(t =>
+                t.contextid == context &&
+                t.component == component &&
+                t.filearea == filearea &&
+                t.itemid == item &&
+                t.filepath == filepath &&
+                t.filename == filename);
+
+            if (file != null)
+            {
+                path = WebConfigurationManager.AppSettings["ElearningDataUrl"] + file.contenthash.Substring(0, 2) 
+                    + "\\" + file.contenthash.Substring(2, 2)
+                    + "\\" + file.contenthash;
+                mimetype = file.mimetype;
+            }
+
+            return new KeyValuePair<string, string>(path, mimetype);
         }
         #endregion
     }

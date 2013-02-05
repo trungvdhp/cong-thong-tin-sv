@@ -42,5 +42,12 @@ namespace CongThongTinSV
         public string customtext2 { get; set; }
         public long timecreated { get; set; }
         public long timemodified { get; set; }
+        public Nullable<long> customint5 { get; set; }
+        public Nullable<long> customint6 { get; set; }
+        public Nullable<long> customint7 { get; set; }
+        public Nullable<long> customint8 { get; set; }
+        public string customchar3 { get; set; }
+        public string customtext3 { get; set; }
+        public string customtext4 { get; set; }
     }
 }

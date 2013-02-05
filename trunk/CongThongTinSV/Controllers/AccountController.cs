@@ -153,19 +153,20 @@ namespace CongThongTinSV.Controllers
                     // save moodle user group name
                     userData[4] = Service;
 
-                    try
-                    {
+                    //try
+                    //{
                         var moodleUser = mdb.fit_user.Single(t => t.username == model.UserName);
                         // save moodle user id
                         userData[5] = moodleUser.id.ToString();
                         // save moodle user fullname
                         userData[6] = moodleUser.lastname + " " + moodleUser.firstname;
-                    }
-                    catch
-                    {
-                        userData[5] = "0";
-                        userData[6] = "";
-                    }
+                    //}
+                    //catch(Exception ex)
+                    //{
+                    //    string mess = ex.ToString();
+                    //    userData[5] = "0";
+                    //    userData[6] = "";
+                    //}
 
                     // create a Forms Auth ticket with the username and the user data. 
                     FormsAuthenticationTicket formsTicket = new FormsAuthenticationTicket(

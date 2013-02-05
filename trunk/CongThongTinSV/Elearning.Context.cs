@@ -25,7 +25,6 @@ namespace CongThongTinSV
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<fit_course> fit_course { get; set; }
         public DbSet<fit_enrol> fit_enrol { get; set; }
         public DbSet<fit_external_services> fit_external_services { get; set; }
         public DbSet<fit_grade_grades> fit_grade_grades { get; set; }
@@ -46,7 +45,6 @@ namespace CongThongTinSV
         public DbSet<fit_message_contacts> fit_message_contacts { get; set; }
         public DbSet<fit_message_read> fit_message_read { get; set; }
         public DbSet<fit_message_working> fit_message_working { get; set; }
-        public DbSet<fit_user> fit_user { get; set; }
         public DbSet<fit_user_enrolments> fit_user_enrolments { get; set; }
         public DbSet<fit_role> fit_role { get; set; }
         public DbSet<fit_role_context_levels> fit_role_context_levels { get; set; }
@@ -65,5 +63,14 @@ namespace CongThongTinSV
         public DbSet<fit_role_assignments> fit_role_assignments { get; set; }
         public DbSet<fit_user_info_data> fit_user_info_data { get; set; }
         public DbSet<fit_user_info_field> fit_user_info_field { get; set; }
+        public DbSet<fit_question> fit_question { get; set; }
+        public DbSet<fit_question_answers> fit_question_answers { get; set; }
+        public DbSet<fit_question_attempt_step_data> fit_question_attempt_step_data { get; set; }
+        public DbSet<fit_question_attempt_steps> fit_question_attempt_steps { get; set; }
+        public DbSet<fit_question_attempts> fit_question_attempts { get; set; }
+        public DbSet<fit_user> fit_user { get; set; }
+        public DbSet<fit_course> fit_course { get; set; }
+        public DbSet<fit_files> fit_files { get; set; }
+        public DbSet<fit_files_reference> fit_files_reference { get; set; }
     }
 }

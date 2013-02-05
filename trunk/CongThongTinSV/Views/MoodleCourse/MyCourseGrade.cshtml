@@ -6,7 +6,8 @@
 <h2>Bảng điểm các khóa học bạn đã ghi danh</h2>
 @(Html.Kendo().Grid<CongThongTinSV.Models.MoodleStudentCourseGrade>()
     .Name("Grid")
-    .Columns(columns => {
+    .Columns(columns =>
+    {
         columns.Bound(c => c.Lop_hoc_phan)
             .ClientTemplate((@Html.ActionLink("#=Lop_hoc_phan#", "MyQuizGrade", "MoodleQuiz", new { courseid = "CourseId" }, new { title = "Xem bảng điểm các bài thi của tôi" }).ToHtmlString().Replace("CourseId", "#=ID#")));
         columns.Bound(c => c.Diem)
@@ -18,14 +19,14 @@
         columns.Bound(c => c.Hoc_ky).Width(75).Hidden();
         columns.Bound(c => c.Nam_hoc).Width(90).Hidden();
     })
-    .Pageable(pager => pager.PageSizes(new int[]{5, 10, 20, 50}).Refresh(true).Input(true).Numeric(false).Messages(m =>{ m.ItemsPerPage("dòng mỗi trang"); m.First("Trang đầu tiên"); m.Last("Trang cuối cùng"); m.Next("Trang sau"); m.Previous("Trang trước"); m.Refresh("Làm mới");}))
+    .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50 }).Refresh(true).Input(true).Numeric(false).Messages(m => { m.ItemsPerPage("dòng mỗi trang"); m.First("Trang đầu tiên"); m.Last("Trang cuối cùng"); m.Next("Trang sau"); m.Previous("Trang trước"); m.Refresh("Làm mới"); }))
     .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
     .Filterable()
     .Scrollable()
     //.Groupable()
     .Resizable(r => r.Columns(true))
     .Reorderable(ro => ro.Columns(true))
-    .HtmlAttributes(new { style="height:400px"})
+    //.HtmlAttributes(new { style="height:auto"})
     .ColumnMenu(menu => menu.Enabled(true).Sortable(false))
     .Selectable(s => s.Mode(GridSelectionMode.Single))
     .DataSource(
@@ -36,13 +37,16 @@
             .Read(read => read.Action("GetMyCourseGrades", "MoodleCourse"))
             .PageSize(50)
     )
-    .Events(e => e.Change("onChange"))
+    .Events(e =>
+    {
+        e.Change("onChange");
+        e.DataBound("onDataBound");
+    })
 )
 
-<h2 id="coursename"></h2>
+<h2 id="coursename">Danh sách thành viên</h2>
 @(Html.Kendo().Grid<CongThongTinSV.Models.MoodleCourseMember>()
     .Name("MemberGrid")
-    .HtmlAttributes(new {style = "height: 500px;"})
     .Columns(columns => {
         columns.Bound(c => c.ImageUrl)
             .Sortable(false)
@@ -73,7 +77,7 @@
     .Resizable(r => r.Columns(true))
     .Reorderable(ro => ro.Columns(true))
     .Navigatable()
-    .HtmlAttributes(new { style="height:500px"})
+    //.HtmlAttributes(new { style="height:auto"})
     //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
     //.Selectable(s => s.Mode(GridSelectionMode.Single))
     .DataSource(
@@ -82,6 +86,10 @@
             .Read(read => read.Action("GetCourseMembers", "MoodleCourse").Data("filterGrid"))
             .PageSize(50)
     )
+    .Events(e =>
+    {
+        e.DataBound("onDataBoundMember");
+    })
 )
 
 <script type="text/javascript">
@@ -95,6 +103,14 @@
         return {
             courseid: courseID
         }
+    }
+
+    function onDataBound(e) {
+        resizeGrid("#Grid");
+    }
+
+    function onDataBoundMember(e) {
+        resizeGrid("#MemberGrid");
     }
 
     function onChange(arg) {

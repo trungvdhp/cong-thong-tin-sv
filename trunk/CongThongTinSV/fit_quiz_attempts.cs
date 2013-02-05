@@ -28,5 +28,6 @@ namespace CongThongTinSV
         public string state { get; set; }
         public short needsupgradetonewqe { get; set; }
         public long currentpage { get; set; }
+        public Nullable<long> timecheckstate { get; set; }
     }
 }

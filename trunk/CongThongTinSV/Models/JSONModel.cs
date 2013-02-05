@@ -7,8 +7,5 @@ using System.Runtime.Serialization;
 
 namespace CongThongTinSV.Models
 {
-    public class AutoCompleteData
-    {
-        public string Text { get; set; }
-    }
+    
 }

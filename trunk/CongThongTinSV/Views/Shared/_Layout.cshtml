@@ -33,6 +33,11 @@
         @Scripts.Render("~/bundles/modernizr")
 
         <script type="text/javascript">
+            function fullScreen() {
+                window.moveTo(0, 0);
+                window.resizeTo(screen.width, screen.height);
+            }
+
             function SetMenuWidth()
             {
                 var menu = $('#Menu');
@@ -50,7 +55,7 @@
             }
         </script>
 </head>
-    <body>
+    <body onload="fullScreen();" style="width:100%">
         <header>
             <div class="content-wrapper">
                 <div class="float-left">
@@ -144,7 +149,7 @@
                                         </div>
                                 }
                                     <p>
-                                        <a href='@System.Web.Configuration.WebConfigurationManager.AppSettings["ServerUrl"]'>Tới trang thi trắc nghiệm trực tuyến - Elearning</a>
+                                        <a href='@System.Web.Configuration.WebConfigurationManager.AppSettings["ElearningUrl"]'>Tới trang thi trắc nghiệm trực tuyến - Elearning</a>
                                     </p>
                                 </div>
                                 </text>);

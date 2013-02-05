@@ -63,6 +63,7 @@
     // on data bound, check checkboxes
     function onDataBound(e) {
         checkCells(selectedVals, '#masterCheckBox', '#Grid :checkbox');
+        resizeGrid("#Grid");
     }
     // on click checkbox cell in a row
     $(function () {

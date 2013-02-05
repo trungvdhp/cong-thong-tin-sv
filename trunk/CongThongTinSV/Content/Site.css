@@ -1,4 +1,5 @@
-﻿html {
+﻿html
+{
     background-color: #e2e2e2;
     margin: 0;
     padding: 0;
@@ -13,9 +14,18 @@ body
     font-size: .82em;
     font-family: "Segoe UI" , Verdana, Helvetica, Sans-Serif;
     margin: 0;
-    padding: 0;
+    /*padding: 0px 10px 0px 10px;*/
     border-top-width: thin;
 }
+
+/*Logo*/
+.logo
+{
+    margin-left:10px;
+    width:342px;
+    height:90px;
+}
+
 a
 {
     outline: none;
@@ -63,6 +73,7 @@ mark {
 h1, h2, h3,
 h4, h5, h6 {
     color: #000;
+    margin-top:5px;
     margin-bottom: 5px;
 }
 
@@ -98,7 +109,7 @@ h5, h6 {
 ----------------------------------------------------------*/
 .content-wrapper {
     margin: 0 auto;
-    max-width: 960px;
+    /*max-width: 960px;*/
 }
 
 #body {
@@ -109,7 +120,8 @@ h5, h6 {
 
     .main-content {
         background: url("../Images/accent.png") no-repeat;
-        padding-left: 0px;
+        margin-left: 25px;
+        margin-right: 20px;
         padding-top: 30px;
     }
 
@@ -118,6 +130,7 @@ h5, h6 {
     }
 
 header .content-wrapper {
+    padding-right: 20px;
     padding-top: 10px; 
 }
 
@@ -126,6 +139,8 @@ footer {
     background-color: #e2e2e2;
     font-size: .85em;
     height: 100px;
+    padding-left: 25px;
+    padding-right: 20px;
 }
 
 
@@ -829,10 +844,128 @@ hr
         color: #FF0000;
         /*text-decoration: underline;*/
     }
-/*Logo*/
-.logo
+/*Quiz review summary*/
+table.quizreviewsummary 
 {
-    margin-left:-18px;
-    width:342px;
-    height:90px;
+    width: 100%;
+    color: black;
+}
+
+table.quizreviewsummary th.cell
+{
+    padding: 1px 0.5em 1px 1em;
+    font-weight: bold;
+    text-align: right;
+    width: 10em;
+    background: none repeat scroll 0% 0% rgb(240, 240, 240);
+}
+
+.generalbox, .generalboxcontent, .informationbox, .informationboxcontent 
+{
+    border-radius: 3px 3px 15px 15px;
+}
+
+.generalbox 
+{
+    border-width: 1px;
+    border-style: solid;
+    margin-bottom: 15px;
+    padding: 10px;
+}
+
+.generaltable
+{
+    border-width: 1px;
+    border-style: solid;
+}
+
+.generaltable .cell 
+{
+    border-width: 1px;
+    border-style: solid;
+}
+
+.generaltable 
+{
+    border: 1px solid rgb(238, 238, 238);
+    border-collapse: collapse;
+    background-color: rgb(255, 255, 255);
+}
+
+.generaltable td 
+{
+    /*border: 1px solid rgb(221, 221, 221);*/
+    vertical-align: middle;
+}
+
+.cell
+{
+    border: 1px solid rgb(221, 221, 221);
+    vertical-align: middle;
+}
+
+.generaltable .cell {
+    border-width: 1px;
+    border-style: solid;
+}
+/*Question*/
+.question
+{
+    border: 1px solid rgb(221, 221, 221);
+    background-color: #E4F1FA;
+    margin: 0px;
+    padding: 0px;
+}
+
+.question-text
+{
+    border-width: 1px;
+    border-color: rgb(221, 221, 221);
+    border-bottom-style: solid;
+}
+/*Answer*/
+.answer
+{
+    background-color: #F5F5F5;
+    margin: 5px;
+}
+
+    .answer p
+    {
+        margin: 0px 0px 2px 0px;
+    }
+
+.answer-item
+{
+    display: inline-block;
+}
+
+.question-text,
+.correct-my-answer,
+.correct-answer,
+.incorrect-answer,
+.normal-answer
+{
+    margin: 0px 0px 2px 0px;
+    padding: 5px;
+}
+
+.correct-my-answer
+{
+    background-color: #AAFFAA;
+}
+
+.correct-answer
+{
+    background-color: #FFF3BF;
+}
+
+.incorrect-answer
+{
+    background-color: #FFAAAA;
+}
+
+.normal-answer
+{
+    background-color: #F5F5F5;
 }
