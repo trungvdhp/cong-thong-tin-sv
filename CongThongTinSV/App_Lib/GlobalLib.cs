@@ -261,7 +261,7 @@ namespace CongThongTinSV.App_Lib
         /// </summary>
         /// <param name="capability">Capability</param>
         /// <returns></returns>
-        public static int UpdateCapability(Capability capability)
+        public static bool UpdateCapability(Capability capability)
         {
             Entities db = new Entities();
             MOD_Quyen entity = db.MOD_Quyen.SingleOrDefault(t => t.ID_quyen == capability.ID_quyen);
@@ -271,17 +271,18 @@ namespace CongThongTinSV.App_Lib
                 entity.Ten_quyen = capability.Ten_quyen;
                 entity.Action_name = capability.Action_name;
                 db.Entry(entity).State = System.Data.EntityState.Modified;
+
+                try
+                {
+                    db.SaveChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                }
             }
 
-            try
-            {
-                return db.SaveChanges();
-            }
-            catch (Exception)
-            {
-            }
-
-            return -1;
+            return false;
         }
 
         /// <summary>

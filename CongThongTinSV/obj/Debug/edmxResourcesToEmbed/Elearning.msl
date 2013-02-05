@@ -1,49 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="moodleModelStoreContainer" CdmEntityContainer="MoodleEntities">
-    <EntitySetMapping Name="fit_course">
-      <EntityTypeMapping TypeName="moodleModel.fit_course">
-        <MappingFragment StoreEntitySet="fit_course">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="category" ColumnName="category" />
-          <ScalarProperty Name="sortorder" ColumnName="sortorder" />
-          <ScalarProperty Name="fullname" ColumnName="fullname" />
-          <ScalarProperty Name="shortname" ColumnName="shortname" />
-          <ScalarProperty Name="idnumber" ColumnName="idnumber" />
-          <ScalarProperty Name="summary" ColumnName="summary" />
-          <ScalarProperty Name="summaryformat" ColumnName="summaryformat" />
-          <ScalarProperty Name="format" ColumnName="format" />
-          <ScalarProperty Name="showgrades" ColumnName="showgrades" />
-          <ScalarProperty Name="sectioncache" ColumnName="sectioncache" />
-          <ScalarProperty Name="modinfo" ColumnName="modinfo" />
-          <ScalarProperty Name="newsitems" ColumnName="newsitems" />
-          <ScalarProperty Name="startdate" ColumnName="startdate" />
-          <ScalarProperty Name="numsections" ColumnName="numsections" />
-          <ScalarProperty Name="marker" ColumnName="marker" />
-          <ScalarProperty Name="maxbytes" ColumnName="maxbytes" />
-          <ScalarProperty Name="legacyfiles" ColumnName="legacyfiles" />
-          <ScalarProperty Name="showreports" ColumnName="showreports" />
-          <ScalarProperty Name="visible" ColumnName="visible" />
-          <ScalarProperty Name="visibleold" ColumnName="visibleold" />
-          <ScalarProperty Name="hiddensections" ColumnName="hiddensections" />
-          <ScalarProperty Name="groupmode" ColumnName="groupmode" />
-          <ScalarProperty Name="groupmodeforce" ColumnName="groupmodeforce" />
-          <ScalarProperty Name="defaultgroupingid" ColumnName="defaultgroupingid" />
-          <ScalarProperty Name="lang" ColumnName="lang" />
-          <ScalarProperty Name="theme" ColumnName="theme" />
-          <ScalarProperty Name="timecreated" ColumnName="timecreated" />
-          <ScalarProperty Name="timemodified" ColumnName="timemodified" />
-          <ScalarProperty Name="requested" ColumnName="requested" />
-          <ScalarProperty Name="enablecompletion" ColumnName="enablecompletion" />
-          <ScalarProperty Name="completionstartonenrol" ColumnName="completionstartonenrol" />
-          <ScalarProperty Name="completionnotify" ColumnName="completionnotify" />
-          <ScalarProperty Name="coursedisplay" ColumnName="coursedisplay" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="fit_enrol">
       <EntityTypeMapping TypeName="moodleModel.fit_enrol">
         <MappingFragment StoreEntitySet="fit_enrol">
+          <ScalarProperty Name="customtext4" ColumnName="customtext4" />
+          <ScalarProperty Name="customtext3" ColumnName="customtext3" />
+          <ScalarProperty Name="customchar3" ColumnName="customchar3" />
+          <ScalarProperty Name="customint8" ColumnName="customint8" />
+          <ScalarProperty Name="customint7" ColumnName="customint7" />
+          <ScalarProperty Name="customint6" ColumnName="customint6" />
+          <ScalarProperty Name="customint5" ColumnName="customint5" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="enrol" ColumnName="enrol" />
           <ScalarProperty Name="status" ColumnName="status" />
@@ -410,62 +377,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="fit_user">
-      <EntityTypeMapping TypeName="moodleModel.fit_user">
-        <MappingFragment StoreEntitySet="fit_user">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="auth" ColumnName="auth" />
-          <ScalarProperty Name="confirmed" ColumnName="confirmed" />
-          <ScalarProperty Name="policyagreed" ColumnName="policyagreed" />
-          <ScalarProperty Name="deleted" ColumnName="deleted" />
-          <ScalarProperty Name="suspended" ColumnName="suspended" />
-          <ScalarProperty Name="mnethostid" ColumnName="mnethostid" />
-          <ScalarProperty Name="username" ColumnName="username" />
-          <ScalarProperty Name="password" ColumnName="password" />
-          <ScalarProperty Name="idnumber" ColumnName="idnumber" />
-          <ScalarProperty Name="firstname" ColumnName="firstname" />
-          <ScalarProperty Name="lastname" ColumnName="lastname" />
-          <ScalarProperty Name="email" ColumnName="email" />
-          <ScalarProperty Name="emailstop" ColumnName="emailstop" />
-          <ScalarProperty Name="icq" ColumnName="icq" />
-          <ScalarProperty Name="skype" ColumnName="skype" />
-          <ScalarProperty Name="yahoo" ColumnName="yahoo" />
-          <ScalarProperty Name="aim" ColumnName="aim" />
-          <ScalarProperty Name="msn" ColumnName="msn" />
-          <ScalarProperty Name="phone1" ColumnName="phone1" />
-          <ScalarProperty Name="phone2" ColumnName="phone2" />
-          <ScalarProperty Name="institution" ColumnName="institution" />
-          <ScalarProperty Name="department" ColumnName="department" />
-          <ScalarProperty Name="address" ColumnName="address" />
-          <ScalarProperty Name="city" ColumnName="city" />
-          <ScalarProperty Name="country" ColumnName="country" />
-          <ScalarProperty Name="lang" ColumnName="lang" />
-          <ScalarProperty Name="theme" ColumnName="theme" />
-          <ScalarProperty Name="timezone" ColumnName="timezone" />
-          <ScalarProperty Name="firstaccess" ColumnName="firstaccess" />
-          <ScalarProperty Name="lastaccess" ColumnName="lastaccess" />
-          <ScalarProperty Name="lastlogin" ColumnName="lastlogin" />
-          <ScalarProperty Name="currentlogin" ColumnName="currentlogin" />
-          <ScalarProperty Name="lastip" ColumnName="lastip" />
-          <ScalarProperty Name="secret" ColumnName="secret" />
-          <ScalarProperty Name="picture" ColumnName="picture" />
-          <ScalarProperty Name="url" ColumnName="url" />
-          <ScalarProperty Name="description" ColumnName="description" />
-          <ScalarProperty Name="descriptionformat" ColumnName="descriptionformat" />
-          <ScalarProperty Name="mailformat" ColumnName="mailformat" />
-          <ScalarProperty Name="maildigest" ColumnName="maildigest" />
-          <ScalarProperty Name="maildisplay" ColumnName="maildisplay" />
-          <ScalarProperty Name="htmleditor" ColumnName="htmleditor" />
-          <ScalarProperty Name="autosubscribe" ColumnName="autosubscribe" />
-          <ScalarProperty Name="trackforums" ColumnName="trackforums" />
-          <ScalarProperty Name="timecreated" ColumnName="timecreated" />
-          <ScalarProperty Name="timemodified" ColumnName="timemodified" />
-          <ScalarProperty Name="trustbitmask" ColumnName="trustbitmask" />
-          <ScalarProperty Name="imagealt" ColumnName="imagealt" />
-          <ScalarProperty Name="screenreader" ColumnName="screenreader" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="fit_user_enrolments">
       <EntityTypeMapping TypeName="moodleModel.fit_user_enrolments">
         <MappingFragment StoreEntitySet="fit_user_enrolments">
@@ -571,6 +482,7 @@
     <EntitySetMapping Name="fit_quiz_attempts">
       <EntityTypeMapping TypeName="moodleModel.fit_quiz_attempts">
         <MappingFragment StoreEntitySet="fit_quiz_attempts">
+          <ScalarProperty Name="timecheckstate" ColumnName="timecheckstate" />
           <ScalarProperty Name="currentpage" ColumnName="currentpage" />
           <ScalarProperty Name="needsupgradetonewqe" ColumnName="needsupgradetonewqe" />
           <ScalarProperty Name="state" ColumnName="state" />
@@ -753,6 +665,218 @@
           <ScalarProperty Name="datatype" ColumnName="datatype" />
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="shortname" ColumnName="shortname" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="fit_question">
+      <EntityTypeMapping TypeName="moodleModel.fit_question">
+        <MappingFragment StoreEntitySet="fit_question">
+          <ScalarProperty Name="modifiedby" ColumnName="modifiedby" />
+          <ScalarProperty Name="createdby" ColumnName="createdby" />
+          <ScalarProperty Name="timemodified" ColumnName="timemodified" />
+          <ScalarProperty Name="timecreated" ColumnName="timecreated" />
+          <ScalarProperty Name="hidden" ColumnName="hidden" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="stamp" ColumnName="stamp" />
+          <ScalarProperty Name="length" ColumnName="length" />
+          <ScalarProperty Name="qtype" ColumnName="qtype" />
+          <ScalarProperty Name="penalty" ColumnName="penalty" />
+          <ScalarProperty Name="defaultmark" ColumnName="defaultmark" />
+          <ScalarProperty Name="generalfeedbackformat" ColumnName="generalfeedbackformat" />
+          <ScalarProperty Name="generalfeedback" ColumnName="generalfeedback" />
+          <ScalarProperty Name="questiontextformat" ColumnName="questiontextformat" />
+          <ScalarProperty Name="questiontext" ColumnName="questiontext" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="parent" ColumnName="parent" />
+          <ScalarProperty Name="category" ColumnName="category" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="fit_question_answers">
+      <EntityTypeMapping TypeName="moodleModel.fit_question_answers">
+        <MappingFragment StoreEntitySet="fit_question_answers">
+          <ScalarProperty Name="feedbackformat" ColumnName="feedbackformat" />
+          <ScalarProperty Name="feedback" ColumnName="feedback" />
+          <ScalarProperty Name="fraction" ColumnName="fraction" />
+          <ScalarProperty Name="answerformat" ColumnName="answerformat" />
+          <ScalarProperty Name="answer" ColumnName="answer" />
+          <ScalarProperty Name="question" ColumnName="question" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="fit_question_attempt_step_data">
+      <EntityTypeMapping TypeName="moodleModel.fit_question_attempt_step_data">
+        <MappingFragment StoreEntitySet="fit_question_attempt_step_data">
+          <ScalarProperty Name="value" ColumnName="value" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="attemptstepid" ColumnName="attemptstepid" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="fit_question_attempt_steps">
+      <EntityTypeMapping TypeName="moodleModel.fit_question_attempt_steps">
+        <MappingFragment StoreEntitySet="fit_question_attempt_steps">
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="timecreated" ColumnName="timecreated" />
+          <ScalarProperty Name="fraction" ColumnName="fraction" />
+          <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="sequencenumber" ColumnName="sequencenumber" />
+          <ScalarProperty Name="questionattemptid" ColumnName="questionattemptid" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="fit_question_attempts">
+      <EntityTypeMapping TypeName="moodleModel.fit_question_attempts">
+        <MappingFragment StoreEntitySet="fit_question_attempts">
+          <ScalarProperty Name="timemodified" ColumnName="timemodified" />
+          <ScalarProperty Name="responsesummary" ColumnName="responsesummary" />
+          <ScalarProperty Name="rightanswer" ColumnName="rightanswer" />
+          <ScalarProperty Name="questionsummary" ColumnName="questionsummary" />
+          <ScalarProperty Name="flagged" ColumnName="flagged" />
+          <ScalarProperty Name="minfraction" ColumnName="minfraction" />
+          <ScalarProperty Name="maxmark" ColumnName="maxmark" />
+          <ScalarProperty Name="variant" ColumnName="variant" />
+          <ScalarProperty Name="questionid" ColumnName="questionid" />
+          <ScalarProperty Name="behaviour" ColumnName="behaviour" />
+          <ScalarProperty Name="slot" ColumnName="slot" />
+          <ScalarProperty Name="questionusageid" ColumnName="questionusageid" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="fit_user">
+      <EntityTypeMapping TypeName="moodleModel.fit_user">
+        <MappingFragment StoreEntitySet="fit_user">
+          <ScalarProperty Name="imagealt" ColumnName="imagealt" />
+          <ScalarProperty Name="trustbitmask" ColumnName="trustbitmask" />
+          <ScalarProperty Name="timemodified" ColumnName="timemodified" />
+          <ScalarProperty Name="timecreated" ColumnName="timecreated" />
+          <ScalarProperty Name="trackforums" ColumnName="trackforums" />
+          <ScalarProperty Name="autosubscribe" ColumnName="autosubscribe" />
+          <ScalarProperty Name="htmleditor" ColumnName="htmleditor" />
+          <ScalarProperty Name="maildisplay" ColumnName="maildisplay" />
+          <ScalarProperty Name="maildigest" ColumnName="maildigest" />
+          <ScalarProperty Name="mailformat" ColumnName="mailformat" />
+          <ScalarProperty Name="descriptionformat" ColumnName="descriptionformat" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="url" ColumnName="url" />
+          <ScalarProperty Name="picture" ColumnName="picture" />
+          <ScalarProperty Name="secret" ColumnName="secret" />
+          <ScalarProperty Name="lastip" ColumnName="lastip" />
+          <ScalarProperty Name="currentlogin" ColumnName="currentlogin" />
+          <ScalarProperty Name="lastlogin" ColumnName="lastlogin" />
+          <ScalarProperty Name="lastaccess" ColumnName="lastaccess" />
+          <ScalarProperty Name="firstaccess" ColumnName="firstaccess" />
+          <ScalarProperty Name="timezone" ColumnName="timezone" />
+          <ScalarProperty Name="theme" ColumnName="theme" />
+          <ScalarProperty Name="lang" ColumnName="lang" />
+          <ScalarProperty Name="country" ColumnName="country" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="department" ColumnName="department" />
+          <ScalarProperty Name="institution" ColumnName="institution" />
+          <ScalarProperty Name="phone2" ColumnName="phone2" />
+          <ScalarProperty Name="phone1" ColumnName="phone1" />
+          <ScalarProperty Name="msn" ColumnName="msn" />
+          <ScalarProperty Name="aim" ColumnName="aim" />
+          <ScalarProperty Name="yahoo" ColumnName="yahoo" />
+          <ScalarProperty Name="skype" ColumnName="skype" />
+          <ScalarProperty Name="icq" ColumnName="icq" />
+          <ScalarProperty Name="emailstop" ColumnName="emailstop" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="lastname" ColumnName="lastname" />
+          <ScalarProperty Name="firstname" ColumnName="firstname" />
+          <ScalarProperty Name="idnumber" ColumnName="idnumber" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="mnethostid" ColumnName="mnethostid" />
+          <ScalarProperty Name="suspended" ColumnName="suspended" />
+          <ScalarProperty Name="deleted" ColumnName="deleted" />
+          <ScalarProperty Name="policyagreed" ColumnName="policyagreed" />
+          <ScalarProperty Name="confirmed" ColumnName="confirmed" />
+          <ScalarProperty Name="auth" ColumnName="auth" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="fit_course">
+      <EntityTypeMapping TypeName="moodleModel.fit_course">
+        <MappingFragment StoreEntitySet="fit_course">
+          <ScalarProperty Name="completionnotify" ColumnName="completionnotify" />
+          <ScalarProperty Name="completionstartonenrol" ColumnName="completionstartonenrol" />
+          <ScalarProperty Name="enablecompletion" ColumnName="enablecompletion" />
+          <ScalarProperty Name="requested" ColumnName="requested" />
+          <ScalarProperty Name="timemodified" ColumnName="timemodified" />
+          <ScalarProperty Name="timecreated" ColumnName="timecreated" />
+          <ScalarProperty Name="theme" ColumnName="theme" />
+          <ScalarProperty Name="lang" ColumnName="lang" />
+          <ScalarProperty Name="defaultgroupingid" ColumnName="defaultgroupingid" />
+          <ScalarProperty Name="groupmodeforce" ColumnName="groupmodeforce" />
+          <ScalarProperty Name="groupmode" ColumnName="groupmode" />
+          <ScalarProperty Name="visibleold" ColumnName="visibleold" />
+          <ScalarProperty Name="visible" ColumnName="visible" />
+          <ScalarProperty Name="showreports" ColumnName="showreports" />
+          <ScalarProperty Name="legacyfiles" ColumnName="legacyfiles" />
+          <ScalarProperty Name="maxbytes" ColumnName="maxbytes" />
+          <ScalarProperty Name="marker" ColumnName="marker" />
+          <ScalarProperty Name="startdate" ColumnName="startdate" />
+          <ScalarProperty Name="newsitems" ColumnName="newsitems" />
+          <ScalarProperty Name="modinfo" ColumnName="modinfo" />
+          <ScalarProperty Name="sectioncache" ColumnName="sectioncache" />
+          <ScalarProperty Name="showgrades" ColumnName="showgrades" />
+          <ScalarProperty Name="format" ColumnName="format" />
+          <ScalarProperty Name="summaryformat" ColumnName="summaryformat" />
+          <ScalarProperty Name="summary" ColumnName="summary" />
+          <ScalarProperty Name="idnumber" ColumnName="idnumber" />
+          <ScalarProperty Name="shortname" ColumnName="shortname" />
+          <ScalarProperty Name="fullname" ColumnName="fullname" />
+          <ScalarProperty Name="sortorder" ColumnName="sortorder" />
+          <ScalarProperty Name="category" ColumnName="category" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="fit_files">
+      <EntityTypeMapping TypeName="moodleModel.fit_files">
+        <MappingFragment StoreEntitySet="fit_files">
+          <ScalarProperty Name="referencelifetime" ColumnName="referencelifetime" />
+          <ScalarProperty Name="referencelastsync" ColumnName="referencelastsync" />
+          <ScalarProperty Name="referencefileid" ColumnName="referencefileid" />
+          <ScalarProperty Name="sortorder" ColumnName="sortorder" />
+          <ScalarProperty Name="timemodified" ColumnName="timemodified" />
+          <ScalarProperty Name="timecreated" ColumnName="timecreated" />
+          <ScalarProperty Name="license" ColumnName="license" />
+          <ScalarProperty Name="author" ColumnName="author" />
+          <ScalarProperty Name="source" ColumnName="source" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="mimetype" ColumnName="mimetype" />
+          <ScalarProperty Name="filesize" ColumnName="filesize" />
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="filename" ColumnName="filename" />
+          <ScalarProperty Name="filepath" ColumnName="filepath" />
+          <ScalarProperty Name="itemid" ColumnName="itemid" />
+          <ScalarProperty Name="filearea" ColumnName="filearea" />
+          <ScalarProperty Name="component" ColumnName="component" />
+          <ScalarProperty Name="contextid" ColumnName="contextid" />
+          <ScalarProperty Name="pathnamehash" ColumnName="pathnamehash" />
+          <ScalarProperty Name="contenthash" ColumnName="contenthash" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="fit_files_reference">
+      <EntityTypeMapping TypeName="moodleModel.fit_files_reference">
+        <MappingFragment StoreEntitySet="fit_files_reference">
+          <ScalarProperty Name="referencehash" ColumnName="referencehash" />
+          <ScalarProperty Name="reference" ColumnName="reference" />
+          <ScalarProperty Name="lifetime" ColumnName="lifetime" />
+          <ScalarProperty Name="lastsync" ColumnName="lastsync" />
+          <ScalarProperty Name="repositoryid" ColumnName="repositoryid" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>

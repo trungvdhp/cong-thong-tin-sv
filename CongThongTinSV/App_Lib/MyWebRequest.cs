@@ -13,11 +13,11 @@ namespace CongThongTinSV.App_Lib
 {
     public class MyWebRequest
     {
-        private string RestUrl = WebConfigurationManager.AppSettings["ServerUrl"] +
+        private string RestUrl = WebConfigurationManager.AppSettings["ElearningUrl"] +
     "webservice/rest/server.php";
-        private string LoginUrl = WebConfigurationManager.AppSettings["ServerUrl"] +
+        private string LoginUrl = WebConfigurationManager.AppSettings["ElearningUrl"] +
             "login/token.php";
-        private string SoapUrl = WebConfigurationManager.AppSettings["ServerUrl"] +
+        private string SoapUrl = WebConfigurationManager.AppSettings["ElearningUrl"] +
             "webservice/soap/server.php";
 
         private WebRequest MyRequest { get; set; }
@@ -49,7 +49,7 @@ namespace CongThongTinSV.App_Lib
                 queryData = RestUrl + "?" + queryData + "&wstoken=" + GlobalLib.GetCurrentUserData().MoodleToken;
             else
                 queryData = RestUrl + "?" + queryData + "&moodlewsrestformat=json" + "&wstoken=" + GlobalLib.GetCurrentUserData().MoodleToken;
-
+            //Utility.WriteTextToFile("D:\\Query.txt", queryData);
             MyRequest = WebRequest.Create(queryData);
         }
 
@@ -108,7 +108,9 @@ namespace CongThongTinSV.App_Lib
                 queryData += "&wstoken=" + GlobalLib.GetCurrentUserData().MoodleToken;
             else if (scriptType > 3)
                 queryData += "&moodlewsrestformat=json" + "&wstoken=" + GlobalLib.GetCurrentUserData().MoodleToken;
-            //Utility.WriteTextToFile("D:\\Query.txt", queryData);
+
+            Utility.WriteTextToFile("D:\\Query.txt", queryData);
+
             SetMethod(method);
             ProcessData(queryData);
         }

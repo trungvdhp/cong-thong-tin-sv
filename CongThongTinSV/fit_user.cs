@@ -63,6 +63,5 @@ namespace CongThongTinSV
         public long timemodified { get; set; }
         public long trustbitmask { get; set; }
         public string imagealt { get; set; }
-        public bool screenreader { get; set; }
     }
 }

@@ -81,11 +81,13 @@ namespace CongThongTinSV.Models
         [DisplayName("ID quyền")]
         public int ID_quyen { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "{0} không được bỏ trống.")]
+        [StringLength(100, ErrorMessage = "{0} phải dài tối đa là {1} ký tự và ít nhất là {2} ký tự", MinimumLength = 1)]
         [DisplayName("Tên quyền")]
         public string Ten_quyen { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "{0} không được bỏ trống.")]
+        [StringLength(50, ErrorMessage = "{0} phải dài tối đa là {1} ký tự và ít nhất là {2} ký tự", MinimumLength = 1)]
         [DisplayName("Action name")]
         public string Action_name { get; set; }
 
@@ -94,6 +96,11 @@ namespace CongThongTinSV.Models
 
         [DisplayName("Trạng thái")]
         public bool Trang_thai { get; set; }
+    }
+
+    public class AutoCompleteData
+    {
+        public string Text { get; set; }
     }
 
     public class Message

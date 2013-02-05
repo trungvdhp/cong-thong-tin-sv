@@ -30,7 +30,10 @@ namespace CongThongTinSV.Controllers
         {
             if (quyen != null && ModelState.IsValid)
             {
-               GlobalLib.CreateCapability(quyen);
+                if (GlobalLib.CreateCapability(quyen) == -1)
+                {
+                    ModelState.AddModelError("Error", "Lỗi khi tạo mới quyền: " + quyen.Ten_quyen);
+                }
             }
 
             return Json(ModelState.ToDataSourceResult());
@@ -42,7 +45,10 @@ namespace CongThongTinSV.Controllers
         {
             if (quyen != null)
             {
-                GlobalLib.DeleteCapability(quyen);
+                if (GlobalLib.DeleteCapability(quyen) == -1)
+                {
+                    ModelState.AddModelError("Error", "Lỗi khi xóa quyền: " + quyen.Ten_quyen);
+                }
             }
 
             return Json(ModelState.ToDataSourceResult());
@@ -82,7 +88,10 @@ namespace CongThongTinSV.Controllers
 
             if (quyen != null && ModelState.IsValid)
             {
-                GlobalLib.UpdateCapability(quyen);
+                if (!GlobalLib.UpdateCapability(quyen))
+                {
+                    ModelState.AddModelError("Error", "Lỗi khi cập nhật quyền: " + quyen.Ten_quyen);
+                }
             }
 
             return Json(ModelState.ToDataSourceResult());

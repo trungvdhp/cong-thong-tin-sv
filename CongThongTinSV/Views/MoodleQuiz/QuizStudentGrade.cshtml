@@ -37,9 +37,13 @@
             .Width(60)
             .HtmlAttributes(new { style = "text-align:center" });
         columns.Bound(c => c.DiemY_moi)
-            .Format("{0:0.0}")
             .Width(70)
-            .HtmlAttributes(new { style = "text-align:center" });
+            .HtmlAttributes(new { style = "text-align:center" })
+            .ClientTemplate(
+            "# if (DiemY_moi != null) { #" +
+                (@Html.ActionLink("#= kendo.toString(DiemY_moi, '0.0') #", "StudentQuizReview", "MoodleQuiz", new { userid = "UserId", quizid = ViewBag.QuizID }, new { title = "Xem lại bài làm" }).ToHtmlString().Replace("UserId", "#=ID#")) + 
+            "# } #"
+            );
         columns.Bound(c => c.DiemZ_moi)
             .Format("{0:0.0}")
             .Width(70)
@@ -51,7 +55,7 @@
             "# if (Khac_diem) { #" +
                 Url.Content("~/Images/warning.png") + " title='Điểm Y cũ và mới khác nhau' }" + 
             "# } else { #" +
-                Url.Content("~/Images/ok-2.png") + " title='Điểm Y cũ và mới giống nhau' }" +
+                Url.Content("~/Images/check.png") + " title='Điểm Y cũ và mới giống nhau' }" +
             "# } # />" +
             "# if (Khac_diem && ID_diem_thi != 0) { #" +
               "<button class='button-update' title='Cập nhật điểm' onclick='update_one(#=DiemY_moi#, #=ID_diem_thi#)'></button>" +
@@ -66,7 +70,7 @@
     .Resizable(r => r.Columns(true))
     .Reorderable(ro => ro.Columns(true))
     .Navigatable()
-    .HtmlAttributes(new { style="height:400px"})
+    //.HtmlAttributes(new { style = "height:auto" })
     .ColumnMenu(menu => menu.Enabled(true).Sortable(false))
     //.Selectable(s => s.Mode(GridSelectionMode.Single))
     .Events(e =>
@@ -113,7 +117,7 @@
     // on data bound, check checkboxes
     function onDataBound(e) {
         checkCells(selectedVals, '#masterCheckBox', '#Grid :checkbox');
-
+        resizeGrid("#Grid");
         // ask the parameterMap to create the request object for you
         var grid = $('#Grid').data('kendoGrid');
         requestObject = (new kendo.data.transports["aspnetmvc-server"]({ prefix: "" }))

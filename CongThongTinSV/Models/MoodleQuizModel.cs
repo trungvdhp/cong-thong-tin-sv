@@ -66,4 +66,58 @@ namespace CongThongTinSV.Models
         [DisplayName("Url")]
         public string Url { get; set; }
     }
+
+    public class MoodleQuizQuestion
+    {
+        [DisplayName("ID")]
+        public long ID { get; set; }
+
+        [DisplayName("ID câu hỏi")]
+        public long ID_cau_hoi { get; set; }
+
+        [DisplayName("STT")]
+        public long STT { get; set; }
+
+        [DisplayName("Điểm")]
+        public string Diem { get; set; }
+
+        [DisplayName("Câu hỏi")]
+        public string Cau_hoi { get; set; }
+
+        [DisplayName("Nội dung")]
+        public string Noi_dung { get; set; }
+    }
+
+    public class MoodleQuizAttempt
+    {
+        [DisplayName("ID học viên")]
+        public long ID { get; set; }
+
+        [DisplayName("Họ và đệm")]
+        public string Ho_dem { get; set; }
+
+        [DisplayName("Tên")]
+        public string Ten { get; set; }
+
+        [DisplayName("Bắt đầu vào lúc")]
+        public DateTime Bat_dau { get; set; }
+
+        [DisplayName("Kết thúc lúc")]
+        public DateTime Ket_thuc { get; set; }
+
+        [DisplayName("Thời gian thực hiện")]
+        public string Thoi_gian_lam { get; set; }
+
+        [DisplayName("Quá hạn")]
+        public string Qua_han { get; set; }
+
+        [DisplayName("Tổng điểm")]
+        public string Tong_diem { get; set; }
+
+        [DisplayName("Điểm hệ 10")]
+        public string Diem_he_10 { get; set; }
+
+        [DisplayName("Điểm hệ 4")]
+        public string Diem_he_4 { get; set; }
+    }
 }

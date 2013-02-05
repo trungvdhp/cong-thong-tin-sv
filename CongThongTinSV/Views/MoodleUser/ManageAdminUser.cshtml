@@ -76,12 +76,13 @@
     .Resizable(r => r.Columns(true))
     .Reorderable(ro => ro.Columns(true))
     .Navigatable()
-    .HtmlAttributes(new { style="height:400px"})
+    //.HtmlAttributes(new { style = "height:auto" })
     //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
     //.Selectable(s => s.Mode(GridSelectionMode.Single))
-    .Events(e => {
-                e.DataBound("onDataBound");
-            })
+    .Events(e => 
+    {
+        e.DataBound("onDataBound");
+    })
     .DataSource(
         dataSource => dataSource
             .Ajax()
@@ -113,6 +114,7 @@
     // on data bound, check checkboxes
     function onDataBound(e) {
         checkCells(selectedVals, '#masterCheckBox', '#Grid :checkbox');
+        resizeGrid("#Grid");
     }
     // on click checkbox cell in a row
     $(function () {

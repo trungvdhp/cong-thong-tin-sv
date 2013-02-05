@@ -5,6 +5,8 @@
     <EntitySet Name="fit_course" EntityType="moodleModel.Store.fit_course" store:Type="Tables" Schema="moodle" />
     <EntitySet Name="fit_enrol" EntityType="moodleModel.Store.fit_enrol" store:Type="Tables" Schema="moodle" />
     <EntitySet Name="fit_external_services" EntityType="moodleModel.Store.fit_external_services" store:Type="Tables" Schema="moodle" />
+    <EntitySet Name="fit_files" EntityType="moodleModel.Store.fit_files" store:Type="Tables" Schema="moodle" />
+    <EntitySet Name="fit_files_reference" EntityType="moodleModel.Store.fit_files_reference" store:Type="Tables" Schema="moodle" />
     <EntitySet Name="fit_grade_grades" EntityType="moodleModel.Store.fit_grade_grades" store:Type="Tables" Schema="moodle" />
     <EntitySet Name="fit_grade_grades_history" EntityType="moodleModel.Store.fit_grade_grades_history" store:Type="Tables" Schema="moodle" />
     <EntitySet Name="fit_grade_import_newitem" EntityType="moodleModel.Store.fit_grade_import_newitem" store:Type="Tables" Schema="moodle" />
@@ -23,6 +25,11 @@
     <EntitySet Name="fit_message_contacts" EntityType="moodleModel.Store.fit_message_contacts" store:Type="Tables" Schema="moodle" />
     <EntitySet Name="fit_message_read" EntityType="moodleModel.Store.fit_message_read" store:Type="Tables" Schema="moodle" />
     <EntitySet Name="fit_message_working" EntityType="moodleModel.Store.fit_message_working" store:Type="Tables" Schema="moodle" />
+    <EntitySet Name="fit_question" EntityType="moodleModel.Store.fit_question" store:Type="Tables" Schema="moodle" />
+    <EntitySet Name="fit_question_answers" EntityType="moodleModel.Store.fit_question_answers" store:Type="Tables" Schema="moodle" />
+    <EntitySet Name="fit_question_attempt_step_data" EntityType="moodleModel.Store.fit_question_attempt_step_data" store:Type="Tables" Schema="moodle" />
+    <EntitySet Name="fit_question_attempt_steps" EntityType="moodleModel.Store.fit_question_attempt_steps" store:Type="Tables" Schema="moodle" />
+    <EntitySet Name="fit_question_attempts" EntityType="moodleModel.Store.fit_question_attempts" store:Type="Tables" Schema="moodle" />
     <EntitySet Name="fit_quiz" EntityType="moodleModel.Store.fit_quiz" store:Type="Tables" Schema="moodle" />
     <EntitySet Name="fit_quiz_attempts" EntityType="moodleModel.Store.fit_quiz_attempts" store:Type="Tables" Schema="moodle" />
     <EntitySet Name="fit_quiz_grades" EntityType="moodleModel.Store.fit_quiz_grades" store:Type="Tables" Schema="moodle" />
@@ -64,20 +71,18 @@
     <Property Name="idnumber" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="summary" Type="longtext" />
     <Property Name="summaryformat" Type="tinyint" Nullable="false" />
-    <Property Name="format" Type="varchar" Nullable="false" MaxLength="10" />
+    <Property Name="format" Type="varchar" Nullable="false" MaxLength="21" />
     <Property Name="showgrades" Type="tinyint" Nullable="false" />
     <Property Name="sectioncache" Type="longtext" />
     <Property Name="modinfo" Type="longtext" />
     <Property Name="newsitems" Type="mediumint" Nullable="false" />
     <Property Name="startdate" Type="bigint" Nullable="false" />
-    <Property Name="numsections" Type="mediumint" Nullable="false" />
     <Property Name="marker" Type="bigint" Nullable="false" />
     <Property Name="maxbytes" Type="bigint" Nullable="false" />
     <Property Name="legacyfiles" Type="smallint" Nullable="false" />
     <Property Name="showreports" Type="smallint" Nullable="false" />
     <Property Name="visible" Type="bool" Nullable="false" />
     <Property Name="visibleold" Type="bool" Nullable="false" />
-    <Property Name="hiddensections" Type="tinyint" Nullable="false" />
     <Property Name="groupmode" Type="smallint" Nullable="false" />
     <Property Name="groupmodeforce" Type="smallint" Nullable="false" />
     <Property Name="defaultgroupingid" Type="bigint" Nullable="false" />
@@ -89,7 +94,6 @@
     <Property Name="enablecompletion" Type="bool" Nullable="false" />
     <Property Name="completionstartonenrol" Type="bool" Nullable="false" />
     <Property Name="completionnotify" Type="bool" Nullable="false" />
-    <Property Name="coursedisplay" Type="tinyint" Nullable="false" />
   </EntityType>
   <EntityType Name="fit_enrol">
     <Key>
@@ -115,12 +119,19 @@
     <Property Name="customint2" Type="bigint" />
     <Property Name="customint3" Type="bigint" />
     <Property Name="customint4" Type="bigint" />
+    <Property Name="customint5" Type="bigint" />
+    <Property Name="customint6" Type="bigint" />
+    <Property Name="customint7" Type="bigint" />
+    <Property Name="customint8" Type="bigint" />
     <Property Name="customchar1" Type="varchar" MaxLength="255" />
     <Property Name="customchar2" Type="varchar" MaxLength="255" />
+    <Property Name="customchar3" Type="varchar" MaxLength="1333" />
     <Property Name="customdec1" Type="decimal" Precision="12" Scale="7" />
     <Property Name="customdec2" Type="decimal" Precision="12" Scale="7" />
     <Property Name="customtext1" Type="longtext" />
     <Property Name="customtext2" Type="longtext" />
+    <Property Name="customtext3" Type="longtext" />
+    <Property Name="customtext4" Type="longtext" />
     <Property Name="timecreated" Type="bigint" Nullable="false" />
     <Property Name="timemodified" Type="bigint" Nullable="false" />
   </EntityType>
@@ -138,6 +149,44 @@
     <Property Name="timemodified" Type="bigint" />
     <Property Name="shortname" Type="varchar" MaxLength="255" />
     <Property Name="downloadfiles" Type="bool" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fit_files">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="contenthash" Type="varchar" Nullable="false" MaxLength="40" />
+    <Property Name="pathnamehash" Type="varchar" Nullable="false" MaxLength="40" />
+    <Property Name="contextid" Type="bigint" Nullable="false" />
+    <Property Name="component" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="filearea" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="itemid" Type="bigint" Nullable="false" />
+    <Property Name="filepath" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="filename" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="userid" Type="bigint" />
+    <Property Name="filesize" Type="bigint" Nullable="false" />
+    <Property Name="mimetype" Type="varchar" MaxLength="100" />
+    <Property Name="status" Type="bigint" Nullable="false" />
+    <Property Name="source" Type="longtext" />
+    <Property Name="author" Type="varchar" MaxLength="255" />
+    <Property Name="license" Type="varchar" MaxLength="255" />
+    <Property Name="timecreated" Type="bigint" Nullable="false" />
+    <Property Name="timemodified" Type="bigint" Nullable="false" />
+    <Property Name="sortorder" Type="bigint" Nullable="false" />
+    <Property Name="referencefileid" Type="bigint" />
+    <Property Name="referencelastsync" Type="bigint" />
+    <Property Name="referencelifetime" Type="bigint" />
+  </EntityType>
+  <EntityType Name="fit_files_reference">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="repositoryid" Type="bigint" Nullable="false" />
+    <Property Name="lastsync" Type="bigint" />
+    <Property Name="lifetime" Type="bigint" />
+    <Property Name="reference" Type="longtext" />
+    <Property Name="referencehash" Type="varchar" Nullable="false" MaxLength="40" />
   </EntityType>
   <EntityType Name="fit_grade_grades">
     <Key>
@@ -440,6 +489,81 @@
     <Property Name="unreadmessageid" Type="bigint" Nullable="false" />
     <Property Name="processorid" Type="bigint" Nullable="false" />
   </EntityType>
+  <EntityType Name="fit_question">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="category" Type="bigint" Nullable="false" />
+    <Property Name="parent" Type="bigint" Nullable="false" />
+    <Property Name="name" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="questiontext" Type="longtext" Nullable="false" />
+    <Property Name="questiontextformat" Type="tinyint" Nullable="false" />
+    <Property Name="generalfeedback" Type="longtext" Nullable="false" />
+    <Property Name="generalfeedbackformat" Type="tinyint" Nullable="false" />
+    <Property Name="defaultmark" Type="decimal" Nullable="false" Precision="12" Scale="7" />
+    <Property Name="penalty" Type="decimal" Nullable="false" Precision="12" Scale="7" />
+    <Property Name="qtype" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="length" Type="bigint" Nullable="false" />
+    <Property Name="stamp" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="version" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="hidden" Type="bool" Nullable="false" />
+    <Property Name="timecreated" Type="bigint" Nullable="false" />
+    <Property Name="timemodified" Type="bigint" Nullable="false" />
+    <Property Name="createdby" Type="bigint" />
+    <Property Name="modifiedby" Type="bigint" />
+  </EntityType>
+  <EntityType Name="fit_question_answers">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="question" Type="bigint" Nullable="false" />
+    <Property Name="answer" Type="longtext" Nullable="false" />
+    <Property Name="answerformat" Type="tinyint" Nullable="false" />
+    <Property Name="fraction" Type="decimal" Nullable="false" Precision="12" Scale="7" />
+    <Property Name="feedback" Type="longtext" Nullable="false" />
+    <Property Name="feedbackformat" Type="tinyint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fit_question_attempt_step_data">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="attemptstepid" Type="bigint" Nullable="false" />
+    <Property Name="name" Type="varchar" Nullable="false" MaxLength="32" />
+    <Property Name="value" Type="longtext" />
+  </EntityType>
+  <EntityType Name="fit_question_attempt_steps">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="questionattemptid" Type="bigint" Nullable="false" />
+    <Property Name="sequencenumber" Type="bigint" Nullable="false" />
+    <Property Name="state" Type="varchar" Nullable="false" MaxLength="13" />
+    <Property Name="fraction" Type="decimal" Precision="12" Scale="7" />
+    <Property Name="timecreated" Type="bigint" Nullable="false" />
+    <Property Name="userid" Type="bigint" />
+  </EntityType>
+  <EntityType Name="fit_question_attempts">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="questionusageid" Type="bigint" Nullable="false" />
+    <Property Name="slot" Type="bigint" Nullable="false" />
+    <Property Name="behaviour" Type="varchar" Nullable="false" MaxLength="32" />
+    <Property Name="questionid" Type="bigint" Nullable="false" />
+    <Property Name="variant" Type="bigint" Nullable="false" />
+    <Property Name="maxmark" Type="decimal" Nullable="false" Precision="12" Scale="7" />
+    <Property Name="minfraction" Type="decimal" Nullable="false" Precision="12" Scale="7" />
+    <Property Name="flagged" Type="bool" Nullable="false" />
+    <Property Name="questionsummary" Type="longtext" />
+    <Property Name="rightanswer" Type="longtext" />
+    <Property Name="responsesummary" Type="longtext" />
+    <Property Name="timemodified" Type="bigint" Nullable="false" />
+  </EntityType>
   <EntityType Name="fit_quiz">
     <Key>
       <PropertyRef Name="id" />
@@ -497,6 +621,7 @@
     <Property Name="timestart" Type="bigint" Nullable="false" />
     <Property Name="timefinish" Type="bigint" Nullable="false" />
     <Property Name="timemodified" Type="bigint" Nullable="false" />
+    <Property Name="timecheckstate" Type="bigint" />
     <Property Name="layout" Type="longtext" Nullable="false" />
     <Property Name="preview" Type="smallint" Nullable="false" />
     <Property Name="state" Type="varchar" Nullable="false" MaxLength="16" />
@@ -707,7 +832,6 @@
     <Property Name="timemodified" Type="bigint" Nullable="false" />
     <Property Name="trustbitmask" Type="bigint" Nullable="false" />
     <Property Name="imagealt" Type="varchar" MaxLength="255" />
-    <Property Name="screenreader" Type="bool" Nullable="false" />
   </EntityType>
   <EntityType Name="fit_user_enrolments">
     <Key>

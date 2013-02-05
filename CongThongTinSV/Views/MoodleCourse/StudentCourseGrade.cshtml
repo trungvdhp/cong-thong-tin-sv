@@ -19,7 +19,7 @@
         columns.Bound(c => c.Hoc_ky).Width(120).Hidden();
         columns.Bound(c => c.Nam_hoc).Width(120).Hidden();
     })
-    .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50 }).Refresh(true).Input(true).Numeric(false).Messages(m =>{ m.ItemsPerPage("dòng mỗi trang"); m.First("Trang đầu tiên"); m.Last("Trang cuối cùng"); m.Next("Trang sau"); m.Previous("Trang trước"); m.Refresh("Làm mới");}))
+    .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50 }).Refresh(true).Input(true).Numeric(false).Messages(m => { m.ItemsPerPage("dòng mỗi trang"); m.First("Trang đầu tiên"); m.Last("Trang cuối cùng"); m.Next("Trang sau"); m.Previous("Trang trước"); m.Refresh("Làm mới"); }))
     .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
     .Filterable()
     .Scrollable()
@@ -27,7 +27,7 @@
     .Resizable(r => r.Columns(true))
     .Reorderable(ro => ro.Columns(true))
     //.Navigatable()
-        //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
+    //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
     .Selectable(s => s.Mode(GridSelectionMode.Single))
     .DataSource(
         dataSource => dataSource
@@ -37,13 +37,18 @@
             .Read(read => read.Action("GetStudentCourseGrades", "MoodleCourse", new { userid = ViewBag.UserID }))
             .PageSize(50)
     )
-    .Events(e => e.Change("onChange"))
+    .Events(e => 
+    { 
+        e.Change("onChange");
+        e.DataBound("onDataBound");
+    })
 )
 <h2 id="coursename"></h2>
 @(Html.Kendo().Grid<CongThongTinSV.Models.MoodleCourseMember>()
     .Name("MemberGrid")
-    .HtmlAttributes(new {style = "height: 500px;"})
-    .Columns(columns => {
+    .HtmlAttributes(new { style = "height: 500px;" })
+    .Columns(columns =>
+    {
         columns.Bound(c => c.ImageUrl)
             .Sortable(false)
             .Groupable(false)
@@ -51,29 +56,29 @@
             .HeaderHtmlAttributes(new { style = "text-align: center;" })
             .HtmlAttributes(new { style = "text-align: center;" })
             .ClientTemplate("<a href='../MoodleUser/UserCourseProfile/?userid=#=UserID#&courseid=#=get_courseid()#'>" +
-                    "<img src=#=ImageUrl# alt='Picture of #=FulName#' title='Ảnh đại diện của #=FullName#' />" + 
+                    "<img src=#=ImageUrl# alt='Picture of #=FulName#' title='Ảnh đại diện của #=FullName#' />" +
                     "</a>"
                     )
             .Width(120);
         columns.Bound(c => c.FullName)
             .ClientTemplate(
-                (@Html.ActionLink("#=FullName#", "UserCourseProfile", "MoodleUser", new { userid = "UserID", courseid = "CourseID" }, new { title = "Xem hồ sơ khóa học của #=FullName#" })).ToHtmlString().Replace("CourseID", "#=get_courseid()#").Replace("UserID","#=UserID#"))
+                (@Html.ActionLink("#=FullName#", "UserCourseProfile", "MoodleUser", new { userid = "UserID", courseid = "CourseID" }, new { title = "Xem hồ sơ khóa học của #=FullName#" })).ToHtmlString().Replace("CourseID", "#=get_courseid()#").Replace("UserID", "#=UserID#"))
                 .Width(180);
         columns.Bound(c => c.City).Width(150);
         columns.Bound(c => c.Country).Width(100);
         columns.Bound(c => c.LastAccess).Width(150);
-        columns.Bound(c => c.Roles).HtmlAttributes(new { style = "color: blue;"});
-        
+        columns.Bound(c => c.Roles).HtmlAttributes(new { style = "color: blue;" });
+
     })
-    .Pageable(pager => pager.PageSizes(new int[]{5, 10, 20, 50}).Refresh(true).Input(true).Numeric(false).Messages(m =>{ m.ItemsPerPage("dòng mỗi trang"); m.First("Trang đầu tiên"); m.Last("Trang cuối cùng"); m.Next("Trang sau"); m.Previous("Trang trước"); m.Refresh("Làm mới");}))
+    .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50 }).Refresh(true).Input(true).Numeric(false).Messages(m => { m.ItemsPerPage("dòng mỗi trang"); m.First("Trang đầu tiên"); m.Last("Trang cuối cùng"); m.Next("Trang sau"); m.Previous("Trang trước"); m.Refresh("Làm mới"); }))
     .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
     .Filterable()
     .Scrollable()
-    //.Groupable()
+        //.Groupable()
     .Resizable(r => r.Columns(true))
     .Reorderable(ro => ro.Columns(true))
     .Navigatable()
-    .HtmlAttributes(new { style="height:400px"})
+    //.HtmlAttributes(new { style = "height:auto" })
     //.ColumnMenu(menu => menu.Enabled(true).Sortable(false))
     //.Selectable(s => s.Mode(GridSelectionMode.Single))
     .DataSource(
@@ -82,6 +87,7 @@
             .Read(read => read.Action("GetCourseMembers", "MoodleCourse").Data("filterGrid"))
             .PageSize(50)
     )
+    .Events(e => e.DataBound("onDataBoundMember"))
 )
 
 <script type="text/javascript">
@@ -95,6 +101,14 @@
         return {
             courseid: courseID
         }
+    }
+
+    function onDataBound(e) {
+        resizeGrid("#Grid");
+    }
+
+    function onDataBoundMember(e) {
+        resizeGrid("#MemberGrid");
     }
 
     function onChange(arg) {

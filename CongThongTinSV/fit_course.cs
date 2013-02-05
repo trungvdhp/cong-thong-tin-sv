@@ -28,14 +28,12 @@ namespace CongThongTinSV
         public string modinfo { get; set; }
         public int newsitems { get; set; }
         public long startdate { get; set; }
-        public int numsections { get; set; }
         public long marker { get; set; }
         public long maxbytes { get; set; }
         public short legacyfiles { get; set; }
         public short showreports { get; set; }
         public bool visible { get; set; }
         public bool visibleold { get; set; }
-        public sbyte hiddensections { get; set; }
         public short groupmode { get; set; }
         public short groupmodeforce { get; set; }
         public long defaultgroupingid { get; set; }
@@ -47,6 +45,5 @@ namespace CongThongTinSV
         public bool enablecompletion { get; set; }
         public bool completionstartonenrol { get; set; }
         public bool completionnotify { get; set; }
-        public sbyte coursedisplay { get; set; }
     }
 }

@@ -96,7 +96,12 @@ namespace CongThongTinSV.App_Lib
         #endregion
 
         #region Date and time utilities
-
+        public static int MinTimeStamp 
+        { 
+            get {
+                return 1337014800;
+            } 
+        }
         /// <summary>
         /// Method for converting a System.DateTime value to a UNIX Timestamp
         /// </summary>
@@ -151,17 +156,11 @@ namespace CongThongTinSV.App_Lib
         /// <param name="timestamp">value to be converted</param>
         /// <param name="format">datetime format</param>
         /// <returns>Vietnamese datetime string</returns>
-        public static string ConvertToDateTimeString(int timestamp, string format, string cultureInfo = "vi-VN")
+        public static string ConvertToDateTimeString(int timestamp, string format="F", string cultureInfo = "vi-VN")
         {
             DateTime date = ConvertToDateTime(timestamp);
-            DateTime mindate = new DateTime(1970, 1, 1, 0, 0, 0, 0);
 
-            if (date.ToShortDateString() == mindate.ToShortDateString())
-            {
-                return cultureInfo == "vi-VN" ? "Chưa bao giờ" : "Never";
-            }
-
-            return date.ToString(format, new CultureInfo(cultureInfo));
+            return ConvertToString(date, format, cultureInfo);
         }
         /// <summary>
         /// Method for converting a Date Time String in cultureInfo("fr-FR")
@@ -202,12 +201,24 @@ namespace CongThongTinSV.App_Lib
                span.Duration().Minutes > 0 ? string.Format("{0:0} phút ", span.Minutes) : string.Empty,
                span.Duration().Seconds > 0 ? string.Format("{0:0} giây", span.Seconds) : string.Empty);
 
-                if (formatted.EndsWith(" ")) formatted = formatted.Substring(0, formatted.Length - 2);
+                if (formatted.EndsWith(" ")) formatted = formatted.Substring(0, formatted.Length - 1);
 
                 if (string.IsNullOrEmpty(formatted)) formatted = "0 giây";
             }
            
             return formatted;
+        }
+
+        public static string ConvertToString(DateTime date, string format = "F", string cultureInfo = "vi-VN")
+        {
+            DateTime mindate = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+
+            if (date.ToShortDateString() == mindate.ToShortDateString())
+            {
+                return cultureInfo == "vi-VN" ? "Chưa bao giờ" : "Never";
+            }
+
+            return date.ToString(format, new CultureInfo(cultureInfo));
         }
 
         public static string ConvertToDetailDateTimeString(int timestamp, string format = "F", string cultureInfo = "vi-VN")
@@ -222,7 +233,7 @@ namespace CongThongTinSV.App_Lib
 
             TimeSpan span = DateTime.Now.Subtract(date);
 
-            return string.Format(new CultureInfo(cultureInfo), "{0:" + format + "}", date) + ", " + " (" + ConvertToString(span) + ")";
+            return string.Format(new CultureInfo(cultureInfo), "{0:" + format + "}", date) + " (" + ConvertToString(span) + ")";
         }
         #endregion
 
@@ -382,11 +393,11 @@ namespace CongThongTinSV.App_Lib
 
         #region Other utilities
         /// <summary>
-        /// Convert grade to text
+        /// Convert 10 pont grading scale to text
         /// </summary>
-        /// <param name="grade">Grade to convert</param>
+        /// <param name="grade">10 point grading scale to convert</param>
         /// <returns>Text grade</returns>
-        public static string ConvertGradeToText(float? grade)
+        public static string Convert10ScaleToText(float? grade)
         {
             if (grade == null) { return ""; }
 
@@ -407,6 +418,58 @@ namespace CongThongTinSV.App_Lib
             if (grade < 8.95) { return "A"; }
 
             return "A+";
+        }
+
+        /// <summary>
+        /// Convert 4 point grading scale to text
+        /// </summary>
+        /// <param name="grade">4 point grading scale to convert</param>
+        /// <returns>Text grade</returns>
+        public static string Convert4ScaleToText(float? grade)
+        {
+            if (grade == null) { return ""; }
+
+            if (grade.Value == 0) { return "F"; }
+
+            if (grade.Value == 1) { return "D"; }
+
+            if (grade.Value == 1.5) { return "D+"; }
+
+            if (grade.Value == 2) { return "C"; }
+
+            if (grade.Value == 2.5) { return "C+"; }
+
+            if (grade.Value == 3) { return "B"; }
+
+            if (grade.Value == 3.5) { return "B+"; }
+
+            return "A";
+        }
+
+        /// <summary>
+        /// Convert 10 point grading scale to 4 point grading scale
+        /// </summary>
+        /// <param name="grade">10 poing grading scale</param>
+        /// <returns></returns>
+        public static decimal? Convert10To4Scale(decimal? grade)
+        {
+            if (grade == null) { return null; }
+
+            if (grade.Value < 3.95M) { return 0M; }
+
+            if (grade.Value < 4.95M) { return 1M; }
+
+            if (grade.Value < 5.45M) { return 1.5M; }
+
+            if (grade.Value < 6.45M) { return 2M; }
+
+            if (grade.Value < 6.95M) { return 2.5M; }
+
+            if (grade.Value < 7.95M) { return 3M; }
+
+            if (grade.Value < 8.45M) { return 3.5M; }
+
+            return 4M;
         }
 
         /// <summary>
