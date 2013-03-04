@@ -930,7 +930,7 @@
     <Content Include="Views\MoodleUser\ManageStudent.cshtml" />
     <Content Include="Views\MoodleCategory\ManageSemester.cshtml" />
     <Content Include="Views\MoodleCourse\Manage.cshtml" />
-    <Content Include="Views\ThongBao\TaiLieu\Upload.cshtml" />
+    <Content Include="Views\TaiLieu\Upload.cshtml" />
     <Content Include="Views\TraCuu\SinhVien.cshtml" />
     <Content Include="Views\TraCuu\DiemHocTap.cshtml" />
     <Content Include="Views\MoodleEnrol\EnrolStudent.cshtml" />
@@ -942,7 +942,7 @@
     </Content>
     <Content Include="Views\MoodleEnrol\EnrolTeacher.cshtml" />
     <Content Include="Views\MoodleUser\ChangePassword.cshtml" />
-    <Content Include="Views\ThongBao\TaiLieu\Index.cshtml" />
+    <Content Include="Views\TaiLieu\Index.cshtml" />
     <Content Include="Views\MoodleUser\UserProfile.cshtml">
       <SubType>Code</SubType>
     </Content>
@@ -961,8 +961,8 @@
     <Content Include="Views\MoodleQuiz\MyQuizGrade.cshtml" />
     <Content Include="Views\MoodleCourse\StudentCourseGrade.cshtml" />
     <Content Include="Views\MoodleQuiz\QuizList.cshtml" />
-    <Content Include="Views\ThongBao\TaiLieu\ChiaSe.cshtml" />
-    <Content Include="Views\ThongBao\TaiLieu\Sua.cshtml" />
+    <Content Include="Views\TaiLieu\ChiaSe.cshtml" />
+    <Content Include="Views\TaiLieu\Sua.cshtml" />
     <Content Include="Views\MoodleUser\SearchStudent.cshtml" />
     <Content Include="Views\MoodleUser\SearchTeacher.cshtml">
       <SubType>Code</SubType>
