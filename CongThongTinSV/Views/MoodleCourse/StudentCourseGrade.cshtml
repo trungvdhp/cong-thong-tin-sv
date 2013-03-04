@@ -16,14 +16,14 @@
                 (@Html.ActionLink("#= kendo.toString(Diem, '0.0') #", "CourseStudentGrade", "MoodleCourse", new { courseid = "CourseID" }, new { title = "Xem bảng điểm tổng kết khóa học" })).ToHtmlString().Replace("CourseID", "#=ID#"));
         columns.Bound(c => c.Ky_hieu).Width(95).HtmlAttributes(new { style = "text-align:center" });
         columns.Bound(c => c.So_tin_chi).Width(120);
-        columns.Bound(c => c.Hoc_ky).Width(120).Hidden();
         columns.Bound(c => c.Nam_hoc).Width(120).Hidden();
+        columns.Bound(c => c.Hoc_ky).Width(120).Hidden();
     })
     .Pageable(pager => pager.PageSizes(new int[] { 5, 10, 20, 50 }).Refresh(true).Input(true).Numeric(false).Messages(m => { m.ItemsPerPage("dòng mỗi trang"); m.First("Trang đầu tiên"); m.Last("Trang cuối cùng"); m.Next("Trang sau"); m.Previous("Trang trước"); m.Refresh("Làm mới"); }))
     .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
     .Filterable()
     .Scrollable()
-    .Groupable()
+    .Groupable(group => group.Enabled(false))
     .Resizable(r => r.Columns(true))
     .Reorderable(ro => ro.Columns(true))
     //.Navigatable()
@@ -43,10 +43,9 @@
         e.DataBound("onDataBound");
     })
 )
-<h2 id="coursename"></h2>
+<h2 id="coursename">Danh sách thành viên</h2>
 @(Html.Kendo().Grid<CongThongTinSV.Models.MoodleCourseMember>()
     .Name("MemberGrid")
-    .HtmlAttributes(new { style = "height: 500px;" })
     .Columns(columns =>
     {
         columns.Bound(c => c.ImageUrl)
@@ -56,7 +55,7 @@
             .HeaderHtmlAttributes(new { style = "text-align: center;" })
             .HtmlAttributes(new { style = "text-align: center;" })
             .ClientTemplate("<a href='../MoodleUser/UserCourseProfile/?userid=#=UserID#&courseid=#=get_courseid()#'>" +
-                    "<img src=#=ImageUrl# alt='Picture of #=FulName#' title='Ảnh đại diện của #=FullName#' />" +
+                    "<img src=#=ImageUrl# alt='Picture of #=FullName#' title='Ảnh đại diện của #=FullName#' />" +
                     "</a>"
                     )
             .Width(120);

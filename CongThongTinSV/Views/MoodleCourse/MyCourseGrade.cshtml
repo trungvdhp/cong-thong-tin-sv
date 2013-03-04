@@ -23,7 +23,7 @@
     .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
     .Filterable()
     .Scrollable()
-    //.Groupable()
+    .Groupable(group => group.Enabled(false))
     .Resizable(r => r.Columns(true))
     .Reorderable(ro => ro.Columns(true))
     //.HtmlAttributes(new { style="height:auto"})
