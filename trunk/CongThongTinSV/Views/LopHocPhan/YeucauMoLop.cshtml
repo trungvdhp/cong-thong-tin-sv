@@ -37,8 +37,8 @@
     .Pageable(pager =>pager.Enabled(false))
     .DataSource( 
         dataSource => dataSource.Ajax()
-                .Group(group => group.Add(diem => diem.Nam_hoc))
-                .Group(group => group.Add(diem => diem.Hoc_ky))
+            .Group(group => group.Add(diem => diem.Nam_hoc))
+            .Group(group => group.Add(diem => diem.Hoc_ky))
             .Read(read => read.Action("MonYeuCau","LopHocPhan").Data("filterData"))
     )
     .HtmlAttributes(new {style = "height:400px"})

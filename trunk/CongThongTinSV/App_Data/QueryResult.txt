@@ -1,1 +1,1 @@
-{"token":"4b4165fdcab1a2ccc5dfb7a86765531e"}
+[{"id":127,"name":"General","visible":1,"summary":"","summaryformat":1,"modules":[{"id":97,"url":"http:\/\/localhost:8080\/moodle\/mod\/quiz\/view.php?id=97","name":"DE THI KET THUC HOC PHAN","visible":1,"modicon":"http:\/\/localhost:8080\/moodle\/theme\/image.php\/_s\/standard\/quiz\/1359206717\/icon","modname":"quiz","modplural":"C\u00e1c \u0111\u1ec1 thi","availablefrom":0,"availableuntil":0,"indent":0}]},{"id":128,"name":" 16 June -  22 June","visible":1,"summary":"","summaryformat":1,"modules":[]}]
