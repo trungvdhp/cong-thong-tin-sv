@@ -401,21 +401,23 @@ namespace CongThongTinSV.App_Lib
         {
             if (grade == null) { return ""; }
 
-            if (grade < 3.95) { return "F"; }
+            var t = grade;
 
-            if (grade < 4.95) { return "D"; }
+            if (grade < 3.95f) { return "F"; }
 
-            if (grade < 5.45) { return "D+"; }
+            if (grade < 4.95f) { return "D"; }
 
-            if (grade < 6.45) { return "C"; }
+            if (grade < 5.45f) { return "D+"; }
 
-            if (grade < 6.95) { return "C+"; }
+            if (grade < 6.45f) { return "C"; }
 
-            if (grade < 7.95) { return "B"; }
+            if (grade < 6.95f) { return "C+"; }
 
-            if (grade < 8.45) { return "B+"; }
+            if (grade < 7.95f) { return "B"; }
 
-            if (grade < 8.95) { return "A"; }
+            if (grade < 8.45f) { return "B+"; }
+
+            if (grade < 8.95f) { return "A"; }
 
             return "A+";
         }

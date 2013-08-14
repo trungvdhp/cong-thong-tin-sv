@@ -2673,8 +2673,8 @@ namespace CongThongTinSV.App_Lib
                            ID_diem_thi = diem == null ? 0 : diem.ID_diem_thi,
                            DiemY_cu = diem == null ? null : (float?)diem.Diem_thi,
                            DiemY_moi = u.DiemY_moi,
-                           DiemZ_moi = diem == null || u.DiemY_moi == null ? null : (float?)(0.3 * u.DiemX + 0.7 * (float)u.DiemY_moi),
-                           Diem_chu = Utility.Convert10ScaleToText(diem == null || u.DiemY_moi == null ? null : (float?)(0.3 * u.DiemX + 0.7 * (float)u.DiemY_moi)),
+                           DiemZ_moi = diem == null || u.DiemY_moi == null ? null : (float?)(0.3M * (decimal)u.DiemX + 0.7M * u.DiemY_moi.Value),
+                           Diem_chu = Utility.Convert10ScaleToText(diem == null || u.DiemY_moi == null ? null : (float?)(0.3M * (decimal)u.DiemX + 0.7M * u.DiemY_moi.Value)),
                            Khac_diem = diem == null || !u.DiemY_moi.HasValue ||
                                          (diem != null && u.DiemY_moi.HasValue && string.Format("{0:0.0}", diem.Diem_thi) == string.Format("{0:0.0}", u.DiemY_moi))
                                          ? false : true
@@ -2728,6 +2728,12 @@ namespace CongThongTinSV.App_Lib
             return rs;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <param name="quizid"></param>
+        /// <returns></returns>
         public static IEnumerable<MoodleQuizQuestion> GetStudentQuizQuestions(string userid = "0", string quizid = "0")
         {
             List<MoodleQuizQuestion> list = new List<MoodleQuizQuestion>();
@@ -2880,6 +2886,15 @@ namespace CongThongTinSV.App_Lib
             return list;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="exportFileName"></param>
+        /// <param name="templateFileName"></param>
+        /// <param name="exportSheetName"></param>
+        /// <param name="grades"></param>
+        /// <param name="courseid"></param>
+        /// <returns></returns>
         public static ExcelExportor ExportQuizGradeToExcel(string exportFileName, string templateFileName, string exportSheetName, IEnumerable<MoodleQuizStudentGrade> grades, string courseid)
         {
             //Get course info
