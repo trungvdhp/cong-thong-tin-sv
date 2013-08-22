@@ -636,7 +636,7 @@ namespace CongThongTinSV.Controllers
                 {
 
                     data.title = "Success";
-                    data.message = "Tạo tài khoản quản trị viên thành công";
+                    data.message = "Xóa tài khoản quản trị viên thành công";
                     data.state = "success";
                 }
             }

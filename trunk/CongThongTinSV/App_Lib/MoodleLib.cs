@@ -899,6 +899,7 @@ namespace CongThongTinSV.App_Lib
             Entities db = new Entities();
             MoodleEntities mdb = new MoodleEntities();
 
+            // Thêm các sinh viên có trong moodle vào DHHH
             var sinhviens = from sv in list
                             join user in mdb.fit_user.AsEnumerable()
                             on sv.Ma_sv equals user.username
@@ -920,6 +921,19 @@ namespace CongThongTinSV.App_Lib
 
                     db.MOD_NguoiDung.Add(entity);
                 }
+            }
+
+            // Xóa các sinh viên không có tài khoản trên moodle
+            List<int> IDs = sinhviens.Select(t => t.ID_sv).ToList();
+            list = list.Where(t => !IDs.Contains(t.ID_sv)).ToList();
+
+            if (DeleteStudents(list) == -1) return -1;
+
+            foreach (var item in list)
+            {
+                MOD_NguoiDung entity = db.MOD_NguoiDung.FirstOrDefault(t => t.ID_nd == item.ID_sv);
+
+                db.MOD_NguoiDung.Remove(entity);
             }
 
             try
